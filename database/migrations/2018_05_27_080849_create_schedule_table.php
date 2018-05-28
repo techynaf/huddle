@@ -18,7 +18,7 @@ class CreateScheduleTable extends Migration
             $table->integer('user_id');
             $table->integer('week_id');
             $table->integer('branch_id');
-            $table->string('day');
+            $table->date('date');
             $table->timestamp('start');
             $table->timestamp('end');
         });
