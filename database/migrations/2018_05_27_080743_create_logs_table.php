@@ -22,6 +22,7 @@ class CreateLogsTable extends Migration
             $table->boolean('punch_in_approval')->nullable();
             $table->boolean('punch_out_approval')->nullable();
             $table->boolean('is_late');
+            $table->integer('branch_id');
         });
     }
 

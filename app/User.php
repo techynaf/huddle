@@ -4,6 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Branch;
+use App\Schedule;
+use App\Log;
+use App\Role;
+use App\Leave;
+use App\Request;
 
 class User extends Authenticatable
 {
@@ -26,4 +32,34 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function branch ()
+    {
+        return $this->belongsTo('App\Branch');
+    }
+
+    public function log ()
+    {
+        return $this->hasMany('App\Log');
+    }
+
+    public function leave ()
+    {
+        return $this->hasOne('App\Leave');
+    }
+
+    public function request ()
+    {
+        return $this->hasMany('App\Request');
+    }
+
+    public function role ()
+    {
+        return $this->hasMany('App\Role');
+    }
+
+    public function schedule ()
+    {
+        return $this->hasMany('App\Schedule');
+    }
 }
