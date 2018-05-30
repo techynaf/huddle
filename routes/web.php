@@ -15,7 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/login/{pin}/{day}', 'AttendanceController@login');
+Route::post('/login/{pin}', 'AttendanceController@login');
+Route::get('/add/week', 'HRController@addWeek');
 
 Auth::routes();
 

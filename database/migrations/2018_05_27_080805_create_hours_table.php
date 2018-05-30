@@ -16,7 +16,6 @@ class CreateHoursTable extends Migration
         Schema::create('hours', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('week_id');
             $table->time('hours');
             $table->time('overtime');
             $table->integer('late_count');

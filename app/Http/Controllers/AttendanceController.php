@@ -3,28 +3,86 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use App\User;
 use App\Log;
+use App\Schedule;
 
 class AttendanceController extends Controller
 {
-    public function login (Request $request, $pin, $day)
-    {
+    /*
+        Conditions for punch in and out approval        
+            if punch_in_approval or punch_out_approval == NULL
+            approval is not needed
+            
+            if punch_in_approval or punch_out_approval == False
+            emplyee was late or early and needs approval
+            
+            if punch_in_approval or punch_out_approval == True
+            employee was late or early and was approved
+        
+        Conditions for punch in and out difference
+            if punch_in_difference or punch_out_difference is positive
+            the employee came or left early, respectively
+            
+            if punch_in_difference or punch_out_difference is negative
+            the employee came or left late, respectively
+    */
+    public function login (Request $request, $pin)
+    {   
+        //getting the current timestamp
+        $now = new Carbon;
+        $date = $now->format('Y-m-d');
         $user = User::find($pin);
-        $log = new Log;
-        $log->user_id = $user->id;
-        $log->punch_in = Carbon::now();
-        $log->punch_out = NULL;
-        $is_late = NULL;
-        $schedules = $user->schedule;
-        $schedule;
 
-        foreach ($schedules as $schedules) {
-            if ($s->day == $day) {
-                $schedule = $s;
-                break;
+        if (count($user) == 0) {
+            return "Invalid PIN";
+        }
+
+        //finding the schedule where the date is the today's date and the user id is of the pin's user
+        $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->get();
+
+        if (count($schedule) == 0) {
+            return "You are not scheduled for today";
+        }
+
+        $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->get();
+
+        //Check if the employee has already logged in or not
+        if (count($log) == 0) { //Employee has not logged in
+            $startTime = Carbon::parse($schedule->start);
+
+            $log = new Log;
+            $diff = $now->diffInMinutes($startTime, false);
+
+            //will need approval of manager if employee is more than 10 mins early or late.
+            if ($diff > 10 || $diff < -10) {
+                $log->punch_in_difference = $now->diffInMinutes($startTime, false)->format('%H:%I:%S');
+                $log->punch_in_approval = false;
+            } else {
+                $log->punch_in_difference = '00:00:00';
+                $log->punch_in_approval = NULL;
             }
+
+            $log->user_id = $user->id;
+            $log->punch_out_difference = NULL;
+            $log->punch_out_approval = NULL;
+
+            return "Successfully Logged in!";
+        } else { //Employee has logged in and will now log out.
+            $endTime = Carbon::parse($schedule->end);
+            $diff = $now->diffInMinutes($endTime, false);
+
+            //will need approval of manager if employee is leaves more than 10 mins early or late.
+            if ($diff > 10 || $diff < -10) {
+                $log->punch_out_difference = $now->diffInMinutes($endTime, false)->format('%H:%I:%S');
+                $log->punch_out_approval = false;
+            } else {
+                $log->punch_out_difference = '00:00:00';
+                $log->punch_out_approval = NULL;
+            }
+
+            return "Logged out! Have a nice day!!";
         }
     }
 }
