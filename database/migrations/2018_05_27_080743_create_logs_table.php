@@ -16,10 +16,12 @@ class CreateLogsTable extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->date('date');
             $table->timestamp('punch_in_difference');
             $table->timestamp('punch_out_difference')->nullable();
             $table->boolean('punch_in_approval')->nullable();
             $table->boolean('punch_out_approval')->nullable();
+            $table->boolean('is_late');
         });
     }
 
