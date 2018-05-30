@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::post('/login/{pin}', 'AttendanceController@login');
 Route::get('/add/week', 'HRController@addWeek');
+Route::get('/view/employee/logged', 'AdminController@viewLoggedIn');
 
 Auth::routes();
 
