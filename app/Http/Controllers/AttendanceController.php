@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\User;
 use App\Log;
 use App\Schedule;
+use Validator;
+use Session;
 
 class AttendanceController extends Controller
 {
@@ -29,48 +31,47 @@ class AttendanceController extends Controller
             the employee came or left late, respectively
     */
     public function login (Request $request)
-    {   
+    {
         //Validating the data
-        $validatedData = $request->validate([
+        $this->validate($request, [
             'pin' => 'required',
-            'device_id' => 'required',
+            'device_id' => 'required'
         ]);
-        
+
         $pin = $request->pin;
         $device_id = $request->device_id;
-        //getting the current timestamp
 
+        //getting the current timestamp
         $now = new Carbon;
         $date = $now->format('Y-m-d');
-        $user = User::find($pin);
+        $user = User::where('pin', $pin)->first();
         $string = '';
 
-        if (count($user) == 0) {
-            return failureResponse ('Invalid PIN');
+        if ($user == null) {
+            return $this->failureResponse ('Invalid PIN');
         }
 
         //finding the schedule where the date is the today's date and the user id is of the pin's user
-        $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->get();
+        $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
 
-        if (count($schedule) == 0) {
-            return failureResponse ('You are not scheduled for today.');
+        if ($schedule == null) {
+            return $this->failureResponse ('You are not scheduled for today.');
         }
 
-        $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->get();
+        $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->first();
 
         //Check if the employee has already logged in or not
-        if (count($log) == 0) { //Employee has not logged in
+        if ($log == null) { //Employee has not logged in
             $startTime = Carbon::parse($schedule->start);
 
             $log = new Log;
-            $diff = $now->diffInMinutes($startTime, false);
+            $log->punch_in_difference = $now->diffInSeconds($startTime, false);
+            $diffInMins = gmdate("i:s", $diff);
 
             //will need approval of manager if employee is more than 10 mins early or late.
-            if ($diff > 10 || $diff < -10) {
-                $log->punch_in_difference = $now->diffInMinutes($startTime, false)->format('%H:%I:%S');
+            if ($diffInMins > 10 || $diffInMins < -10) {                
                 $log->punch_in_approval = false;
             } else {
-                $log->punch_in_difference = '00:00:00';
                 $log->punch_in_approval = NULL;
             }
 
@@ -78,21 +79,20 @@ class AttendanceController extends Controller
             $log->punch_out_difference = NULL;
             $log->punch_out_approval = NULL;
 
-            return successResponse ('Successfully Logged in!');
+            return $this->successResponse ('Successfully Logged in!');
         } else { //Employee has logged in and will now log out.
             $endTime = Carbon::parse($schedule->end);
-            $diff = $now->diffInMinutes($endTime, false);
+            $log->punch_out_difference = $now->diffInSeconds($endTime, false);
+            $diffInMins = gmdate("i:s", $diff);
 
             //will need approval of manager if employee is leaves more than 10 mins early or late.
-            if ($diff > 10 || $diff < -10) {
-                $log->punch_out_difference = $now->diffInMinutes($endTime, false)->format('%H:%I:%S');
+            if ($diffInMins > 10 || $diffInMins < -10) {
                 $log->punch_out_approval = false;
             } else {
-                $log->punch_out_difference = '00:00:00';
                 $log->punch_out_approval = NULL;
             }
 
-            return successResponse ('Logged out! Have a nice day!!');
+            return $this->successResponse ('Logged out! Have a nice day!!');
         }
     }
 
@@ -111,4 +111,77 @@ class AttendanceController extends Controller
             'message' => $message
         ]);
     }
+
+    public function test () 
+    {
+        return view('test');
+    }
+
+    // public function login2 (Request $request)
+    // {
+    //     //Validating the data
+    //     $this->validate($request, [
+    //         'pin' => 'required',
+    //         'device_id' => 'required'
+    //     ]);
+
+    //     $pin = $request->pin;
+    //     $device_id = $request->device_id;
+        
+    //     $now = new Carbon;
+    //     $date = $now->format('Y-m-d');
+    //     $user = User::where('pin', $pin)->first();
+    //     $string = '';
+
+    //     if ($user == null) {
+    //         return $this->failureResponse ('Invalid PIN');
+    //     }
+
+    //     //finding the schedule where the date is the today's date and the user id is of the pin's user
+    //     $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
+
+    //     if ($schedule == null) {
+    //         return $this->failureResponse ('You are not scheduled for today.');
+    //     }
+
+    //     $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->get();
+
+    //     //Check if the employee has already logged in or not
+    //     if (count($log) == 0) { //Employee has not logged in
+    //         $startTime = Carbon::parse($schedule->start);
+
+    //         $log = new Log;
+    //         $diff = $now->diffInMinutes($startTime, false);
+
+    //         //will need approval of manager if employee is more than 10 mins early or late.
+    //         if ($diff > 10 || $diff < -10) {
+    //             $log->punch_in_difference = $now->diffInMinutes($startTime, false)->format('%H:%I:%S');
+    //             $log->punch_in_approval = false;
+    //         } else {
+    //             $log->punch_in_difference = '00:00:00';
+    //             $log->punch_in_approval = NULL;
+    //         }
+
+    //         $log->user_id = $user->id;
+    //         $log->punch_out_difference = NULL;
+    //         $log->punch_out_approval = NULL;
+
+    //         return $this->successResponse ('Successfully Logged in!');
+    //     } else { //Employee has logged in and will now log out.
+    //         $endTime = Carbon::parse($schedule->end);
+    //         $diff = $now->diffInMinutes($endTime, false);
+
+    //         //will need approval of manager if employee is leaves more than 10 mins early or late.
+    //         if ($diff > 10 || $diff < -10) {
+    //             $log->punch_out_difference = $now->diffInMinutes($endTime, false)->format('%H:%I:%S');
+    //             $log->punch_out_approval = false;
+    //         } else {
+    //             $log->punch_out_difference = '00:00:00';
+    //             $log->punch_out_approval = NULL;
+    //         }
+
+    //         return $this->successResponse ('Logged out! Have a nice day!!');
+    //     }
+    //     return 'something';
+    // }
 }
