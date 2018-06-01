@@ -34,16 +34,19 @@ class AttendanceController extends Controller
         $now = new Carbon;
         $date = $now->format('Y-m-d');
         $user = User::find($pin);
+        $string = '';
 
         if (count($user) == 0) {
-            return "Invalid PIN";
+            $string = 'Invalid PIN';
+            return view('test-views.login-api')->with('string', $string);
         }
 
         //finding the schedule where the date is the today's date and the user id is of the pin's user
         $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->get();
 
         if (count($schedule) == 0) {
-            return "You are not scheduled for today";
+            $string = 'You are not scheduled for today';
+            return view('test-views.login-api')->with('string', $string);
         }
 
         $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->get();
@@ -68,7 +71,8 @@ class AttendanceController extends Controller
             $log->punch_out_difference = NULL;
             $log->punch_out_approval = NULL;
 
-            return "Successfully Logged in!";
+            $string =  'Successfully Logged in!';
+            return view('test-views.login-api')->with('string', $string);
         } else { //Employee has logged in and will now log out.
             $endTime = Carbon::parse($schedule->end);
             $diff = $now->diffInMinutes($endTime, false);
@@ -82,7 +86,8 @@ class AttendanceController extends Controller
                 $log->punch_out_approval = NULL;
             }
 
-            return "Logged out! Have a nice day!!";
+            $string = 'Logged out! Have a nice day!!';
+            return view('test-views.login-api')->with('string', $string);
         }
     }
 }
