@@ -44,4 +44,9 @@ class AdminController extends Controller
             return redirect('/')->with('error', 'Sorry, you are not authorized to access this!');
         }
     }
+
+    public function show (Request $request, $id)
+    {
+        
+    }
 }
