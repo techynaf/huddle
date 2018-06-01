@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class ScheduleTableSeeder extends Seeder
+class SchedulesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class ScheduleTableSeeder extends Seeder
         $eTime = $now->copy()->addHours(5)->format('H:i');
 
         //test for invalid pin (1000)
-        DB::table('schedule')->insert([
+        DB::table('schedules')->insert([
             'user_id' => 1,
             'date' => $date,
             'start' => $sTime,
@@ -28,7 +28,7 @@ class ScheduleTableSeeder extends Seeder
         ]);
 
         //test for early punch out
-        DB::table('schedule')->insert([
+        DB::table('schedules')->insert([
             'user_id' => 2,
             'date' => $date,
             'start' => $sTime,
@@ -41,7 +41,7 @@ class ScheduleTableSeeder extends Seeder
         $eTime = $now->copy()->addHours(6)->format('H:i');
 
         //test for invalid schedule
-        DB::table('schedule')->insert([
+        DB::table('schedules')->insert([
             'user_id' => 3,
             'date' => $date,
             'start' => $sTime,
@@ -49,7 +49,7 @@ class ScheduleTableSeeder extends Seeder
             'branch_id' => 0,
         ]);
 
-        DB::table('schedule')->insert([
+        DB::table('schedules')->insert([
             'user_id' => 4,
             'date' => $date,
             'start' => $sTime,
@@ -62,7 +62,7 @@ class ScheduleTableSeeder extends Seeder
         $eTime = $now->copy()->addHours(6)->format('H:i');
 
         //test for early punch in
-        DB::table('schedule')->insert([
+        DB::table('schedules')->insert([
             'user_id' => 5,
             'date' => $date,
             'start' => $sTime,
@@ -74,7 +74,7 @@ class ScheduleTableSeeder extends Seeder
         $eTime = $now->copy()->addHours(6)->format('H:i');
 
         //test for timely punch in
-        DB::table('schedule')->insert([
+        DB::table('schedules')->insert([
             'user_id' => 6,
             'date' => $date,
             'start' => $sTime,

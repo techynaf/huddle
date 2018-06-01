@@ -15,11 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/login', 'AttendanceController@login');
 Route::get('/add/week', 'HRController@addWeek');
 Route::get('/view/employee/logged', 'AdminController@viewLoggedIn');
-Route::get('view/employee', 'AdminController@showAll');
-Route::get('view/employee/{id}', 'AdminController@show');
+Route::get('/view/employee', 'AdminController@showAll');
+Route::get('/view/employee/{id}', 'AdminController@show');
+Route::get('/test', 'AttendanceController@test');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
