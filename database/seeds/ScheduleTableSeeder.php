@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illumninate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class ScheduleTableSeeder extends Seeder
@@ -15,8 +15,8 @@ class ScheduleTableSeeder extends Seeder
     {
         $now = new Carbon;
         $date = $now->copy()->format('Y-m-d');
-        $sTime = $now->copy()->format('H:i')->subHour();
-        $eTime = $now->copy()->format('H:i')->addHours(5);
+        $sTime = $now->copy()->subHour()->format('H:i');
+        $eTime = $now->copy()->addHours(5)->format('H:i');
 
         //test for invalid pin (1000)
         DB::table('schedule')->insert([
@@ -37,8 +37,8 @@ class ScheduleTableSeeder extends Seeder
         ]);
         
         $date = $now->copy()->addDay()->format('Y-m-d');
-        $sTime = $now->copy()->format('H:i')->addHour();
-        $eTime = $now->copy()->format('H:i')->addHours(6);
+        $sTime = $now->copy()->addHour()->format('H:i');
+        $eTime = $now->copy()->addHours(6)->format('H:i');
 
         //test for invalid schedule
         DB::table('schedule')->insert([
@@ -58,8 +58,8 @@ class ScheduleTableSeeder extends Seeder
         ]);
 
         $date = $now->copy()->format('Y-m-d');
-        $sTime = $now->copy()->format('H:i')->addHour();
-        $eTime = $now->copy()->format('H:i')->addHours(6);
+        $sTime = $now->copy()->addHour()->format('H:i');
+        $eTime = $now->copy()->addHours(6)->format('H:i');
 
         //test for early punch in
         DB::table('schedule')->insert([
@@ -71,7 +71,7 @@ class ScheduleTableSeeder extends Seeder
         ]);
 
         $sTime = $now->copy()->format('H:i');
-        $eTime = $now->copy()->format('H:i')->addHours(6);
+        $eTime = $now->copy()->addHours(6)->format('H:i');
 
         //test for timely punch in
         DB::table('schedule')->insert([

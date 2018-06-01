@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illumninate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class BranchesTableSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class BranchesTableSeeder extends Seeder
      */
     public function run()
     {
-        $branches = array('Badda', 'Gulshan', 'Dhanmondi', 'Apollo', 'AISD', 'Some Other');
+        $branches = array('Badda', 'Gulshan', 'Dhanmondi', 'Apollo', 'AISD', 'Some Other', 'Techynaf');
         foreach ($branches as $branch) {
             DB::table('branches')->insert([
                 'name' => $branch,

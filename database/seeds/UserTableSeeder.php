@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illumninate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class UserTableSeeder extends Seeder
 {
@@ -14,20 +14,24 @@ class UserTableSeeder extends Seeder
     {
         $pin = 999;
 
-        for ($i = 0; $i <= 200; $i++) {
+        for ($i = 1; $i <= 200; $i++) {
             $pin++;
             
             DB::table('users')->insert([
                 'name' => 'user'.$i,
+                'email' => 'user'.$i.'@test.com',
                 'pin' => $pin,
-                'branch' => rand(0, 5),
+                'password' => bcrypt('bangladesh'),
+                'branch_id' => rand(0, 5),
             ]);
         }
 
         DB::table('users')->insert([
             'name' => 'Mobashir',
+            'email' => 'mobashir@techynaf.com',
             'pin' => 9999,
-            'branch' => rand(0, 5),
+            'password' => bcrypt('bangladesh'),
+            'branch_id' => 6,
         ]);
     }
 }
