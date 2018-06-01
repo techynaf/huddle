@@ -66,7 +66,7 @@ class AttendanceController extends Controller
 
             $log = new Log;
             $log->punch_in_difference = $now->diffInSeconds($startTime, false);
-            $diffInMins = gmdate("i:s", $diff);
+            $diffInMins = gmdate("i:s", $log->punch_in_difference);
 
             //will need approval of manager if employee is more than 10 mins early or late.
             if ($diffInMins > 10 || $diffInMins < -10) {                
@@ -83,7 +83,7 @@ class AttendanceController extends Controller
         } else { //Employee has logged in and will now log out.
             $endTime = Carbon::parse($schedule->end);
             $log->punch_out_difference = $now->diffInSeconds($endTime, false);
-            $diffInMins = gmdate("i:s", $diff);
+            $diffInMins = gmdate("i:s", $log->punch_out_difference);
 
             //will need approval of manager if employee is leaves more than 10 mins early or late.
             if ($diffInMins > 10 || $diffInMins < -10) {
