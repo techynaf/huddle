@@ -35,7 +35,9 @@ class AttendanceController extends Controller
             'pin' => 'required',
             'device_id' => 'required',
         ]);
-
+        
+        $pin = $request->pin;
+        $device_id = $request->device_id;
         //getting the current timestamp
 
         $now = new Carbon;
