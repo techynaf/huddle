@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Log;
+use App\User;
 use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function viewLoggedIn (Request $request,  $branch) {
+    public function viewLoggedIn (Request $request,  $branch)
+    {
         if (auth()->user()->role == 'manager') {
             $now = new Carbon;
             $date = $now->format('Y-m-d');
@@ -27,8 +29,19 @@ class AdminController extends Controller
             //Return a view with all those logged in all branch
 
             return 'A view with $log';
-        }else {
-            return 'Sorry, you are not authorized to access this!';
+        } else {
+            return redirect('/')->with('error', 'Sorry, you are not authorized to access this!');
+        }
+    }
+
+    public function showAll ()
+    {
+        if (auth()->user()->role == 'super-admin' || auth()->user()->role == 'owner') {
+            $allUsers = User::all();
+
+            return view('showAll');
+        } else {
+            return redirect('/')->with('error', 'Sorry, you are not authorized to access this!');
         }
     }
 }
