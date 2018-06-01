@@ -16,8 +16,10 @@ Route::get('/', function () {
 });
 
 Route::post('/login', 'AttendanceController@login');
-Route::get('/view/employee/logged', 'AdminController@viewLoggedIn')->middleware('auth');
-Route::get('/view/employee', 'AdminController@showAll')->middleware('auth');
-Auth::routes('/view/employee/{id}', 'AdminController@show')->middleware('auth');
+Route::get('/add/week', 'HRController@addWeek');
+Route::get('/view/employee/logged', 'AdminController@viewLoggedIn');
+Route::get('view/employee', 'AdminController@showAll');
+Route::get('view/employee/{id}', 'AdminController@show');
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
