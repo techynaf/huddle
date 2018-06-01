@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illumninate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class RequestsTableSeeder extends Seeder
 {

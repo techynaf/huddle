@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illumninate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class RoleUserTableSeeder extends Seeder
 {
@@ -12,11 +12,16 @@ class RoleUserTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 200; $i++) { 
+        for ($i=1; $i <= 200; $i++) { 
             DB::table('role_user')->insert([
                 'user_id' => $i,
-                'role_id' => rand(0, 3),
+                'role_id' => rand(2, 3),
             ]);
         }
+
+        DB::table('role_user')->insert([
+            'user_id' => 201,
+            'role_id' => 4,
+        ]);
     }
 }
