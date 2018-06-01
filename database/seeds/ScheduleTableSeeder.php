@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illumninate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ScheduleTableSeeder extends Seeder
 {
@@ -12,30 +13,73 @@ class ScheduleTableSeeder extends Seeder
      */
     public function run()
     {
-        $year = '2018';
-        $month = rand(3, 12);
-        $mins = array(00, 15, 30, 45);
-        for ($i=1; $i <= 200; $i++) {
-            for ($j = 1; $j <= 21; $j++) { 
-                $date = $year . '-06-' . $j;
-                
-                $sHour = rand(10, 15);
-                $sMin = $mins[rand(0, 3)];
-                $start = $shour . ':' . $sMin .':00';
+        $now = new Carbon;
+        $date = $now->copy()->format('Y-m-d');
+        $sTime = $now->copy()->format('H:i')->subHour();
+        $eTime = $now->copy()->format('H:i')->addHours(5);
 
-                $eHour = rand(($sHour + 3) , 22);
-                $eMin = $mins[rand(0, 3)];
-                $end = $ehour . ':' . $eMin .':00';
+        //test for invalid pin (1000)
+        DB::table('schedule')->insert([
+            'user_id' => 1,
+            'date' => $date,
+            'start' => $sTime,
+            'end' => $eTime,
+            'branch_id' => 0,
+        ]);
 
+        //test for early punch out
+        DB::table('schedule')->insert([
+            'user_id' => 2,
+            'date' => $date,
+            'start' => $sTime,
+            'end' => $eTime,
+            'branch_id' => 0,
+        ]);
+        
+        $date = $now->copy()->addDay()->format('Y-m-d');
+        $sTime = $now->copy()->format('H:i')->addHour();
+        $eTime = $now->copy()->format('H:i')->addHours(6);
 
-                DB::table('schedule')->insert([
-                    'user_id' => $i,
-                    'date' => $pin,
-                    'start' => $start,
-                    'end' => $end,
-                    'branch' => rand(0, 5),
-                ]);
-            }
-        }
+        //test for invalid schedule
+        DB::table('schedule')->insert([
+            'user_id' => 3,
+            'date' => $date,
+            'start' => $sTime,
+            'end' => $eTime,
+            'branch_id' => 0,
+        ]);
+
+        DB::table('schedule')->insert([
+            'user_id' => 4,
+            'date' => $date,
+            'start' => $sTime,
+            'end' => $eTime,
+            'branch_id' => 0,
+        ]);
+
+        $date = $now->copy()->format('Y-m-d');
+        $sTime = $now->copy()->format('H:i')->addHour();
+        $eTime = $now->copy()->format('H:i')->addHours(6);
+
+        //test for early punch in
+        DB::table('schedule')->insert([
+            'user_id' => 5,
+            'date' => $date,
+            'start' => $sTime,
+            'end' => $eTime,
+            'branch_id' => 0,
+        ]);
+
+        $sTime = $now->copy()->format('H:i');
+        $eTime = $now->copy()->format('H:i')->addHours(6);
+
+        //test for timely punch in
+        DB::table('schedule')->insert([
+            'user_id' => 6,
+            'date' => $date,
+            'start' => $sTime,
+            'end' => $eTime,
+            'branch_id' => 0,
+        ]);
     }
 }

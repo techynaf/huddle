@@ -15,13 +15,19 @@ class UserTableSeeder extends Seeder
         $pin = 999;
 
         for ($i = 0; $i <= 200; $i++) {
-            $pin = $pin + rand(1, 45);
+            $pin++;
             
             DB::table('users')->insert([
-                'name' => str_random(rand(15, 30)),
+                'name' => 'user'.$i,
                 'pin' => $pin,
                 'branch' => rand(0, 5),
             ]);
         }
+
+        DB::table('users')->insert([
+            'name' => 'Mobashir',
+            'pin' => 9999,
+            'branch' => rand(0, 5),
+        ]);
     }
 }

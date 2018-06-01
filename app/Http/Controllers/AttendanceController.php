@@ -28,25 +28,30 @@ class AttendanceController extends Controller
             if punch_in_difference or punch_out_difference is negative
             the employee came or left late, respectively
     */
-    public function login (Request $request, $pin)
+    public function login (Request $request)
     {   
+        //Validating the data
+        $validatedData = $request->validate([
+            'pin' => 'required',
+            'device_id' => 'required',
+        ]);
+
         //getting the current timestamp
+
         $now = new Carbon;
         $date = $now->format('Y-m-d');
         $user = User::find($pin);
         $string = '';
 
         if (count($user) == 0) {
-            $string = 'Invalid PIN';
-            return view('test-views.login-api')->with('string', $string);
+            return failureResponse ('Invalid PIN');
         }
 
         //finding the schedule where the date is the today's date and the user id is of the pin's user
         $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->get();
 
         if (count($schedule) == 0) {
-            $string = 'You are not scheduled for today';
-            return view('test-views.login-api')->with('string', $string);
+            return failureResponse ('You are not scheduled for today.');
         }
 
         $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->get();
@@ -71,8 +76,7 @@ class AttendanceController extends Controller
             $log->punch_out_difference = NULL;
             $log->punch_out_approval = NULL;
 
-            $string =  'Successfully Logged in!';
-            return view('test-views.login-api')->with('string', $string);
+            return successResponse ('Successfully Logged in!');
         } else { //Employee has logged in and will now log out.
             $endTime = Carbon::parse($schedule->end);
             $diff = $now->diffInMinutes($endTime, false);
@@ -86,8 +90,23 @@ class AttendanceController extends Controller
                 $log->punch_out_approval = NULL;
             }
 
-            $string = 'Logged out! Have a nice day!!';
-            return view('test-views.login-api')->with('string', $string);
+            return successResponse ('Logged out! Have a nice day!!');
         }
+    }
+
+    public function successResponse ($message) 
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => $message
+        ]);
+    }
+
+    public function failureResponse ($message) 
+    {
+        return response()->json([
+            'status' => 'failure',
+            'message' => $message
+        ]);
     }
 }
