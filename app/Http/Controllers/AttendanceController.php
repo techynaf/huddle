@@ -35,7 +35,7 @@ class AttendanceController extends Controller
         //Validating the data
         $this->validate($request, [
             'pin' => 'required',
-            'device_id' => 'required'
+            'device_id' => 'nullable'
         ]);
 
         $pin = $request->pin;

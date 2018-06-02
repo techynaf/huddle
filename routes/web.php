@@ -19,7 +19,10 @@ Route::get('/add/week', 'HRController@addWeek');
 Route::get('/view/employee/logged', 'AdminController@viewLoggedIn');
 Route::get('/view/employee', 'AdminController@showAll');
 Route::get('/view/employee/{id}', 'AdminController@show');
-Route::get('/test', 'AttendanceController@test');
+Route::get('/schedule/create/{id}', 'AdminController@createSchedule');
+Route::post('/schedule/store/{id}', 'AdminController@storeSchdedule');
+Route::get('/employee/create', 'AdminController@createEmployee');
+Route::post('/employee/store', 'AdminController@storeEmployee');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
