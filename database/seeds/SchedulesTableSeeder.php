@@ -22,8 +22,8 @@ class SchedulesTableSeeder extends Seeder
         DB::table('schedules')->insert([
             'user_id' => 1,
             'date' => $date,
-            'start' => $sTime,
-            'end' => $eTime,
+            'start' => $sTime.':00',
+            'end' => $eTime.':00',
             'branch_id' => 0,
         ]);
 
@@ -31,8 +31,8 @@ class SchedulesTableSeeder extends Seeder
         DB::table('schedules')->insert([
             'user_id' => 2,
             'date' => $date,
-            'start' => $sTime,
-            'end' => $eTime,
+            'start' => $sTime.':00',
+            'end' => $eTime.':00',
             'branch_id' => 0,
         ]);
         
@@ -44,16 +44,16 @@ class SchedulesTableSeeder extends Seeder
         DB::table('schedules')->insert([
             'user_id' => 3,
             'date' => $date,
-            'start' => $sTime,
-            'end' => $eTime,
+            'start' => $sTime.':00',
+            'end' => $eTime.':00',
             'branch_id' => 0,
         ]);
 
         DB::table('schedules')->insert([
             'user_id' => 4,
             'date' => $date,
-            'start' => $sTime,
-            'end' => $eTime,
+            'start' => $sTime.':00',
+            'end' => $eTime.':00',
             'branch_id' => 0,
         ]);
 
@@ -65,8 +65,8 @@ class SchedulesTableSeeder extends Seeder
         DB::table('schedules')->insert([
             'user_id' => 5,
             'date' => $date,
-            'start' => $sTime,
-            'end' => $eTime,
+            'start' => $sTime.':00',
+            'end' => $eTime.':00',
             'branch_id' => 0,
         ]);
 
@@ -77,9 +77,23 @@ class SchedulesTableSeeder extends Seeder
         DB::table('schedules')->insert([
             'user_id' => 6,
             'date' => $date,
-            'start' => $sTime,
-            'end' => $eTime,
+            'start' => $sTime.':00',
+            'end' => $eTime.':00',
             'branch_id' => 0,
         ]);
+
+        $date = $now->copy()->format('Y-m-d');
+        $sTime = $now->copy()->format('H:i');
+        $eTime = $now->copy()->addHours(6)->format('H:i');
+
+        for ($i = 1; $i < 201; $i++) { 
+            DB::table('schedules')->insert([
+                'user_id' => $i,
+                'date' => $date,
+                'start' => $sTime.':00',
+                'end' => $eTime.':00',
+                'branch_id' => 0,
+            ]);
+        }
     }
 }

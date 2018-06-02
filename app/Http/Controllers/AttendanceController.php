@@ -58,13 +58,13 @@ class AttendanceController extends Controller
             return $this->failureResponse ('You are not scheduled for today.');
         }
 
-        $log = Log::whereNotNull('punch_out_difference')->where('user_id', $user->id)->first();
+        $log = Log::whereNotNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
 
-        if ($log == null) {
+        if ($log != null) {
             return $this->failureResponse('Sorry, you have already worked for today!');
         }
 
-        $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->first();
+        $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
 
         //Check if the employee has already logged in or not
         if ($log == null) { //Employee has not logged in
@@ -75,15 +75,25 @@ class AttendanceController extends Controller
             $diffInMins = gmdate("i:s", $log->punch_in_difference);
 
             //will need approval of manager if employee is more than 10 mins early or late.
-            if ($diffInMins > 10 || $diffInMins < -10) {                
+            if ($diffInMins > 10) {                
+                $log->is_late = false;
+                $log->punch_in_approval = false;
+            } elseif ($diffInMins < -10) {
+                $log->is_late = true;
                 $log->punch_in_approval = false;
             } else {
-                $log->punch_in_approval = NULL;
+                $log->is_late = false;
+                $log->punch_in_approval = null;
             }
 
+            //need to get branch_id from device_id
+            $log->branch_id = 1;
             $log->user_id = $user->id;
+            $log->date = $date;
             $log->punch_out_difference = NULL;
             $log->punch_out_approval = NULL;
+            $log->timestamps = false;
+            $log->save();
 
             return $this->successResponse ('Successfully Logged in!');
         } else { //Employee has logged in and will now log out.
@@ -97,6 +107,9 @@ class AttendanceController extends Controller
             } else {
                 $log->punch_out_approval = NULL;
             }
+
+            $log->timestamps = false;
+            $log->save();
 
             return $this->successResponse ('Logged out! Have a nice day!!');
         }
