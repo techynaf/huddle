@@ -58,6 +58,12 @@ class AttendanceController extends Controller
             return $this->failureResponse ('You are not scheduled for today.');
         }
 
+        $log = Log::whereNotNull('punch_out_difference')->where('user_id', $user->id)->first();
+
+        if ($log == null) {
+            return $this->failureResponse('Sorry, you have already worked for today!');
+        }
+
         $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->first();
 
         //Check if the employee has already logged in or not
