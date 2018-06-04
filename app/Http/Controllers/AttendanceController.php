@@ -115,6 +115,7 @@ class AttendanceController extends Controller
         }
     }
 
+    //success response json
     public function successResponse ($message) 
     {
         return response()->json([
@@ -123,6 +124,7 @@ class AttendanceController extends Controller
         ]);
     }
 
+    //failure response json
     public function failureResponse ($message) 
     {
         return response()->json([
@@ -131,76 +133,42 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function test () 
+    //create schedules for testing purposes
+    public function schedule ()
     {
-        return view('test');
+        $value = true;
+        $now = new Carbon;
+        $date = $now->copy()->format('Y-m-d');
+        $schedule = Schedule::where('date', $date)->get();
+
+        if (count($schedule) == 0) {
+            $value = false;
+        }
+
+        return view('test-scheduler')->with('value', $value);
     }
 
-    // public function login2 (Request $request)
-    // {
-    //     //Validating the data
-    //     $this->validate($request, [
-    //         'pin' => 'required',
-    //         'device_id' => 'required'
-    //     ]);
+    public function scheduler ()
+    {
+        $entries = 200;
+        $now = new Carbon;
+        $date = $now->copy()->format('Y-m-d');
+        $sTime = $now->copy()->format('H:i:s');
+        $eTime = $now->copy()->addHours(5)->format('H:i:s');
 
-    //     $pin = $request->pin;
-    //     $device_id = $request->device_id;
-        
-    //     $now = new Carbon;
-    //     $date = $now->format('Y-m-d');
-    //     $user = User::where('pin', $pin)->first();
-    //     $string = '';
+        for ($i = 1; $i <= $entries; $i++) { 
+            $schedule = new Schedule;
+            $schedule->user_id = $i;
+            $schedule->date = $date;
+            $schedule->start = $sTime;
+            $schedule->end = $eTime;
+            $schedule->branch_id = 1;
+            $schedule->timestamps = false;
+            $schedule->save();
+        }
 
-    //     if ($user == null) {
-    //         return $this->failureResponse ('Invalid PIN');
-    //     }
+        $message = '200 entries have been created. Please use the following pins for testing today: 1000 - 1199'; 
 
-    //     //finding the schedule where the date is the today's date and the user id is of the pin's user
-    //     $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
-
-    //     if ($schedule == null) {
-    //         return $this->failureResponse ('You are not scheduled for today.');
-    //     }
-
-    //     $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->get();
-
-    //     //Check if the employee has already logged in or not
-    //     if (count($log) == 0) { //Employee has not logged in
-    //         $startTime = Carbon::parse($schedule->start);
-
-    //         $log = new Log;
-    //         $diff = $now->diffInMinutes($startTime, false);
-
-    //         //will need approval of manager if employee is more than 10 mins early or late.
-    //         if ($diff > 10 || $diff < -10) {
-    //             $log->punch_in_difference = $now->diffInMinutes($startTime, false)->format('%H:%I:%S');
-    //             $log->punch_in_approval = false;
-    //         } else {
-    //             $log->punch_in_difference = '00:00:00';
-    //             $log->punch_in_approval = NULL;
-    //         }
-
-    //         $log->user_id = $user->id;
-    //         $log->punch_out_difference = NULL;
-    //         $log->punch_out_approval = NULL;
-
-    //         return $this->successResponse ('Successfully Logged in!');
-    //     } else { //Employee has logged in and will now log out.
-    //         $endTime = Carbon::parse($schedule->end);
-    //         $diff = $now->diffInMinutes($endTime, false);
-
-    //         //will need approval of manager if employee is leaves more than 10 mins early or late.
-    //         if ($diff > 10 || $diff < -10) {
-    //             $log->punch_out_difference = $now->diffInMinutes($endTime, false)->format('%H:%I:%S');
-    //             $log->punch_out_approval = false;
-    //         } else {
-    //             $log->punch_out_difference = '00:00:00';
-    //             $log->punch_out_approval = NULL;
-    //         }
-
-    //         return $this->successResponse ('Logged out! Have a nice day!!');
-    //     }
-    //     return 'something';
-    // }
+        return redirect('/test/schedule')->with('success', $message)->with('value', true);
+    }
 }
