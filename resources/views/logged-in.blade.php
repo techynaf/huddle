@@ -23,7 +23,7 @@
                                 <tbody>
                                     <tr>
                                         <td>{{$list[0]}}</td>
-                                        <td>{{$list[1]}}</td>
+                                        <td>{{$list[1][1]}}</td>
                                         <td>{{$list[2]}}</td>
                                         <td>{{$list[3]}}</td>
                                         <td>{{$list[4]}}</td>

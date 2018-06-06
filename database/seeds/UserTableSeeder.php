@@ -32,6 +32,7 @@ class UserTableSeeder extends Seeder
             'pin' => 9999,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 6,
+            'logged_in' => false,
         ]);
     }
 }

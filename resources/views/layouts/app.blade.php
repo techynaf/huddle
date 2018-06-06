@@ -42,7 +42,11 @@
 </head>
 <body>
     @guest
-        <h1>HELLO!!!</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <h1>HELLO!!!</h1>
+            </div>
+        </div>
     @else
         @include('layouts.nav')
     @endif

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('branch_id');
             $table->rememberToken();
+            $table->boolean('logged_in')->nullable();
             $table->timestamps();
         });
     }

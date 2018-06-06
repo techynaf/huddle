@@ -11,23 +11,31 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function viewLoggedIn (Request $request,  $branch)
+    public function viewLoggedIn (Request $request)
     {
         $now = new Carbon;
         $date = $now->format('Y-m-d');
-        
-        if (auth()->user()->role == 'manager') {
-            $log = Log::where('date', $date)->where('branch_id', $branch)->whereNull('punch_out_difference')->get();
+        if(auth()->user() == null) {
+            return redirect('/')->with('error', 'You are not authorized to access this page.');
+        }
+        $roles = auth()->user()->role;
+        $user_role = '';
+        foreach ($roles as $role) {
+            $user_role = $role->name;
+        }
+
+        if ($user_role == 'manager') {
+            $log = Log::where('date', $date)->where('branch_id', auth()->user()->branch_id)->whereNull('punch_out_difference')->get();
             $lists = array();
             $lists = $this->listMaker($log, $lists, $date);
 
             //Return a view with all those logged into that branch
             return view('logged-in')->with('lists', $lists)->with('value', false);
-        } elseif (auth()->user()->role == 'admin' || auth()->user()->role == 'owner') {
+        } elseif (auth()->user()->role == 'admin' || $user_role == 'owner' || $user_role == 'super-admin') {
             $log = Log::where('date', $date)->whereNull('punch_out_difference')->get();
             $lists = array();
             $lists = $this->listMaker($log, $lists, $date);
-            
+
             //Return a view with all those logged in all branch
             return view('logged-in')->with('lists', $lists)->with('value', false);
         } else {
@@ -39,9 +47,16 @@ class AdminController extends Controller
     {
         foreach ($log as $value) {
             $name = $value->user->name;
-            $role = $value->user->role;
+            $roles = $value->user->role;
+            $user_role = '';
+            foreach ($roles as $role) {
+                $user_role = $role->name;
+            }
             $schedule = Schedule::where('date', $value->date)->where('user_id', $value->user_id)->first();
-            $branch = $log->branch;
+            $branch = '';
+            foreach ($log as $l) {
+                $branch = $l->branch;
+            }
             $logoutTime = $schedule->end;
             $sTime = Carbon::parse($schedule->start);
 
@@ -53,7 +68,7 @@ class AdminController extends Controller
                 $loginTime = $sTime->subSeconds($diff);
             }
 
-            array_push($lists, array($name, $role, $loginTime, $logoutTime, $branch));
+            array_push($lists, array($name, $user_role, $loginTime, $logoutTime, $branch));
         }
 
         return $lists;
