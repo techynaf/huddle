@@ -76,22 +76,24 @@ class AdminController extends Controller
 
     public function showAll ()
     {
-        if (auth()->user()->role == 'super-admin' || auth()->user()->role == 'owner') {
+        $rs = auth()->user()->role;
+        $role = '';
+
+        foreach ($rs as $r) {
+            $role = $r->name;
+        }
+        if ($role == 'super-admin' || $role == 'owner') {
             $users = User::all();
             $branches = Branch::all();
             $role = 'owner';
 
-            return view('showAll')->with('users', $users)
-            ->with('branches', $branches)
-            ->with('role', $role);
-        } elseif (auth()->user()->role == 'manager') {
+            return view('show-all')->with('users', $users)->with('role', $role);
+        } elseif ($role == 'manager') {
             $branch = Branch::where('id', auth()->user()->branch_id)->first();
             $user = User::where('id', $id)->where('branch_id', auth()->user()->branch_id)->get();
             $role = 'manager';
 
-            return view('showAll')->with('users', $users)
-            ->with('branch', $branch)
-            ->with('role', $role);
+            return view('show-all')->with('users', $users)->with('role', $role);
         }else {
             return redirect('/')->with('error', 'Sorry, you are not authorized to access this!');
         }
