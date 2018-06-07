@@ -37,6 +37,7 @@
                                     <th>Role</th>
                                     <th>Login Time</th>
                                     <th>Scheduled logout Time</th>
+                                    <th>Branch</th>
                                 </tr>
                             </thead>
                             
@@ -47,6 +48,7 @@
                                         <td>{{$list[1]}}</td>
                                         <td>{{$list[2]}}</td>
                                         <td>{{$list[3]}}</td>
+                                        <td>{{$list[4]}}</td>
                                     </tr>
                                 </tbody>
                             @endforeach
