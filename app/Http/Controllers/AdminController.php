@@ -55,7 +55,7 @@ class AdminController extends Controller
             $schedule = Schedule::where('date', $value->date)->where('user_id', $value->user_id)->first();
             $branch = '';
             foreach ($log as $l) {
-                $branch = $l->branch;
+                $branch = $l->branch->name;
             }
             $logoutTime = $schedule->end;
             $sTime = Carbon::parse($schedule->start);
