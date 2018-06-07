@@ -4,8 +4,13 @@
     <div class="wrapper">
         <div class="container-fluid">
             @if(count($users) == 0)
-                <h3>No one is logged in to be logged out!!</h3>
-                <h4>Please click <a href="/test/log">here</a> to log employees in</h4>
+                @if($type == 'out')
+                    <h3>No one is logged in to be logged out!!</h3>
+                    <h4>Please click <a href="/test/log">here</a> to log employees in</h4>
+                @else
+                    <h3>Everyone is logged in!!</h3>
+                    <h4>Please click <a href="/test/logout">here</a> to log employees out</h4>
+                @endif
             @else
                 <form action="/test/logger" method="post">
                     @csrf
@@ -18,6 +23,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                <td>
+                                    All
+                                </td>
+                                <td>
+                                    ---
+                                </td>
+                                <td>
+                                    <input type="checkbox" for="all" name="all" value="all">
+                                </td>
+                            </tr>
                             @foreach($users as $user)
                                 <tr>
                                     <td>

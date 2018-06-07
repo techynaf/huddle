@@ -76,12 +76,16 @@ class AdminController extends Controller
 
     public function showAll ()
     {
+        if (auth()->user() == null) {
+            return redirect ('/')->with('error', 'Please login.');
+        }
         $rs = auth()->user()->role;
         $role = '';
 
         foreach ($rs as $r) {
             $role = $r->name;
         }
+
         if ($role == 'super-admin' || $role == 'owner') {
             $users = User::all();
             $branches = Branch::all();
@@ -101,9 +105,61 @@ class AdminController extends Controller
 
     public function show (Request $request, $id)
     {
-        $user = User::where('id', $id);
+        $now = new Carbon;
+        $today = $now->format('d-m-Y');
+        $user = User::where('id', $id)->first();
         
+        if (auth()->user() == null) {
+            return redirect ('/')->with('error', 'Please login.');
+        }
+
+        $rs = auth()->user()->role;
+        $role = '';
+
+        foreach ($rs as $r) {
+            $role = $r->name;
+        }
+
+        $hours = 'Please enter date range';
+        $lates = 'Nothing';
+
+        if ($request->start_date != null) {
+            $hours = 0;
+            $lates = 0;
+            $start = $request->start_date;
+            $end = $request->end_date;
+            $logs = Log::where('date', '>=', $start)->where('date', '<=', $end)
+            ->where('user_id', $id)->whereNotNull('punch_out_difference')->get();
+
+            foreach ($logs as $log) {
+                $schedule = Schedule::where('date', $log->date)->where('user_id', $id)->first();
+                $in_time = Carbon::parse($schedule->start);
+                $out_time = Carbon::parse($schedule->end);
+                
+                $diff = (-1) * $log->punch_in_difference;
+                $in_time->addSeconds($diff);
+
+                $diff = (-1) * $log->punch_out_difference;
+                $out_time->addSeconds($diff);
+                
+                $hours += $in_time->diffInMinutes($out_time);
+
+                if ($log->is_late) {
+                    $lates++;
+                }
+            }
+        }
+        
+        if ($role == 'super-admin' || $role == 'owner' || $role == 'manager' || $role == 'admin') {
+            return view('show')->with('user', $user)
+            ->with('hours', $hours)
+            ->with('lates', $lates)
+            ->with('today', $today);
+        } else {
+            return redirect('/')->with('error', 'You are not authorized.');
+        }
     }
+
 
     public function createSchedule (Request $request, $id)
     {

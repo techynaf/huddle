@@ -26,7 +26,7 @@
     
                                     <p class="text-muted font-13"><strong>Address :</strong> <span class="m-l-15">{{$user->address}}</span></p>
                                 </div>
-                                <a href="" type="btn-rounded" class="btn btn-custom btn-rounded waves-effect waves-light">Show details</a>
+                                <a href="/view/employee/{{$user->id}}" type="btn-rounded" class="btn btn-custom btn-rounded waves-effect waves-light">Show details</a>
                             </div>
                         </div>
                     </div> <!-- end col -->

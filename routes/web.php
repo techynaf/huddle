@@ -25,6 +25,7 @@ Route::post('/test/scheduler', 'AttendanceController@scheduler');
 Route::get('/test/log', 'AttendanceController@log');
 Route::get('/test/logout', 'AttendanceController@logout');
 Route::post('/test/logger', 'AttendanceController@logger');
+Route::get('view/employee/{id}', 'AdminController@show');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
