@@ -57,18 +57,13 @@ class AdminController extends Controller
             foreach ($log as $l) {
                 $branch = $l->branch->name;
             }
-            $logoutTime = $schedule->end;
+            $logoutTime = Carbon::parse($schedule->end)->format('H:i');
             $sTime = Carbon::parse($schedule->start);
 
-            if ($value->punch_in_difference < 0) {
-                $diff = (-1) * $value->punch_in_difference;
-                $loginTime = $sTime->addSeconds($diff);
-            } else {
-                $diff = $value->punch_in_difference;
-                $loginTime = $sTime->subSeconds($diff);
-            }
+            $diff = (-1) * $value->punch_in_difference;
+            $loginTime = $sTime->addSeconds($diff)->format('H:i');
 
-            array_push($lists, array($name, $user_role, $loginTime, $logoutTime, $branch));
+            array_push($lists, array($name, $user_role, $loginTime, $logoutTime, $date, $branch));
         }
 
         return $lists;
