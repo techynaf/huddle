@@ -45,7 +45,6 @@ class AttendanceController extends Controller
         $now = new Carbon;
         $date = $now->format('Y-m-d');
         $user = User::where('pin', $pin)->first();
-        $string = '';
 
         if ($user == null) {
             return $this->failureResponse ('Invalid PIN');
@@ -140,7 +139,7 @@ class AttendanceController extends Controller
         $now = new Carbon;
         $date = $now->copy()->format('Y-m-d');
         $schedule = Schedule::where('date', $date)->get();
-
+        
         if (count($schedule) == 0) {
             $value = false;
         }
@@ -170,5 +169,163 @@ class AttendanceController extends Controller
         $message = '200 entries have been created. Please use the following pins for testing today: 1000 - 1199'; 
 
         return redirect('/test/schedule')->with('success', $message)->with('value', true);
+    }
+
+    public function log ()
+    {
+        $now = new Carbon;
+        $date = $now->copy()->format('Y-m-d');
+        $users = User::all();
+
+        for ($i = count($users) - 1; $i >= 0; $i--) {
+            $log = Log::where('date', $date)->whereNull('punch_out_difference')->where('user_id', $users[$i]->id)->first();
+
+            if($log != null || $users[$i]->pin == 9999){
+                unset($users[$i]);
+            }
+        }
+
+        return view('test-employee-logger')->with('users', $users)->with('type', 'in');
+    }
+
+    public function logOut ()
+    {
+        $now = new Carbon;
+        $date = $now->copy()->format('Y-m-d');
+        $users = User::where('logged_in', true)->get();
+
+        return view('test-employee-logger')->with('users', $users)->with('type', 'out');
+    }
+
+    public function logger (Request $request)
+    {
+        $now = new Carbon;
+        $date = $now->format('Y-m-d');
+        
+        if ($request->input('all')) {
+            for ($i = 1; $i <= 200; $i++) {
+                $user = User::where('id', $i)->first();
+
+                //finding the schedule where the date is the today's date and the user id is of the pin's user
+                $schedule = Schedule::where('date', $date)->where('user_id', $i)->first();
+                $log = Log::whereNotNull('punch_out_difference')->where('user_id', $i)->where('date', $date)->first();
+
+                if ($log == null) {
+                    $log = Log::whereNull('punch_out_difference')->where('user_id', $i)->where('date', $date)->first();
+
+                    //Check if the employee has already logged in or not
+                    if ($log == null) { //Employee has not logged in
+                        $startTime = Carbon::parse($schedule->start);
+                        $user->logged_in = true;
+                        $log = new Log;
+                        $log->punch_in_difference = $now->diffInSeconds($startTime, false);
+                        $diffInMins = gmdate("i:s", $log->punch_in_difference);
+
+                        //will need approval of manager if employee is more than 10 mins early or late.
+                        if ($diffInMins > 10) {                
+                            $log->is_late = false;
+                            $log->punch_in_approval = false;
+                        } elseif ($diffInMins < -10) {
+                            $log->is_late = true;
+                            $log->punch_in_approval = false;
+                        } else {
+                            $log->is_late = false;
+                            $log->punch_in_approval = null;
+                        }
+
+                        //need to get branch_id from device_id
+                        $log->branch_id = 1;
+                        $log->user_id = $i;
+                        $log->date = $date;
+                        $log->punch_out_difference = NULL;
+                        $log->punch_out_approval = NULL;
+                        $log->timestamps = false;
+                        $log->save();
+                        $user->save();
+                    } else { //Employee has logged in and will now log out.
+                        $endTime = Carbon::parse($schedule->end);
+                        $log->punch_out_difference = $now->diffInSeconds($endTime, false);
+                        $diffInMins = gmdate("i:s", $log->punch_out_difference);
+
+                        //will need approval of manager if employee is leaves more than 10 mins early or late.
+                        if ($diffInMins > 10 || $diffInMins < -10) {
+                        $log->punch_out_approval = false;
+                        } else {
+                            $log->punch_out_approval = NULL;
+                        }
+
+                        $user->logged_in = null;
+                        $log->timestamps = false;
+                        $log->save();
+                        $user->save();
+                    }
+                }
+            }
+        }
+
+        for ($i = 0; $i < 200; $i++) {
+            $pin = $request->input('log_'.$i);
+            
+            if ($pin != null) {
+                $user = User::where('pin', $pin)->first();
+
+                //finding the schedule where the date is the today's date and the user id is of the pin's user
+                $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
+                $log = Log::whereNotNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
+
+                if ($log == null) {
+                    $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
+
+                    //Check if the employee has already logged in or not
+                    if ($log == null) { //Employee has not logged in
+                        $startTime = Carbon::parse($schedule->start);
+                        $user->logged_in = true;
+                        $log = new Log;
+                        $log->punch_in_difference = $now->diffInSeconds($startTime, false);
+                        $diffInMins = gmdate("i:s", $log->punch_in_difference);
+
+                        //will need approval of manager if employee is more than 10 mins early or late.
+                        if ($diffInMins > 10) {                
+                            $log->is_late = false;
+                            $log->punch_in_approval = false;
+                        } elseif ($diffInMins < -10) {
+                            $log->is_late = true;
+                            $log->punch_in_approval = false;
+                        } else {
+                            $log->is_late = false;
+                            $log->punch_in_approval = null;
+                        }
+
+                        //need to get branch_id from device_id
+                        $log->branch_id = 1;
+                        $log->user_id = $user->id;
+                        $log->date = $date;
+                        $log->punch_out_difference = NULL;
+                        $log->punch_out_approval = NULL;
+                        $log->timestamps = false;
+                        $log->save();
+                        $user->save();
+                    } else { //Employee has logged in and will now log out.
+                        $endTime = Carbon::parse($schedule->end);
+                        $log->punch_out_difference = $now->diffInSeconds($endTime, false);
+                        $diffInMins = gmdate("i:s", $log->punch_out_difference);
+
+                        //will need approval of manager if employee is leaves more than 10 mins early or late.
+                        if ($diffInMins > 10 || $diffInMins < -10) {
+                        $log->punch_out_approval = false;
+                        } else {
+                            $log->punch_out_approval = NULL;
+                        }
+
+                        $user->logged_in = null;
+                        $log->timestamps = false;
+                        $log->save();
+                        $user->save();
+                    }
+                }
+            }
+        }
+        
+        return $this->log();
     }
 }

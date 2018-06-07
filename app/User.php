@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function role ()
     {
-        return $this->hasMany('App\Role');
+        return $this->belongsToMany('App\Role');
     }
 
     public function schedule ()

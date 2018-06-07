@@ -42,12 +42,22 @@
 </head>
 <body>
     @guest
-        <h1>HELLO!!!</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <h1>HELLO!!!</h1>
+            </div>
+        </div>
     @else
         @include('layouts.nav')
     @endif
 
-    @include('layouts.messages')
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-12">@include('layouts.messages')</div>
+            </div>
+        </div>
+    </div>
     @yield('content')
     @include('layouts.footer')
 </body>

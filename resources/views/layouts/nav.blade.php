@@ -7,8 +7,8 @@
             <div class="logo">
                 <!-- Image Logo -->
                 <a href="index.html" class="logo">
-                    <img src="assets/images/logo-sm.png" alt="" height="50" class="logo-small">
-                    <img src="assets/images/logo.png" alt="" height="27" class="logo-large">
+                    <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
+                    <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
                 </a>
 
             </div>
@@ -36,7 +36,7 @@
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="false" aria-expanded="false">
-                            <img src="assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle"><span class="font-16 text-dark">Name Goes Here</span>
+                    <img src="/frontend/images/users/avatar-1.jpg" alt="user" class="rounded-circle"><span class="font-16 text-dark">{{auth()->user()->name}}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
