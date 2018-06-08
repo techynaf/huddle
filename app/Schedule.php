@@ -9,6 +9,7 @@ use App\Branch;
 class Schedule extends Model
 {
     protected $guarded = [];
+    protected $table = 'schedules';
     
     public function user ()
     {

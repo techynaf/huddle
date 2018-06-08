@@ -156,13 +156,39 @@ class AdminController extends Controller
     }
 
 
-    public function createSchedule (Request $request, $id)
+    public function storeSchedule (Request $request, $count)
     {
-        $user = User::where('id', $id);
+        for ($i = 0; $i < $count; $i++) { 
+            $user_id = null;
+        }
     }
 
-    public function storeSchedule ()
+    public function createSchedule ()
     {
-        
+        if (auth()->user() == null) {
+            return redirect('/')->with('error', 'Please login first');
+        }
+
+        $role = auth()->user()->role->first();
+
+        if ($role == 'manager' || $role == 'super-admin' || $role == 'admin') {
+            $branch_id = auth()->user()->branch_id;
+            $s_day = Schedule::where('branch_id', 1)->orderBy('date', 'desc')->first();
+            $s_day = $s_day->date;
+            $s_day = Carbon::parse($s_day);
+            $s_day->addDay()->format('Y-m-d');
+            dd($s_day);
+            $s_day = $s_day->addDay();
+            $days = array($s_day);
+
+            for ($i = 1; $i < 7; $i++) { 
+                array_push($days);
+            }
+
+            return view('/create/schedule')->with('users', $users)->with('days', $days);
+        } else {
+            return redirect('/', 'You are not authorized to access this');
+        }
+        return view();
     }
 }
