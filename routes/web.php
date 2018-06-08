@@ -18,8 +18,8 @@ Route::get('/', function () {
 Route::get('/view/employee/logged', 'AdminController@viewLoggedIn');
 Route::get('/view/employee', 'AdminController@showAll');
 Route::get('/view/employee/{id}', 'AdminController@show');
-Route::get('/schedule/create/{id}', 'AdminController@createSchedule');
-Route::post('/schedule/store/{id}', 'AdminController@storeSchdedule');
+Route::get('/schedule/create', 'AdminController@createSchedule');
+Route::post('/schedule/store', 'AdminController@storeSchdedule');
 Route::get('/test/schedule', 'AttendanceController@schedule');
 Route::post('/test/scheduler', 'AttendanceController@scheduler');
 Route::get('/test/log', 'AttendanceController@log');
