@@ -8,6 +8,8 @@ use App\User;
 use App\Log;
 use App\Overtime;
 use App\Schedule;
+use App\LeaveRequest;
+use App\AllRequest;
 use Validator;
 use Session;
 
@@ -169,6 +171,44 @@ class AttendanceController extends Controller
             'message' => $message,
             'state' => $state
         ]);
+    }
+
+    public function requestLeave ()
+    {
+        if (auth()->user() == null) {
+            return redirect('/login')->with('error','Please login to access this page.');
+        }
+
+        $types = array('Sick Leave', 'sick_leave', 'Paid Leave', 'paid_leave', 'Unpaid Leave', 'unpaid_leave');
+        $id = auth()->user()->id;
+
+        return view('/request')->with('id', $id)->with('types', $types);
+    }
+
+    public function storeLeaveRequest (Request $request, $id)
+    {
+        $this->validate($request, [
+            'subject' => 'required',
+            'body' => 'required',
+            'type' => 'required'
+        ]);
+
+        $start = Carbon::parse($request->start)->format('Y-m-d');
+        $end = Carbon::parse($request->end)->format('Y-m-d');
+        $req = new AllRequest;
+        $req->user_id = $id;
+        $req->hr_approved = null;
+        $req->manager_approved = null;
+        $req->subject = $request->subject;
+        $req->start = $start;
+        $req->end = $end;
+        $req->branch_id = auth()->user()->branch_id;
+        $req->body = $request->body;
+        $req->type = $request->type;
+        $req->is_removed = false;
+        $req->save();
+
+        return redirect('/dashboard')->with('success', 'Your request has been successfully added.');
     }
 
     //create schedules for testing purposes

@@ -2,12 +2,10 @@
     @foreach($errors->all() as $error)
         <div class="wrapper">
             <div class="container-fluid">
-                <div class="row text-center">
+                <div class="row text-center alert alert-danger">
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
-                        <div class="alert alert-danger">
-                            {{$error}}
-                        </div>
+                        {{$error}}
                     </div>
                     <div class="col-md-4"></div>
                 </div>
@@ -19,12 +17,10 @@
 @if(session('success'))
     <div class="wrapper">
         <div class="container-fluid">
-            <div class="row text-center">
+            <div class="row text-center alert alert-danger">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <div class="alert alert-success">
-                        {{session('success')}}
-                    </div>
+                    {{session('success')}}
                 </div>
                 <div class="col-md-4"></div>
             </div>
@@ -35,12 +31,10 @@
 @if(session('error'))
     <div class="wrapper">
         <div class="container-fluid">
-            <div class="row text-center">
+            <div class="row text-center alert alert-danger">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <div class="alert alert-danger">
-                        {{session('error')}}
-                    </div>
+                    {{session('error')}}
                 </div>
                 <div class="col-md-4"></div>
             </div>

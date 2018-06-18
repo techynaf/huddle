@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 
-class Request extends Model
+class AllRequest extends Model
 {
     public function user ()
     {

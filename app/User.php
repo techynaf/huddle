@@ -9,7 +9,7 @@ use App\Schedule;
 use App\Log;
 use App\Role;
 use App\Leave;
-use App\Request;
+use App\AllRequest;
 use App\Overtime;
 
 class User extends Authenticatable
@@ -49,9 +49,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Leave');
     }
 
-    public function request ()
+    public function allRequest ()
     {
-        return $this->hasMany('App\Request');
+        return $this->hasMany('App\AllRequest');
     }
 
     public function role ()

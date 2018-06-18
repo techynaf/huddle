@@ -3,16 +3,13 @@
 @section('content')
     <div class="wrapper">
         <div class="container-fluid">
-            <!-- Page-Title -->
             <div class="row">
                 <div class="col-sm-12">	
                     <h2 class="page-title">Profile</h2>
                 </div>
-            </div>
-            <!-- end page title end breadcrumb -->
-            
+            </div>            
             <div class="row">
-                <!-- profile pic container starts here -->
+
                 <div class="col-sm-12 col-md-4">
                     <div class="card-box">
                         <div class="text-center">
@@ -42,9 +39,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- profile pic container End here -->
-            
-                <!-- personal info container starts here -->
                 <div class="col-sm-12 col-md-8">
                     <div class="card-box">
                         <div class="card-title">
@@ -53,7 +47,6 @@
                         <div class="widget-container">
                             <div class="row">
                                 <div class="col-lg-12">
-
                                     <div class="p-20">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -93,13 +86,11 @@
                                             </div>
                                         </form>
                                     </div>
-                                </div><!-- end col -->
-
+                                </div>
                             </div>							
                         </div>
                     </div>
                 </div>
-                <!-- personal info container End here -->
             </div>
         </div>
     </div>

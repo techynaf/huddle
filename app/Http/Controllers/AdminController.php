@@ -7,6 +7,7 @@ use App\Log;
 use App\User;
 use App\Branch;
 use App\Schedule;
+use App\AllRequest;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -15,9 +16,6 @@ class AdminController extends Controller
     {
         $now = new Carbon;
         $date = $now->format('Y-m-d');
-        if(auth()->user() == null) {
-            return redirect('/')->with('error', 'You are not authorized to access this page.');
-        }
         $roles = auth()->user()->role;
         $user_role = '';
         foreach ($roles as $role) {
@@ -39,7 +37,7 @@ class AdminController extends Controller
             //Return a view with all those logged in all branch
             return view('logged-in')->with('lists', $lists)->with('value', false);
         } else {
-            return redirect('/')->with('error', 'Sorry, you are not authorized to access this!');
+            return redirect('/dashboard')->with('error', 'Sorry, you are not authorized to access this!');
         }
     }
 
@@ -71,9 +69,6 @@ class AdminController extends Controller
 
     public function showAll ()
     {
-        if (auth()->user() == null) {
-            return redirect ('/')->with('error', 'Please login.');
-        }
         $rs = auth()->user()->role;
         $role = '';
 
@@ -94,7 +89,7 @@ class AdminController extends Controller
 
             return view('show-all')->with('users', $users)->with('role', $role);
         }else {
-            return redirect('/')->with('error', 'Sorry, you are not authorized to access this!');
+            return redirect('/dashboard')->with('error', 'Sorry, you are not authorized to access this!');
         }
     }
 
@@ -103,10 +98,6 @@ class AdminController extends Controller
         $now = new Carbon;
         $today = $now->format('d-m-Y');
         $user = User::where('id', $id)->first();
-        
-        if (auth()->user() == null) {
-            return redirect ('/')->with('error', 'Please login.');
-        }
 
         $rs = auth()->user()->role;
         $role = '';
@@ -151,7 +142,7 @@ class AdminController extends Controller
             ->with('lates', $lates)
             ->with('today', $today);
         } else {
-            return redirect('/')->with('error', 'You are not authorized.');
+            return redirect('/dashboard')->with('error', 'You are not authorized.');
         }
     }
 
@@ -163,12 +154,9 @@ class AdminController extends Controller
         }
     }
 
+    //need to send users, branches, dates, days and count
     public function createSchedule ()
     {
-        if (auth()->user() == null) {
-            return redirect('/')->with('error', 'Please login first');
-        }
-
         $role = auth()->user()->role->first();
 
         if ($role == 'manager' || $role == 'super-admin' || $role == 'admin') {
@@ -185,10 +173,59 @@ class AdminController extends Controller
                 array_push($days);
             }
 
-            return view('/create/schedule')->with('users', $users)->with('days', $days);
+            $branches = Branch::all();
+
+            return view('shift-schedule')->with('users', $users)->
+            with('days', $days)->with('branches', $branches)
+            ->with('dates', $dates);
         } else {
-            return redirect('/', 'You are not authorized to access this');
+            return redirect('/dashboard', 'You are not authorized to access this');
         }
-        return view();
+    }
+
+    public function request ()
+    {
+        $role = auth()->user()->role[0]->name;
+        $request = '';
+        $flow = 'null';
+
+        if ($role == 'manager' || $role == 'super-admin') {
+            $requests = AllRequest::whereNull('manager_approved')->whereNotNull('start')->
+            where('branch_id', auth()->user()->branch_id)->orderBy('id', 'desc')->get();
+            $flow = 'manager';
+        } elseif ($role == 'super-admin' || $role == 'owner' || $role == 'admin') {
+            $requests = AllRequest::where('manager_approved', true)->whereNull('hr_approved')->
+            whereNotNull('start')->orderBy('id', 'desc')->get();
+            $flow = 'hr';
+        } else {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this page');
+        }
+        
+        return view('view-requests')->with('requests', $requests)->with('flow', $flow);
+    }
+
+    public function requestProcess (Request $request, $id)
+    {
+        $role = auth()->user()->role[0]->name;
+
+        if ($role == 'manager' || $role == 'super-admin') {
+            $flow = true;
+        } elseif ($role == 'owner' || $role == 'admin') {
+            $flow = false;
+        } else {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this page');
+        }
+
+        $req = AllRequest::where('id', $id)->first();
+        
+        if ($request->status == 'approved') {
+            $req->is_approved = true;
+            $req->save();
+        } elseif ($request->status == 'declined') {
+            $req->is_approved = false;
+            $req->save();
+        }
+
+        return redirect('/view/requests');
     }
 }

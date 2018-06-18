@@ -1,16 +1,166 @@
-<div class="wrapper">
-    <div class="container-fluid">
+@extends('layouts.app')
 
-        <!-- Page-Title -->
-        <div class="row">
-            <div class="col-sm-12">	
-                <h2 class="page-title">Dashboard</h2>
+@section('content')
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">	
+                    <h2 class="page-title">Profile</h2>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <div class="card-box">
+                        <div class="text-center">
+                            <img src="/frontend/images/users/avatar-1.jpg" class="rounded-circle thumb-xl img-thumbnail m-b-10" alt="profile-image">
+                        </div>
+                        <div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cell-sm">Name</td>
+                                        <td>{{$user->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Role</td>
+                                        <td>{{$user->role[0]->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>{{$user->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile</td>
+                                        <td>{{$user->phone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PIN</td>
+                                        <td>{{$user->pin}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-8">
+                    <div class="card-box">
+                        <div class="card-title">
+                            <h2>Current Week Schedule</h2>
+                        </div>
+                        <div class="widget-container">
+                            <table class="table">
+                                @if(count($schedules) == 0)
+                                    <br><br>
+                                    <br><hr>
+                                        <p class="text-center">Schedule has yet to be posted</p>
+                                    <hr><br>
+                                    <br><br>
+                                @else
+                                <tbody>
+                                    @foreach($schedules as $schedule)
+                                        <tr>
+                                            <td>{{$days[$loop->index]}}</td>
+                                            <td>{{$schedule->date}}</td>
+                                            <td>{{$schedule->start}}</td>
+                                            <td>{{$schedule->end}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                @endif
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+                    <div class="card-box">
+                        <div>
+                            <div class="card-title">
+                                <h2>Analytics for Current Month</h2>
+                            </div>
+                            @if($flow)
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="cell-sm">Late Count</td>
+                                            <td>{{$analytics[0]}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumulative late time</td>
+                                            <td>{{$analytics[1]}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Early Leave Count</td>
+                                            <td>{{$analytics[2]}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumulative early leave time</td>
+                                            <td>{{$analytics[3]}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @else
+                                <br><hr>
+                                    <p class="text-center">No analytics for current month yet</p>
+                                <hr><br>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="card-box">
+                        <div class="card-title">
+                            <h2>Requests made</h2>
+                        </div>
+                        <div class="widget-container">
+                            @if(count($requests) == 0)
+                                <br><hr>
+                                <p class="text-center">No requests made yet</p>
+                                <hr><br>
+                            @else
+                            <hr>
+                                @foreach($requests as $request)
+                                    <h4>{{$request->subject}}</h4>
+                                    <div class="row">
+                                        @if($request->start != null)
+                                            <div class="col-3">
+                                                Date range
+                                            </div>
+                                            <div class="col-3">
+                                                {{$request->start}}
+                                            </div>
+                                            <div class="col-3">
+                                                {{$request->end}}
+                                            </div>
+                                            <div class="col-1"></div>
+                                        @else
+                                            <div class="col-2">
+                                                Request Body
+                                            </div>
+                                            <div class="col-10">
+                                                {{$request->body}}
+                                            </div>
+                                        @endif
+                                        <div class="col-1">
+                                            @if($request->manager_approved == null || $request->hr_approved == null)
+                                                <div class="btn btn-secondary">Pending</div>
+                                            @elseif ($request->manager_approved && $request->hr_approved)
+                                                <div class="btn btn-success">Approved</div>
+                                            @else
+                                                <div class="btn btn-danger">Declined</div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <hr>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="text-center">
-            <span class="display-3">Welcome to<br> Northend Coffee Roasters</span>
-        </div>
-        
     </div>
-</div>
+@endsection

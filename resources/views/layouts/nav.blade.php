@@ -69,22 +69,27 @@
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
                     <li class="has-submenu">
-                        <a href="index.html"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                        <a href="/"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
                     </li>
-                    <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-invert-colors"></i> <span> UI Components </span> </a>
-                        <ul class="submenu megamenu">
-                            <li>
-                                <ul>
-                                    <li><a href="tables.html">Data Tables</a></li>
-                                    <li><a href="form.html">Forms</a></li>
-                                    <li><a href="cards.html">Cards</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    @if(auth()->user()->role[0] == 'barista')
+                        <li class="has-submenu">
+                            <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Request Form </span> </a>
+                        </li>
+                    @elseif(auth()->user()->role[0]->name == 'manager' || auth()->user()->role[0]->name == 'super-admin')
+                        <li class="has-submenu">
+                            <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Leave Form </span> </a>
+                            <ul class="submenu">
+                                <li><a href="/view/requests">Show Requests</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="/create/employee"><i class="mdi mdi-texture"></i> <span> New Profile </span> </a>
+                        </li>
+                    @else
 
-                    <li class="has-submenu">
+                    @endif
+
+                    {{-- <li class="has-submenu">
                         <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
                         <ul class="submenu">
                             <li><a href="login.html">Login</a></li>
@@ -131,7 +136,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
                 <!-- End navigation menu -->
             </div> <!-- end #navigation -->
