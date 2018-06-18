@@ -218,12 +218,22 @@ class AdminController extends Controller
 
         $req = AllRequest::where('id', $id)->first();
         
-        if ($request->status == 'approved') {
-            $req->is_approved = true;
-            $req->save();
-        } elseif ($request->status == 'declined') {
-            $req->is_approved = false;
-            $req->save();
+        if ($flow) {
+            if ($request->status == 'approved') {
+                $req->manager_approved = true;
+                $req->save();
+            } elseif ($request->status == 'declined') {
+                $req->manager_approved = false;
+                $req->save();
+            }
+        } elseif (!$flow) {
+            if ($request->status == 'approved') {
+                $req->hr_approved = true;
+                $req->save();
+            } elseif ($request->status == 'declined') {
+                $req->hr_approved = false;
+                $req->save();
+            }
         }
 
         return redirect('/view/requests');
