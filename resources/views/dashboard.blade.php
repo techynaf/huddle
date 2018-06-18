@@ -145,12 +145,12 @@
                                             </div>
                                         @endif
                                         <div class="col-1">
-                                            @if($request->manager_approved == null || $request->hr_approved == null)
-                                                <div class="btn btn-secondary">Pending</div>
-                                            @elseif ($request->manager_approved && $request->hr_approved)
+                                            @if($request->manager_approved == false || $request->hr_approved == false)
+                                                <div class="btn btn-danger">Declined</div>
+                                            @elseif($request->manager_approved == true || $request->hr_approved == true)
                                                 <div class="btn btn-success">Approved</div>
                                             @else
-                                                <div class="btn btn-danger">Declined</div>
+                                                <div class="btn btn-secondary">Pending</div>
                                             @endif
                                         </div>
                                     </div>
