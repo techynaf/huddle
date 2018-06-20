@@ -91,6 +91,12 @@
                                 <li><a href="/schedule/create">Create Schedule</a></li>
                             </ul>
                         </li>
+                        <li class="has-submenu">
+                            <a href="/view/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
+                            <ul class="submenu">
+                                <li><a href="/view/employee/logged">Logged In</a></li>
+                            </ul>
+                        </li>
                     @else
 
                     @endif
