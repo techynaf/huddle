@@ -79,9 +79,17 @@ class ProfileController extends Controller
         }
 
         $roles = Role::all();
+        $rs = array();
+        $r = array('Owner', 'Admin', 'Manager', 'Barista', 'Super-admin');
+        $i = 0;
+        foreach ($roles as $role) {
+            $composite = array($r[$i], $role->id);
+            array_push($rs, $composite);
+            $i++;
+        }
         $branches = Branch::all();
 
-        return view('create-profile')->with('branches', $branches)->with('roles', $roles);
+        return view('create-profile')->with('branches', $branches)->with('roles', $rs);
     }
 
     public function store (Request $request)
@@ -98,7 +106,6 @@ class ProfileController extends Controller
             'id' => 'required',
             'category' => 'required',
             'status' => 'required',
-            'job_title' => 'required',
         ]);
 
         $user = new User;
@@ -122,11 +129,12 @@ class ProfileController extends Controller
         $user->password = Hash::make('$pin');
         $user->logged_in = null;
         $user->joining_date = $request->date;
-        $user->title = $request->job_title;
         $user->category = $request->category;
         $user->status = $request->status;
         $user->employee_id = $request->id;
         $user->religion = $request->religion;
+        $role = Role::find($request->role);
+        $user->roles()->attach($role);
         $user->save();
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
 

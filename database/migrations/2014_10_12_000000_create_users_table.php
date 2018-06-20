@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('address');
             $table->integer('branch_id');
-            $table->string('title');
             $table->string('status');
             $table->string('category');
             $table->string('religion');

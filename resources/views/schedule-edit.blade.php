@@ -21,10 +21,10 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <input type="text" class="form-control" name="start" placeholder="{{$schedule->start}}">
+                                <input type="text" class="form-control" name="start" placeholder="{{$schedule->start}}" value="{{$schedule->start}}">
                             </div>
                             <div class="col-6">
-                                <input type="text" class="form-control" name="end" placeholder="{{$schedule->end}}">
+                                <input type="text" class="form-control" name="end" placeholder="{{$schedule->end}}" value="{{$schedule->end}}">
                             </div>
                         </div>
                         <br>

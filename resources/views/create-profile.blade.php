@@ -41,17 +41,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="role">Role</label>
+                                            <label class="col-2 col-form-label" for="role">Job Title</label>
                                             <div class="col-4">
                                                 <select name="role" class="form-control">
                                                     @foreach($roles as $role)
-                                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                                        <option value="{{$role[1]}}">{{$role[0]}}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
-                                            <label class="col-2 col-form-label" for="job_title">Job Title</label>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" name="job_title" placeholder="Job Title">
                                             </div>
                                         </div>
                                         <div class="form-group row">

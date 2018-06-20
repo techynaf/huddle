@@ -31,7 +31,6 @@ class UserTableSeeder extends Seeder
                 'employee_id' => 'something',
                 'category' => 'something',
                 'status' => 'something',
-                'title' => 'something',
                 'password' => bcrypt('bangladesh'),
                 'branch_id' => rand(0, 5),
             ]);
@@ -49,7 +48,6 @@ class UserTableSeeder extends Seeder
             'employee_id' => 'something',
             'category' => 'something',
             'status' => 'something',
-            'title' => 'something',
             'branch_id' => 6,
             'logged_in' => false,
         ]);
