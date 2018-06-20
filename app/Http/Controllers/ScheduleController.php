@@ -6,19 +6,21 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Schedule;
 use App\User;
+use App\Branch;
 use Validator;
 use Session;
 
 class ScheduleController extends Controller
 {
     private $months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-
+    private $url = null;
+    
     //include the year in this method as well
     public function month ()
     {
         $role = auth()->user()->role->first();
         
-        if ($role == 'barista') {
+        if ($role == 'barista' || $role == 'admin') {
             return redirect('/')->with('error', 'You are not authorized to access this page.');
         }
 
@@ -42,7 +44,7 @@ class ScheduleController extends Controller
     {
         $role = auth()->user()->role->first();
         
-        if ($role == 'barista') {
+        if ($role == 'barista' || $role == 'admin') {
             return redirect('/')->with('error', 'You are not authorized to access this page.');
         }
 
@@ -76,17 +78,18 @@ class ScheduleController extends Controller
     {
         $role = auth()->user()->role->first();
         
-        if ($role == 'barista') {
+        if ($role == 'barista' || $role == 'admin') {
             return redirect('/')->with('error', 'You are not authorized to access this page.');
         }
 
         $branch_id = auth()->user()->branch_id;
         $date = $year.'-'.$month.'-'.$day;
-
+        $branches = Branch::all();
         $schedules = Schedule::where('date', $date)->where('branch_id', $branch_id)->get();
         $users = User::where('branch_id', $branch_id)->get();
 
-        return view('add-schedule')->with('schedules', $schedules)->with('users', $users)->with('date', $date);
+        return view('add-schedule')->with('schedules', $schedules)->with('users', $users)->with('date', $date)->
+        with('branches', $branches);
     }
 
     public function store (Request $request, $date)
@@ -100,6 +103,8 @@ class ScheduleController extends Controller
         $end = Carbon::parse($request->end)->format('H:i');
         $schedule->start = $start;
         $schedule->end = $end;
+        $schedule->start_branch = $request->start_branch;
+        $schedule->end_branch = $request->end_branch;
         $schedule->timestamps = false;
         $schedule->save();
         $date = explode('-', $date);
@@ -144,7 +149,7 @@ class ScheduleController extends Controller
             'month' => 'required'
         ]);
 
-        if(auth()->user()->role[0] == 'barista') {
+        if(auth()->user()->role[0]->name == 'barista') {
             return redirect('/')->with('error', 'You are not authorized to view this page');
         }
 
@@ -207,8 +212,37 @@ class ScheduleController extends Controller
                 }
             }
         }
+
+        $this->url = $request->url();
         
         return view('schedule-show')->with('flow', $flow)->with('schedules', $schedules)->with('date', $date)->
         with('year', $request->year)->with('month',$request->month)->with('name', $name)->with('message', $message);
+    }
+
+    public function edit (Request $request, $id)
+    {
+        if (auth()->user()->role[0]->name == 'barista') {
+            return redirect('/')->with('error', 'You are not authorized to view this page');
+        }
+
+        $schedule = Schedule::where('id', $id)->first();
+        $branches = Branch::all();
+
+        return view('schedule-edit')->with('schedule', $schedule)->with('branches', $branches);
+    }
+
+    public function update (Request $request, $id)
+    {
+        $schedule = Schedule::where('id', $id)->first();
+        $start = Carbon::parse($request->start)->format('H:i');
+        $end = Carbon::parse($request->end)->format('H:i');
+        $schedule->start = $start;
+        $schedule->end = $end;
+        $schedule->start_branch = $request->start_branch;
+        $schedule->end_branch = $request->end_branch;
+        $schedule->timestamps = false;
+        $schedule->save();
+
+        return redirect($this->url)->with('success', 'Edit successfully stored');
     }
 }

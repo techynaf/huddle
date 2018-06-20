@@ -22,6 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('address');
             $table->integer('branch_id');
+            $table->string('title');
+            $table->string('status');
+            $table->string('category');
+            $table->string('religion');
+            $table->string('employee_id');
+            $table->date('joining_date');
             $table->rememberToken();
             $table->boolean('logged_in')->nullable();
             $table->timestamps();

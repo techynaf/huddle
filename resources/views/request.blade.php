@@ -41,11 +41,13 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="control-label col-sm-4">Leave Date Range</label>
-                                            <div class="col-sm-8">
-                                                <div class="input-daterange input-group" id="date-range">
-                                                    <input type="text" class="form-control" name="start" placeholder="From"/>
-                                                    <input type="text" class="form-control" name="end" placeholder="To"/>
+                                            <label class="control-label col-sm-2">Leave Date Range</label>
+                                            <div class="col-sm-10">
+                                                <div class="row">
+                                                    <div class="col-2">From: </div>
+                                                    <div class="col-4"><input type="date" name="from" placeholder="From"></div>
+                                                    <div class="col-2">To: </div>
+                                                    <div class="col-4"><input type="date" name="to" placeholder="To"></div>
                                                 </div>
                                             </div>
                                         </div>

@@ -36,7 +36,7 @@
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                             aria-haspopup="false" aria-expanded="false">
-                    <img src="/frontend/images/users/avatar-1.jpg" alt="user" class="rounded-circle"><span class="font-16 text-dark">{{auth()->user()->name}}</span>
+                    <img src="/frontend/images/pic.jpg" alt="user" class="rounded-circle"><span class="font-16 text-dark">{{auth()->user()->name}}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
