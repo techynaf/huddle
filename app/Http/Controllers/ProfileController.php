@@ -10,6 +10,7 @@ use App\Log;
 use App\Role;
 use App\Branch;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -91,7 +92,13 @@ class ProfileController extends Controller
             'phone' => 'required',
             'branch' => 'required',
             'role' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            'religion' => 'required',
+            'date' => 'required',
+            'id' => 'required',
+            'category' => 'required',
+            'status' => 'required',
+            'job_title' => 'required',
         ]);
 
         $user = new User;
@@ -104,7 +111,7 @@ class ProfileController extends Controller
 
         while (true) {
             $pin = rand(1000, 9999);
-            $check = User::where('pin', $pin)->get;
+            $check = User::where('pin', $pin)->get();
 
             if (count($check) == 0) {
                 break;
@@ -114,6 +121,12 @@ class ProfileController extends Controller
         $user->pin = $pin;
         $user->password = Hash::make('$pin');
         $user->logged_in = null;
+        $user->joining_date = $request->date;
+        $user->title = $request->job_title;
+        $user->category = $request->category;
+        $user->status = $request->status;
+        $user->employee_id = $request->id;
+        $user->religion = $request->religion;
         $user->save();
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
 

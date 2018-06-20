@@ -15,9 +15,10 @@ class LeavesTableSeeder extends Seeder
         for ($i=1; $i <= 201; $i++) { 
             DB::table('leaves')->insert([
                 'user_id' => $i,
-                'sick_leave' => 0,
-                'paid_leave' => 0,
-                'unpaid_leave' => 0,
+                'sick_leave' => 12,
+                'annual_leave' => 14,
+                'govt_holiday' => 12,
+                'year' => 2018,
             ]);
         }
     }

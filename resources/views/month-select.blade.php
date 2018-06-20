@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">	
-                    <h2 class="page-title">Month Select</h2>
+                    <h2 class="page-title">Select Month</h2>
                 </div>
             </div>
             @foreach($years as $year)

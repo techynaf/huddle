@@ -175,14 +175,10 @@ class AttendanceController extends Controller
 
     public function requestLeave ()
     {
-        if (auth()->user() == null) {
-            return redirect('/login')->with('error','Please login to access this page.');
-        }
-
-        $types = array('Sick Leave', 'sick_leave', 'Paid Leave', 'paid_leave', 'Unpaid Leave', 'unpaid_leave');
+        $types = array('Sick Leave', 'sick_leave', 'Annual Leave', 'annual_leave', 'Government Holiday', 'govt_hoiliday');
         $id = auth()->user()->id;
 
-        return view('/request')->with('id', $id)->with('types', $types);
+        return view('request')->with('id', $id)->with('types', $types);
     }
 
     public function storeLeaveRequest (Request $request, $id)
@@ -195,6 +191,11 @@ class AttendanceController extends Controller
 
         $start = Carbon::parse($request->start)->format('Y-m-d');
         $end = Carbon::parse($request->end)->format('Y-m-d');
+
+        if ($start > $end) {
+            return redirect('/request')->with('error', 'Invalid date range');
+        }
+
         $req = new AllRequest;
         $req->user_id = $id;
         $req->hr_approved = null;

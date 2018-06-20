@@ -17,8 +17,9 @@ class CreateLeavesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('sick_leave');
-            $table->integer('paid_leave');
-            $table->integer('unpaid_leave');
+            $table->integer('annual_leave');
+            $table->integer('govt_holiday');
+            $table->integer('year');
         });
     }
 

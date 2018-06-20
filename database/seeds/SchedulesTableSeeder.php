@@ -25,6 +25,8 @@ class SchedulesTableSeeder extends Seeder
             'start' => $sTime.':00',
             'end' => $eTime.':00',
             'branch_id' => 0,
+            'start_branch' => null,
+            'end_branch' => null,
         ]);
 
         //test for early punch out
@@ -34,6 +36,8 @@ class SchedulesTableSeeder extends Seeder
             'start' => $sTime.':00',
             'end' => $eTime.':00',
             'branch_id' => 0,
+            'start_branch' => null,
+            'end_branch' => null,
         ]);
         
         $date = $now->copy()->addDay()->format('Y-m-d');
@@ -47,6 +51,8 @@ class SchedulesTableSeeder extends Seeder
             'start' => $sTime.':00',
             'end' => $eTime.':00',
             'branch_id' => 0,
+            'start_branch' => null,
+            'end_branch' => null,
         ]);
 
         DB::table('schedules')->insert([
@@ -55,6 +61,8 @@ class SchedulesTableSeeder extends Seeder
             'start' => $sTime.':00',
             'end' => $eTime.':00',
             'branch_id' => 0,
+            'start_branch' => null,
+            'end_branch' => null,
         ]);
 
         $date = $now->copy()->format('Y-m-d');
@@ -68,6 +76,8 @@ class SchedulesTableSeeder extends Seeder
             'start' => $sTime.':00',
             'end' => $eTime.':00',
             'branch_id' => 0,
+            'start_branch' => null,
+            'end_branch' => null,
         ]);
 
         $sTime = $now->copy()->format('H:i');
@@ -80,6 +90,8 @@ class SchedulesTableSeeder extends Seeder
             'start' => $sTime.':00',
             'end' => $eTime.':00',
             'branch_id' => 0,
+            'start_branch' => null,
+            'end_branch' => null,
         ]);
 
         $date = $now->copy()->format('Y-m-d');
@@ -93,6 +105,8 @@ class SchedulesTableSeeder extends Seeder
                 'start' => $sTime.':00',
                 'end' => $eTime.':00',
                 'branch_id' => 0,
+                'start_branch' => null,
+                'end_branch' => null,
             ]);
         }
     }

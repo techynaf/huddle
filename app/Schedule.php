@@ -20,4 +20,14 @@ class Schedule extends Model
     {
         return $this->belongsTo('App\Branch');
     }
+
+    public function statingBranch()
+    {
+        return $this->belongsTo('App\Branch', 'start_branch');
+    }
+
+    public function endingBranch()
+    {
+        return $this->belongsTo('App\Branch', 'end_branch');
+    }
 }
