@@ -45,7 +45,10 @@
                                             <td>{{$schedule->end}}</td>
                                             <td>{{$schedule->startingBranch->name}}</td>
                                             <td>{{$schedule->endingBranch->name}}</td>
-                                            <td><a href="/schedule/edit/{{$schedule->id}}">Edit</a> <a href="/schedule/delete/{{$schedule->id}}">Delete</a></td>
+                                            <td>
+                                                <a href="/schedule/edit/{{$schedule->id}}">Edit</a> 
+                                                {{-- <a href="/schedule/delete/{{$schedule->id}}">Delete</a> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -69,6 +72,7 @@
                             <a href="/schedule/show?year={{$year.'&month='.$month.'&date='.$i}}">
                                 <h4>{{$name.' - '.$i}}</h4>
                             </a>
+                            <input name="url" type="hidden" value="/schedule/show?year={{$year.'&month='.$month.'&date='.$i}}">
                         </div>
                     @endfor
                 </div>

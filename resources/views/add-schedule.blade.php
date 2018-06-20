@@ -38,8 +38,8 @@
                                         <td>{{$schedule->startingBranch->name}}</td>
                                         <td>{{$schedule->endingBranch->name}}</td>
                                         <td>
-                                            <a href="/schedule/edit/{{$schedule->id}}">Edit</a> / 
-                                            <a href="/schedule/delete/{{$schedule->id}}">Delete</a>
+                                            <a href="/schedule/edit/{{$schedule->id}}">Edit</a>
+                                            {{-- <a href="/schedule/delete/{{$schedule->id}}">Delete</a> --}}
                                         </td>
                                     </tr>
                                 @endforeach

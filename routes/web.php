@@ -40,4 +40,4 @@ Route::post('/schedule/store/{date}', 'ScheduleController@store')->middleware('a
 Route::get('/schedule/view', 'ScheduleController@view')->middleware('auth');
 Route::get('/schedule/show', 'ScheduleController@showDates')->middleware('auth');
 Route::get('/schedule/edit/{id}', 'ScheduleController@edit')->middleware('auth');
-Route::get('/schedule/update/{id}', 'ScheduleController@update')->middleware('auth');
+Route::post('/schedule/update/{id}', 'ScheduleController@update')->middleware('auth');

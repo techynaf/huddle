@@ -13,7 +13,6 @@ use Session;
 class ScheduleController extends Controller
 {
     private $months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    private $url = null;
 
     //include the year in this method as well
     public function month ()
@@ -212,8 +211,6 @@ class ScheduleController extends Controller
                 }
             }
         }
-
-        $this->url = $request->url();
         
         return view('schedule-show')->with('flow', $flow)->with('schedules', $schedules)->with('date', $date)->
         with('year', $request->year)->with('month',$request->month)->with('name', $name)->with('message', $message);
@@ -243,6 +240,6 @@ class ScheduleController extends Controller
         $schedule->timestamps = false;
         $schedule->save();
 
-        return redirect($this->url)->with('success', 'Edit successfully stored');
+        return redirect('/schedule/view')->with('success', 'Edit successfully stored');
     }
 }

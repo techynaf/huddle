@@ -46,7 +46,7 @@
                             </a>
 
                             <!-- item-->
-                            <a href="login.html" class="dropdown-item notify-item">
+                            <a href="{{ url('/logout') }}" class="dropdown-item notify-item">
                                 <i class="ti-power-off m-r-5"></i> Logout
                             </a>
 

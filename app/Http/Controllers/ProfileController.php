@@ -112,12 +112,6 @@ class ProfileController extends Controller
             'status' => 'required',
         ]);
 
-        $user = new User;
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->email = $request->email;
-        $user->branch_id = $request->branch;
-        $user->address = $request->address;
         $pin = 0;
 
         while (true) {
@@ -129,8 +123,14 @@ class ProfileController extends Controller
             }
         }
 
+        $user = new User;
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->branch_id = $request->branch;
+        $user->address = $request->address;
         $user->pin = $pin;
-        $user->password = Hash::make('$pin');
+        $user->password = bcrypt($pin);
         $user->logged_in = null;
         $user->joining_date = $request->date;
         $user->category = $request->category;
