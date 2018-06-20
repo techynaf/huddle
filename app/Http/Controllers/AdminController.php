@@ -146,43 +146,6 @@ class AdminController extends Controller
         }
     }
 
-
-    public function storeSchedule (Request $request, $count)
-    {
-        for ($i = 0; $i < $count; $i++) { 
-            $user_id = null;
-        }
-    }
-
-    //need to send users, branches, dates, days and count
-    public function createSchedule ()
-    {
-        $role = auth()->user()->role->first();
-
-        if ($role == 'manager' || $role == 'super-admin' || $role == 'admin') {
-            $branch_id = auth()->user()->branch_id;
-            $s_day = Schedule::where('branch_id', 1)->orderBy('date', 'desc')->first();
-            $s_day = $s_day->date;
-            $s_day = Carbon::parse($s_day);
-            $s_day->addDay()->format('Y-m-d');
-            dd($s_day);
-            $s_day = $s_day->addDay();
-            $days = array($s_day);
-
-            for ($i = 1; $i < 7; $i++) { 
-                array_push($days);
-            }
-
-            $branches = Branch::all();
-
-            return view('shift-schedule')->with('users', $users)->
-            with('days', $days)->with('branches', $branches)
-            ->with('dates', $dates);
-        } else {
-            return redirect('/dashboard', 'You are not authorized to access this');
-        }
-    }
-
     public function request ()
     {
         $role = auth()->user()->role[0]->name;

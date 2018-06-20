@@ -44,6 +44,7 @@
     @guest
         
     @else
+        <br>
         @include('layouts.nav')
     @endif
 

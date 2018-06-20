@@ -17,7 +17,7 @@
 @if(session('success'))
     <div class="wrapper">
         <div class="container-fluid">
-            <div class="row text-center alert alert-danger">
+            <div class="row text-center alert alert-success">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
                     {{session('success')}}
