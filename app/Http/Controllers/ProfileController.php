@@ -75,9 +75,12 @@ class ProfileController extends Controller
 
     public function create ()
     {
-        if (auth()->user()->role[0]->name == 'manager' || auth()->user()->role[0]->name == 'barista') {
-            return redirect('/dashboard')->with('error', 'You are not authorized to access this');
+        foreach (auth()->user()->roles as $role){
+            if ($role->name == 'manager' || $role->name == 'barista') {
+                return redirect('/dashboard')->with('error', 'You are not authorized to access this');
+            }
         }
+       
 
         $roles = Role::all();
         $rs = array();
@@ -135,8 +138,8 @@ class ProfileController extends Controller
         $user->employee_id = $request->id;
         $user->religion = $request->religion;
         $role = Role::find($request->role);
-        $user->roles()->attach($role);
         $user->save();
+        $user->roles()->attach($role);
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
 
         return redirect('/dashboard')->with('success', $message);

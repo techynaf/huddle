@@ -16,7 +16,7 @@ class AdminController extends Controller
     {
         $now = new Carbon;
         $date = $now->format('Y-m-d');
-        $roles = auth()->user()->role;
+        $roles = auth()->user()->roles;
         $user_role = '';
         foreach ($roles as $role) {
             $user_role = $role->name;
@@ -32,7 +32,7 @@ class AdminController extends Controller
 
             //Return a view with all those logged into that branch
             return view('logged-in')->with('lists', $lists)->with('value', false);
-        } elseif (auth()->user()->role == 'admin' || $user_role == 'owner' || $user_role == 'super-admin') {
+        } elseif (auth()->user()->roles->first() == 'admin' || $user_role == 'owner' || $user_role == 'super-admin') {
             $log = Log::where('date', $date)->whereNull('punch_out_difference')->get();
             $lists = array();
 
@@ -51,7 +51,7 @@ class AdminController extends Controller
     {
         foreach ($log as $value) {
             $name = $value->user->name;
-            $roles = $value->user->role;
+            $roles = $value->user->roles;
             $user_role = '';
             foreach ($roles as $role) {
                 $user_role = $role->name;
@@ -75,12 +75,7 @@ class AdminController extends Controller
 
     public function showAll ()
     {
-        $rs = auth()->user()->role;
-        $role = '';
-
-        foreach ($rs as $r) {
-            $role = $r->name;
-        }
+        $role = auth()->user()->roles->first()->name;
 
         if ($role == 'super-admin' || $role == 'owner') {
             $users = User::all();
@@ -105,12 +100,8 @@ class AdminController extends Controller
         $today = $now->format('d-m-Y');
         $user = User::where('id', $id)->first();
 
-        $rs = auth()->user()->role;
-        $role = '';
+        $role = auth()->user()->roles->first()->name;
 
-        foreach ($rs as $r) {
-            $role = $r->name;
-        }
 
         $hours = 'Please enter date range';
         $lates = 'Nothing';
@@ -154,7 +145,7 @@ class AdminController extends Controller
 
     public function request ()
     {
-        $role = auth()->user()->role[0]->name;
+        $role = auth()->user()->roles->first()->name;
         $request = '';
         $flow = 'null';
 
@@ -175,7 +166,7 @@ class AdminController extends Controller
 
     public function requestProcess (Request $request, $id)
     {
-        $role = auth()->user()->role[0]->name;
+        $role = auth()->user()->roles->first()->name;
 
         if ($role == 'manager' || $role == 'super-admin') {
             $flow = true;

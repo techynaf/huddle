@@ -18,7 +18,7 @@ class ScheduleController extends Controller
     //include the year in this method as well
     public function month ()
     {
-        $role = auth()->user()->role->first();
+        $role = auth()->user()->roles->first()->name;
         
         if ($role == 'barista' || $role == 'admin') {
             return redirect('/')->with('error', 'You are not authorized to access this page.');
@@ -42,7 +42,7 @@ class ScheduleController extends Controller
 
     public function day (Request $request, $year, $month)
     {
-        $role = auth()->user()->role->first();
+        $role = auth()->user()->roles->first()->name;
         
         if ($role == 'barista' || $role == 'admin') {
             return redirect('/')->with('error', 'You are not authorized to access this page.');
@@ -76,7 +76,7 @@ class ScheduleController extends Controller
 
     public function add (Request $request, $year, $month, $day)
     {
-        $role = auth()->user()->role->first();
+        $role = auth()->user()->roles->first()->name;
         
         if ($role == 'barista' || $role == 'admin') {
             return redirect('/')->with('error', 'You are not authorized to access this page.');
@@ -115,7 +115,7 @@ class ScheduleController extends Controller
 
     public function view ()
     {
-        $role = auth()->user()->role->first();
+        $role = auth()->user()->roles->first()->name;
 
         if ($role == 'barista') {
             return redirect('/')->with('error', 'You are not authorized to view this page');
@@ -149,7 +149,7 @@ class ScheduleController extends Controller
             'month' => 'required'
         ]);
 
-        if(auth()->user()->role[0]->name == 'barista') {
+        if(auth()->user()->roles->first()->name == 'barista') {
             return redirect('/')->with('error', 'You are not authorized to view this page');
         }
 
@@ -186,7 +186,7 @@ class ScheduleController extends Controller
             $check = $request->year.'-'.$request->month.'-'.$request->date;
             $message = 'Try another date';
             
-            if (auth()->user()->role->first == 'manager') {
+            if (auth()->user()->roles->first()->name == 'manager') {
                 $schedules = Schedule::where('date', $check)->where('branch_id', auth()->user()->branch_id)->get();
             } else {
                 $schedules = Schedule::where('date', $check)->get();
@@ -221,7 +221,7 @@ class ScheduleController extends Controller
 
     public function edit (Request $request, $id)
     {
-        if (auth()->user()->role[0]->name == 'barista') {
+        if (auth()->user()->roles->first()->name == 'barista') {
             return redirect('/')->with('error', 'You are not authorized to view this page');
         }
         

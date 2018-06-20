@@ -71,11 +71,11 @@
                     <li class="has-submenu">
                         <a href="/"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
                     </li>
-                    @if(auth()->user()->role[0] == 'barista')
+                    @if(auth()->user()->roles->first()->name == 'barista')
                         <li class="has-submenu">
                             <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Request Form </span> </a>
                         </li>
-                    @elseif(auth()->user()->role[0]->name == 'manager' || auth()->user()->role[0]->name == 'super-admin')
+                    @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
                         <li class="has-submenu">
                             <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Leave Form </span> </a>
                             <ul class="submenu">
@@ -98,7 +98,6 @@
                     @else
 
                     @endif
-
                     {{-- <li class="has-submenu">
                         <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
                         <ul class="submenu">
