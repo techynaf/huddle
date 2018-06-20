@@ -14,7 +14,7 @@ class ScheduleController extends Controller
 {
     private $months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
     private $url = null;
-    
+
     //include the year in this method as well
     public function month ()
     {
@@ -224,7 +224,7 @@ class ScheduleController extends Controller
         if (auth()->user()->role[0]->name == 'barista') {
             return redirect('/')->with('error', 'You are not authorized to view this page');
         }
-
+        
         $schedule = Schedule::where('id', $id)->first();
         $branches = Branch::all();
 

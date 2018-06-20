@@ -21,7 +21,7 @@ class Schedule extends Model
         return $this->belongsTo('App\Branch');
     }
 
-    public function statingBranch()
+    public function startingBranch()
     {
         return $this->belongsTo('App\Branch', 'start_branch');
     }

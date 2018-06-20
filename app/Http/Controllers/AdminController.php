@@ -25,14 +25,20 @@ class AdminController extends Controller
         if ($user_role == 'manager') {
             $log = Log::where('date', $date)->where('branch_id', auth()->user()->branch_id)->whereNull('punch_out_difference')->get();
             $lists = array();
-            $lists = $this->listMaker($log, $lists, $date);
+
+            if (count($log) != 0) {
+                $lists = $this->listMaker($log, $lists, $date);
+            }
 
             //Return a view with all those logged into that branch
             return view('logged-in')->with('lists', $lists)->with('value', false);
         } elseif (auth()->user()->role == 'admin' || $user_role == 'owner' || $user_role == 'super-admin') {
             $log = Log::where('date', $date)->whereNull('punch_out_difference')->get();
             $lists = array();
-            $lists = $this->listMaker($log, $lists, $date);
+
+            if (count($log) != 0) {
+                $lists = $this->listMaker($log, $lists, $date);
+            }
 
             //Return a view with all those logged in all branch
             return view('logged-in')->with('lists', $lists)->with('value', false);

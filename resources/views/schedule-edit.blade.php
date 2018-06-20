@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('section')
+@section('content')
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">	
-                    <h2 class="page-title">Schedule Edit for {{$schedule->user}} on {{$schedule->date}}</h2>
+                    <h2 class="page-title">Schedule edit for {{$schedule->user->name}} on {{$schedule->date}}</h2>
                 </div>
             </div>
 
@@ -21,10 +21,10 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <input id="timepicker" type="text" class="form-control" name="start" placeholder="{{$schedule->start}}">
+                                <input type="text" class="form-control" name="start" placeholder="{{$schedule->start}}">
                             </div>
                             <div class="col-6">
-                                <input id="timepicker3" type="text" class="form-control" name="end" placeholder="{{$schedule->end}}">
+                                <input type="text" class="form-control" name="end" placeholder="{{$schedule->end}}">
                             </div>
                         </div>
                         <br>
@@ -39,7 +39,6 @@
                         <div class="row">
                             <div class="col-6">
                                 <select class="form-control" name="start_branch">
-                                    <option value="">---</option>
                                     @foreach($branches as $branch)
                                         <option value="{{$branch->id}}">{{$branch->name}}</option>
                                     @endforeach
@@ -47,7 +46,6 @@
                             </div>
                             <div class="col-6">
                                 <select class="form-control" name="end_branch">
-                                    <option value="">---</option>
                                     @foreach($branches as $branch)
                                         <option value="{{$branch->id}}">{{$branch->name}}</option>
                                     @endforeach

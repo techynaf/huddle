@@ -20,8 +20,8 @@ class CreateSchedulesTable extends Migration
             $table->date('date');
             $table->time('start');
             $table->time('end');
-            $table->integer('start_branch')->nullable();
-            $table->integer('end_branch')->nullable();
+            $table->integer('start_branch');
+            $table->integer('end_branch');
         });
     }
 

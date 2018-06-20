@@ -24,9 +24,9 @@ class SchedulesTableSeeder extends Seeder
             'date' => $date,
             'start' => $sTime.':00',
             'end' => $eTime.':00',
-            'branch_id' => 0,
-            'start_branch' => null,
-            'end_branch' => null,
+            'branch_id' => 1,
+            'start_branch' =>  1,
+            'end_branch' =>  1,
         ]);
 
         //test for early punch out
@@ -35,9 +35,9 @@ class SchedulesTableSeeder extends Seeder
             'date' => $date,
             'start' => $sTime.':00',
             'end' => $eTime.':00',
-            'branch_id' => 0,
-            'start_branch' => null,
-            'end_branch' => null,
+            'branch_id' => 1,
+            'start_branch' =>  1,
+            'end_branch' =>  1,
         ]);
         
         $date = $now->copy()->addDay()->format('Y-m-d');
@@ -50,9 +50,9 @@ class SchedulesTableSeeder extends Seeder
             'date' => $date,
             'start' => $sTime.':00',
             'end' => $eTime.':00',
-            'branch_id' => 0,
-            'start_branch' => null,
-            'end_branch' => null,
+            'branch_id' => 1,
+            'start_branch' =>  1,
+            'end_branch' =>  1,
         ]);
 
         DB::table('schedules')->insert([
@@ -60,9 +60,9 @@ class SchedulesTableSeeder extends Seeder
             'date' => $date,
             'start' => $sTime.':00',
             'end' => $eTime.':00',
-            'branch_id' => 0,
-            'start_branch' => null,
-            'end_branch' => null,
+            'branch_id' => 1,
+            'start_branch' =>  1,
+            'end_branch' =>  1,
         ]);
 
         $date = $now->copy()->format('Y-m-d');
@@ -75,9 +75,9 @@ class SchedulesTableSeeder extends Seeder
             'date' => $date,
             'start' => $sTime.':00',
             'end' => $eTime.':00',
-            'branch_id' => 0,
-            'start_branch' => null,
-            'end_branch' => null,
+            'branch_id' => 1,
+            'start_branch' =>  1,
+            'end_branch' =>  1,
         ]);
 
         $sTime = $now->copy()->format('H:i');
@@ -89,9 +89,9 @@ class SchedulesTableSeeder extends Seeder
             'date' => $date,
             'start' => $sTime.':00',
             'end' => $eTime.':00',
-            'branch_id' => 0,
-            'start_branch' => null,
-            'end_branch' => null,
+            'branch_id' => 1,
+            'start_branch' =>  1,
+            'end_branch' =>  1,
         ]);
 
         $date = $now->copy()->format('Y-m-d');
@@ -104,9 +104,9 @@ class SchedulesTableSeeder extends Seeder
                 'date' => $date,
                 'start' => $sTime.':00',
                 'end' => $eTime.':00',
-                'branch_id' => 0,
-                'start_branch' => null,
-                'end_branch' => null,
+                'branch_id' => 1,
+                'start_branch' =>  1,
+                'end_branch' =>  1,
             ]);
         }
     }

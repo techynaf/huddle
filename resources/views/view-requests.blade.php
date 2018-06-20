@@ -36,7 +36,6 @@
                                     </div>
                                     <div class="col-1">
                                         <select class="form-control" name="status">
-                                            <option value="null">---</option>
                                             <option value="approved">Approve</option>
                                             <option value="declined">Decline</option>
                                         </select>
