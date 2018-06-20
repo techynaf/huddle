@@ -11,6 +11,7 @@ use App\Role;
 use App\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRole;
 
 class ProfileController extends Controller
 {
