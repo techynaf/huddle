@@ -24,7 +24,7 @@
                                     </tr>
                                     <tr>
                                         <td>Role</td>
-                                        <td>{{$user->role[0]->name}}</td>
+                                        <td>{{$user->roles->first()->name}}</td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
