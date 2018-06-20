@@ -19,7 +19,6 @@
                             <div class="row">
                                 <div class="col-6">
                                     <select name="year">
-                                        <option value="">---</option>
                                         @for($i = $date_first[0]; $i <= $date_last[0]; $i++)
                                             <option value="{{$i}}">{{$i}}</option>
                                         @endfor
@@ -27,7 +26,6 @@
                                 </div>
                                 <div class="col-6">
                                     <select name="month">
-                                        <option value="">---</option>
                                         @foreach($months as $month)
                                             <option value="{{$loop->iteration}}">{{$month}}</option>
                                         @endforeach

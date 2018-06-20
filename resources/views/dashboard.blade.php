@@ -13,7 +13,7 @@
                 <div class="col-sm-12 col-md-4">
                     <div class="card-box">
                         <div class="text-center">
-                            <img src="/frontend/images/users/avatar-1.jpg" class="rounded-circle thumb-xl img-thumbnail m-b-10" alt="profile-image">
+                            <img src="/frontend/images/pic.jpg" class="rounded-circle thumb-xl img-thumbnail m-b-10" alt="profile-image">
                         </div>
                         <div>
                             <table class="table">

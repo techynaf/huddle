@@ -23,7 +23,7 @@ class LogsTableSeeder extends Seeder
             'punch_in_approval' => null,
             'punch_out_approval' => null,
             'is_late' => false,
-            'branch_id' => 0,
+            'branch_id' => 1,
         ]);
     }
 }

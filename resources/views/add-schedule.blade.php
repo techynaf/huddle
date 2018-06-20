@@ -35,8 +35,8 @@
                                         <td>{{$schedule->branch->name}}</td>
                                         <td>{{$schedule->start}}</td>
                                         <td>{{$schedule->end}}</td>
-                                        <td>{{$schedule->start_branch}}</td>
-                                        <td>{{$schedule->end_branch}}</td>
+                                        <td>{{$schedule->startingBranch->name}}</td>
+                                        <td>{{$schedule->endingBranch->name}}</td>
                                         <td>
                                             <a href="/schedule/edit/{{$schedule->id}}">Edit</a> / 
                                             <a href="/schedule/delete/{{$schedule->id}}">Delete</a>
@@ -79,10 +79,10 @@
                             </select>
                         </div>
                         <div class="col-4">
-                            <input id="timepicker" type="text" class="form-control" name="start">
+                            <input type="text" class="form-control" name="start" placeholder="HH:MM:SS">
                         </div>
                         <div class="col-4">
-                            <input id="timepicker3" type="text" class="form-control" name="end">
+                            <input type="text" class="form-control" name="end" placeholder="HH:MM:SS">
                         </div>
                     </div>
                     <br>
@@ -100,7 +100,6 @@
                         <div class="col-4"></div>
                         <div class="col-4">
                             <select class="form-control" name="start_branch">
-                                <option value="">---</option>
                                 @foreach($branches as $branch)
                                     <option value="{{$branch->id}}">{{$branch->name}}</option>
                                 @endforeach
@@ -108,7 +107,6 @@
                         </div>
                         <div class="col-4">
                             <select class="form-control" name="end_branch">
-                                <option value="">---</option>
                                 @foreach($branches as $branch)
                                     <option value="{{$branch->id}}">{{$branch->name}}</option>
                                 @endforeach

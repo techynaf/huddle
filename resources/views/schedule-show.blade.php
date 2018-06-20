@@ -43,8 +43,8 @@
                                             <td>{{$schedule->branch->name}}</td>
                                             <td>{{$schedule->start}}</td>
                                             <td>{{$schedule->end}}</td>
-                                            <td>{{$schedule->start_branch}}</td>
-                                            <td>{{$schedule->end_branch}}</td>
+                                            <td>{{$schedule->startingBranch->name}}</td>
+                                            <td>{{$schedule->endingBranch->name}}</td>
                                             <td><a href="/schedule/edit/{{$schedule->id}}">Edit</a> <a href="/schedule/delete/{{$schedule->id}}">Delete</a></td>
                                         </tr>
                                     @endforeach

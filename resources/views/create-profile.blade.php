@@ -34,7 +34,6 @@
                                             <label class="col-2 col-form-label" for="branch">Branch</label>
                                             <div class="col-4">
                                                 <select name="branch" class="form-control">
-                                                    <option value="null">---</option>
                                                     @foreach($branches as $branch)
                                                         <option value="{{$branch->id}}">{{$branch->name}}</option>
                                                     @endforeach
@@ -45,7 +44,6 @@
                                             <label class="col-2 col-form-label" for="role">Role</label>
                                             <div class="col-4">
                                                 <select name="role" class="form-control">
-                                                    <option value="null">---</option>
                                                     @foreach($roles as $role)
                                                         <option value="{{$role->id}}">{{$role->name}}</option>
                                                     @endforeach
@@ -64,7 +62,6 @@
                                             <label class="col-2 col-form-label" for="status">Status of Employee</label>
                                             <div class="col-4">
                                                 <select name="status" class="form-control">
-                                                    <option value="">---</option>
                                                     <option value="probational">Probational</option>
                                                     <option value="premanent">Premanent</option>
                                                     <option value="contractual">Contractual</option>
@@ -75,7 +72,6 @@
                                             <label class="col-2 col-form-label" for="category">Category of Employee</label>
                                             <div class="col-4">
                                                 <select name="category" class="form-control">
-                                                    <option value="">---</option>
                                                     <option value="full_time">Full Time</option>
                                                     <option value="part_time">Part Time</option>
                                                 </select>
