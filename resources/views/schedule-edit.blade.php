@@ -46,6 +46,7 @@
                     <div class="row">
                         <div class="col-6">
                             <select class="form-control" name="start_branch">
+                                <option value="{{$schedule->startingBranch->id}}">{{$schedule->startingBranch->name}}</option>
                                 @foreach($branches as $branch)
                                     <option value="{{$branch->id}}">{{$branch->name}}</option>
                                 @endforeach
@@ -53,6 +54,7 @@
                         </div>
                         <div class="col-6">
                             <select class="form-control" name="end_branch">
+                                <option value="{{$schedule->endingBranch->id}}">{{$schedule->endingBranch->name}}</option>
                                 @foreach($branches as $branch)
                                     <option value="{{$branch->id}}">{{$branch->name}}</option>
                                 @endforeach
