@@ -16,6 +16,7 @@ class UserTableSeeder extends Seeder
         $pin = 999;
         $now = new Carbon;
         $date = $now->format('Y-m-d');
+        $url = array('', '');
 
         for ($i = 1; $i <= 200; $i++) {
             $pin++;
@@ -31,6 +32,7 @@ class UserTableSeeder extends Seeder
                 'employee_id' => 'something',
                 'category' => 'something',
                 'status' => 'something',
+                'img_url' => '',
                 'password' => bcrypt('bangladesh'),
                 'branch_id' => rand(0, 5),
             ]);

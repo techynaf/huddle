@@ -219,10 +219,6 @@ class AttendanceController extends Controller
         $now = new Carbon;
         $date = $now->copy()->format('Y-m-d');
         $schedule = Schedule::where('date', $date)->get();
-        
-        if (count($schedule) == 0) {
-            $value = false;
-        }
 
         return view('test-scheduler')->with('value', $value);
     }
@@ -242,6 +238,8 @@ class AttendanceController extends Controller
             $schedule->start = $sTime;
             $schedule->end = $eTime;
             $schedule->branch_id = 1;
+            $schedule->start_branch = 1;
+            $schedule->end_branch = 1;
             $schedule->timestamps = false;
             $schedule->save();
         }

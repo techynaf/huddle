@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('religion');
             $table->string('employee_id');
             $table->date('joining_date');
+            $table->text('img_url');
             $table->rememberToken();
             $table->boolean('logged_in')->nullable();
             $table->timestamps();

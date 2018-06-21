@@ -29,7 +29,7 @@ Route::post('/test/logger', 'AttendanceController@logger')->middleware('auth');
 Route::get('/request', 'AttendanceController@requestLeave')->middleware('auth');
 Route::post('/request/{id}', 'AttendanceController@storeLeaveRequest')->middleware('auth');
 Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
-Route::post('store/profile', 'ProfileController@store')->middleware('auth');
+Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
 Auth::routes();
 
 //Schedule Routes

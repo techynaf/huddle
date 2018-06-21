@@ -85,7 +85,7 @@ class AdminController extends Controller
             return view('show-all')->with('users', $users)->with('role', $role);
         } elseif ($role == 'manager') {
             $branch = Branch::where('id', auth()->user()->branch_id)->first();
-            $user = User::where('id', $id)->where('branch_id', auth()->user()->branch_id)->get();
+            $user = User::where('id', auth()->user()->id)->where('branch_id', auth()->user()->branch_id)->get();
             $role = 'manager';
 
             return view('show-all')->with('users', $users)->with('role', $role);
