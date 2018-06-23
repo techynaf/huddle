@@ -12,7 +12,8 @@ class BranchesTableSeeder extends Seeder
      */
     public function run()
     {
-        $branches = array('Badda', 'Gulshan', 'Dhanmondi', 'Apollo', 'AISD', 'Some Other', 'Techynaf');
+        $branches = array('Badda', 'Ascott', 'Dhanmondi', 'City Scape', 'LK Tower', 'Coffee Kiosk', 'Apollo',
+        'AISD', 'Lakeshore', 'Baridhara');
         foreach ($branches as $branch) {
             DB::table('branches')->insert([
                 'name' => $branch,
