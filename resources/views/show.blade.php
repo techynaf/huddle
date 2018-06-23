@@ -70,12 +70,18 @@
                                         @endif
                                         <form action="/view/employee/{{$user->id}}" class="form-horizontal">
                                             <div class="form-group row">
-                                                <label class="control-label col-sm-3"><h4>Date Range</h4></label>
-                                                <div class="col-sm-9">
-                                                    <div class="input-daterange input-group" id="date-range">
-                                                        <input type="text" class="form-control" name="start_date" placeholder="{{$today}}"/>
-                                                        <input type="text" class="form-control" name="end_date" placeholder="{{$today}}"/>
-                                                    </div>
+                                                <label class="control-label col-sm-2"><h4>Date Range</h4></label>
+                                                <div class="col-sm-1 control-label">
+                                                    <h4><label for="start_date">From</label></h4>
+                                                </div>
+                                                <div class="col-sm-4 control-label">
+                                                    <input type="date" class="form-control" name="start_date" placeholder="YYYY-MM-DD">
+                                                </div>
+                                                <div class="col-sm-1 control-label">
+                                                    <h4><label for="end_date">To</label></h4>
+                                                </div>
+                                                <div class="col-sm-4 control-label">
+                                                    <input type="date" class="form-control" name="end_date" placeholder="YYYY-MM-DD">
                                                 </div>
                                             </div>
                                             <div class="row">

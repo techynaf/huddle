@@ -54,16 +54,24 @@ class HomeController extends Controller
             'id' => 'required',
         ]);
 
-        $f_name = explode(' ', $request->name);
-        $f_name = $f_name[0];
+        // $f_name = explode(' ', $request->name);
+        // $f_name = $f_name[0];
 
-        $user = User::where('f_name', $request->name)->where()->get();
+        $user = User::where('name', $request->name)->where('branch_id', $request->id)->get();
 
-        if ($user == null) {
-            return redirect()->with('error', 'There are no');
-        } else {
-            $url = '/view/employee/'.$id;
+        if (count($user) == 0) {
+            return redirect('/')->with('error', 'There are no employee with name '.$request->name);
+        } elseif (count($user) == 1) {
+            $url = '/view/employee/'.$user->first()->id;
+            
             return redirect($url);
+        } else {
+            $filters = Branch::all();
+            $branch = Branch::where('id', $request->id)->first();
+            dd($user);
+
+            return view('home')->with('users', $user)->with('branches', $branch)->with('days', $this->days)->
+            with('filters', $filters)->with('flow', true);
         }
         
     }
@@ -74,6 +82,6 @@ class HomeController extends Controller
         $filters = Branch::all();
 
         return view('home')->with('users', $users)->with('branches', $branches)->with('days', $this->days)->
-        with('filters', $filters);
+        with('filters', $filters)->with('flow', false);
     }
 }

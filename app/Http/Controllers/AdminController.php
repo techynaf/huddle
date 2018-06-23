@@ -109,8 +109,18 @@ class AdminController extends Controller
         if ($request->start_date != null) {
             $hours = 0;
             $lates = 0;
-            $start = $request->start_date;
-            $end = $request->end_date;
+            $start = Carbon::parse($request->start_date)->format('Y-m-d');
+            $end = Carbon::parse($request->end_date)->format('Y-m-d');
+
+            if ($start > $end) {
+                return redirect('/view/employee/'.$user->id)->with('error', 'Invalid Date Range!!');
+            }
+
+            if ($end == null) {
+                $now = new Carbon;
+                $end = $now->format('Y-m-d');
+            }
+
             $logs = Log::where('date', '>=', $start)->where('date', '<=', $end)
             ->where('user_id', $id)->whereNotNull('punch_out_difference')->get();
 
@@ -139,7 +149,7 @@ class AdminController extends Controller
             ->with('lates', $lates)
             ->with('today', $today);
         } else {
-            return redirect('/dashboard')->with('error', 'You are not authorized.');
+            return redirect('/')->with('error', 'You are not authorized.');
         }
     }
 
