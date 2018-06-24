@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
                 'employee_id' => 'something',
                 'category' => 'something',
                 'status' => 'something',
-                'img_url' => '',
+                'img_url' => '/frontend/images/users/avatar-1.jpg',
                 'password' => bcrypt('bangladesh'),
                 'branch_id' => rand(0, 5),
             ]);
@@ -49,6 +49,7 @@ class UserTableSeeder extends Seeder
             'joining_date' => $date,
             'employee_id' => 'something',
             'category' => 'something',
+            'img_url' => '/frontend/images/pic.jpg',
             'status' => 'something',
             'branch_id' => 6,
             'logged_in' => false,
