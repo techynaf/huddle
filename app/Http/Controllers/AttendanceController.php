@@ -35,10 +35,8 @@ class AttendanceController extends Controller
 
         Json Response states
             0 == Invalid ID
-            1 == Overtime login
-            2 == Overtime logout
-            3 == Logged in
-            4 == Logged out
+            1 == Successfully login
+            2 == Successfully logout
     */
     public function login (Request $request)
     {
@@ -62,95 +60,93 @@ class AttendanceController extends Controller
 
         //finding the schedule where the date is the today's date and the user id is of the pin's user
         $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
-
-        if ($schedule == null) {
-            return $this->overtime($user);
-        }
-
-        $log = Log::whereNotNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
-
-        if ($log != null) {
-            return $this->overtime($user);
-        }
-
         $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
 
-        //Check if the employee has already logged in or not
-        if ($log == null) { //Employee has not logged in
-            $startTime = Carbon::parse($schedule->start);
-
-            $log = new Log;
-            $log->punch_in_difference = $now->diffInSeconds($startTime, false);
-            $diffInMins = gmdate("i:s", $log->punch_in_difference);
-
-            //will need approval of manager if employee is more than 10 mins early or late.
-            if ($diffInMins > 10) {                
-                $log->is_late = false;
-                $log->punch_in_approval = false;
-            } elseif ($diffInMins < -10) {
-                $log->is_late = true;
-                $log->punch_in_approval = false;
+        if ($schedule == null) {//create log without schedule
+            if ($log == null) {
+                return $this->createLog($user, $schedule, $now);
             } else {
-                $log->is_late = false;
-                $log->punch_in_approval = null;
+                $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
+                return $this->punchOut($user, $log, $schedule, $now);
             }
+        } else {//create log with schedule
+            $end = Carbon::parse($schedule->end);
 
-            //need to get branch_id from device_id
-            $log->branch_id = 1;
-            $log->user_id = $user->id;
-            $log->date = $date;
-            $log->punch_out_difference = NULL;
-            $log->punch_out_approval = NULL;
-            $log->timestamps = false;
-            $log->save();
+            //check if the login time is within schedule range
+            if ($now->copy()->format('H:i:s') >= $end) {//time is within range
+                if ($log == null) {
+                    return $this->createLog($user, $schedule, $now);
+                } else {
+                    $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
 
-            return $this->successResponse ('Successfully Logged in!', 3);
-        } else { //Employee has logged in and will now log out.
-            $endTime = Carbon::parse($schedule->end);
-            $log->punch_out_difference = $now->diffInSeconds($endTime, false);
-            $diffInMins = gmdate("i:s", $log->punch_out_difference);
+                    return $this->punchOut($user, $log, $schedule, $now);
+                }
+            } else {//time is not within range
+                if ($log == null) {
+                    return $this->createLog($user, null, $now);
+                } else {
+                    $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
 
-            //will need approval of manager if employee is leaves more than 10 mins early or late.
-            if ($diffInMins > 10 || $diffInMins < -10) {
-                $log->punch_out_approval = false;
-                
-            } else {
-                $log->punch_out_approval = NULL;
+                    return $this->punchOut($user, $log, null, $now);
+                }
             }
-
-            $log->timestamps = false;
-            $log->save();
-
-            return $this->successResponse ('Logged out! Have a nice day!!', 4);
+            
         }
     }
 
-    public function overtime ($user)
-    {
-        $now = new Carbon;
-        $date = $now->copy()->format('Y-m-d');
-        $time = $now->copy()->format('H:i');
-        $overtime = Overtime::where('date', $date)->where('user_id', $user->id)->whereNull('punch_out')->first();
+    public function createLog ($user, $schedule, $now) {
+        $log = new Log;
+        $startTime = 0;
 
-        if ($overtime == null) {
-            $overtime = new Overtime;
-            $overtime->user_id = $user->id;
-            $overtime->date = $date;
-            $overtime->is_approved = null;
-            $overtime->punch_in = $time;
-            $overtime->punch_out = null;
-            $overtime->branch_id = $user->branch_id;
-            $overtime->timestamps = false;
-            $overtime->save();
-
-            return $this->successResponse('You have logged in for overtime, please have the manager approve this session.', 1);
+        if ($schedule == null) {
+            $startTime = $now->copy()->format('H:i:s');
         } else {
-            $overtime->punch_out = $time;
-            $overtime->timestamps = false;
-            $overtime->save();
-
-            return $this->successResponse('You have logged out from overtime, please have the manager approve this session.', 2);
+            $startTime = Carbon::parse($schedule->start);
         }
+
+        $log->punch_in_difference = $now->diffInSeconds($startTime, false);
+        $diffInMins = gmdate("i:s", $log->punch_in_difference);
+
+        if ($diffInMins < -10) {
+            $log->is_late = true;
+        } else {
+            $log->is_late = false;
+        }
+
+        //need to get branch id from device_id
+        $log->branch_id = $user->branch->id;
+        $log->user_id = $user->id;
+        $log->date = $now->copy()->format('Y-m-d');
+        $log->punch_out_difference = null;
+
+        // if ($schedule == null) {
+        //     $log->schedule_id = null;
+        // } else {
+        //     $log->schedule_id = $schedule->id;
+        // }
+        
+
+        $log->timestamps = false;
+        $log->save();
+
+        return $this->successResponse ('Logged in', 1);
+    }
+
+    public function punchOut ($user, $log, $schedule, $now)
+    {
+        $endTime = 0;
+        if ($schedule == null) {
+            $endTime = $now->copy()->format('H:i:s');
+        } else {
+            $endTime = Carbon::parse($schedule->end);
+        }
+        
+        $log->punch_out_difference = $now->diffInSeconds($endTime, false);
+        $diffInMins = gmdate("i:s", $log->punch_out_difference);
+        $log->timestamps = false;
+        $log->save();
+
+        return $this->successResponse ('Logged out! Have a nice day!!', 2);
     }
 
     //success response json

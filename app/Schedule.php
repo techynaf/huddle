@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Branch;
+use App\Log;
 
 class Schedule extends Model
 {
@@ -29,5 +30,10 @@ class Schedule extends Model
     public function endingBranch()
     {
         return $this->belongsTo('App\Branch', 'end_branch');
+    }
+
+    public function log ()
+    {
+        return $this->hasOne('App\Log');
     }
 }

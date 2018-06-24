@@ -19,10 +19,9 @@ class CreateLogsTable extends Migration
             $table->date('date');
             $table->bigInteger('punch_in_difference');
             $table->bigInteger('punch_out_difference')->nullable();
-            $table->boolean('punch_in_approval')->nullable();
-            $table->boolean('punch_out_approval')->nullable();
             $table->boolean('is_late');
             $table->integer('branch_id');
+            $table->integer('schedule_id')->nullable();
         });
     }
 
