@@ -14,6 +14,7 @@
 Route::get('/', 'HomeController@index')->middleware('auth');
 Route::get('/branch', 'HomeController@branchFilter')->middleware('auth');
 Route::get('branch/user', 'HomeController@userFilter')->middleware('auth');
+Route::get('/home', 'HomeController@index')->middleware('auth');
 
 Route::get('/dashboard', 'ProfileController@index')->middleware('auth');
 Route::post('/store/requests/{id}/manager', 'AdminController@requestProcess')->middleware('auth');
