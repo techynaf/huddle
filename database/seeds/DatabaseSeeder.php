@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             SchedulesTableSeeder::class,
             LeavesTableSeeder::class,
+            LeaveTypesTableSeeder::class,
             LogsTableSeeder::class,
             RolesTableSeeder::class,
             RoleUserTableSeeder::class,

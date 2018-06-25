@@ -14,9 +14,9 @@ class LeavesTableSeeder extends Seeder
     public function run()
     {
         $now = new Carbon;
-        $date = $now->copy()->format('Y-m-d');
+        
         for ($i=1; $i <= 201; $i++) {
-            $d = $date->copy()->addDays(rand(0,4));
+            $d = $now->copy()->addDays(rand(0,4))->format('Y-m-d');
 
             DB::table('leaves')->insert([
                 'user_id' => $i,
