@@ -6,10 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\User;
 use App\Log;
-use App\Overtime;
 use App\Schedule;
-use App\LeaveRequest;
-use App\AllRequest;
 use Validator;
 use Session;
 
