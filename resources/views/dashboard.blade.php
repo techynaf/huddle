@@ -140,7 +140,7 @@
                                             <div class="col-2">
                                                 Request Body
                                             </div>
-                                            <div class="col-10">
+                                            <div class="col-8">
                                                 {{$request->body}}
                                             </div>
                                         @endif
