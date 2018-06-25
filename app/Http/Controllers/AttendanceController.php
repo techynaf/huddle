@@ -166,37 +166,6 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function storeLeaveRequest (Request $request, $id)
-    {
-        $this->validate($request, [
-            'subject' => 'required',
-            'body' => 'required',
-            'type' => 'required'
-        ]);
-
-        $start = Carbon::parse($request->start)->format('Y-m-d');
-        $end = Carbon::parse($request->end)->format('Y-m-d');
-
-        if ($start > $end) {
-            return redirect('/request')->with('error', 'Invalid date range');
-        }
-
-        $req = new AllRequest;
-        $req->user_id = $id;
-        $req->hr_approved = null;
-        $req->manager_approved = null;
-        $req->subject = $request->subject;
-        $req->start = $start;
-        $req->end = $end;
-        $req->branch_id = auth()->user()->branch_id;
-        $req->body = $request->body;
-        $req->type = $request->type;
-        $req->is_removed = false;
-        $req->save();
-
-        return redirect('/dashboard')->with('success', 'Your request has been successfully added.');
-    }
-
     //create schedules for testing purposes
     public function schedule ()
     {

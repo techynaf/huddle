@@ -31,7 +31,7 @@ Route::get('/test/log', 'AttendanceController@log')->middleware('auth');
 Route::get('/test/logout', 'AttendanceController@logout')->middleware('auth');
 Route::post('/test/logger', 'AttendanceController@logger')->middleware('auth');
 
-Route::post('/request/{id}', 'AttendanceController@storeLeaveRequest')->middleware('auth');
+
 Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
 Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
 Auth::routes();
@@ -48,3 +48,4 @@ Route::post('/schedule/update/{id}', 'ScheduleController@update')->middleware('a
 
 //Leave Routes
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');
+Route::post('/request/{id}', 'LeavesController@storeLeaveRequest')->middleware('auth');
