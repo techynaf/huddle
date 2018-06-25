@@ -41,14 +41,17 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="control-label col-sm-2">Leave Date Range</label>
-                                            <div class="col-sm-10">
-                                                <div class="row">
-                                                    <div class="col-2">From: </div>
-                                                    <div class="col-4"><input type="date" name="from" placeholder="From"></div>
-                                                    <div class="col-2">To: </div>
-                                                    <div class="col-4"><input type="date" name="to" placeholder="To"></div>
-                                                </div>
+                                            <div class="col-2">
+                                                <label for="date">Start Date</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="date" name="date" class="form-control">
+                                            </div>
+                                            <div class="col-2">
+                                                <label for="days">Number of Days</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="number" name="subject" class="form-control" placeholder="Number of days of leave">
                                             </div>
                                         </div>
                                         <div class="form-group row">

@@ -22,29 +22,31 @@ class LeavesController extends Controller
         $this->validate($request, [
             'subject' => 'required',
             'body' => 'required',
-            'type' => 'required'
+            'type' => 'required',
+            'days' => 'required'
         ]);
 
-        $start = Carbon::parse($request->start)->format('Y-m-d');
-        $end = Carbon::parse($request->end)->format('Y-m-d');
-
-        if ($start > $end) {
-            return redirect('/request')->with('error', 'Invalid date range');
+        if ($request->type == 1) {
+            //return view with option to edit/delete current leaves or create new weekly leave
         }
 
-        $req = new AllRequest;
-        $req->user_id = $id;
-        $req->hr_approved = null;
-        $req->manager_approved = null;
-        $req->subject = $request->subject;
-        $req->start = $start;
-        $req->end = $end;
-        $req->branch_id = auth()->user()->branch_id;
-        $req->body = $request->body;
-        $req->type = $request->type;
-        $req->is_removed = false;
-        $req->save();
+        $start = Carbon::parse($request->date)->format('Y-m-d');
+        $leave = new Leave;
+        $leave->user_id = $id;
+        $leave->is_approved = null;
+        $leave->subject = $request->subject;
+        $leave->date = $start;
+        $leave->days = $request->days - 1;
+        $leave->body = $request->body;
+        $leave->type = $request->type;
+        $leave->is_removed = false;
+        $leave->save();
 
         return redirect('/dashboard')->with('success', 'Your request has been successfully added.');
+    }
+
+    public function weeklyLeave ($request)
+    {
+        
     }
 }
