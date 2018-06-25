@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\AllRequest;
+use App\Leave;
 use App\Schedule;
 use App\Log;
 use App\Role;
@@ -38,7 +38,7 @@ class ProfileController extends Controller
         $user = auth()->user();
         $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $startDate)->
         where('date', '<=', $endDate)->get();
-        $requests = AllRequest::where('user_id', $user->id)->where('is_removed', false)->orderBy('id', 'desc')->get();
+        $requests = Leave::where('user_id', $user->id)->orderBy('date', 'desc')->get();
         $logs = Log::where('user_id', $user->id)->where('date', '>=', $monthStart)->
         where('date', '<=', $monthEnd)->get();
         
