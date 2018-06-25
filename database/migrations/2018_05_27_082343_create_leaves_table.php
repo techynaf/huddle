@@ -16,10 +16,12 @@ class CreateLeavesTable extends Migration
         Schema::create('leaves', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('sick_leave');
-            $table->integer('annual_leave');
-            $table->integer('govt_holiday');
-            $table->integer('year');
+            $table->integer('type');
+            $table->string('subject');
+            $table->string('body');
+            $table->date('date');
+            $table->integer('days');
+            $table->boolean('is_approved')->nullable();
         });
     }
 
