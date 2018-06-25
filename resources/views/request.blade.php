@@ -20,9 +20,9 @@
                                             <label class="col-2 col-form-label">Leave Type</label>
                                             <div class="col-10">
                                                 <select class="form-control" name="type">
-                                                    @for($i = 0; $i < count($types); $i = $i + 2)
-                                                        <option value="{{$types[$i+1]}}">{{$types[$i]}}</option>
-                                                    @endfor
+                                                    @foreach($types as $type)
+                                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

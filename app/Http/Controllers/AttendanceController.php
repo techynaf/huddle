@@ -166,14 +166,6 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function requestLeave ()
-    {
-        $types = array('Sick Leave', 'sick_leave', 'Annual Leave', 'annual_leave', 'Government Holiday', 'govt_hoiliday');
-        $id = auth()->user()->id;
-
-        return view('request')->with('id', $id)->with('types', $types);
-    }
-
     public function storeLeaveRequest (Request $request, $id)
     {
         $this->validate($request, [

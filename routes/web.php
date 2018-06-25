@@ -30,7 +30,7 @@ Route::post('/test/scheduler', 'AttendanceController@scheduler')->middleware('au
 Route::get('/test/log', 'AttendanceController@log')->middleware('auth');
 Route::get('/test/logout', 'AttendanceController@logout')->middleware('auth');
 Route::post('/test/logger', 'AttendanceController@logger')->middleware('auth');
-Route::get('/request', 'AttendanceController@requestLeave')->middleware('auth');
+
 Route::post('/request/{id}', 'AttendanceController@storeLeaveRequest')->middleware('auth');
 Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
 Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
@@ -45,3 +45,6 @@ Route::get('/schedule/view', 'ScheduleController@view')->middleware('auth');
 Route::get('/schedule/show', 'ScheduleController@showDates')->middleware('auth');
 Route::get('/schedule/edit/{id}', 'ScheduleController@edit')->middleware('auth');
 Route::post('/schedule/update/{id}', 'ScheduleController@update')->middleware('auth');
+
+//Leave Routes
+Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');
