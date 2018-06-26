@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class WeeklyLeavesTableSeeder extends Seeder
 {
@@ -23,9 +24,9 @@ class WeeklyLeavesTableSeeder extends Seeder
                 DB::table('weekly_leaves')->insert([
                     'user_id' => $i,
                     'date_1' => $date1,
-                    'date_2' => $date,
+                    'date_2' => $date2,
                     'is_approved' => true,
-                    'is_clustured' => true,
+                    'is_clustered' => true,
                 ]);
             }
         }
