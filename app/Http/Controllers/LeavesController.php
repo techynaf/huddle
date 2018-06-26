@@ -52,7 +52,7 @@ class LeavesController extends Controller
 
     public function edit (Request $request, $id)
     {
-        $leave = Leave::find($id);
+        $leave = Leave::where('id', $id)->first();
         $types = LeaveTypes::where('id', '!=', 1)->get();
 
         if ($leave->is_approved != null) {
@@ -62,9 +62,9 @@ class LeavesController extends Controller
         return view('edit-leave')->with('leave', $leave)->with('types', $types);
     }
 
-    public function update (Request $request)
+    public function update (Request $request, $id)
     {
-        $leave = find($request->id);
+        $leave = Leave::where('id', $id)->first();
         $leave->type = $request->type;
         $leave->subject = $request->subject;
         $leave->body = $request->body;
@@ -72,6 +72,15 @@ class LeavesController extends Controller
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
         $leave->save();
 
-        return redirect('/')->with('error', 'Leave application successfully edited');
+        return redirect('/')->with('success', 'Leave application successfully edited.');
+    }
+
+    public function remove (Request $request, $id)
+    {
+        $leave = Leave::where('id', $id)->first();
+        $leave->is_removed = true;
+        $leave->save();
+
+        return redirect('/')->with('success', 'Leave application successfully removed.');
     }
 }
