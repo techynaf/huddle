@@ -38,6 +38,10 @@ class LeavesController extends Controller
 
     public function weeklyLeave ($request)
     {
+        if($request->days > 2){
+            return redirect('/dashboard')->with('error', "You can only have two days off per week");
+        }
+        
         $start = Carbon::parse($request->date);
 
         while(Carbon::parse($request->date)->format('l') != 'Sunday') {
@@ -49,23 +53,10 @@ class LeavesController extends Controller
         $leaves = Leave::where('user_id', $request->user_id)->where('date', '>=', $start)->
         where('date', '<=', $end)->where('type', 1)->get();
 
-        if (count($leaves) == 0) {
-            $this->createLeave($request);
-        } elseif (count($leaves) == 1) {
-            if ($leaves[0]->days == 0 && $request->days == 1) {
-                $this->createLeave($request);
-            } elseif ($leaves[0]->days == 2) {
-                $l = $leaves[0];
-                $l->delete();
-                $this->createLeave($request);
-            }
-        } elseif (count($leaves) == 2) {
-            if ($request->days == 2) {
-                $leaves[0]->delete();
-                $leaves[1]->delete();
-                $this->createLeave($request);
-            }
-        }
+        $x = array($request->id, $request->subject, $request->date, $request->days, $request->body, $request->type);
+        
+
+        $this->createLeave();
     }
 
     public function createLeave($request)
