@@ -5,16 +5,17 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">	
-                    <h2 class="page-title">Leave Request Form</h2>
+                    <h2 class="page-title">Edit Leave</h2>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card-box">
                         <div class="row">
                             <div class="col-12">
                                 <div class="p-20">
-                                    <form class="form-horizontal" role="form" action="/request/{{auth()->user()->id}}" method="POST">
+                                    <form class="form-horizontal" role="form" action="/update/{{$leave->id}}" method="POST">
                                         @csrf
                                         <div class="form-group row">
                                             <label class="col-2 col-form-label">Leave Type</label>
@@ -29,14 +30,14 @@
                                         <div class="form-group row">
                                             <label class="col-2 col-form-label" for="subject">Request Subject</label>
                                             <div class="col-10">
-                                                <input type="text" name="subject" class="form-control" placeholder="Request Subject">
+                                                <input type="text" name="subject" class="form-control" placeholder="Request Subject" value="{{$leave->subject}}">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
                                             <label class="col-2 col-form-label" for="body">Request Body</label>
                                             <div class="col-10">
-                                                <textarea name="body" class="form-control" rows="5" placeholder="Request Body"></textarea>
+                                                <textarea name="body" class="form-control" rows="5" placeholder="Request Body">{{$leave->body}}</textarea>
                                             </div>
                                         </div>
 
@@ -45,13 +46,13 @@
                                                 <label for="start">Start Date</label>
                                             </div>
                                             <div class="col-4">
-                                                <input type="date" name="start" class="form-control">
+                                                <input type="date" name="start" class="form-control" value="{{$leave->start}}">
                                             </div>
                                             <div class="col-2">
                                                 <label for="end">End Date</label>
                                             </div>
                                             <div class="col-4">
-                                                <input type="date" name="end" class="form-control">
+                                                <input type="date" name="end" class="form-control" value="{{$leave->end}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -70,7 +71,6 @@
                     </div> <!-- end card-box -->
                 </div><!-- end col -->
             </div>
-            <!-- end row -->
         </div>
     </div>
 @endsection

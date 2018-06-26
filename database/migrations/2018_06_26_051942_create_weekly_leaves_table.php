@@ -19,6 +19,7 @@ class CreateWeeklyLeavesTable extends Migration
             $table->date('date_1');
             $table->date('date_2');
             $table->boolean('is_approved')->nullable();
+            $table->boolean('is_clustered');
             $table->timestamps();
         });
     }

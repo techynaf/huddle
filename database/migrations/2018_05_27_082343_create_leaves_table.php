@@ -19,8 +19,8 @@ class CreateLeavesTable extends Migration
             $table->integer('type');
             $table->string('subject');
             $table->string('body');
-            $table->date('date');
-            $table->integer('days');
+            $table->date('start');
+            $table->date('end');
             $table->boolean('is_approved')->nullable();
             $table->boolean('is_removed');
             $table->timestamps();
