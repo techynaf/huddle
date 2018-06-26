@@ -27,36 +27,13 @@ class LeavesController extends Controller
             'days' => 'required'
         ]);
 
-        if ($request->type == 1) {
-            //return view with option to edit/delete current leaves or create new weekly leave
+        if (is_int(!$request->days) || $request->days <= 0) {
+            return redirect('')->with('error', 'Number of cannot be decimal, negative or zero');
         }
 
         $this->createLeave($request);
 
         return redirect('/dashboard')->with('success', 'Your request has been successfully added.');
-    }
-
-    public function weeklyLeave ($request)
-    {
-        if($request->days > 2){
-            return redirect('/dashboard')->with('error', "You can only have two days off per week");
-        }
-        
-        $start = Carbon::parse($request->date);
-
-        while(Carbon::parse($request->date)->format('l') != 'Sunday') {
-            $start->addDays(-1);
-        }
-
-        $end = $start->addDays(6);
-
-        $leaves = Leave::where('user_id', $request->user_id)->where('date', '>=', $start)->
-        where('date', '<=', $end)->where('type', 1)->get();
-
-        $x = array($request->id, $request->subject, $request->date, $request->days, $request->body, $request->type);
-        
-
-        $this->createLeave();
     }
 
     public function createLeave($request)
@@ -71,10 +48,5 @@ class LeavesController extends Controller
         $leave->type = $request->type;
         $leave->is_removed = false;
         $leave->save();
-    }
-
-    public function weeklyChange ($request)
-    {
-        
     }
 }
