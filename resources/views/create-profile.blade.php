@@ -50,43 +50,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="address">Address</label>
-                                            <div class="col-4">
-                                                <textarea name="address" class="form-control" rows="5" placeholder="Address"></textarea>
-                                            </div>
-                                            <label class="col-2 col-form-label" for="status">Status of Employee</label>
-                                            <div class="col-4">
-                                                <select name="status" class="form-control">
-                                                    <option value="probational">Probational</option>
-                                                    <option value="premanent">Premanent</option>
-                                                    <option value="contractual">Contractual</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="category">Category of Employee</label>
-                                            <div class="col-4">
-                                                <select name="category" class="form-control">
-                                                    <option value="full_time">Full Time</option>
-                                                    <option value="part_time">Part Time</option>
-                                                </select>
-                                            </div>
-                                            <label class="col-2 col-form-label" for="religion">Religion</label>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" name="religion" placeholder="Religion">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                                <label class="col-2 col-form-label" for="date">Joining Date</label>
-                                                <div class="col-4">
-                                                    <input type="date" class="form-control" name="date" placeholder="Joining Date">
-                                                </div>
-                                                <label class="col-2 col-form-label" for="id">Employee ID</label>
-                                                <div class="col-4">
-                                                    <input type="text" class="form-control" name="id" placeholder="Employee ID">
-                                                </div>
-                                            </div>
                                         <div class="row">
                                             <div class="col-11"></div>
                                             <div class="col-1">

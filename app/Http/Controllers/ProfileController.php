@@ -104,12 +104,7 @@ class ProfileController extends Controller
             'phone' => 'required',
             'branch' => 'required',
             'role' => 'required',
-            'address' => 'required',
-            'religion' => 'required',
-            'date' => 'required',
             'id' => 'required',
-            'category' => 'required',
-            'status' => 'required',
         ]);
 
         $pin = 0;
@@ -128,15 +123,10 @@ class ProfileController extends Controller
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->branch_id = $request->branch;
-        $user->address = $request->address;
         $user->pin = $pin;
         $user->password = bcrypt($pin);
         $user->logged_in = null;
-        $user->joining_date = $request->date;
-        $user->category = $request->category;
-        $user->status = $request->status;
         $user->employee_id = $request->id;
-        $user->religion = $request->religion;
         $role = Role::find($request->role);
         $user->save();
         $user->roles()->attach($role);
