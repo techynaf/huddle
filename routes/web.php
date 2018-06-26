@@ -50,3 +50,5 @@ Route::post('/schedule/update/{id}', 'ScheduleController@update')->middleware('a
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');
 Route::post('/request/{id}', 'LeavesController@storeLeaveRequest')->middleware('auth');
 Route::post('/request/edit/{id}', 'LeavesController@edit')->middleware('auth');
+Route::post('/request/update/{id}', 'LeavesController@update')->middleware('auth');
+Route::post('/request/remove/{id}', 'LeavesController@remove')->middleware('auth');
