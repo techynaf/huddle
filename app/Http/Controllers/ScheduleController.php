@@ -253,10 +253,11 @@ class ScheduleController extends Controller
         $start = $start->format('Y-m-d');
         $end = $end->format('Y-m-d');
         $days = array(array($d->copy()->format('l'), $d->copy()->format('Y-d-m')));
+        $d = $d->addDay();
 
-        while($d->copy()->format('l') == 'Sunday') {
-            $d = $d->addDay();
+        while($d->copy()->format('l') != 'Sunday') {
             array_push($days, array($d->copy()->format('l'), $d->copy()->format('Y-d-m')));
+            $d = $d->addDay();
         }
 
         $users = User::where('branch_id', auth()->user()->branch->id)->get();
