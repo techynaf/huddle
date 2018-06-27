@@ -30,7 +30,9 @@
                                         @foreach($schedules[$loop->index] as $schedule)
                                             <td>
                                                 @if($schedule == 'day-off')
-                                                    DAY OFF
+                                                    <div class="text-center btn-danger">
+                                                        DAY OFF
+                                                    </div>
                                                 @elseif($schedule == false)
                                                     @include('templates.schedule-default-form')
                                                 @else

@@ -281,7 +281,6 @@ class ScheduleController extends Controller
             return view('create-schedule')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
             with('branches', $branches);
         }
-        
     }
 
     public function dayOffChecker ($user, $date)
