@@ -248,7 +248,20 @@ class ScheduleController extends Controller
     public function create (Request $request)
     {
         if ($request->date == null) {
-            return view('select-date');
+            $now = new Carbon;
+            
+            while ($now->copy()->format('l') != 'Sunday') {
+                $now = $now->addDays(-1);
+            }
+
+            $dates = array();
+
+            for ($i = -4; $i <= 4; $i++) {
+                $date = $now->copy()->addWeeks($i)->format('Y-m-d');
+                array_push($dates, $date);
+            }
+
+            return view('select-date')->with('dates', $dates);
         } else {
             $start = Carbon::parse($request->date);
             $d = $start;
