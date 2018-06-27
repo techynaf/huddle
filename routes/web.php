@@ -45,6 +45,7 @@ Route::get('/schedule/view', 'ScheduleController@view')->middleware('auth');
 Route::get('/schedule/show', 'ScheduleController@showDates')->middleware('auth');
 Route::get('/schedule/edit/{id}', 'ScheduleController@edit')->middleware('auth');
 Route::post('/schedule/update/{id}', 'ScheduleController@update')->middleware('auth');
+Route::get('/create', 'ScheduleController@create')->middleware('auth');
 
 //Leave Routes
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');

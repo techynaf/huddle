@@ -29,7 +29,7 @@ class UserTableSeeder extends Seeder
                 'employee_id' => 'something',
                 'img_url' => '/frontend/images/users/avatar-1.jpg',
                 'password' => bcrypt('bangladesh'),
-                'branch_id' => rand(0, 5),
+                'branch_id' => rand(1, 6),
             ]);
         }
 

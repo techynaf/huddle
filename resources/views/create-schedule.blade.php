@@ -27,13 +27,17 @@
                                     <tr>
                                         <td>{{$user->name}}</td>
                                         
-                                        @if($schedules[$loop->index]->user_id == $user->id)
-                                            @foreach($schedules[$loop->index] as $schedule)
-                                                <td>
-                                                    
-                                                </td>
-                                            @endforeach
-                                        @endif
+                                        @foreach($schedules[$loop->index] as $schedule)
+                                            <td>
+                                                @if($schedule == 'day-off')
+                                                    DAY OFF
+                                                @elseif($schedule == false)
+                                                    @include('templates.schedule-default-form')
+                                                @else
+                                                    @include('templates.schedule-form')
+                                                @endif
+                                            </td>
+                                        @endforeach
                                     </tr>
                                 @endforeach
                             </tbody>

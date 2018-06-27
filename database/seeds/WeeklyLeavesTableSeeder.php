@@ -25,8 +25,8 @@ class WeeklyLeavesTableSeeder extends Seeder
                     'user_id' => $i,
                     'date_1' => $date1,
                     'date_2' => $date2,
-                    'is_approved' => true,
-                    'is_clustered' => true,
+                    'approved' => true,
+                    'clustered' => true,
                 ]);
             }
         }

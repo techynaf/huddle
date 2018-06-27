@@ -247,45 +247,51 @@ class ScheduleController extends Controller
 
     public function create (Request $request)
     {
-        $start = Carbon::parse($request->date);
-        $d = $start;
-        $end = $start->copy()->addDays(6);
-        $start = $start->format('Y-m-d');
-        $end = $end->format('Y-m-d');
-        $days = array(array($d->copy()->format('l'), $d->copy()->format('Y-d-m')));
-        $d = $d->addDay();
-
-        while($d->copy()->format('l') != 'Sunday') {
-            array_push($days, array($d->copy()->format('l'), $d->copy()->format('Y-d-m')));
+        if ($request->date == null) {
+            return view('select-date');
+        } else {
+            $start = Carbon::parse($request->date);
+            $d = $start;
+            $end = $start->copy()->addDays(6);
+            $start = $start->format('Y-m-d');
+            $end = $end->format('Y-m-d');
+            $days = array(array($d->copy()->format('l'), $d->copy()->format('Y-m-d')));
             $d = $d->addDay();
-        }
 
-        $users = User::where('branch_id', auth()->user()->branch->id)->get();
-        $branches = Branch::all();
-        $schedules = array();
-
-        foreach ($users as $user) {
-            $user_schedule = array();
-
-            foreach ($days[1] as $date) {
-                array_push($user_schedule, dayOffChecker($user, $date));
+            while($d->copy()->format('l') != 'Sunday') {
+                $x = array($d->copy()->format('l'), $d->copy()->format('Y-m-d'));
+                array_push($days, $x);
+                $d = $d->addDay();
             }
 
-            array_push($schedules, $user_schedule);
-        }
+            $users = User::where('branch_id', auth()->user()->branch->id)->get();
+            $branches = Branch::all();
+            $schedules = array();
 
-        return view('create-schedule')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
-        with('branches', $branches);
+            foreach ($users as $user) {
+                $user_schedule = array();
+
+                foreach ($days as $date) {
+                    array_push($user_schedule, $this->dayOffChecker($user, $date[1]));
+                }
+
+                array_push($schedules, $user_schedule);
+            }
+
+            return view('create-schedule')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
+            with('branches', $branches);
+        }
+        
     }
 
     public function dayOffChecker ($user, $date)
     {
-        if (WeeklyLeave::where('user_id', $user->id)->where('date_1', $date)->where('is_approved' == true)->first() != null) {//checking if weekly off
-            return null;
-        } elseif (WeeklyLeave::where('user_id', $user->id)->where('date_2', $date)->where('is_approved' == true)->first() != null) {//checking if weekly off
-            return null;
+        if (WeeklyLeave::where('user_id', $user->id)->where('date_1', $date)->where('approved', true)->first() != null) {//checking if weekly off
+            return 'day-off';
+        } elseif (WeeklyLeave::where('user_id', $user->id)->where('date_2', $date)->where('approved', true)->first() != null) {//checking if weekly off
+            return 'day-off';
         } elseif (Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', true)->first() != null) {//checking if has approved leave
-            return null;
+            return 'day-off';
         } else {
             $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
             
