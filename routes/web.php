@@ -54,3 +54,6 @@ Route::post('/request/{id}', 'LeavesController@storeLeaveRequest')->middleware('
 Route::post('/request/edit/{id}', 'LeavesController@edit')->middleware('auth');
 Route::post('/request/update/{id}', 'LeavesController@update')->middleware('auth');
 Route::post('/request/remove/{id}', 'LeavesController@remove')->middleware('auth');
+
+//Weekly Leave Routes
+Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth');
