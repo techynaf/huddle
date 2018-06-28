@@ -18,13 +18,15 @@
                     </div>
 
                     <br>
-                    <form action="/create/weekly/{{auth()->user()->id}}">
+                    <form action="/create/weekly/{{auth()->user()->id}}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-2">
                                 <label for="day_1" class="form-label-control">First Day</label>
                             </div>
                             <div class="col-4">
                                 <select name="day_1" class="form-control">
+                                    <option value=""></option>
                                     @foreach($days as $day)
                                         <option value="{{$day}}">{{$day}}</option>
                                     @endforeach
@@ -35,6 +37,7 @@
                             </div>
                             <div class="col-4">
                                 <select name="day_2" class="form-control">
+                                    <option value=""></option>
                                     @foreach($days as $day)
                                         <option value="{{$day}}">{{$day}}</option>
                                     @endforeach
@@ -59,7 +62,7 @@
                                 <label for="start" class="form-label-control">Select End Date</label>
                             </div>
                             <div class="col-4">
-                                <input type="date" name="start" max="{{$end}}" class="form-control">
+                                <input type="date" name="end" min="{{$end}}" class="form-control">
                             </div>
                         </div>
                         <hr>
