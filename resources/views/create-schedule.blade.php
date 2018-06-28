@@ -24,23 +24,30 @@
                             </thead>
                             <tbody>
                                 @foreach($users as $user)
-                                    <tr>
-                                        <td>{{$user->name}}</td>
-                                        
-                                        @foreach($schedules[$loop->index] as $schedule)
+                                    <form action="/create/schedule/{{$user->id}}" method="POST">
+                                        <button class="btn btn-primary btn-rounded">Submit</button>
+                                        @csrf
+                                        <tr>
                                             <td>
-                                                @if($schedule == 'day-off')
-                                                    <div class="text-center btn-danger">
-                                                        DAY OFF
-                                                    </div>
-                                                @elseif($schedule == false)
-                                                    @include('templates.schedule-default-form')
-                                                @else
-                                                    @include('templates.schedule-form')
-                                                @endif
+                                                {{$user->name}}
+                                                <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
                                             </td>
-                                        @endforeach
-                                    </tr>
+                                            
+                                            @foreach($schedules[$loop->index] as $schedule)
+                                                <td>
+                                                    @if($schedule == 'day-off')
+                                                        <div class="text-center btn-danger">
+                                                            DAY OFF
+                                                        </div>
+                                                    @elseif($schedule == false)
+                                                        @include('templates.schedule-default-form')
+                                                    @else
+                                                        @include('templates.schedule-form')
+                                                    @endif
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                    </form>
                                 @endforeach
                             </tbody>
                         </table>

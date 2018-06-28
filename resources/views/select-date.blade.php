@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-2"></div>
                 <div class="card-box col-8">
-                    <form action="">
+                    <form action="/create/schedule" method="GET">
                         <div class="row">
                             <div class="col-2">
                                 <h4><label for="date" class="form-label-control">Date</label></h4>

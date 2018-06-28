@@ -314,4 +314,10 @@ class ScheduleController extends Controller
             }
         }
     }
+
+    public function s (Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+        dd('here');
+    }
 }
