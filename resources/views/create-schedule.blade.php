@@ -25,7 +25,6 @@
                             <tbody>
                                 @foreach($users as $user)
                                     <form action="/create/schedule/{{$user->id}}" method="POST">
-                                        <button class="btn btn-primary btn-rounded">Submit</button>
                                         @csrf
                                         <tr>
                                             <td>
