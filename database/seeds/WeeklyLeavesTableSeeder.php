@@ -17,15 +17,13 @@ class WeeklyLeavesTableSeeder extends Seeder
             for ($j = 0; $j < 8; $j++) {
                 $now = new Carbon;
                 $now = $now->addWeek($j);
-                $date1 = $now;
-                $date2 = $now->addDay();
 
                 DB::table('weekly_leaves')->insert([
                     'user_id' => $i,
-                    'date_1' => $date1->copy()->format('Y-m-d'),
-                    'date_2' => $date2->copy()->format('Y-m-d'),
-                    'day_1' => $date1->copy()->format('l'),
-                    'day_2' => $date2->copy()->format('l'),
+                    'date_1' => $now->copy()->format('Y-m-d'),
+                    'date_2' => $now->copy()->addDay()->format('Y-m-d'),
+                    'day_1' => $now->copy()->format('l'),
+                    'day_2' => $now->copy()->addDay()->format('l'),
                     'approved' => true,
                     'clustered' => true,
                 ]);
