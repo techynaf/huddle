@@ -38,7 +38,7 @@ class ProfileController extends Controller
         $user = auth()->user();
         $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $startDate)->
         where('date', '<=', $endDate)->get();
-        $requests = Leave::where('user_id', $user->id)->orderBy('date', 'desc')->get();
+        $requests = Leave::where('user_id', $user->id)->orderBy('id', 'desc')->get();
         $logs = Log::where('user_id', $user->id)->where('date', '>=', $monthStart)->
         where('date', '<=', $monthEnd)->get();
         
