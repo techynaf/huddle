@@ -13,14 +13,11 @@ class WeeklyLeavesTableSeeder extends Seeder
      */
     public function run()
     {
-        $now = new Carbon;
-
         for ($i = 0; $i < 201; $i++) {
-            $now = $now->addWeek();
-
-            for ($j = 0; $j < 8; $j++) { 
-                $now = $now->addDays($j);
-                $date1 = $now->copy()->format('Y-m-d');
+            for ($j = 0; $j < 8; $j++) {
+                $now = new Carbon;
+                $now = $now->addWeek($j);
+                $date1 = $now;
                 $date2 = $now->addDay();
 
                 DB::table('weekly_leaves')->insert([
