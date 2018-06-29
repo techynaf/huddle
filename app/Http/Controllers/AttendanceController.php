@@ -151,7 +151,7 @@ class AttendanceController extends Controller
 
         $message = 'Hello '.$user->name.'. You have logged out! You have worked for '.$hours.' hours.';
 
-        return $this->successResponse ('Logged out! Have a nice day!!', 2);
+        return $this->successResponse ($message, 2);
     }
 
     //success response json
