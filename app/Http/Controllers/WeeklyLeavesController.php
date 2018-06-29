@@ -11,14 +11,15 @@ use Session;
 
 class WeeklyLeavesController extends Controller
 {
+    private $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+
     public function create ()
     {
-        $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
         $now = new Carbon;
         $start = $now->copy()->format('Y-m-d');
         $end = $now->addWeek()->format('Y-m-d');
 
-        return view('create-weekly-leave')->with('days', $days)->with('start', $start)->with('end', $end);
+        return view('create-weekly-leave')->with('days', $this->days)->with('start', $start)->with('end', $end);
     }
 
     public function store (Request $request, $id)
@@ -30,28 +31,35 @@ class WeeklyLeavesController extends Controller
             'end' => 'required',
         ]);
 
-        //add checker of overlapping leaves
-        $user = User::where('id', $id)->first();
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
+        $leaves = WeeklyLeave::where('date_1', '>=', $start)->where('date_2', '<=', $end)->get();
+
+        if (count($leaves) != 0) {
+            return redirect('/')->with('error', 'Weekly Leaves already exits for this date range, please use edit to change them');
+        }
+
+        $user = User::where('id', $id)->first();
         $day_1 = null;
         $day_2 = null;
         $counter = 0;
 
         for ($i = $start; $i <= $end; $i = $i->addDay()) {
             if ($request->day_1 == $i->copy()->format('l')) {
-                $day_1 = $i->copy()->format('Y-m-d');
+                $day_1 = $i;
             }
 
             if ($request->day_2 == $i->copy()->format('l')) {
-                $day_2 = $i->copy()->format('Y-m-d');
+                $day_2 = $i;
             }
 
             if ($counter != 0 && $counter % 7 == 0) {
                 $leave = new WeeklyLeave;
                 $leave->user_id = $user->id;
-                $leave->date_1 = $day_1;
-                $leave->date_2 = $day_2;
+                $leave->date_1 = $day_1->copy()->format('Y-m-d');
+                $leave->date_2 = $day_2->copy()->format('Y-m-d');
+                $leave->day_1 = $request->day_1;
+                $leave->day_2 = $request->day_2;
                 $leave->clustered = true;
                 $leave->approved = null;
                 $leave->save();
@@ -60,5 +68,10 @@ class WeeklyLeavesController extends Controller
         }
 
         return redirect('/dashboard')->with('success', 'Weekly day off successfully added, waiting for approval');
+    }
+
+    public function edit ()
+    {
+
     }
 }
