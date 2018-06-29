@@ -125,8 +125,9 @@ class AttendanceController extends Controller
 
         $log->timestamps = false;
         $log->save();
+        $message = 'Hello '.$user->name.'. You have logged in!';
 
-        return $this->successResponse ('Logged in', 1);
+        return $this->successResponse ($message, 1);
     }
 
     public function punchOut ($user, $log, $schedule, $now)
@@ -142,6 +143,10 @@ class AttendanceController extends Controller
         $diffInMins = gmdate("i:s", $log->punch_out_difference);
         $log->timestamps = false;
         $log->save();
+
+        //add hours worked calculator
+
+        $message = 'Hello '.$user->name.'. You have logged out!';
 
         return $this->successResponse ('Logged out! Have a nice day!!', 2);
     }

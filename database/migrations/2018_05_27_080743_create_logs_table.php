@@ -17,8 +17,8 @@ class CreateLogsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->date('date');
-            $table->bigInteger('punch_in_difference');
-            $table->bigInteger('punch_out_difference')->nullable();
+            $table->time('start');
+            $table->time('end')->nullable();
             $table->boolean('is_late');
             $table->integer('branch_id');
             $table->integer('schedule_id')->nullable();
