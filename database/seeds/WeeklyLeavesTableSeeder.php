@@ -25,7 +25,6 @@ class WeeklyLeavesTableSeeder extends Seeder
                     'day_1' => $now->copy()->format('l'),
                     'day_2' => $now->copy()->addDay()->format('l'),
                     'approved' => true,
-                    'clustered' => true,
                 ]);
             }
         }
