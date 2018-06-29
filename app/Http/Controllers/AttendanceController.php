@@ -57,13 +57,13 @@ class AttendanceController extends Controller
 
         //finding the schedule where the date is the today's date and the user id is of the pin's user
         $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
-        $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
+        $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
 
         if ($schedule == null) {//create log without schedule
             if ($log == null) {
                 return $this->createLog($user, $schedule, $now);
             } else {
-                $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
+                $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
                 return $this->punchOut($user, $log, $schedule, $now);
             }
         } else {//create log with schedule
@@ -74,7 +74,7 @@ class AttendanceController extends Controller
                 if ($log == null) {
                     return $this->createLog($user, $schedule, $now);
                 } else {
-                    $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
+                    $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
 
                     return $this->punchOut($user, $log, $schedule, $now);
                 }
@@ -82,7 +82,7 @@ class AttendanceController extends Controller
                 if ($log == null) {
                     return $this->createLog($user, null, $now);
                 } else {
-                    $log = Log::whereNull('punch_out_difference')->where('user_id', $user->id)->where('date', $date)->first();
+                    $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
 
                     return $this->punchOut($user, $log, null, $now);
                 }
@@ -97,30 +97,31 @@ class AttendanceController extends Controller
 
         if ($schedule == null) {
             $startTime = $now->copy()->format('H:i:s');
+            $log->is_late = null;
         } else {
             $startTime = Carbon::parse($schedule->start);
+            $diffInMins = gmdate("i:s", $now->diffInSeconds($startTime, false));
+
+            if ($diffInMins < -10) {
+                $log->is_late = true;
+            } else {
+                $log->is_late = false;
+            }
         }
 
-        $log->punch_in_difference = $now->diffInSeconds($startTime, false);
-        $diffInMins = gmdate("i:s", $log->punch_in_difference);
-
-        if ($diffInMins < -10) {
-            $log->is_late = true;
-        } else {
-            $log->is_late = false;
-        }
+        $log->start = $startTime;
 
         //need to get branch id from device_id
         $log->branch_id = $user->branch->id;
         $log->user_id = $user->id;
         $log->date = $now->copy()->format('Y-m-d');
-        $log->punch_out_difference = null;
+        $log->end = null;
 
-        // if ($schedule == null) {
-        //     $log->schedule_id = null;
-        // } else {
-        //     $log->schedule_id = $schedule->id;
-        // }
+        if ($schedule == null) {
+            $log->schedule_id = null;
+        } else {
+            $log->schedule_id = $schedule->id;
+        }
         
 
         $log->timestamps = false;
@@ -139,14 +140,16 @@ class AttendanceController extends Controller
             $endTime = Carbon::parse($schedule->end);
         }
         
-        $log->punch_out_difference = $now->diffInSeconds($endTime, false);
-        $diffInMins = gmdate("i:s", $log->punch_out_difference);
+        $log->end = $endTime;
         $log->timestamps = false;
         $log->save();
 
         //add hours worked calculator
+        $start = Carbon::parse($log->start);
+        $end = Carbon::parse($log->end);
+        $hours = $start->diffInHours($end);
 
-        $message = 'Hello '.$user->name.'. You have logged out!';
+        $message = 'Hello '.$user->name.'. You have logged out! You have worked for '.$hours.' hours.';
 
         return $this->successResponse ('Logged out! Have a nice day!!', 2);
     }
