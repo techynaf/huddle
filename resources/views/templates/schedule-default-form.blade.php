@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <label for="entry_b" class="col-form-label"></label>
+            <label for="entry_b" class="col-form-label">Entry Branch</label>
             <select name="entry_b">
                 <option value="{{$user->branch->id}}">{{$user->branch->name}}</option>
                 @foreach($branches as $branch)
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <label for="exit_b" class="col-form-label"></label>
+            <label for="exit_b" class="col-form-label">Exit Branch</label>
             <select name="exit_b">
                 <option value="{{$user->branch->id}}">{{$user->branch->name}}</option>
                 @foreach($branches as $branch)
