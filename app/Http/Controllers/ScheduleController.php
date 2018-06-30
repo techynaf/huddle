@@ -318,6 +318,14 @@ class ScheduleController extends Controller
     public function s (Request $request, $id)
     {
         $user = User::where('id', $id)->first();
-        dd('here');
+        
+        $dates = $request->date;
+        $schedule_ids = $request->s_id;
+        $starts = $request->start;
+        $ends = $request->ends;
+        $s_branches = $request->entry_b;
+        $e_branches = $request->exit_b;
+
+        dd($dates);
     }
 }
