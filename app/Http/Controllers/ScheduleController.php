@@ -322,10 +322,39 @@ class ScheduleController extends Controller
         $dates = $request->date;
         $schedule_ids = $request->s_id;
         $starts = $request->start;
-        $ends = $request->ends;
+        $ends = $request->end;
         $s_branches = $request->entry_b;
         $e_branches = $request->exit_b;
 
-        dd($dates);
+        for ($i = 0; $i < sizeof($dates); $i++) {
+            if ($schedule_ids[$i] == 'null') {
+                $schedule = new Schedule;
+                $schedule->user_id = $user->id;
+                $schedule->branch_id = $user->branch_id;
+                $schedule->date = $dates[$i];
+                $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
+                $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
+                $schedule->start_branch = $s_branches[$i];
+                $schedule->end_branch = $e_branches[$i];
+                $schedule->timestamps = false;
+                $schedule->save();
+            } elseif ($schedule_ids[$i] == 'off') {
+                # this has been put to filter out the off days
+            } else {
+                $schedule = Schedule::where('id', $schedule_ids[$i])->first();
+                $schedule->user_id = $user->id;
+                $schedule->branch_id = $user->branch_id;
+                $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
+                $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
+                $schedule->start_branch = $s_branches[$i];
+                $schedule->end_branch = $e_branches[$i];
+                $schedule->timestamps = false;
+                $schedule->save();
+            }
+        }
+
+        $url = '/create/schedule?date='.$dates[0];
+
+        return redirect($url)->with('success', 'Schedule created for '.$user->name);
     }
 }

@@ -5,7 +5,7 @@
                 <label for="start[]">Entry Time</label>
                 <div class="input-group">
                     <input type="time" class="form-control" name="start[]" value="{{$schedule->start}}" 
-                    placeholder="HH:MM:SS">
+                    placeholder="HH:MM">
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 <label for="end[]">Exit Time</label>
                 <div class="input-group">
                     <input type="time" class="form-control" name="end[]" value="{{$schedule->end}}" 
-                    placeholder="HH:MM:SS">
+                    placeholder="HH:MM">
                 </div>
             </div>
         </div>
