@@ -245,7 +245,7 @@ class ScheduleController extends Controller
         return redirect('/schedule/view')->with('success', 'Edit successfully stored');
     }
 
-    public function create (Request $request)
+    public function scheduler (Request $request)
     {
         if ($request->date == null) {
             $now = new Carbon;
@@ -315,7 +315,7 @@ class ScheduleController extends Controller
         }
     }
 
-    public function s (Request $request, $id)
+    public function schedule (Request $request, $id)
     {
         $user = User::where('id', $id)->first();
         
@@ -353,7 +353,7 @@ class ScheduleController extends Controller
             }
         }
 
-        $url = '/create/schedule?date='.$dates[0];
+        $url = '/scheduler?date='.$dates[0];
 
         return redirect($url)->with('success', 'Schedule created for '.$user->name);
     }

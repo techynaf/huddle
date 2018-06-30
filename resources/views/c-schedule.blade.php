@@ -20,7 +20,7 @@
                     </div>
                     <hr>
                     @foreach($users as $user)
-                    <form action="/create/schedule/{{$user->id}}" method="POST">
+                    <form action="/scheduler/{{$user->id}}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-3">{{$user->name}}</div>
