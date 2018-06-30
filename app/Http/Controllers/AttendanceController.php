@@ -126,7 +126,7 @@ class AttendanceController extends Controller
 
         $log->timestamps = false;
         $log->save();
-        $message = 'Hello '.$user->name.'. You have logged in!';
+        $message = 'Hello '.$user->name.'. You have logged in at '.$now->copy()->format('H:i');
 
         return $this->successResponse ($message, 1);
     }
@@ -149,7 +149,7 @@ class AttendanceController extends Controller
         $end = Carbon::parse($log->end);
         $hours = $start->diffInHours($end);
 
-        $message = 'Hello '.$user->name.'. You have logged out! You have worked for '.$hours.' hours.';
+        $message = 'Hello '.$user->name.'. You have logged out at'.$now->copy()->format('H:i').'. You have worked for '.$hours.' hours.';
 
         return $this->successResponse ($message, 2);
     }
