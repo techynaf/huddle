@@ -89,7 +89,7 @@
                         <li class="has-submenu">
                             <a href="/schedule/view"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
                             <ul class="submenu">
-                                <li><a href="/schedule/create">Create Schedule</a></li>
+                                <li><a href="/scheduler">Create Schedule</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
