@@ -73,7 +73,7 @@
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
                     <li class="has-submenu">
-                        <a href="/"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                        <a href="/dashboard"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
                     </li>
                     @if(auth()->user()->roles->first()->name == 'barista')
                         <li class="has-submenu">
@@ -83,6 +83,8 @@
                         <li class="has-submenu">
                             <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Leave Form </span> </a>
                             <ul class="submenu">
+                                <li><a href="/create/weekly">Create Weekly</a></li>
+                                <li><a href="/edit/weekly">Edit Weekly</a></li>
                                 <li><a href="/view/requests">Show Requests</a></li>
                             </ul>
                         </li>
