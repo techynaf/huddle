@@ -24,14 +24,6 @@ Route::get('/view/employee/logged', 'AdminController@viewLoggedIn')->middleware(
 Route::get('/view/employee', 'AdminController@showAll')->middleware('auth');
 Route::get('/view/employee/{id}', 'AdminController@show')->middleware('auth');
 
-Route::get('/ClassSchedule/create')->middleware('auth');
-Route::get('/test/schedule', 'AttendanceController@schedule')->middleware('auth');
-Route::post('/test/scheduler', 'AttendanceController@scheduler')->middleware('auth');
-Route::get('/test/log', 'AttendanceController@log')->middleware('auth');
-Route::get('/test/logout', 'AttendanceController@logout')->middleware('auth');
-Route::post('/test/logger', 'AttendanceController@logger')->middleware('auth');
-
-
 Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
 Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
 Auth::routes();
