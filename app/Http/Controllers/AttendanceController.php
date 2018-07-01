@@ -126,6 +126,7 @@ class AttendanceController extends Controller
 
         $log->timestamps = false;
         $log->save();
+        $user->logged_in = true;
         $message = 'Hello '.$user->name.'. You have logged in at '.$now->copy()->format('H:i');
 
         return $this->successResponse ($message, 1);
@@ -148,6 +149,7 @@ class AttendanceController extends Controller
         $start = Carbon::parse($log->start);
         $end = Carbon::parse($log->end);
         $hours = $start->diffInHours($end);
+        $user->logged_in = false;
 
         $message = 'Hello '.$user->name.'. You have logged out at'.$now->copy()->format('H:i').'. You have worked for '.$hours.' hours.';
 
@@ -175,59 +177,6 @@ class AttendanceController extends Controller
     }
 
     //create schedules for testing purposes
-    public function schedule ()
-    {
-        $value = true;
-        $now = new Carbon;
-        $date = $now->copy()->format('Y-m-d');
-        $schedule = Schedule::where('date', $date)->get();
-
-        return view('test-scheduler')->with('value', $value);
-    }
-
-    public function scheduler ()
-    {
-        $entries = 200;
-        $now = new Carbon;
-        $date = $now->copy()->format('Y-m-d');
-        $sTime = $now->copy()->format('H:i:s');
-        $eTime = $now->copy()->addHours(5)->format('H:i:s');
-
-        for ($i = 1; $i <= $entries; $i++) { 
-            $schedule = new Schedule;
-            $schedule->user_id = $i;
-            $schedule->date = $date;
-            $schedule->start = $sTime;
-            $schedule->end = $eTime;
-            $schedule->branch_id = 1;
-            $schedule->start_branch = 1;
-            $schedule->end_branch = 1;
-            $schedule->timestamps = false;
-            $schedule->save();
-        }
-
-        $message = '200 entries have been created. Please use the following pins for testing today: 1000 - 1199'; 
-
-        return redirect('/test/schedule')->with('success', $message)->with('value', true);
-    }
-
-    public function log ()
-    {
-        $now = new Carbon;
-        $date = $now->copy()->format('Y-m-d');
-        $users = User::all();
-
-        for ($i = count($users) - 1; $i >= 0; $i--) {
-            $log = Log::where('date', $date)->whereNull('punch_out_difference')->where('user_id', $users[$i]->id)->first();
-
-            if($log != null || $users[$i]->pin == 9999){
-                unset($users[$i]);
-            }
-        }
-
-        return view('test-employee-logger')->with('users', $users)->with('type', 'in');
-    }
-
     public function logOut ()
     {
         $now = new Carbon;
