@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Branch;
 use App\User;
+use App\Schedule;
+use Carbon\Carbon;
 use Validator;
 use Session;
 
@@ -54,10 +56,22 @@ class HomeController extends Controller
             'id' => 'required',
         ]);
 
-        // $f_name = explode(' ', $request->name);
-        // $f_name = $f_name[0];
+        $user = User::where('name', $request->name)->get();
 
-        $user = User::where('name', $request->name)->where('branch_id', $request->id)->get();
+        $now = new Carbon;
+        $dates = array();
+
+        while ($now->copy()->format('l') != 'Sunday') {
+            $now = $now->addDays(-1);
+        }
+
+        array_push($dates, $now->copy()->format('Y-m-d'));
+        $now = $now->addDay();
+
+        while ($now->copy()->format('l') != 'Sunday') {
+            array_push($dates, $now->copy()->format('Y-m-d'));
+            $now = $now->addDay();
+        }
 
         if (count($user) == 0) {
             return redirect('/')->with('error', 'There are no employee with name '.$request->name);
@@ -65,23 +79,31 @@ class HomeController extends Controller
             $url = '/view/employee/'.$user->first()->id;
             
             return redirect($url);
-        } else {
-            $filters = Branch::all();
-            $branch = Branch::where('id', $request->id)->first();
-            dd($user);
-
-            return view('home')->with('users', $user)->with('branches', $branch)->with('days', $this->days)->
-            with('filters', $filters)->with('flow', true);
         }
-        
     }
 
     public function homeView($branches)
     {
         $users = User::all();
         $filters = Branch::all();
+        $now = new Carbon;
+        $dates = array();
+
+        while ($now->copy()->format('l') != 'Sunday') {
+            $now = $now->addDays(-1);
+        }
+
+        array_push($dates, $now->copy()->format('Y-m-d'));
+        $now = $now->addDay();
+
+        while ($now->copy()->format('l') != 'Sunday') {
+            array_push($dates, $now->copy()->format('Y-m-d'));
+            $now = $now->addDay();
+        }
+
+        $schedules = Schedule::where('date', '>=', $dates[0])->where('date', '<=', $dates[6])->get();
 
         return view('home')->with('users', $users)->with('branches', $branches)->with('days', $this->days)->
-        with('filters', $filters)->with('flow', false);
+        with('filters', $filters)->with('flow', false)->with('schedules', $schedules)->with('dates', $dates);
     }
 }
