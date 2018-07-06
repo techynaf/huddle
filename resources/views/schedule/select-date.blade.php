@@ -13,13 +13,13 @@
                 <div class="card-box col-8">
                     <form action="/scheduler" method="GET">
                         <div class="row">
-                            <div class="col-2">
-                                <h4><label for="date" class="form-label-control">Date</label></h4>
+                            <div class="col-3">
+                                <h4><label for="date" class="form-label-control">Week date range</label></h4>
                             </div>
-                            <div class="col-6">
+                            <div class="col-5">
                                 <select name="date" class="form-control">
                                     @foreach($dates as $date)
-                                        <option value="{{$date}}">{{$date}}</option>
+                                        <option value="{{$date[0]}}">{{$date[0].' to '.$date[1]}}</option>
                                     @endforeach
                                 </select>
                             </div>

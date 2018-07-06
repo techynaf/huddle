@@ -257,11 +257,11 @@ class ScheduleController extends Controller
             $dates = array();
 
             for ($i = -4; $i <= 4; $i++) {
-                $date = $now->copy()->addWeeks($i)->format('Y-m-d');
+                $date = array($now->copy()->addWeeks($i)->format('Y-m-d'), $now->copy()->addWeeks($i + 1)->format('Y-m-d'));
                 array_push($dates, $date);
             }
 
-            return view('select-date')->with('dates', $dates);
+            return view('schedule/select-date')->with('dates', $dates);
         } else {
             $start = Carbon::parse($request->date);
             $d = $start;
