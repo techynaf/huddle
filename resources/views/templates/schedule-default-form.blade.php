@@ -4,7 +4,7 @@
             <div class="form-group mb-0">
                 <label for="start[]">Entry Time</label>
                 <div class="input-group">
-                    <input type="time" class="form-control" name="start[]" placeholder="HH:MM">
+                    <input type="time" class="form-control" name="start[]" placeholder="HH:MM" required>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <div class="form-group mb-0">
                 <label for="end[]">Exit Time</label>
                 <div class="input-group">
-                    <input type="time" class="form-control" name="end[]" placeholder="HH:MM">
+                    <input type="time" class="form-control" name="end[]" placeholder="HH:MM" required>
                 </div>
             </div>
         </div>
