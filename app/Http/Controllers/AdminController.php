@@ -7,7 +7,7 @@ use App\Log;
 use App\User;
 use App\Branch;
 use App\Schedule;
-use App\AllRequest;
+use App\Leave;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -155,6 +155,15 @@ class AdminController extends Controller
     }
 
     public function request ()
+    {
+        $user = auth()->user();
+
+        if ($user->roles->first() == 'barista') {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
+        }
+    }
+
+    public function requests ()
     {
         $role = auth()->user()->roles->first()->name;
         $request = '';
