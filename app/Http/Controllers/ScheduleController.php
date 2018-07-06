@@ -291,7 +291,7 @@ class ScheduleController extends Controller
                 array_push($schedules, $user_schedule);
             }
 
-            return view('c-schedule')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
+            return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
             with('branches', $branches);
         }
     }
