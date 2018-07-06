@@ -158,9 +158,13 @@ class AdminController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->roles->first() == 'barista') {
+        if ($user->roles->first()->name == 'barista') {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
         }
+
+        $leaves = Leave::where('branch_id', $user->branch->id)->whereNull('approved')->get();
+
+        dd($leaves);
     }
 
     public function requests ()

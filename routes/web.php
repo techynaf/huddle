@@ -28,6 +28,8 @@ Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
 Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
 Auth::routes();
 
+Route::get('/logout', 'Auth\LoginController@logout');
+
 //Schedule Routes
 Route::get('/schedule/create', 'ScheduleController@month')->middleware('auth');
 Route::get('/schedule/create/{year}/{month}', 'ScheduleController@day')->middleware('auth');

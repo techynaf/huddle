@@ -102,7 +102,7 @@
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="#"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
+                            <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
                         </li>
                     @else
 

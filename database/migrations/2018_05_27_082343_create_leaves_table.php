@@ -23,6 +23,7 @@ class CreateLeavesTable extends Migration
             $table->date('end');
             $table->boolean('is_approved')->nullable();
             $table->boolean('is_removed');
+            $table->integer('branch_id');
             $table->timestamps();
         });
     }

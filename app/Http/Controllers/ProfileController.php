@@ -104,7 +104,6 @@ class ProfileController extends Controller
             'phone' => 'required',
             'branch' => 'required',
             'role' => 'required',
-            'id' => 'required',
         ]);
 
         $pin = 0;
