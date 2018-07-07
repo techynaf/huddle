@@ -6,7 +6,7 @@
             <!-- Logo container-->
             <div class="logo">
                 <!-- Image Logo -->
-                <a href="index.html" class="logo">
+                <a href="/" class="logo">
                     <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
                     <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
                 </a>
