@@ -49,6 +49,10 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                            <label class="col-2 col-form-label" for="role">Employee ID</label>
+                                            <div class="col-4">
+                                                <input type="text" class="form-control" name="e_id" placeholder="Employee ID">
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-11"></div>

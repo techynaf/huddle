@@ -104,6 +104,7 @@ class ProfileController extends Controller
             'phone' => 'required',
             'branch' => 'required',
             'role' => 'required',
+            'e_id' => 'required',
         ]);
 
         $pin = 0;
@@ -124,8 +125,8 @@ class ProfileController extends Controller
         $user->branch_id = $request->branch;
         $user->pin = $pin;
         $user->password = bcrypt($pin);
-        $user->logged_in = null;
-        $user->employee_id = $request->id;
+        $user->logged_in = false;
+        $user->employee_id = $request->e_id;
         $role = Role::find($request->role);
         $user->save();
         $user->roles()->attach($role);
