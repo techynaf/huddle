@@ -12,6 +12,7 @@ use App\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRole;
+use QRCode;
 
 class ProfileController extends Controller
 {
@@ -131,7 +132,20 @@ class ProfileController extends Controller
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
+        $qrm = array($pin, $request->name, $request->e_id);
 
-        return redirect('/dashboard')->with('success', $message);
+        return $this->pCard($qrm);
+    }
+
+    public function pCard ($qrm)
+    {
+        $pin = $qrm[0];
+        $name = $qrm[1];
+        $e_id = $qrm[2];
+        $qr = QRCode::text($pin);
+        $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
+        $path = 'qrcodes/'.$pin.'.png';
+
+        return view('profile-created')->with('path', $path)->with('name', $name)->with('e_id', $e_id);
     }
 }
