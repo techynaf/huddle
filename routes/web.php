@@ -54,3 +54,7 @@ Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth'
 Route::post('/create/weekly/{id}', 'WeeklyLeavesController@store')->middleware('auth');
 Route::get('/edit/weekly', 'WeeklyLeavesController@edit')->middleware('auth');
 Route::post('/edit/weekly/{id}', 'WeeklyLeavesController@update')->middleware('auth');
+
+Route::get('/test', 'ProfileController@idCard')->middleware('auth');
+Route::get('/test2', 'ProfileController@idCard')->middleware('auth');
+Route::get('/qr', 'ProfileController@createQR')->middleware('auth');

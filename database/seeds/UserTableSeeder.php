@@ -14,8 +14,6 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $pin = 999;
-        $now = new Carbon;
-        $date = $now->format('Y-m-d');
         $url = array('', '');
 
         for ($i = 1; $i <= 200; $i++) {

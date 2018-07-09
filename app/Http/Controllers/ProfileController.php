@@ -144,8 +144,27 @@ class ProfileController extends Controller
         $e_id = $qrm[2];
         $qr = QRCode::text($pin);
         $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
-        $path = 'qrcodes/'.$pin.'.png';
 
-        return view('profile-created')->with('path', $path)->with('name', $name)->with('e_id', $e_id);
+        return view('profile-created')->with('pin', $pin)->with('name', $name)->with('e_id', $e_id);
+    }
+
+    public function idCard (Request $request)
+    {
+        if ($request->id == null) {
+            return view ('test')->with('flow', false);
+        } else {
+            $user = User::where('id', $request->id)->first();
+
+            return view('test')->with('user', $user)->with('flow', true);
+        }
+    }
+
+    public function createQR () {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $qr = QRCode::text($user->pin);
+            $qr->setOutFile('qrcodes/'.$user->pin.'.png')->png();
+        }
     }
 }
