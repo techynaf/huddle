@@ -114,7 +114,7 @@ class ScheduleController extends Controller
         return redirect($url)->with('success', 'Schedule successfully created.');
     }
 
-    public function view ()
+    public function view (Request $request)
     {
         $role = auth()->user()->roles->first()->name;
 
@@ -122,25 +122,46 @@ class ScheduleController extends Controller
             return redirect('/')->with('error', 'You are not authorized to view this page');
         }
 
-        if ($role == 'manager') {
-            $branch_id = auth()->user()->branch_id;
-            $schedule_last = Schedule::orderby('date', 'desc')->where('branch_id', $branch_id)->first();
-            $schedule_first = Schedule::orderby('date', 'asc')->where('branch_id', $branch_id)->first();
-            $date_last = $schedule_last->date;
-            $date_first = $schedule_first->date;
-            $date_last = explode('-', $date_last);
-            $date_first = explode('-', $date_first);
+        if ($request->date == null) {
+            $now = new Carbon;
+            
+            while ($now->copy()->format('l') != 'Sunday') {
+                $now = $now->addDays(-1);
+            }
+
+            $dates = array();
+
+            for ($i = -4; $i <= 4; $i++) {
+                $date = array($now->copy()->addWeeks($i)->format('Y-m-d'), $now->copy()->addWeeks($i + 1)->format('Y-m-d'));
+                array_push($dates, $date);
+            }
+
+            return view('schedule/select-date')->with('dates', $dates)->with('flow', false);
         } else {
-            $schedule_last = Schedule::orderby('date', 'desc')->first();
-            $schedule_first = Schedule::orderby('date', 'asc')->first();
-            $date_last = $schedule_last->date;
-            $date_first = $schedule_first->date;
-            $date_last = explode('-', $date_last);
-            $date_first = explode('-', $date_first);
+            $date_first = Carbon::parse($request->date);
+            $date_last = $date_first->copy()->addDays(6);
+            $schedules = array();
+            $branches = null;
+
+            if (auth()->user()->roles->first()->name == 'manager') {
+                array_push($schedules, Schedule::where('branch_id', auth()->user()->branch_id)->
+                where('date', '>=', $date_first->format('Y-m-d'))->where('date', '<=', $date_last)->get());
+                $branches = Branch::where('id', auth()->user()->branch_id)->first();
+            } else {
+                $branches = Branch::all();
+
+                foreach ($branches as $branch) {
+                    array_push($schedules, Schedule::where('branch_id', $branch->id)->
+                    where('date', '>=', $date_first->format('Y-m-d'))->where('date', '<=', $date_last)->get());
+                }
+            }
         }
 
-        return view('schedule-date-select')->with('date_last', $date_last)->with('date_first', $date_first)->
-        with('months', $this->months);
+        $date_first = $date_first->format('d F Y');
+        $date_last = $date_last->format('d F Y');
+
+        return view('schedule/show')->with('schedules', $schedules)->with('date_first', $date_first)->
+        with('date_last', $date_last)->with('branches', $branches);
     }
 
     public function showDates (Request $request)
@@ -247,6 +268,10 @@ class ScheduleController extends Controller
 
     public function scheduler (Request $request)
     {
+        if (auth()->user()->roles->first()->name == 'barista') {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
+        }
+
         if ($request->date == null) {
             $now = new Carbon;
             
@@ -261,7 +286,7 @@ class ScheduleController extends Controller
                 array_push($dates, $date);
             }
 
-            return view('schedule/select-date')->with('dates', $dates);
+            return view('schedule/select-date')->with('dates', $dates)->with('flow', true);
         } else {
             $start = Carbon::parse($request->date);
             $d = $start;
