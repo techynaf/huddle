@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-sm-12">
-            @if(auth()->user()->roles->first() == 'district-manager' || auth()->user()->roles->first() == 'super-admin')
+            @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
                 <label for="entry_b[]" class="col-form-label">Entry Branch</label>
                 <select name="entry_b[]">
                     <option value="{{$schedule->startingBranch->id}}">{{$schedule->startingBranch->name}}</option>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="col-sm-12">
-            @if(auth()->user()->roles->first() == 'district-manager' || auth()->user()->roles->first() == 'super-admin')
+            @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
                 <label for="exit_b[]" class="col-form-label">Exit Branch</label>
                 <select name="exit_b[]">
                     <option value="{{$schedule->endingBranch->id}}">{{$schedule->endingBranch->name}}</option>
