@@ -50,7 +50,7 @@
                             </a>
 
                             <!-- item-->
-                            <a href="{{ url('/logout') }}" class="dropdown-item notify-item">
+                            <a href="/logout" class="dropdown-item notify-item">
                                 <i class="ti-power-off m-r-5"></i> Logout
                             </a>
 
@@ -78,6 +78,9 @@
                     @if(auth()->user()->roles->first()->name == 'barista')
                         <li class="has-submenu">
                             <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Request Form </span> </a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
                         </li>
                     @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
                         <li class="has-submenu">
