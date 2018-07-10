@@ -166,5 +166,7 @@ class ProfileController extends Controller
             $qr = QRCode::text($user->pin);
             $qr->setOutFile('qrcodes/'.$user->pin.'.png')->png();
         }
+
+        return redirect('/')->with('success', 'QR Codes successfully generated');
     }
 }
