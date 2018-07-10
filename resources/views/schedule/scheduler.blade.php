@@ -30,7 +30,21 @@
                     <form action="/scheduler/{{$user->id}}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-3">{{$user->name}}</div>
+                            <div class="col-3">
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-11">
+                                        {{$user->name}}
+                                    </div>
+                                </div>
+                                <br><br><br>
+                                <div class="row">
+                                    <div class="col-1"></div>
+                                    <div class="col-11">
+                                        <button type="submit" class="btn btn-primary btn-rounded">Save</button>
+                                    </div>
+                                </div>
+                            </div>
                             
                             @foreach($schedules[$loop->index] as $schedule)
                                 <div class="col-1">
@@ -49,10 +63,6 @@
                                     @endif
                                 </div>
                             @endforeach
-
-                            <div class="col-1">
-                                <button type="submit" class="btn btn-primary btn-rounded">Save</button>
-                            </div>
                         </div>
                         <hr>
                     </form>
