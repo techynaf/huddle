@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="page-title">Create Schedule</h4>
+                    <h4 class="page-title">Scheduler</h4>
                 </div>
             </div>
 
@@ -14,7 +14,14 @@
                     <div class="row">
                         <div class="col-3">Name</div>
                         @foreach($days as $day)
-                            <div class="col-1">{{$day[0].' '.$day[1]}}</div>
+                            <div class="col-1">
+                                <div class="row">
+                                    {{date("D d M", strtotime($day[1]))}}
+                                </div>
+                                <div class="row">
+                                    {{date("Y", strtotime($day[1]))}}
+                                </div>
+                            </div>
                         @endforeach
                         <div class="col-1"></div>
                     </div>
