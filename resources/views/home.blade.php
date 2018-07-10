@@ -12,7 +12,6 @@
                     </div>
                     <div class="col-2">
                         <select class="form-control" name="id">
-                            <option value=""></option>
                             <option value="all">All</option>
                             @foreach($filters as $filter)
                                 <option value="{{$filter->id}}">{{$filter->name}}</option>
