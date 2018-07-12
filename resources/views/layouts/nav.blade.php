@@ -108,7 +108,9 @@
                             <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
                         </li>
                     @else
-
+                        <li class="has-submenu">
+                            <a href="/login"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
+                        </li>
                     @endif
                     {{-- <li class="has-submenu">
                         <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
