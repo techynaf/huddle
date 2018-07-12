@@ -54,7 +54,12 @@
 </head>
 <body>
     @guest
-        
+        @if(Request::is('login'))
+            
+        @else
+            <br>
+            @include('layouts.guest-nav')
+        @endif
     @else
         <br>
         @include('layouts.nav')
