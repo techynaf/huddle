@@ -19,7 +19,9 @@
             @foreach($dates as $date)
                 @if ($schedule->user->id == $user->id && $schedule->date == $date)
                     <div class="col-1">
-                        {{$schedule->start.' - '.$schedule->end}}
+                        {{date("h:m A", strtotime($schedule->start))}}
+                        <br>
+                        {{date("h:m A", strtotime($schedule->end))}}
                     </div>
                     @break
                 @endif
