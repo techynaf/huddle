@@ -3,9 +3,28 @@
 @section('content')
     <div class="wrapper">
         <div class="container-fluid">
-            <div class="row">
-                <h4 class="page-title">Schedule for {{$date_first.' to '.$date_last}}</h4>
-            </div>
+            <form action="/schedule/view" method="get">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h4 class="page-title">Schedules for {{date("D d M", strtotime($date_first)).' to '.date("D d M", strtotime($date_last))}}</h4>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-2">
+                        <h5>Select another date range</h5>
+                    </div>
+                    <div class="col-2">
+                        <select name="date" class="form-control">
+                            <option value="">Current Week</option>
+                            @foreach($dates as $date)
+                                <option value="{{$date[0]}}">{{$date[0].' to '.$date[1]}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
 
             @foreach($branches as $branch)
                 <div class="row">

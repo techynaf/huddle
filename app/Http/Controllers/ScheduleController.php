@@ -15,6 +15,7 @@ use Session;
 class ScheduleController extends Controller
 {
     private $months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    private $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Friday', 'Saturday');
 
     //include the year in this method as well
     public function month ()
@@ -122,46 +123,37 @@ class ScheduleController extends Controller
             return redirect('/')->with('error', 'You are not authorized to view this page');
         }
 
+        $date_first = null;
+
         if ($request->date == null) {
-            $now = new Carbon;
-            
-            while ($now->copy()->format('l') != 'Sunday') {
-                $now = $now->addDays(-1);
-            }
-
-            $dates = array();
-
-            for ($i = -4; $i <= 4; $i++) {
-                $date = array($now->copy()->addWeeks($i)->format('Y-m-d'), $now->copy()->addWeeks($i + 1)->format('Y-m-d'));
-                array_push($dates, $date);
-            }
-
-            return view('schedule/select-date')->with('dates', $dates)->with('flow', false);
+            $$date_first = $this->findSun(new Carbon);
         } else {
             $date_first = Carbon::parse($request->date);
-            $date_last = $date_first->copy()->addDays(6);
-            $schedules = array();
-            $branches = null;
+        }
 
-            if (auth()->user()->roles->first()->name == 'manager') {
-                array_push($schedules, Schedule::where('branch_id', auth()->user()->branch_id)->
+        $date_last = $date_first->copy()->addDays(6);
+        $schedules = array();
+        $branches = null;
+
+        if (auth()->user()->roles->first()->name == 'manager') {
+            array_push($schedules, Schedule::where('branch_id', auth()->user()->branch_id)->
+            where('date', '>=', $date_first->format('Y-m-d'))->where('date', '<=', $date_last)->get());
+            $branches = Branch::where('id', auth()->user()->branch_id)->first();
+        } else {
+            $branches = Branch::all();
+
+            foreach ($branches as $branch) {
+                array_push($schedules, Schedule::where('branch_id', $branch->id)->
                 where('date', '>=', $date_first->format('Y-m-d'))->where('date', '<=', $date_last)->get());
-                $branches = Branch::where('id', auth()->user()->branch_id)->first();
-            } else {
-                $branches = Branch::all();
-
-                foreach ($branches as $branch) {
-                    array_push($schedules, Schedule::where('branch_id', $branch->id)->
-                    where('date', '>=', $date_first->format('Y-m-d'))->where('date', '<=', $date_last)->get());
-                }
             }
         }
 
+        $dates = $this->findWeeks();
         $date_first = $date_first->format('d F Y');
         $date_last = $date_last->format('d F Y');
 
         return view('schedule/show')->with('schedules', $schedules)->with('date_first', $date_first)->
-        with('date_last', $date_last)->with('branches', $branches);
+        with('date_last', $date_last)->with('branches', $branches)->with('dates', $dates);
     }
 
     public function showDates (Request $request)
@@ -275,25 +267,12 @@ class ScheduleController extends Controller
         $start = null;
 
         if ($request->date == null) {
-            $now = new Carbon;
-            
-            while ($now->copy()->format('l') != 'Sunday') {
-                $now = $now->addDays(-1);
-            }
-
-            $start = Carbon::parse($now->format('Y-m-d'));
+            $start = $this->findSun(new Carbon);
         } else {
             $start = Carbon::parse($request->date);
         }
 
-        $dates = array();
-        $s = $start;
-        $e = $start->copy()->addDays(6);
-
-        for ($i = -4; $i <= 4; $i++) {
-            $d = array($s->copy()->addWeeks($i)->format('d-m-Y'), $e->copy()->addWeeks($i)->format('d-m-Y'));
-            array_push($dates, $d);
-        }
+        $dates = $this->findWeeks();
 
         $d = $start;
         $end = $start->copy()->addDays(6);
@@ -381,5 +360,32 @@ class ScheduleController extends Controller
         $url = '/scheduler?date='.$dates[0];
 
         return redirect($url)->with('success', 'Schedule created for '.$user->name);
+    }
+
+    public function findSun ($date)
+    {
+        if ($date == null) {
+            $date = new Carbon;
+        }
+
+        while ($date->copy()->format('l') != 'Sunday') {
+            $date = $date->addDays(-1);
+        }
+
+        return $date;
+    }
+
+    public function findWeeks () {
+        $date = $this->findSun(new Carbon);
+        $dates = array();
+        $s = $date;
+        $e = $s->copy()->addDays(6);
+
+        for ($i = -4; $i <= 4; $i++) {
+            $d = array($s->copy()->addWeeks($i)->format('d-m-Y'), $e->copy()->addWeeks($i)->format('d-m-Y'));
+            array_push($dates, $d);
+        }
+
+        return $dates;
     }
 }
