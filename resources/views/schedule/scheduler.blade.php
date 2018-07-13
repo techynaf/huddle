@@ -14,6 +14,7 @@
                     </div>
                     <div class="col-2">
                         <select name="date" class="form-control">
+                            <option value="">Current Week</option>
                             @foreach($dates as $date)
                                 <option value="{{$date[0]}}">{{$date[0].' to '.$date[1]}}</option>
                             @endforeach
@@ -37,14 +38,10 @@
                                 {{date("Y", strtotime($day[1]))}}
                             </div>
                         @endforeach
-                        <div class="col-md-1 pt-2">Action</div>
-                        <div class="col-md-1"></div>
+                        <div class="col-md-2 pt-2 text-center">Action</div>
                     </div><!-- row -->
                     <hr>
-                </div>    
-                
-                
-
+                </div>
                 
                  <div class="table">
                      @foreach($users as $user)
@@ -62,7 +59,7 @@
                                                 DAY OFF
                                             </div>
                                         @elseif($schedule == false)
-                                            <input type="hidden" name="s_id[]" value="null">
+                                            <input type="hidden" name="s_id[]" value="0">
                                             @include('templates.schedule-default-form')
                                         @else
                                             <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
@@ -70,10 +67,9 @@
                                         @endif
                                     </div>
                                 @endforeach
-                                <div class="col-md-1 pt-2">
-                                    <button type="button" class="btn btn-success btn-rounded">Save</button>
+                                <div class="col-md-2 pt-2 text-center">
+                                    <button type="submit" class="btn btn-success btn-rounded">Save</button>
                                 </div>
-                                <div class="col-md-1"></div>
                             </div>
                         </form>
                         <hr>

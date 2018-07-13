@@ -355,31 +355,26 @@ class ScheduleController extends Controller
         $ends = $request->end;
         $s_branches = $request->entry_b;
         $e_branches = $request->exit_b;
-
+        $counter = 0;
         for ($i = 0; $i < sizeof($dates); $i++) {
-            if ($schedule_ids[$i] == 'null') {
-                $schedule = new Schedule;
+            if ($schedule_ids[$i] != 'off') {
+                $schedule = null;
+                if ($schedule_ids[$i] == '0') {
+                    dd($schedule_ids[$i]);
+                    $schedule = new Schedule;
+                } else {
+                    $schedule = Schedule::where('id', $schedule_ids[$i])->first();
+                }
+
                 $schedule->user_id = $user->id;
                 $schedule->branch_id = $user->branch_id;
-                $schedule->date = $dates[$i];
-                $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
-                $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
-                $schedule->start_branch = $s_branches[$i];
-                $schedule->end_branch = $e_branches[$i];
+                $schedule->start = Carbon::parse($starts[$counter])->format('H:i:s');
+                $schedule->end = Carbon::parse($ends[$counter])->format('H:i:s');
+                $schedule->start_branch = $s_branches[$counter];
+                $schedule->end_branch = $e_branches[$counter];
                 $schedule->timestamps = false;
                 $schedule->save();
-            } elseif ($schedule_ids[$i] == 'off') {
-                # this has been put to filter out the off days
-            } else {
-                $schedule = Schedule::where('id', $schedule_ids[$i])->first();
-                $schedule->user_id = $user->id;
-                $schedule->branch_id = $user->branch_id;
-                $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
-                $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
-                $schedule->start_branch = $s_branches[$i];
-                $schedule->end_branch = $e_branches[$i];
-                $schedule->timestamps = false;
-                $schedule->save();
+                $counter++;
             }
         }
 
