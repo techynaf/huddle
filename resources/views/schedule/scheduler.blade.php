@@ -3,11 +3,27 @@
 @section('content')
     <div class="wrapper">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4 class="page-title">Scheduler</h4>
+            <form action="/scheduler" method="get">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h4 class="page-title">Scheduler for {{date("D d M", strtotime($days[0][1])).' to '.date("D d M", strtotime($days[6][1]))}}</h4>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-2">
+                        <h5>Select another date range</h5>
+                    </div>
+                    <div class="col-2">
+                        <select name="date" class="form-control">
+                            @foreach($dates as $date)
+                                <option value="{{$date[0]}}">{{$date[0].' to '.$date[1]}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                    </div>
                 </div>
-            </div>
+            </form>
 
             <div class="bg-white">
                 <div class="header bg-light">

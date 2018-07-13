@@ -40,17 +40,6 @@
     <link href="/frontend/plugins/datatables/select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    @if(Request::is('scheduler'))
-        <style>
-			.container {position:relative;}
-			.row {clear: both;}
-			.row div {float: left; width: 0px; margin-bottom: 20px}
-
-			.header .row{ /*position: fixed;*/ background:none;}
-			.table {height: 500px; overflow-y: auto; overflow-x: hidden}
-		</style>
-    @endif
 </head>
 <body>
     @guest

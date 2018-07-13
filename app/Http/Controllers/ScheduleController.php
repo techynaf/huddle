@@ -272,6 +272,8 @@ class ScheduleController extends Controller
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
         }
 
+        $start = null;
+
         if ($request->date == null) {
             $now = new Carbon;
             
@@ -279,46 +281,49 @@ class ScheduleController extends Controller
                 $now = $now->addDays(-1);
             }
 
-            $dates = array();
-
-            for ($i = -4; $i <= 4; $i++) {
-                $date = array($now->copy()->addWeeks($i)->format('Y-m-d'), $now->copy()->addWeeks($i + 1)->format('Y-m-d'));
-                array_push($dates, $date);
-            }
-
-            return view('schedule/select-date')->with('dates', $dates)->with('flow', true);
+            $start = Carbon::parse($now->format('Y-m-d'));
         } else {
             $start = Carbon::parse($request->date);
-            $d = $start;
-            $end = $start->copy()->addDays(6);
-            $start = $start->format('Y-m-d');
-            $end = $end->format('Y-m-d');
-            $days = array(array($d->copy()->format('l'), $d->copy()->format('Y-m-d')));
-            $d = $d->addDay();
-
-            while($d->copy()->format('l') != 'Sunday') {
-                $x = array($d->copy()->format('l'), $d->copy()->format('Y-m-d'));
-                array_push($days, $x);
-                $d = $d->addDay();
-            }
-
-            $users = User::where('branch_id', auth()->user()->branch->id)->get();
-            $branches = Branch::all();
-            $schedules = array();
-
-            foreach ($users as $user) {
-                $user_schedule = array();
-
-                foreach ($days as $date) {
-                    array_push($user_schedule, $this->dayOffChecker($user, $date[1]));
-                }
-
-                array_push($schedules, $user_schedule);
-            }
-
-            return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
-            with('branches', $branches);
         }
+
+        $dates = array();
+        $s = $start;
+        $e = $start->copy()->addDays(6);
+
+        for ($i = -4; $i <= 4; $i++) {
+            $d = array($s->copy()->addWeeks($i)->format('d-m-Y'), $e->copy()->addWeeks($i)->format('d-m-Y'));
+            array_push($dates, $d);
+        }
+
+        $d = $start;
+        $end = $start->copy()->addDays(6);
+        $start = $start->format('Y-m-d');
+        $end = $end->format('Y-m-d');
+        $days = array(array($d->copy()->format('l'), $d->copy()->format('Y-m-d')));
+        $d = $d->addDay();
+
+        while($d->copy()->format('l') != 'Sunday') {
+            $x = array($d->copy()->format('l'), $d->copy()->format('Y-m-d'));
+            array_push($days, $x);
+            $d = $d->addDay();
+        }
+
+        $users = User::where('branch_id', auth()->user()->branch->id)->get();
+        $branches = Branch::all();
+        $schedules = array();
+
+        foreach ($users as $user) {
+            $user_schedule = array();
+
+            foreach ($days as $date) {
+                array_push($user_schedule, $this->dayOffChecker($user, $date[1]));
+            }
+
+            array_push($schedules, $user_schedule);
+        }
+
+        return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
+        with('branches', $branches)->with('dates', $dates);
     }
 
     public function dayOffChecker ($user, $date)
