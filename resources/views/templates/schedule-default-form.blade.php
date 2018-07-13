@@ -1,5 +1,5 @@
 <label for="start[]">Entry Time</label>
-<input type="time" class="form-control timepicker3" name="start[]" required>
+<input type="time" class="form-control timepicker3" name="start[]" min="1" max="12" required>
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
     <label for="entry_b[]" class="col-form-label">Entry Branch</label>
@@ -14,7 +14,7 @@
 @endif
 
 <label>Exit Time</label>
-<input type="time" class="form-control timepicker3" name="end[]" required>
+<input type="time" class="form-control timepicker3" name="end[]" min="1" max="12" required>
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
     <label for="exit_b[]" class="col-form-label">Exit Branch</label>

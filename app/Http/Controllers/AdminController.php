@@ -173,12 +173,12 @@ class AdminController extends Controller
         $request = '';
         $flow = 'null';
 
-        if ($role == 'manager' || $role == 'super-admin') {
-            $requests = AllRequest::whereNull('manager_approved')->whereNotNull('start')->
+        if ($role == 'manager') {
+            $requests = Leave::whereNull('is_approved')->whereNotNull('start')->
             where('branch_id', auth()->user()->branch_id)->orderBy('id', 'desc')->get();
             $flow = 'manager';
         } elseif ($role == 'super-admin' || $role == 'owner' || $role == 'admin') {
-            $requests = AllRequest::where('manager_approved', true)->whereNull('hr_approved')->
+            $requests = Leave::where('is_approved', true)->whereNull('hr_approved')->
             whereNotNull('start')->orderBy('id', 'desc')->get();
             $flow = 'hr';
         } else {
@@ -186,6 +186,13 @@ class AdminController extends Controller
         }
         
         return view('view-requests')->with('requests', $requests)->with('flow', $flow);
+    }
+
+    public function r ()
+    {
+        if (auth()->user()->roles->first()->name == 'barista') {
+            return redirect ('/')->with('error', 'You are not authorized to view the page');
+        }
     }
 
     public function requestProcess (Request $request, $id)
@@ -200,22 +207,22 @@ class AdminController extends Controller
             return redirect('/dashboard')->with('error', 'You are not authorized to access this page');
         }
 
-        $req = AllRequest::where('id', $id)->first();
+        $req = Leave::where('id', $id)->first();
         
         if ($flow) {
             if ($request->status == 'approved') {
-                $req->manager_approved = true;
+                $req->is_approved = true;
                 $req->save();
             } elseif ($request->status == 'declined') {
-                $req->manager_approved = false;
+                $req->is_approved = false;
                 $req->save();
             }
         } elseif (!$flow) {
             if ($request->status == 'approved') {
-                $req->hr_approved = true;
+                $req->is_approved = true;
                 $req->save();
             } elseif ($request->status == 'declined') {
-                $req->hr_approved = false;
+                $req->is_approved = false;
                 $req->save();
             }
         }
