@@ -58,3 +58,6 @@ Route::post('/edit/weekly/{id}', 'WeeklyLeavesController@update')->middleware('a
 Route::get('/test', 'ProfileController@idCard')->middleware('auth');
 Route::get('/test2', 'ProfileController@idCard')->middleware('auth');
 Route::get('/qr', 'ProfileController@createQR')->middleware('auth');
+
+//Login redirect route
+Route::get('/logger', 'ProfileController@logger')->middleware('auth');

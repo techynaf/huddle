@@ -169,4 +169,15 @@ class ProfileController extends Controller
 
         return redirect('/')->with('success', 'QR Codes successfully generated');
     }
+
+    public function logger ()
+    {
+        if (auth()->user() == null) {
+            return redirect ('/login');
+        } elseif (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
+            return redirect ('/scheduler');
+        } else {
+            return redirect ('/');
+        }
+    }
 }

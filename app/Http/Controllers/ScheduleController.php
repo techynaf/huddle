@@ -123,12 +123,10 @@ class ScheduleController extends Controller
             return redirect('/')->with('error', 'You are not authorized to view this page');
         }
 
-        $date_first = null;
+        $date_first = $this->findSun(new Carbon);
 
-        if ($request->date == null) {
-            $$date_first = $this->findSun(new Carbon);
-        } else {
-            $date_first = Carbon::parse($request->date);
+        if ($request->date != null) {
+            $$date_first = Carbon::parse($request->date);
         }
 
         $date_last = $date_first->copy()->addDays(6);
