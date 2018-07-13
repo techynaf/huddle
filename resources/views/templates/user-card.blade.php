@@ -14,19 +14,16 @@
                 <i class="fas fa-times 2x"></i>
             @endif
         </div>
-
-        @foreach($schedules as $schedule)
-            @foreach($dates as $date)
-                @if ($schedule->user->id == $user->id && $schedule->date == $date)
-                    <div class="col-1">
-                        {{date("h:m A", strtotime($schedule->start))}}
-                        <br>
-                        {{date("h:m A", strtotime($schedule->end))}}
-                    </div>
-                    @break
-                @endif
-            @endforeach
+        @foreach($schedules[$loop->index] as $schedule)
+            @if($schedule == null)
+                <div class="col-1"></div>
+            @else
+                <div class="col-1">
+                    {{date("h:m A", strtotime($schedule->start))}}
+                    <br>
+                    {{date("h:m A", strtotime($schedule->end))}}
+                </div>
+            @endif
         @endforeach
-
     </div>
 </a>

@@ -70,7 +70,14 @@ class HomeController extends Controller
 
     public function homeView($branches)
     {
-        $users = User::all();
+        $users = null;
+
+        if (count($branches) == 1) {
+            $users = User::where('branch_id', $branches[0]->id)->get();
+        } else {
+            $users = User::all();
+        }
+
         $filters = Branch::all();
         $now = new Carbon;
         $dates = array();
@@ -87,7 +94,18 @@ class HomeController extends Controller
             $now = $now->addDay();
         }
 
-        $schedules = Schedule::where('date', '>=', $dates[0])->where('date', '<=', $dates[6])->get();
+        $schedules = array();
+
+        foreach ($users as $user) {
+            $ss = array();
+
+            foreach ($dates as $date) {
+                $s = Schedule::where('user_id', $user->id)->where('date', $date)->first();
+                array_push($ss, $s);
+            }
+
+            array_push($schedules, $ss);
+        }
 
         return view('home')->with('users', $users)->with('branches', $branches)->with('days', $this->days)->
         with('filters', $filters)->with('flow', false)->with('schedules', $schedules)->with('dates', $dates);
