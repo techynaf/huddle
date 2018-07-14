@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->integer('pin')->unique();
             $table->string('password');
             $table->integer('branch_id');
-            $table->string('employee_id');
+            $table->string('employee_id')->unique();
             $table->text('img_url')->nullable();
             $table->rememberToken();
             $table->boolean('logged_in')->nullable();
