@@ -12,45 +12,6 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function viewLoggedIn (Request $request)
-    {
-        $now = new Carbon;
-        $date = $now->format('Y-m-d');
-        $roles = auth()->user()->roles;
-        $user_role = '';
-        foreach ($roles as $role) {
-            $user_role = $role->name;
-        }
-
-        if ($user_role == 'braista') {
-            return redirect('/dashboard')->with('error', 'You are not authorized to access this page');
-        }
-
-        if ($user_role == 'manager') {
-            $log = Log::where('date', $date)->where('branch_id', auth()->user()->branch_id)->whereNull('end')->get();
-            $lists = array();
-
-            if (count($log) != 0) {
-                $lists = $this->listMaker($log, $lists, $date);
-            }
-
-            //Return a view with all those logged into that branch
-            return view('logged-in')->with('lists', $lists)->with('value', false);
-        } elseif (auth()->user()->roles->first() == 'admin' || $user_role == 'owner' || $user_role == 'super-admin') {
-            $log = Log::where('date', $date)->whereNull('end')->get();
-            $lists = array();
-
-            if (count($log) != 0) {
-                $lists = $this->listMaker($log, $lists, $date);
-            }
-
-            //Return a view with all those logged in all branch
-            return view('logged-in')->with('lists', $lists)->with('value', false);
-        } else {
-            return redirect('/dashboard')->with('error', 'Sorry, you are not authorized to access this!');
-        }
-    }
-
     public function listMaker ($log, $lists, $date)
     {
         foreach ($log as $value) {
@@ -192,6 +153,12 @@ class AdminController extends Controller
     {
         if (auth()->user()->roles->first()->name == 'barista') {
             return redirect ('/')->with('error', 'You are not authorized to view the page');
+        }
+
+        $leaves = null;
+
+        if (auth()->user()->roles->first()->name == 'manager') {
+            $leaves = Leave::where('branch_id', auth()->user()->branch_id)->whereNull('is_approved');
         }
     }
 
