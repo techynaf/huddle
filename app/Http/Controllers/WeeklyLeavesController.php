@@ -34,7 +34,7 @@ class WeeklyLeavesController extends Controller
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
         $leaves = WeeklyLeave::where('user_id', $id)->where('date_1', '>=', $start->copy()->format('Y-m-d'))->
-        where('date_2', '<=', $end->copy()->format('Y-m-d'))->where('clustered', true)->get();
+        where('date_2', '<=', $end->copy()->format('Y-m-d'))->get();
 
         if (count($leaves) != 0) {
             return redirect('/')->with('error', 'Weekly Leaves already exits for this date range, please use edit to change them');
@@ -60,7 +60,6 @@ class WeeklyLeavesController extends Controller
                 $leave->date_2 = $day_2->copy()->format('Y-m-d');
                 $leave->day_1 = $request->day_1;
                 $leave->day_2 = $request->day_2;
-                $leave->clustered = true;
                 $leave->approved = null;
                 $leave->save();
             }
@@ -74,8 +73,10 @@ class WeeklyLeavesController extends Controller
     {
         $now = new Carbon;
 
+        $l1 = WeeklyLeave::where('user_id', auth()->user()->id)->where('date_1', '>=',$now->copy()->format('Y-m-d'))->first();
+
         return view('edit-weekly-leave')->with('start', $now->copy()->format('Y-m-d'))->
-        with('end', $now->copy()->addWeek()->format('Y-m-d'))->with('days', $this->days);
+        with('end', $now->copy()->addWeek()->format('Y-m-d'))->with('days', $this->days)->with('leave', $l1);
     }
 
     public function update (Request $request, $id)
@@ -122,7 +123,6 @@ class WeeklyLeavesController extends Controller
                 $leave->date_2 = $day_2->copy()->format('Y-m-d');
                 $leave->day_1 = $request->day_1;
                 $leave->day_2 = $request->day_2;
-                $leave->clustered = true;
                 $leave->approved = null;
                 $leave->save();
                 $j++;
