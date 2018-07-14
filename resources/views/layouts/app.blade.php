@@ -40,22 +40,48 @@
     <link href="/frontend/plugins/datatables/select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script type="text/JavaScript">
+        function AutoRefresh( t ) {
+            setTimeout("location.reload(true);", t);
+        }
+    </script>
 </head>
-<body>
-    @guest
-        @if(Request::is('login'))
-            
+@if(Request::is('/') || Request::is('branch'))
+    <body onload="JavaScript:AutoRefresh(60000);">
+        @guest
+            @if(Request::is('login'))
+                
+            @else
+                <br>
+                @include('layouts.guest-nav')
+            @endif
         @else
             <br>
-            @include('layouts.guest-nav')
+            @include('layouts.nav')
         @endif
-    @else
-        <br>
-        @include('layouts.nav')
-    @endif
 
-    @include('layouts.messages')
-    @yield('content')
-    @include('layouts.footer')
-</body>
+        @include('layouts.messages')
+        @yield('content')
+        @include('layouts.footer')
+    </body>
+@else
+    <body>
+        @guest
+            @if(Request::is('login'))
+                
+            @else
+                <br>
+                @include('layouts.guest-nav')
+            @endif
+        @else
+            <br>
+            @include('layouts.nav')
+        @endif
+
+        @include('layouts.messages')
+        @yield('content')
+        @include('layouts.footer')
+    </body>
+@endif
 </html>
