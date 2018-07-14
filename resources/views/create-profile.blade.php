@@ -21,23 +21,9 @@
                                             <div class="col-4">
                                                 <input type="text" class="form-control" name="name" placeholder="Name">
                                             </div>
-                                            <label class="col-2 col-form-label" for="email">Email</label>
+                                            <label class="col-2 col-form-label" for="role">Employee ID</label>
                                             <div class="col-4">
-                                                <input type="text" class="form-control" name="email" placeholder="Email Address">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="phone">Phone</label>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control" name="phone" placeholder="Phone Number">
-                                            </div>
-                                            <label class="col-2 col-form-label" for="branch">Branch</label>
-                                            <div class="col-4">
-                                                <select name="branch" class="form-control">
-                                                    @foreach($branches as $branch)
-                                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" class="form-control" name="e_id" placeholder="Employee ID">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -49,11 +35,16 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <label class="col-2 col-form-label" for="role">Employee ID</label>
+                                            <label class="col-2 col-form-label" for="branch">Branch</label>
                                             <div class="col-4">
-                                                <input type="text" class="form-control" name="e_id" placeholder="Employee ID">
+                                                <select name="branch" class="form-control">
+                                                    @foreach($branches as $branch)
+                                                        <option value="{{$branch->id}}">{{$branch->name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
+                                        
                                         <div class="row">
                                             <div class="col-11"></div>
                                             <div class="col-1">

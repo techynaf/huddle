@@ -101,8 +101,6 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
             'branch' => 'required',
             'role' => 'required',
             'e_id' => 'required',
@@ -122,7 +120,6 @@ class ProfileController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->phone = $request->phone;
-        $user->email = $request->email;
         $user->branch_id = $request->branch;
         $user->pin = $pin;
         $user->password = bcrypt($pin);
