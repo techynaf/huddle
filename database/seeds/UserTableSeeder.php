@@ -22,7 +22,7 @@ class UserTableSeeder extends Seeder
             DB::table('users')->insert([
                 'name' => 'user'.$i,
                 'pin' => $pin,
-                'employee_id' => 'something',
+                'employee_id' => 'something'.$i,
                 'img_url' => '/frontend/images/users/avatar-1.jpg',
                 'password' => bcrypt('bangladesh'),
                 'branch_id' => rand(1, 6),
