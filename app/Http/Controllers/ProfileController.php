@@ -162,7 +162,7 @@ class ProfileController extends Controller
 
         foreach ($users as $user) {
             $qr = QRCode::text($user->pin);
-            $qr->setOutFile('qrcodes/'.$user->pin.'.svg')->svg();
+            $qr->setOutFile('qrcodes/'.$user->pin.'.png')->png();
         }
 
         return redirect('/')->with('success', 'QR Codes successfully generated');
