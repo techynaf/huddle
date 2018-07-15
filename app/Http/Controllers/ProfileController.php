@@ -48,13 +48,11 @@ class ProfileController extends Controller
         }
 
         foreach ($dates as $date) {
-            $l = Log::where('id', $user->id)->where('date', $date)->get();
+            $l = Log::where('user_id', $user->id)->where('date', $date)->get();
             array_push($logs, $l);
         }
 
         $path = 'qrcodes/'.$user->pin.'.png';
-        
-        dd($dates);
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
         with('days', $days)->with('logs', $logs);

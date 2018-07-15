@@ -86,13 +86,13 @@
                                                 @foreach($logs[$loop->index] as $log)
                                                     <div class="row">
                                                         <div class="col-sm-6">
-                                                            {{$log->start}}
+                                                            {{date("g:i A", strtotime($log->start))}}
                                                         </div>
                                                         <div class="col-sm-6">
                                                             @if($log->end == null)
                                                                 Logged in
                                                             @else
-                                                                {{$log->end}}
+                                                            {{date("g:i A", strtotime($log->end))}}
                                                             @endif
                                                         </div>
                                                     </div>
