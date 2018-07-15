@@ -48,22 +48,25 @@
                             <h2>Current Week Schedule</h2>
                         </div>
                         <div class="widget-container">
-                            <table class="table">
-                                @if(count($schedules) == 0)
-                                    <br><br>
-                                    <br><hr>
-                                        <p class="text-center">Schedule has yet to be posted</p>
-                                    <hr><br>
-                                    <br><br>
-                                @else
-                                <div class="row">
-                                    <div class="col-sm-6">Scheduled</div>
-                                    <div class="col-sm-6">Actual</div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        @foreach($schedules as $schedule)
+                            @if(count($schedules) == 0)
+                                <br><br>
+                                <br><hr>
+                                    <p class="text-center">Schedule has yet to be posted</p>
+                                <hr><br>
+                                <br><br>
+                            @else
+                            <div class="row">
+                                <div class="col-sm-6">Scheduled</div>
+                                <div class="col-sm-6">Actual</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6"><hr></div>
+                                <div class="col-sm-6"><hr></div>
+                            </div>
+                            
+                                @foreach($schedules as $schedule)
+                                    <div class="row">
+                                        <div class="col-sm-6">
                                             <div class="row">
                                                 <div class="col-sm-4">
                                                     {{$days[$loop->index]}}
@@ -71,12 +74,38 @@
                                                 <div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div>
                                                 <div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div>
                                             </div>
-                                            <hr>
-                                        @endforeach
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @if(count($logs[$loop->index]) == 0)
+                                                <div class="row">
+                                                    <hr>
+                                                    No records yet
+                                                    <hr>
+                                                </div>
+                                            @else
+                                                @foreach($logs[$loop->index] as $log)
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            {{$log->start}}
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            @if($log->end == null)
+                                                                Logged in
+                                                            @else
+                                                                {{$log->end}}
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                                @endif
-                            </table>
+                                    <div class="row">
+                                        <div class="col-sm-6"><hr></div>
+                                        <div class="col-sm-6"><hr></div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -84,37 +113,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-5">
                     <div class="card-box">
-                        <div>
-                            <div class="card-title">
-                                <h2>Analytics for Current Month</h2>
-                            </div>
-                            @if($flow)
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td class="cell-sm">Late Count</td>
-                                            <td>{{$analytics[0]}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cumulative late time</td>
-                                            <td>{{$analytics[1]}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Early Leave Count</td>
-                                            <td>{{$analytics[2]}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cumulative early leave time</td>
-                                            <td>{{$analytics[3]}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            @else
-                                <br><hr>
-                                    <p class="text-center">No analytics for current month yet</p>
-                                <hr><br>
-                            @endif
-                        </div>
+                        <br><br><br><br><br><br><br><br><br>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-7">

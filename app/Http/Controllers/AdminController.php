@@ -64,55 +64,39 @@ class AdminController extends Controller
 
         $role = auth()->user()->roles->first()->name;
 
-
-        $hours = 'Please enter date range';
-        $lates = 'Nothing';
-
-        if ($request->start_date != null) {
-            $hours = 0;
-            $lates = 0;
-            $start = Carbon::parse($request->start_date)->format('Y-m-d');
-            $end = Carbon::parse($request->end_date)->format('Y-m-d');
-
-            if ($start > $end) {
-                return redirect('/view/employee/'.$user->id)->with('error', 'Invalid Date Range!!');
-            }
-
-            if ($end == null) {
-                $now = new Carbon;
-                $end = $now->format('Y-m-d');
-            }
-
-            $logs = Log::where('date', '>=', $start)->where('date', '<=', $end)
-            ->where('user_id', $id)->whereNotNull('punch_out_difference')->get();
-
-            foreach ($logs as $log) {
-                $schedule = Schedule::where('date', $log->date)->where('user_id', $id)->first();
-                $in_time = Carbon::parse($schedule->start);
-                $out_time = Carbon::parse($schedule->end);
-                
-                $diff = (-1) * $log->punch_in_difference;
-                $in_time->addSeconds($diff);
-
-                $diff = (-1) * $log->punch_out_difference;
-                $out_time->addSeconds($diff);
-                
-                $hours += $in_time->diffInMinutes($out_time);
-
-                if ($log->is_late) {
-                    $lates++;
-                }
-            }
-        }
-        
-        if ($role == 'super-admin' || $role == 'owner' || $role == 'manager' || $role == 'admin') {
-            return view('show')->with('user', $user)
-            ->with('hours', $hours)
-            ->with('lates', $lates)
-            ->with('today', $today);
-        } else {
+        if ($role == 'barista') {
             return redirect('/')->with('error', 'You are not authorized.');
         }
+
+
+        $now = new Carbon;
+
+        while ($now->copy()->format('l') != 'Sunday') {
+            $now = $now->copy()->subDay();
+        }
+
+        $yM = $now->copy()->format('Y-m');
+        
+        $monthStart = Carbon::parse($yM.'-1');
+        $monthEnd = $monthStart->copy()->addMonth()->subDay()->format('Y-m-d');
+        $monthStart = $monthStart->format('Y-m-d');
+        $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+        $startDate = $now->format('Y-m-d');
+        $endDate = $now->addDays(6)->format('Y-m-d');
+        $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $startDate)->
+        where('date', '<=', $endDate)->get();
+        $requests = Leave::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $logs = array();
+
+        foreach ($schedules as $schedule) {
+            $l = Log::where('id', $user->id)->where('date', $schedule->date)->get();
+            array_push($logs, $l);
+        }
+
+        $path = 'qrcodes/'.$user->pin.'.png';
+
+        return view('show')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
+        with('days', $days)->with('logs', $logs);
     }
 
     public function request ()

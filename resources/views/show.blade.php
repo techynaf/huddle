@@ -42,58 +42,67 @@
                 <div class="col-sm-12 col-md-8">
                     <div class="card-box">
                         <div class="card-title">
-                            <h2>Employee Analytics</h2>
+                            <h2>Current Week Schedule</h2>
                         </div>
                         <div class="widget-container">
+                            @if(count($schedules) == 0)
+                                <br><br>
+                                <br><hr>
+                                    <p class="text-center">Schedule has yet to be posted</p>
+                                <hr><br>
+                                <br><br>
+                            @else
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="p-20">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <h3>Time worked</h3>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <h3>{{$hours}}</h3>
+                                <div class="col-sm-6">Scheduled</div>
+                                <div class="col-sm-6">Actual</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6"><hr></div>
+                                <div class="col-sm-6"><hr></div>
+                            </div>
+                            
+                                @foreach($schedules as $schedule)
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    {{$days[$loop->index]}}
+                                                </div> 
+                                                <div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div>
+                                                <div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div>
                                             </div>
                                         </div>
-                                        <hr>
-                                        @if($lates != 'Nothing')
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <h4>Late Count</h4>
+                                        <div class="col-sm-6">
+                                            @if(count($logs[$loop->index]) == 0)
+                                                <div class="row">
+                                                    <hr>
+                                                    No records yet
+                                                    <hr>
                                                 </div>
-                                                <div class="col-md-9">
-                                                    <h4>{{$lates}}</h4>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        @endif
-                                        <form action="/view/employee/{{$user->id}}" class="form-horizontal">
-                                            <div class="form-group row">
-                                                <label class="control-label col-sm-2"><h4>Date Range</h4></label>
-                                                <div class="col-sm-1 control-label">
-                                                    <h4><label for="start_date">From</label></h4>
-                                                </div>
-                                                <div class="col-sm-4 control-label">
-                                                    <input type="date" class="form-control" name="start_date" placeholder="YYYY-MM-DD">
-                                                </div>
-                                                <div class="col-sm-1 control-label">
-                                                    <h4><label for="end_date">To</label></h4>
-                                                </div>
-                                                <div class="col-sm-4 control-label">
-                                                    <input type="date" class="form-control" name="end_date" placeholder="YYYY-MM-DD">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-10"></div>
-                                                <div class="col-md-2">
-                                                    <button type="submit" class="btn btn-rounded btn-primary">Enter Dates</button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                            @else
+                                                @foreach($logs[$loop->index] as $log)
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            {{$log->start}}
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            @if($log->end == null)
+                                                                Logged in
+                                                            @else
+                                                                {{$log->end}}
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                            </div>							
+                                    <div class="row">
+                                        <div class="col-sm-6"><hr></div>
+                                        <div class="col-sm-6"><hr></div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

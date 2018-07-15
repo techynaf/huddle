@@ -40,39 +40,17 @@ class ProfileController extends Controller
         $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $startDate)->
         where('date', '<=', $endDate)->get();
         $requests = Leave::where('user_id', $user->id)->orderBy('id', 'desc')->get();
-        $logs = Log::where('user_id', $user->id)->where('date', '>=', $monthStart)->
-        where('date', '<=', $monthEnd)->get();
-        
-        $flow = false;
-        $lateCount = 0;
-        $lateTime = 0;
-        $earlyLeave = 0;
-        $earlyTime = 0;
+        $logs = array();
 
-        if (count($logs) != 0) {
-            foreach ($logs as $log) {
-                if ($log->is_late) {
-                    $lateCount++;
-                    $lateTime += $log->punch_in_difference;
-                }
-
-                if ($log->punch_out_difference > 0) {
-                    $earlyLeave++;
-                    $earlyTime += $log->punch_out_difference;
-                }
-            }
-
-            $lateTime = $lateTime * (-1);
-            $lateTime = gmdate('i', $lateTime);
-            $earlyTime = gmdate('i', $earlyTime);
-            $flow = true;
+        foreach ($schedules as $schedule) {
+            $l = Log::where('id', $user->id)->where('date', $schedule->date)->get();
+            array_push($logs, $l);
         }
 
-        $analytics = array($lateCount, $lateTime, $earlyLeave, $earlyTime);
         $path = 'qrcodes/'.$user->pin.'.png';
 
-        return view('dashboard')->with('user', $user)->with('requests', $requests)->with('flow', $flow)->
-        with('schedules', $schedules)->with('days', $days)->with('analytics', $analytics);
+        return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
+        with('days', $days)->with('logs', $logs);
     }
 
     public function create ()
