@@ -27,12 +27,12 @@
                                         <td>{{$user->roles->first()->name}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Email</td>
-                                        <td>{{$user->email}}</td>
+                                        <td>PIN</td>
+                                        <td>{{$user->pin}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Mobile</td>
-                                        <td>{{$user->phone}}</td>
+                                        <td>QR Code</td>
+                                        <td><a href="{{ asset('qrcodes/'.$user->pin.'.png') }}" target="_blank">Download</a></td>
                                     </tr>
                                 </tbody>
                             </table>
