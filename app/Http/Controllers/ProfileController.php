@@ -69,6 +69,7 @@ class ProfileController extends Controller
         }
 
         $analytics = array($lateCount, $lateTime, $earlyLeave, $earlyTime);
+        $path = 'qrcodes/'.$user->pin.'.png';
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('flow', $flow)->
         with('schedules', $schedules)->with('days', $days)->with('analytics', $analytics);
@@ -94,7 +95,7 @@ class ProfileController extends Controller
         }
         $branches = Branch::all();
 
-        return view('create-profile')->with('branches', $branches)->with('roles', $rs);
+        return view('profile/create')->with('branches', $branches)->with('roles', $rs);
     }
 
     public function store (Request $request)
@@ -161,7 +162,7 @@ class ProfileController extends Controller
 
         foreach ($users as $user) {
             $qr = QRCode::text($user->pin);
-            $qr->setOutFile('qrcodes/'.$user->pin.'.png')->png();
+            $qr->setOutFile('qrcodes/'.$user->pin.'.svg')->svg();
         }
 
         return redirect('/')->with('success', 'QR Codes successfully generated');
