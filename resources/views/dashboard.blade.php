@@ -27,14 +27,6 @@
                                         <td>{{$user->roles->first()->name}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Email</td>
-                                        <td>{{$user->email}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mobile</td>
-                                        <td>{{$user->phone}}</td>
-                                    </tr>
-                                    <tr>
                                         <td>PIN</td>
                                         <td>{{$user->pin}}</td>
                                     </tr>
