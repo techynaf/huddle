@@ -19,9 +19,9 @@
                 <div class="col-1"></div>
             @else
                 <div class="col-1">
-                    {{date("h:m A", strtotime($schedule->start))}}
+                    {{date("g:i A", strtotime($schedule->start))}}
                     <br>
-                    {{date("h:m A", strtotime($schedule->end))}}
+                    {{date("g:i A", strtotime($schedule->end))}}
                 </div>
             @endif
         @endforeach

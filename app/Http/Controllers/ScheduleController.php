@@ -325,7 +325,7 @@ class ScheduleController extends Controller
     public function schedule (Request $request, $id)
     {
         $user = User::where('id', $id)->first();
-        
+
         $dates = $request->date;
         $schedule_ids = $request->s_id;
         $starts = $request->start;
@@ -337,7 +337,6 @@ class ScheduleController extends Controller
             if ($schedule_ids[$i] != 'off') {
                 $schedule = null;
                 if ($schedule_ids[$i] == '0') {
-                    dd($schedule_ids[$i]);
                     $schedule = new Schedule;
                 } else {
                     $schedule = Schedule::where('id', $schedule_ids[$i])->first();
@@ -349,6 +348,7 @@ class ScheduleController extends Controller
                 $schedule->end = Carbon::parse($ends[$counter])->format('H:i:s');
                 $schedule->start_branch = $s_branches[$counter];
                 $schedule->end_branch = $e_branches[$counter];
+                $schedule->date = $dates[$i];
                 $schedule->timestamps = false;
                 $schedule->save();
                 $counter++;

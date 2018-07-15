@@ -56,16 +56,25 @@
                                     <hr><br>
                                     <br><br>
                                 @else
-                                <tbody>
-                                    @foreach($schedules as $schedule)
-                                        <tr>
-                                            <td>{{$days[$loop->index]}}</td>
-                                            <td>{{$schedule->date}}</td>
-                                            <td>{{$schedule->start}}</td>
-                                            <td>{{$schedule->end}}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                <div class="row">
+                                    <div class="col-sm-6">Scheduled</div>
+                                    <div class="col-sm-6">Actual</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        @foreach($schedules as $schedule)
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    {{$days[$loop->index]}}
+                                                </div> 
+                                                <div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div>
+                                                <div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div>
+                                            </div>
+                                            <hr>
+                                        @endforeach
+                                    </div>
+                                </div>
                                 @endif
                             </table>
                         </div>
