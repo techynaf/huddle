@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
         $user = auth()->user();
         $schedules = array();
-        $requests = Leave::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $requests = Leave::where('user_id', $user->id)->where('is_removed', false)->orderBy('id', 'desc')->get();
         $logs = array();
 
         foreach ($dates as $date) {
@@ -106,7 +106,7 @@ class ProfileController extends Controller
         $user->phone = $request->phone;
         $user->branch_id = $request->branch;
         $user->pin = $pin;
-        $user->password = bcrypt($pin);
+        $user->password = bcrypt('bangladesh');
         $user->logged_in = false;
         $user->employee_id = $request->e_id;
         $role = Role::find($request->role);

@@ -19,7 +19,7 @@ Route::get('/auth/logout', 'Auth\AuthController@logout');
 Route::get('/dashboard', 'ProfileController@index')->middleware('auth');
 Route::post('/store/requests/{id}/manager', 'AdminController@requestProcess')->middleware('auth');
 Route::post('/store/requests/{id}/hr', 'AdminController@requestProcess')->middleware('auth');
-Route::get('/view/requests', 'AdminController@request')->middleware('auth');
+
 Route::get('/view/employee/logged', 'AdminController@viewLoggedIn')->middleware('auth');
 Route::get('/view/employee', 'AdminController@showAll')->middleware('auth');
 Route::get('/view/employee/{id}', 'AdminController@show')->middleware('auth');
@@ -45,9 +45,11 @@ Route::post('/scheduler/{id}', 'ScheduleController@schedule')->middleware('auth'
 //Leave Routes
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');
 Route::post('/request/{id}', 'LeavesController@storeLeaveRequest')->middleware('auth');
+Route::post('/request/{id}/process', 'LeavesController@process')->middleware('auth');
 Route::post('/request/edit/{id}', 'LeavesController@edit')->middleware('auth');
 Route::post('/request/update/{id}', 'LeavesController@update')->middleware('auth');
 Route::post('/request/remove/{id}', 'LeavesController@remove')->middleware('auth');
+Route::get('/view/requests', 'LeavesController@show')->middleware('auth');
 
 //Weekly Leave Routes
 Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth');

@@ -7,6 +7,7 @@ use DB;
 use App\User;
 use App\Leave;
 use App\LeaveTypes;
+use Carbon\Carbon;
 
 class LeavesController extends Controller
 {
@@ -24,23 +25,20 @@ class LeavesController extends Controller
             'subject' => 'required',
             'body' => 'required',
             'type' => 'required',
-            'days' => 'required'
+            'start' => 'required',
+            'end' => 'required'
         ]);
 
-        if (is_int(!$request->days) || $request->days <= 0) {
-            return redirect('')->with('error', 'Number of cannot be decimal, negative or zero');
-        }
-
-        $this->create($request);
+        $this->create($request, $id);
 
         return redirect('/dashboard')->with('success', 'Your request has been successfully added.');
     }
 
-    public function create($request)
+    public function create($request, $id)
     {
         $leave = new Leave;
         $leave->user_id = $id;
-        $leave->is_approved = null;
+        $leave->is_approved = 0;
         $leave->subject = $request->subject;
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
@@ -55,7 +53,7 @@ class LeavesController extends Controller
         $leave = Leave::where('id', $id)->first();
         $types = LeaveTypes::where('id', '!=', 1)->get();
 
-        if ($leave->is_approved != null) {
+        if ($leave->is_approved != 0) {
             return redirect('/')->with('error', 'You cannot edit a leave if it is not pending');
         }
 
@@ -82,5 +80,37 @@ class LeavesController extends Controller
         $leave->save();
 
         return redirect('/')->with('success', 'Leave application successfully removed.');
+    }
+
+    public function show ()
+    {
+        if (auth()->user()->roles->first()->name == 'barista') {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
+        }
+
+        $leaves = null;
+
+        if (auth()->user()->roles->first()->name == 'manager') {
+            $leaves = Leave::where('branch_id', auth()->user()->branch_id)->orderBy('created_at', 'desc')->get();
+        } elseif (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
+            $leaves = Leave::orderBy('created_at', 'desc')->get();
+        }
+
+        return view('requests/show-leave')->with('leaves', $leaves);
+    }
+
+    public function process (Request $request, $id)
+    {
+        $leave = Leave::where('id', $id)->first();
+        $leave->is_approved = $request->status;
+        $leave->save();
+        $message = 'Leave has been ';
+
+        if ($request->status) {
+            $message = $message.'approved';
+        } else {
+            $message = $message.'declined';
+        }
+        return redirect ('/view/requests')->with('success', $message);
     }
 }

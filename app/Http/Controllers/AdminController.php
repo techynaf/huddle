@@ -75,21 +75,26 @@ class AdminController extends Controller
             $now = $now->copy()->subDay();
         }
 
-        $yM = $now->copy()->format('Y-m');
-        
-        $monthStart = Carbon::parse($yM.'-1');
-        $monthEnd = $monthStart->copy()->addMonth()->subDay()->format('Y-m-d');
-        $monthStart = $monthStart->format('Y-m-d');
+        $dates = array($now->copy()->format('Y-m-d'));
+        $now = $now->addDay();
+
+        while ($now->copy()->format('l') != 'Sunday') {
+            array_push($dates, $now->copy()->format('Y-m-d'));
+            $now = $now->addDay();
+        }
+
         $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-        $startDate = $now->format('Y-m-d');
-        $endDate = $now->addDays(6)->format('Y-m-d');
-        $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $startDate)->
-        where('date', '<=', $endDate)->get();
+        $schedules = array();
         $requests = Leave::where('user_id', $user->id)->orderBy('id', 'desc')->get();
         $logs = array();
 
-        foreach ($schedules as $schedule) {
-            $l = Log::where('id', $user->id)->where('date', $schedule->date)->get();
+        foreach ($dates as $date) {
+            $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
+            array_push($schedules, $schedule);
+        }
+
+        foreach ($dates as $date) {
+            $l = Log::where('user_id', $user->id)->where('date', $date)->get();
             array_push($logs, $l);
         }
 

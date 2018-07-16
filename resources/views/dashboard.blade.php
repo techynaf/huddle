@@ -66,15 +66,21 @@
                             
                                 @foreach($schedules as $schedule)
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    {{$days[$loop->index]}}
-                                                </div> 
-                                                <div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div>
-                                                <div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div>
+                                        @if($schedule == null)
+                                            <div class="col-sm-6 text-center">
+                                                No Schedule for this day
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        {{$days[$loop->index]}}
+                                                    </div> 
+                                                    <div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div>
+                                                    <div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div>
+                                                </div>
+                                            </div>
+                                        @endif
                                         <div class="col-sm-6">
                                             @if(count($logs[$loop->index]) == 0)
                                                 <div class="row">
@@ -151,10 +157,10 @@
                                             </div>
                                         @endif
                                         <div class="col-1">
-                                            @if($request->hr_approved === 1)
+                                            @if($request->is_approved === 1)
                                                 <div class="btn btn-success">Approved</div>
                                             @else
-                                                @if($request->manager_approved === 0 || $request->hr_approved === 0)
+                                                @if($request->is_approved === 2)
                                                     <div class="btn btn-danger">Declined</div>
                                                 @else
                                                     <div class="btn btn-secondary">Pending</div>
