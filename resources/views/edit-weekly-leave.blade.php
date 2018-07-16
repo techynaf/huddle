@@ -22,7 +22,7 @@
                     <div class="card-box col-12">
                         <div class="row">
                             <div class="col-12">
-                                <h4>Select Days</h4>
+                                <h4><strong>Select Days</strong></h4>
                             </div>
                         </div>
 
@@ -56,7 +56,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-12">
-                                    <h4>Select Range</h4>
+                                    <h4><strong>Select Range</strong></h4>
                                 </div>
                             </div>
                             <br>

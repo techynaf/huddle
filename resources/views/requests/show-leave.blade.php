@@ -51,7 +51,7 @@
                                             </div>
                                             <div class="col-5 ml-3 border-right">
                                                 <div class="row">
-                                                    <h4>{{$leave->subject}}</h4>
+                                                    <h4><strong>{{$leave->subject}}</strong></h4>
                                                 </div>
                                                 <div class="row">
                                                     {{$leave->body}}

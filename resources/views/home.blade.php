@@ -90,7 +90,7 @@
                             </div>
                         </form>
                     @endif
-                    <div class="row">
+                    <div class="row text-center">
                         <div class="col-12">
                             <div class="card-box">
                                 <div class="row">
