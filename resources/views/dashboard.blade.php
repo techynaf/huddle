@@ -56,7 +56,7 @@
 
                 </div>
                 <div class="col-sm-12 col-md-8 border-left">
-                        <div class="card-title">
+                        <div class="card-title text-center">
                             <h2>Current Week Schedule</h2>
                         </div>
                         <div class="widget-container">
@@ -67,9 +67,18 @@
                                 <hr><br>
                                 <br><br>
                             @else
+                            <div class="row text-center">
+                                <div class="col-sm-6 text-center"><h4>Scheduled</h4></div>
+                                <div class="col-sm-6 text-center"><h4>Actual</h4></div>
+                            </div>
                             <div class="row">
-                                <div class="col-sm-6">Scheduled</div>
-                                <div class="col-sm-6">Actual</div>
+                                    <div class="col-sm-6"><hr></div>
+                                    <div class="col-sm-6"><hr></div>
+                                </div>
+                            <div class="row text-center">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-2">Start</div>
+                                <div class="col-sm-2">End</div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6"><hr></div>
@@ -87,9 +96,14 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         {{$days[$loop->index]}}
-                                                    </div> 
-                                                    <strong><div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div></strong>
-                                                    <strong><div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div></strong>
+                                                    </div>
+                                                    
+                                                        <div class="col-sm-4 text-center">
+                                                            <strong>{{date("g:i A", strtotime($schedule->start))}}</strong>
+                                                        </div>
+                                                        <div class="col-sm-4 text-center">
+                                                            <strong>{{date("g:i A", strtotime($schedule->end))}}</strong>    
+                                                        </div>
                                                 </div>
                                             </div>
                                         @endif
@@ -133,7 +147,7 @@
                 </div>
                 <div class="col-sm-12 col-md-8 border-left">
                         <div class="card-title">
-                            <h2>Requests made</h2>
+                            <h2>Requests Made</h2>
                         </div>
                         <div class="widget-container">
                             @if(count($requests) == 0)
