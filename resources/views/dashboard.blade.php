@@ -9,9 +9,9 @@
                 </div>
             </div>
             
-            <div class="row">
-                <div class="col-sm-12 col-md-4">
-                    <div class="card-box">
+            <div class="row card-box">
+                <div class="col-sm-12 col-md-4 border-right">
+
                         <div class="text-center">
                             <img src="/frontend/images/pic.jpg" class="rounded-circle thumb-xl img-thumbnail m-b-10" alt="profile-image">
                         </div>
@@ -30,6 +30,10 @@
                                         <td>PIN</td>
                                         <td>{{$user->pin}}</td>
                                     </tr>
+                                    <tr>
+                                        <td>Branch</td>
+                                        <td>{{$user->branch->name}}</td>
+                                    </tr>
                                     @if(auth()->user()->branch->name == 'HR and Admin' || auth()->user()->roles->first()->name == 'super-admin')
                                         <tr>
                                             <td>QR Code</td>
@@ -39,11 +43,19 @@
                                 </tbody>
                             </table>
                             <hr>
+
+                            <div class="row text-center">
+                                <div class="col-3"></div>
+                                <div class="col-6 border-right border-left">
+                                    <img src="{{'qrcodes/'.$user->pin.'.png'}}" width="150" height="150" alt="{{'QR code of'.$user->name}}">
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                            <hr>
                         </div>
-                    </div>
+
                 </div>
-                <div class="col-sm-12 col-md-8">
-                    <div class="card-box">
+                <div class="col-sm-12 col-md-8 border-left">
                         <div class="card-title">
                             <h2>Current Week Schedule</h2>
                         </div>
@@ -76,8 +88,8 @@
                                                     <div class="col-sm-4">
                                                         {{$days[$loop->index]}}
                                                     </div> 
-                                                    <div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div>
-                                                    <div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div>
+                                                    <strong><div class="col-sm-2">{{date("g:i A", strtotime($schedule->start))}}</div></strong>
+                                                    <strong><div class="col-sm-2">{{date("g:i A", strtotime($schedule->end))}}</div></strong>
                                                 </div>
                                             </div>
                                         @endif
@@ -92,13 +104,13 @@
                                                 @foreach($logs[$loop->index] as $log)
                                                     <div class="row">
                                                         <div class="col-sm-6">
-                                                            {{date("g:i A", strtotime($log->start))}}
+                                                            <strong>{{date("g:i A", strtotime($log->start))}}</strong>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             @if($log->end == null)
                                                                 Logged in
                                                             @else
-                                                            {{date("g:i A", strtotime($log->end))}}
+                                                            <strong>{{date("g:i A", strtotime($log->end))}}</strong>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -113,17 +125,13 @@
                                 @endforeach
                             @endif
                         </div>
-                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12 col-md-5">
-                    <div class="card-box">
+            <div class="row card-box">
+                <div class="col-sm-12 col-md-4 border-right">
                         <br><br><br><br><br><br><br><br><br>
-                    </div>
                 </div>
-                <div class="col-sm-12 col-md-7">
-                    <div class="card-box">
+                <div class="col-sm-12 col-md-8 border-left">
                         <div class="card-title">
                             <h2>Requests made</h2>
                         </div>
@@ -181,7 +189,6 @@
                                 @endforeach
                             @endif
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
