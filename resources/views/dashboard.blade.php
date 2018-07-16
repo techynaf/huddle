@@ -135,17 +135,26 @@
                             @else
                             <hr>
                                 @foreach($requests as $request)
-                                    <h4>{{$request->subject}}</h4>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <h4>{{$request->subject}}</h4>
+                                        </div>
+                                        @if($request->is_approved == 0)
+                                            <div class="col-2 text-center">
+                                                <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>
+                                            </div>
+                                        @endif
+                                    </div>
                                     <div class="row">
                                         @if($request->start != null)
                                             <div class="col-3">
                                                 Date range
                                             </div>
                                             <div class="col-3">
-                                                {{$request->start}}
+                                                {{date("D d M", strtotime($request->start))}}
                                             </div>
                                             <div class="col-3">
-                                                {{$request->end}}
+                                                {{date("D d M", strtotime($request->end))}}
                                             </div>
                                             <div class="col-1"></div>
                                         @else
