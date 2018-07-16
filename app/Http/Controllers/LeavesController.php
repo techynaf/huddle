@@ -57,7 +57,7 @@ class LeavesController extends Controller
             return redirect('/')->with('error', 'You cannot edit a leave if it is not pending');
         }
 
-        return view('edit-leave')->with('leave', $leave)->with('types', $types);
+        return view('requests/edit-leave')->with('leave', $leave)->with('types', $types);
     }
 
     public function update (Request $request, $id)
@@ -111,6 +111,7 @@ class LeavesController extends Controller
         } else {
             $message = $message.'declined';
         }
+
         return redirect ('/view/requests')->with('success', $message);
     }
 }

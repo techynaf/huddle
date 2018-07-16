@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="p-20">
-                                    <form class="form-horizontal" role="form" action="/update/{{$leave->id}}" method="POST">
+                                    <form class="form-horizontal" role="form" action="/request/update/{{$leave->id}}" method="POST">
                                         @csrf
                                         <div class="form-group row">
                                             <label class="col-2 col-form-label">Leave Type</label>

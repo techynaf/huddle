@@ -46,7 +46,7 @@ Route::post('/scheduler/{id}', 'ScheduleController@schedule')->middleware('auth'
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');
 Route::post('/request/{id}', 'LeavesController@storeLeaveRequest')->middleware('auth');
 Route::post('/request/{id}/process', 'LeavesController@process')->middleware('auth');
-Route::post('/request/edit/{id}', 'LeavesController@edit')->middleware('auth');
+Route::get('/request/edit/{id}', 'LeavesController@edit')->middleware('auth');
 Route::post('/request/update/{id}', 'LeavesController@update')->middleware('auth');
 Route::post('/request/remove/{id}', 'LeavesController@remove')->middleware('auth');
 Route::get('/view/requests', 'LeavesController@show')->middleware('auth');
