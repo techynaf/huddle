@@ -95,10 +95,7 @@
                             <a href="/scheduler"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
                         </li>
                         <li class="has-submenu">
-                            <a href="/view/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
-                            <ul class="submenu">
-                                <li><a href="/create/employee">Create Profile</a></li>
-                            </ul>
+                            <a href="/create/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
                         </li>
                         <li class="has-submenu">
                             <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
