@@ -16,7 +16,7 @@ class LeavesController extends Controller
         $types = LeaveTypes::where('id', '!=', 1)->get();
         $id = auth()->user()->id;
 
-        return view('request')->with('id', $id)->with('types', $types);
+        return view('requests/create')->with('id', $id)->with('types', $types);
     }
 
     public function storeLeaveRequest (Request $request, $id)
@@ -29,13 +29,6 @@ class LeavesController extends Controller
             'end' => 'required'
         ]);
 
-        $this->create($request, $id);
-
-        return redirect('/dashboard')->with('success', 'Your request has been successfully added.');
-    }
-
-    public function create($request, $id)
-    {
         $leave = new Leave;
         $leave->user_id = $id;
         $leave->is_approved = 0;
@@ -46,6 +39,8 @@ class LeavesController extends Controller
         $leave->type = $request->type;
         $leave->is_removed = false;
         $leave->save();
+
+        return redirect('/dashboard')->with('success', 'Your request has been successfully added.');
     }
 
     public function edit (Request $request, $id)

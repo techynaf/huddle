@@ -92,10 +92,7 @@
                             </ul>
                         </li>
                         <li class="has-submenu">
-                            <a href="/schedule/view"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
-                            <ul class="submenu">
-                                <li><a href="/scheduler">Create Schedule</a></li>
-                            </ul>
+                            <a href="/scheduler"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
                         </li>
                         <li class="has-submenu">
                             <a href="/view/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
@@ -108,7 +105,6 @@
                         </li>
                     @else
                         <li class="has-submenu">
-                            <a href="/login"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
                         </li>
                     @endif
                     {{-- <li class="has-submenu">

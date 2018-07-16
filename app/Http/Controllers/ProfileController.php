@@ -113,31 +113,10 @@ class ProfileController extends Controller
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
-        $qrm = array($pin, $request->name, $request->e_id);
-
-        return $this->pCard($qrm);
-    }
-
-    public function pCard ($qrm)
-    {
-        $pin = $qrm[0];
-        $name = $qrm[1];
-        $e_id = $qrm[2];
         $qr = QRCode::text($pin);
         $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
 
         return view('profile-created')->with('pin', $pin)->with('name', $name)->with('e_id', $e_id);
-    }
-
-    public function idCard (Request $request)
-    {
-        if ($request->id == null) {
-            return view ('test')->with('flow', false);
-        } else {
-            $user = User::where('id', $request->id)->first();
-
-            return view('test')->with('user', $user)->with('flow', true);
-        }
     }
 
     public function createQR () {

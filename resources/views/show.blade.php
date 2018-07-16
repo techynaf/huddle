@@ -12,7 +12,7 @@
                     <div class="col-sm-12 col-md-4 border-right">
     
                             <div class="text-center">
-                                <img src="/frontend/images/pic.jpg" class="rounded-circle thumb-xl img-thumbnail m-b-10" alt="profile-image">
+                                <h2 class="text-center">{{$user->roles->first()->name.' Information'}}</h2>
                             </div>
                             <div>
                                 <table class="table">

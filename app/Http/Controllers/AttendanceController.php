@@ -179,14 +179,4 @@ class AttendanceController extends Controller
             'state' => $state
         ]);
     }
-
-    //create schedules for testing purposes
-    public function logOut ()
-    {
-        $now = new Carbon;
-        $date = $now->copy()->format('Y-m-d');
-        $users = User::where('logged_in', true)->get();
-
-        return view('test-employee-logger')->with('users', $users)->with('type', 'out');
-    }
 }

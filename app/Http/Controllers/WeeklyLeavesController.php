@@ -19,7 +19,7 @@ class WeeklyLeavesController extends Controller
         $start = $now->copy()->format('Y-m-d');
         $end = $now->addWeek()->format('Y-m-d');
 
-        return view('create-weekly-leave')->with('days', $this->days)->with('start', $start)->with('end', $end);
+        return view('weekly/create')->with('days', $this->days)->with('start', $start)->with('end', $end);
     }
 
     public function store (Request $request, $id)
@@ -75,7 +75,7 @@ class WeeklyLeavesController extends Controller
 
         $l1 = WeeklyLeave::where('user_id', auth()->user()->id)->where('date_1', '>=',$now->copy()->format('Y-m-d'))->first();
 
-        return view('edit-weekly-leave')->with('start', $now->copy()->format('Y-m-d'))->
+        return view('weekly/edit')->with('start', $now->copy()->format('Y-m-d'))->
         with('end', $now->copy()->addWeek()->format('Y-m-d'))->with('days', $this->days)->with('leave', $l1);
     }
 

@@ -17,8 +17,6 @@ Route::get('branch/user', 'HomeController@userFilter')->middleware('auth');
 Route::get('/home', 'HomeController@index')->middleware('auth');
 Route::get('/auth/logout', 'Auth\AuthController@logout');
 Route::get('/dashboard', 'ProfileController@index')->middleware('auth');
-Route::post('/store/requests/{id}/manager', 'AdminController@requestProcess')->middleware('auth');
-Route::post('/store/requests/{id}/hr', 'AdminController@requestProcess')->middleware('auth');
 
 Route::get('/view/employee/logged', 'AdminController@viewLoggedIn')->middleware('auth');
 Route::get('/view/employee', 'AdminController@showAll')->middleware('auth');
