@@ -3,18 +3,6 @@
     <div class="topbar-main">
         <div class="container-fluid">
 
-            <!-- Logo container-->
-            <div class="logo">
-                <!-- Image Logo -->
-                <a href="/" class="logo">
-                    <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
-                    <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
-                </a>
-
-            </div>
-            <!-- End Logo container-->
-
-
             <div class="menu-extras topbar-custom">
 
                 <ul class="list-unstyled topbar-right-menu float-right mb-0">
@@ -29,32 +17,6 @@
                             </div>
                         </a>
                         <!-- End mobile menu toggle-->
-                    </li>
-                    
-                    
-
-                    <li class="dropdown notification-list">
-                        <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="false" aria-expanded="false">
-                        @if(auth()->user()->url_img == null)
-                            <img src="/frontend/images/users/avatar-1.jpg" alt="user" class="rounded-circle"><span class="font-16 text-dark">{{auth()->user()->name}}</span>
-                        @else
-                            <img src="{{auth()->user()->url_img}}" alt="user" class="rounded-circle"><span class="font-16 text-dark">{{auth()->user()->name}}</span>
-                        @endif
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-
-                            <!-- item-->
-                            <a href="profile.html" class="dropdown-item notify-item">
-                                <i class="ti-user m-r-5"></i> My Profile
-                            </a>
-
-                            <!-- item-->
-                            <a href="/logout" class="dropdown-item notify-item">
-                                <i class="ti-power-off m-r-5"></i> Logout
-                            </a>
-
-                        </div>
                     </li>
 
                 </ul>
