@@ -9,8 +9,7 @@ use App\Schedule;
 use App\Log;
 use App\Role;
 use App\Leave;
-use App\AllRequest;
-use App\Overtime;
+use App\NoSchedule;
 
 class User extends Authenticatable
 {
@@ -67,5 +66,15 @@ class User extends Authenticatable
     public function overtime ()
     {
         return $this->hasMany('App\Overtime');
+    }
+
+    public function noSchedule ()
+    {
+        return $this->hasMany('App\NoSchedule');
+    }
+
+    public function disabledBy ()
+    {
+        return $this->hasMany('App\NoSchedule', 'manager_id');
     }
 }
