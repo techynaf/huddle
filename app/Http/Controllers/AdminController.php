@@ -100,8 +100,8 @@ class AdminController extends Controller
 
         $path = '/'.'qrcodes/'.$user->pin.'.png';
 
-        return view('show')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
-        with('days', $days)->with('logs', $logs)->with('path', $path);
+        return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
+        with('days', $days)->with('logs', $logs);
     }
 
     public function request ()
