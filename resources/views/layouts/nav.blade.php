@@ -94,9 +94,11 @@
                         <li class="has-submenu">
                             <a href="/scheduler"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
                         </li>
-                        <li class="has-submenu">
-                            <a href="/create/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
-                        </li>
+                        @if(auth()->user()->roles->first()->name == 'manager')
+                            <li class="has-submenu">
+                                <a href="/create/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
+                            </li>
+                        @endif
                         <li class="has-submenu">
                             <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
                         </li>
