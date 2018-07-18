@@ -50,3 +50,6 @@ Route::get('/logger', 'ProfileController@logger')->middleware('auth');
 Route::post('/create/weekly/{id}', 'WeeklyLeavesController@store')->middleware('auth');
 Route::get('/edit/weekly', 'WeeklyLeavesController@edit')->middleware('auth');
 Route::post('/edit/weekly/{id}', 'WeeklyLeavesController@update')->middleware('auth');
+
+//Branch Routes
+Route::get('/branch', 'BranchController@show')->middleware('auth');

@@ -15,7 +15,7 @@
                             <label for="pin" class="col-sm-4 col-form-label text-md-right">Pin</label>
 
                             <div class="col-md-6">
-                                <input id="pin" type="number" class="form-control" name="pin" value="{{ old('pin') }}" min="1000" max="9999" required autofocus>
+                                <input id="pin" type="number" class="form-control" name="pin" value="{{ old('pin') }}" required autofocus>
 
                                 {{-- @if ($errors->has('email'))
                                     <span class="invalid-feedback">
