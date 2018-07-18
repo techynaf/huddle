@@ -37,7 +37,7 @@
                                     @if(auth()->user()->branch->name == 'HR and Admin' || auth()->user()->roles->first()->name == 'super-admin')
                                         <tr>
                                             <td>QR Code</td>
-                                            <td><a href="{{ asset('qrcodes/'.$user->pin.'.png') }}" target="_blank">Download</a></td>
+                                            <td><a href="{{ asset('/qrcodes/'.$user->pin.'.png') }}" target="_blank">Download</a></td>
                                         </tr>
                                     @endif
                                 </tbody>
