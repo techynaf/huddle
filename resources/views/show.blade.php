@@ -46,7 +46,7 @@
                                 <div class="row text-center">
                                     <div class="col-3"></div>
                                     <div class="col-6 border-right border-left">
-                                        <img src="{{'qrcodes/'.$user->pin.'.png'}}" width="150" height="150" alt="{{'QR code of '.$user->name}}">
+                                        <img src="{{'/qrcodes/'.$user->pin.'.png'}}" width="150" height="150" alt="{{'QR code of '.$user->name}}">
                                     </div>
                                     <div class="col-3"></div>
                                 </div>
