@@ -3,6 +3,17 @@
     <div class="topbar-main">
         <div class="container-fluid">
 
+            <!-- Logo container-->
+            <div class="logo">
+                    <!-- Image Logo -->
+                    <a href="/" class="logo">
+                        <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
+                        <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
+                    </a>
+
+                </div>
+                <!-- End Logo container-->
+
             <div class="menu-extras topbar-custom">
 
                 <ul class="list-unstyled topbar-right-menu float-right mb-0">
