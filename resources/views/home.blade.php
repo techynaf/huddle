@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-8"></div>
                     <div class="col-1">
-                        <label for="id">Filter Branch</label>
+                        <label for="id" class="form-label-control">Filter Branch</label>
                     </div>
                     <div class="col-2">
                         <select class="form-control" name="id">
