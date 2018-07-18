@@ -75,6 +75,26 @@ class AdminController extends Controller
             $now = $now->copy()->subDay();
         }
 
+        $month_start = $now->copy()->format('Y-m');
+        $month_start = Carbon::parse($month_start.'-1');
+        $month_end = $month_start->copy()->addMonth()->subDay();
+        $logs = Log::where('user_id', $user->id)->where('date', '>=', $month_start)->
+        where('date', '<=', $month_end)->get();
+
+        $minutes = 0;
+        $hours = 0;
+
+        foreach ($logs as $log) {
+            if ($log->end != null) {
+                $start = Carbon::parse($log->start);
+                $end = Carbon::parse($log->end);
+                $minutes += $start->diffInMinutes($end);
+            }
+        }
+
+        $hours = floor($minutes / 60);
+        $minutes = $minutes % 60;
+
         $dates = array($now->copy()->format('Y-m-d'));
         $now = $now->addDay();
 
@@ -101,7 +121,7 @@ class AdminController extends Controller
         $path = '/'.'qrcodes/'.$user->pin.'.png';
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
-        with('days', $days)->with('logs', $logs);
+        with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes);
     }
 
     public function request ()

@@ -150,7 +150,25 @@
             </div>
             <div class="row card-box">
                 <div class="col-sm-12 col-md-4 border-right">
-                        <br><br><br><br><br><br><br><br><br>
+                    <div class="card-title">
+                        <h2>Employee Analytics</h2>
+                    </div>
+                    <br><hr>
+                    <div class="widget-container">
+                        <div class="row">
+                            <div class="col-6">
+                                Working time
+                            </div>
+                            <div class="col-6">
+                                {{$hours}} hours and {{$minutes}} minutes
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">Lates</div>
+                            <div class="col-6">Some value</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-8 border-left">
                         <div class="card-title">
