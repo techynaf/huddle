@@ -20,7 +20,7 @@
                                 <div class="text-left">
                                     <p class="text-muted font-13"><strong>Full Name :</strong> <span class="m-l-15">{{$user->name}}</span></p>
     
-                                    <p class="text-muted font-13"><strong>Role :</strong> <span class="m-l-15">{{$user->roles->first()->name}}</span></p>
+                                    <p class="text-muted font-13"><strong>Role :</strong> <span class="m-l-15">{{ucwords($user->roles->first()->name)}}</span></p>
     
                                     <p class="text-muted font-13"><strong>PIN :</strong> <span class="m-l-15">{{$user->pin}}</span></p>
                                     

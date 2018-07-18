@@ -12,7 +12,7 @@
                     <div class="col-sm-12 col-md-4 border-right">
     
                             <div class="text-center">
-                                <h2 class="text-center">{{$user->roles->first()->name.' Information'}}</h2>
+                                <h2 class="text-center">{{ucwords($user->roles->first()->name).' Information'}}</h2>
                             </div>
                             <div>
                                 <table class="table">
@@ -23,7 +23,7 @@
                                         </tr>
                                         <tr>
                                             <td>Role</td>
-                                            <td>{{$user->roles->first()->name}}</td>
+                                            <td>{{ucwords($user->roles->first()->name)}}</td>
                                         </tr>
                                         <tr>
                                             <td>PIN</td>
