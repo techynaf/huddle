@@ -9,6 +9,7 @@ use App\User;
 use App\Branch;
 use App\Leave;
 use App\WeeklyLeave;
+use App\NoSchedule;
 use Validator;
 use Session;
 
@@ -62,8 +63,10 @@ class ScheduleController extends Controller
             array_push($schedules, $user_schedule);
         }
 
+        $path = $request->path();
+
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
-        with('branches', $branches)->with('dates', $dates);
+        with('branches', $branches)->with('dates', $dates)->with('path', $path);
     }
 
     public function dayOffChecker ($user, $date)
@@ -74,6 +77,8 @@ class ScheduleController extends Controller
             return 'day-off';
         } elseif (Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', true)->first() != null) {//checking if has approved leave
             return 'day-off';
+        } elseif (NoSchedule::where('user_id', $user->id)->where('date', $date)->first() != null) { //checking if manager disabled this day
+            return 'no-schedule';
         } else {
             $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
             
@@ -148,5 +153,24 @@ class ScheduleController extends Controller
         }
 
         return $dates;
+    }
+
+    public function disable (Request $request, $id, $date, $url)
+    {
+        $noSchedule = new NoSchedule;
+        $noSchedule->date = $date;
+        $noSchedule->user_id = $id;
+        $noSchedule->manager_id = auth()->user()->id;
+        $noSchedule->save();
+
+        return redirect($url);
+    }
+
+    public function enable (Request $request, $id, $date, $url)
+    {
+        $noSchedule = NoSchedule::where('user_id', $id)->where('date', $date)->first();
+        $noSchedule->delete();
+
+        return redirect($url);
     }
 }

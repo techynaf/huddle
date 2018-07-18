@@ -54,16 +54,22 @@
                                     <div class="col-md-1">
                                         <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
                                         @if($schedule == 'day-off')
-                                            <div class="text-center btn-danger">
+                                            <div class="text-center btn btn-danger">
                                                 <input type="hidden" name="s_id[]" value="off">
                                                 DAY OFF
                                             </div>
+                                        @elseif($schedule == 'no-schedule')
+                                            <a href="/enable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-success">ENABLE</a>
                                         @elseif($schedule == false)
                                             <input type="hidden" name="s_id[]" value="0">
                                             @include('templates.schedule-default-form')
+                                            <br>
+                                            <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
                                         @else
                                             <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
                                             @include('templates.schedule-form')
+                                            <br>
+                                            <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
                                         @endif
                                     </div>
                                 @endforeach

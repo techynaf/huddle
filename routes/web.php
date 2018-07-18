@@ -33,6 +33,8 @@ Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth'
 //Schedule Routes
 Route::get('/scheduler', 'ScheduleController@scheduler')->middleware('auth');
 Route::post('/scheduler/{id}', 'ScheduleController@schedule')->middleware('auth');
+Route::get('/disable/{id}/{date}/{url}', 'ScheduleController@disable')->middleware('auth');
+Route::get('/enable/{id}/{date}/{url}', 'ScheduleController@enable')->middleware('auth');
 
 //Leave Routes
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');

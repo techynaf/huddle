@@ -7,7 +7,7 @@ use App\User;
 
 class NoSchedule extends Model
 {
-    public function for ()
+    public function user ()
     {
         return $this->belongsTo('App\User');
     }
