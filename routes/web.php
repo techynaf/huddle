@@ -53,3 +53,7 @@ Route::post('/edit/weekly/{id}', 'WeeklyLeavesController@update')->middleware('a
 
 //Branch Routes
 Route::get('/branch', 'BranchController@show')->middleware('auth');
+Route::get('/branch/create', 'BranchController@create')->middleware('auth');
+Route::post('/branch/create', 'BranchController@store')->middleware('auth');
+Route::get('/branch/delete', 'BranchController@delete')->middleware('auth');
+Route::post('/branch/destroy', 'BranchController@destroy')->middleware('auth');

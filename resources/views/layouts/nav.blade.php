@@ -77,6 +77,10 @@
                             </li>
                             <li class="has-submenu">
                                 <a href="/branch"><i class="mdi mdi-google-pages"></i> <span> Branch </span> </a>
+                                <ul class="submenu">
+                                    <li><a href="/branch/create">Create Branch</a></li>
+                                    <li><a href="/branch/delete">Delete Branch</a></li>
+                                </ul>
                             </li>
                         @endif
                         <li class="has-submenu">
