@@ -12,50 +12,6 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function listMaker ($log, $lists, $date)
-    {
-        foreach ($log as $value) {
-            $name = $value->user->name;
-            $roles = $value->user->roles;
-            $user_role = '';
-
-            foreach ($roles as $role) {
-                $user_role = $role->name;
-            }
-
-            $schedule = Schedule::where('date', $value->date)->where('user_id', $value->user_id)->first();
-            $branch = $value->branch->name;
-            
-            $logoutTime = Carbon::parse($schedule->end)->format('H:i');
-            $sTime = Carbon::parse($schedule->start);
-
-            array_push($lists, array($name, $user_role, $value->start, $logoutTime, $date, $branch));
-        }
-
-        return $lists;
-    }
-
-    public function showAll ()
-    {
-        $role = auth()->user()->roles->first()->name;
-
-        if ($role == 'super-admin' || $role == 'owner') {
-            $users = User::all();
-            $branches = Branch::all();
-            $role = 'owner';
-
-            return view('show-all')->with('users', $users)->with('role', $role);
-        } elseif ($role == 'manager') {
-            $branch = Branch::where('id', auth()->user()->branch_id)->first();
-            $users = User::where('branch_id', auth()->user()->branch_id)->get();
-            $role = 'manager';
-
-            return view('show-all')->with('users', $users)->with('role', $role);
-        }else {
-            return redirect('/dashboard')->with('error', 'Sorry, you are not authorized to access this!');
-        }
-    }
-
     public function show (Request $request, $id)
     {
         $now = new Carbon;
