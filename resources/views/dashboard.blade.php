@@ -160,13 +160,13 @@
                                 Working time
                             </div>
                             <div class="col-6">
-                                {{$hours}} hours and {{$minutes}} minutes
+                                {{$hours}} hours {{$minutes}} minutes
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-6">Lates</div>
-                            <div class="col-6">Some value</div>
+                            <div class="col-6">{{$lates}}</div>
                         </div>
                     </div>
                 </div>

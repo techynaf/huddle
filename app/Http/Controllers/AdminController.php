@@ -50,6 +50,23 @@ class AdminController extends Controller
 
         $hours = floor($minutes / 60);
         $minutes = $minutes % 60;
+        $lates = 0;
+
+        $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $month_start)->
+        where('date', '<=', $month_end)->get();
+
+        foreach ($schedules as $schedule) {
+            $log = Log::where('user_id', $user->id)->where('date', $schedule->date)->first();
+            
+            if ($log != null) {
+                $scheduled = Carbon::parse($schedule->start);
+                $actual = Carbon::parse($log->start);
+
+                if ($actual->diffInMinutes($scheduled) >= 10) { //checks if the person is late or not, late factor is 10 mins
+                    $lates++;
+                }
+            }
+        }
 
         $dates = array($now->copy()->format('Y-m-d'));
         $now = $now->addDay();
@@ -77,7 +94,7 @@ class AdminController extends Controller
         $path = '/'.'qrcodes/'.$user->pin.'.png';
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
-        with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes);
+        with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->with('lates', $lates);
     }
 
     public function request ()
