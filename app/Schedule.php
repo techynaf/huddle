@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Branch;
 use App\Log;
+use App\ScheduleEdit;
 
 class Schedule extends Model
 {
@@ -35,5 +36,10 @@ class Schedule extends Model
     public function log ()
     {
         return $this->hasOne('App\Log');
+    }
+
+    public function edits ()
+    {
+        return $this->hasMany('App\ScheduleEdit');
     }
 }

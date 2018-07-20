@@ -10,6 +10,8 @@ use App\Log;
 use App\Role;
 use App\Leave;
 use App\NoSchedule;
+use App\Late;
+use App\ScheduleEdit;
 
 class User extends Authenticatable
 {
@@ -45,12 +47,7 @@ class User extends Authenticatable
 
     public function leave ()
     {
-        return $this->hasOne('App\Leave');
-    }
-
-    public function allRequest ()
-    {
-        return $this->hasMany('App\AllRequest');
+        return $this->hasMany('App\Leave');
     }
 
     public function roles ()
@@ -63,11 +60,6 @@ class User extends Authenticatable
         return $this->hasMany('App\Schedule');
     }
 
-    public function overtime ()
-    {
-        return $this->hasMany('App\Overtime');
-    }
-
     public function noSchedule ()
     {
         return $this->hasMany('App\NoSchedule');
@@ -76,5 +68,20 @@ class User extends Authenticatable
     public function disabledBy ()
     {
         return $this->hasMany('App\NoSchedule', 'manager_id');
+    }
+
+    public function lates ()
+    {
+        return $this->hasMany('App\Late');
+    }
+
+    public function approved ()
+    {
+        return $this->hasMany('App\Late', 'altered_by');
+    }
+
+    public function edits ()
+    {
+        return $this->hasMany('App\ScheduleEdit');
     }
 }

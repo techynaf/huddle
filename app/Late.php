@@ -10,16 +10,16 @@ class Late extends Model
 {
     public function user ()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function alteredBy ()
     {
-        return $this->hasOne('App\User', 'altered_by');
+        return $this->belongsTo('App\User', 'altered_by');
     }
 
     public function log ()
     {
-        return $this->hasOne('App\Log');
+        return $this->belongsTo('App\Log');
     }
 }
