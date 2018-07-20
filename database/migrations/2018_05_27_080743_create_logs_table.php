@@ -19,7 +19,6 @@ class CreateLogsTable extends Migration
             $table->date('date');
             $table->time('start');
             $table->time('end')->nullable();
-            $table->boolean('is_late')->nullable();
             $table->integer('branch_id');
             $table->integer('schedule_id')->nullable();
         });
