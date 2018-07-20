@@ -3,7 +3,7 @@
 @section('content')
     <div class="wrapper">
         <div class="container-fluid">
-            <form action="/branch" method="GET">
+            <form action="/branch/filter" method="GET">
                 @csrf
                 <div class="row">
                     <div class="col-8"></div>

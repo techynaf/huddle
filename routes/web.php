@@ -12,7 +12,7 @@
 */
 //Home Ro
 Route::get('/', 'HomeController@index');
-Route::get('/branch', 'HomeController@branchFilter');
+Route::get('/branch/filter', 'HomeController@branchFilter');
 Route::get('branch/user', 'HomeController@userFilter')->middleware('auth');
 Route::get('/home', 'HomeController@index')->middleware('auth');
 
@@ -57,3 +57,10 @@ Route::get('/branch/create', 'BranchController@create')->middleware('auth');
 Route::post('/branch/create', 'BranchController@store')->middleware('auth');
 Route::get('/branch/delete', 'BranchController@delete')->middleware('auth');
 Route::post('/branch/destroy', 'BranchController@destroy')->middleware('auth');
+
+//Late Routes
+Route::get('/', 'AttendanceController@test');
+
+//Test Routes
+Route::get('/test', 'AttendanceController@test');
+Route::get('/test2', 'LateController@test');
