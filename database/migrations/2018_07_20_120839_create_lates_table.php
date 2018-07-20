@@ -19,7 +19,7 @@ class CreateLatesTable extends Migration
             $table->integer('log_id');
             $table->integer('altered_by')->nullable();
             $table->string('type')->nullable();
-            $table->string('comment');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }
