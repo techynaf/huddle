@@ -17,7 +17,7 @@ class CreateLatesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('log_id');
-            $table->integer('altered_by');
+            $table->integer('altered_by')->nullable();
             $table->string('type')->nullable();
             $table->string('comment');
             $table->timestamps();
