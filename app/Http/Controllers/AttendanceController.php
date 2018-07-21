@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Log;
 use App\Schedule;
+use App\Late;
 use Validator;
 use Session;
 
@@ -59,56 +60,16 @@ class AttendanceController extends Controller
         $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
         $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
 
-        if ($schedule == null) {//create log without schedule
-            if ($log == null) {
-                return $this->createLog($user, $schedule, $now);
-            } else {
-                $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
-                return $this->punchOut($user, $log, $schedule, $now);
-            }
-        } else {//create log with schedule
-            $end = Carbon::parse($schedule->end);
-
-            //check if the login time is within schedule range
-            if ($now->copy()->format('H:i:s') >= $end) {//time is within range
-                if ($log == null) {
-                    return $this->createLog($user, $schedule, $now);
-                } else {
-                    $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
-
-                    return $this->punchOut($user, $log, $schedule, $now);
-                }
-            } else {//time is not within range
-                if ($log == null) {
-                    return $this->createLog($user, null, $now);
-                } else {
-                    $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
-
-                    return $this->punchOut($user, $log, null, $now);
-                }
-            }
-            
+        if ($log == null) {
+            return $this->createLog($user, $schedule, $now);
+        } else {
+            return $this->punchOut($user, $log, $schedule, $now);
         }
     }
 
     public function createLog ($user, $schedule, $now) {
         $log = new Log;
-        $startTime = 0;
-
-        if ($schedule == null) {
-            $startTime = $now->copy()->format('H:i:s');
-            $log->is_late = null;
-        } else {
-            $startTime = Carbon::parse($schedule->start);
-            $diffInMins = gmdate("i:s", $now->diffInSeconds($startTime, false));
-
-            if ($diffInMins < -10) {
-                $log->is_late = true;
-            } else {
-                $log->is_late = false;
-            }
-        }
-
+        $startTime = $now->copy()->format('H:i:s');
         $log->start = $startTime;
 
         //need to get branch id from device_id
@@ -118,34 +79,35 @@ class AttendanceController extends Controller
         $log->end = null;
 
         if ($schedule == null) {
-            $log->schedule_id = null;
+            $log->schedule_id = 0;
         } else {
-            $log->schedule_id = $schedule->id;
+            $l = Log::where('schedule_id', $schedule->id)->first();
+
+            if ($l == null) {
+                $log->schedule_id = $schedule->id;
+            } else {
+                $log->schedule_id = 0;
+            }
         }
-        
 
         $log->timestamps = false;
         $log->save();
+
+        if ($log->schedule_id != 0) {
+            $this->check($log, $schedule);
+        }
+
         $user->logged_in = true;
         $user->timestamps = false;
         $user->save();
         $message = 'Hello '.$user->name.'. You have logged in at '.$now->copy()->format('H:i');
-        $url = '/late/check/'.$log->id;
-        redirect($url);
 
         return $this->successResponse ($message, 1);
     }
 
     public function punchOut ($user, $log, $schedule, $now)
     {
-        $endTime = 0;
-        if ($schedule == null) {
-            $endTime = $now->copy()->format('H:i:s');
-        } else {
-            $endTime = Carbon::parse($schedule->end);
-        }
-        
-        $log->end = $endTime;
+        $log->end = $now->copy()->format('H:i:s');;
         $log->timestamps = false;
         $log->save();
 
@@ -157,7 +119,7 @@ class AttendanceController extends Controller
         $user->timestamps = false;
         $user->save();
 
-        $message = 'Hello '.$user->name.'. You have logged out at'.$now->copy()->format('H:i').'. You have worked for '.$hours.' hours.';
+        $message = 'Hello '.$user->name.'. You have logged out at '.$now->copy()->format('H:i').'. You have worked for '.$hours.' hours.';
 
         return $this->successResponse ($message, 2);
     }
@@ -180,5 +142,19 @@ class AttendanceController extends Controller
             'message' => $message,
             'state' => $state
         ]);
+    }
+
+    public function check ($log, $schedule)
+    {
+        $scheduled = Carbon::parse($schedule->start);
+        $actual = Carbon::parse($log->start);
+
+        if ($actual->diffInMinutes($scheduled) >= 10) { //checks if the person is late or not, late factor is 10 mins
+            $late = new Late;
+            $late->date = $log->date;
+            $late->log_id = $log->id;
+            $late->user_id = $log->user_id;
+            $late->save();
+        }
     }
 }
