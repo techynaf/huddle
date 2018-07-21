@@ -76,7 +76,14 @@ class ScheduleController extends Controller
         } elseif (WeeklyLeave::where('user_id', $user->id)->where('date_2', $date)->where('approved', true)->first() != null) {//checking if weekly off
             return 'day-off';
         } elseif (Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', true)->first() != null) {//checking if has approved leave
-            return 'day-off';
+            $l = Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', true)->first();
+            if ($l->type == 2) {
+                return 'sick';
+            } elseif ($l->type == 3) {
+                return 'annual';
+            } else {
+                return 'govt';
+            }
         } elseif (NoSchedule::where('user_id', $user->id)->where('date', $date)->first() != null) { //checking if manager disabled this day
             return 'no-schedule';
         } else {
