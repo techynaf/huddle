@@ -59,8 +59,6 @@ Route::get('/branch/delete', 'BranchController@delete')->middleware('auth');
 Route::post('/branch/destroy', 'BranchController@destroy')->middleware('auth');
 
 //Late Routes
-Route::get('/', 'AttendanceController@test');
+Route::get('/late/check/{id}', 'LateController@check');
 
 //Test Routes
-Route::get('/test', 'AttendanceController@test');
-Route::get('/test2', 'LateController@test');

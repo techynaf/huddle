@@ -130,6 +130,8 @@ class AttendanceController extends Controller
         $user->timestamps = false;
         $user->save();
         $message = 'Hello '.$user->name.'. You have logged in at '.$now->copy()->format('H:i');
+        $url = '/late/check/'.$log->id;
+        redirect($url);
 
         return $this->successResponse ($message, 1);
     }
