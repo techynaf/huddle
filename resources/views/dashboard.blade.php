@@ -69,7 +69,11 @@
                             @else
                             <div class="row text-center">
                                 <div class="col-sm-6 text-center"><h4>Scheduled</h4></div>
-                                <div class="col-sm-6 text-center"><h4>Actual</h4></div>
+                                @if (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
+                                    <div class="col-sm-6 text-center"><h4>Actual</h4></div>
+                                @else
+                                    <div class="col-sm-6 text-center"><h4>Branch</h4></div>
+                                @endif
                             </div>
                             <div class="row">
                                     <div class="col-sm-6"><hr></div>
@@ -79,6 +83,13 @@
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-2">Start</div>
                                 <div class="col-sm-2">End</div>
+                                @if (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
+                                    <div class="col-3 text-center">Login Time</div>
+                                    <div class="col-3 text-center">Logout Time</div>
+                                @else
+                                    <div class="col-3 text-center">Starting Branch</div>
+                                    <div class="col-3 text-center">Ending Branch</div>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="col-sm-6"><hr></div>
@@ -114,30 +125,43 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="col-sm-6">
-                                            @if(count($logs[$loop->index]) == 0)
-                                                <div class="row">
-                                                    <hr>
-                                                    No records yet
-                                                    <hr>
-                                                </div>
-                                            @else
-                                                @foreach($logs[$loop->index] as $log)
+                                        @if (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
+                                            <div class="col-sm-6">
+                                                @if(count($logs[$loop->index]) == 0)
                                                     <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <strong>{{date("g:i A", strtotime($log->start))}}</strong>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            @if($log->end == null)
-                                                                Logged in
-                                                            @else
-                                                            <strong>{{date("g:i A", strtotime($log->end))}}</strong>
-                                                            @endif
-                                                        </div>
+                                                        <hr>
+                                                        No records yet
+                                                        <hr>
                                                     </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
+                                                @else
+                                                    @foreach($logs[$loop->index] as $log)
+                                                        <div class="row">
+                                                            <div class="col-sm-6 text-center">
+                                                                <strong>{{date("g:i A", strtotime($log->start))}}</strong>
+                                                            </div>
+                                                            <div class="col-sm-6 text-center">
+                                                                @if($log->end == null)
+                                                                    Logged in
+                                                                @else
+                                                                <strong>{{date("g:i A", strtotime($log->end))}}</strong>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @else
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    @if ($schedule == null)
+                                                        <div class="col-12 text-center">No Schedule for this day</div>
+                                                    @else
+                                                        <div class="col-6 text-center">{{$schedule->startingBranch->name}}</div>
+                                                        <div class="col-6 text-center">{{$schedule->endingBranch->name}}</div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6"><hr></div>
