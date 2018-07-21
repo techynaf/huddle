@@ -64,9 +64,11 @@ class ScheduleController extends Controller
         }
 
         $path = $request->path();
+        $now = new Carbon;
+        $today = $now->copy()->format('Y-m-d');
 
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
-        with('branches', $branches)->with('dates', $dates)->with('path', $path);
+        with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today);
     }
 
     public function dayOffChecker ($user, $date)

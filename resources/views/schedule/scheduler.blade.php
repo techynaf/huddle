@@ -51,64 +51,102 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-2 pt-2">{{$user->name}}</div>
                                 @foreach($schedules[$loop->index] as $schedule)
-                                    <div class="col-md-1">
-                                        <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
-                                        @if($schedule == 'day-off')
-                                            <div class="text-center btn btn-outline-danger h-100 w-100">
+                                    @if ($days[$loop->index][1] <= $today)
+                                        <div class="col-md-1">
+                                            @if($schedule == 'day-off')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>DAY</h4>
+                                                    <h4>OFF</h4>
+                                                </div>
+                                            @elseif ($schedule == 'sick')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>SICK</h4>
+                                                    <h4>LEAVE</h4>
+                                                </div>
+                                            @elseif ($schedule == 'annual')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>ANNUAL</h4>
+                                                    <h4>LEAVE</h4>
+                                                </div>
+                                            @elseif ($schedule == 'govt')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>GOVERNMENT</h4>
+                                                    <h4>HOLIDAY</h4>
+                                                </div>
+                                            @elseif($schedule == 'no-schedule' || $schedule == false)
+                                                <div class="text-center btn btn-outline-danger h-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>NO</h4>
+                                                    <h4>SCHEDULE</h4>
+                                                </div>
+                                                <br><br>
+                                            @else
                                                 <input type="hidden" name="s_id[]" value="off">
+                                                <h4 class="text-center">{{date("g:i A", strtotime($schedule->start))}}</h4>
                                                 <br>
-                                                <h4>DAY</h4>
+                                                <h4 class="text-center">{{date("g:i A", strtotime($schedule->endforeach))}}</h4>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="col-md-1">
+                                            <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
+                                            @if($schedule == 'day-off')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>DAY</h4>
+                                                    <h4>OFF</h4>
+                                                </div>
+                                            @elseif ($schedule == 'sick')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>SICK</h4>
+                                                    <h4>LEAVE</h4>
+                                                </div>
+                                            @elseif ($schedule == 'annual')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>ANNUAL</h4>
+                                                    <h4>LEAVE</h4>
+                                                </div>
+                                            @elseif ($schedule == 'govt')
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>GOVERNMENT</h4>
+                                                    <h4>HOLIDAY</h4>
+                                                </div>
+                                            @elseif($schedule == 'no-schedule')
+                                                <div class="text-center btn btn-outline-danger h-75">
+                                                    <input type="hidden" name="s_id[]" value="off">
+                                                    <h4>DAY OFF</h4>
+                                                </div>
+                                                <br><br>
+                                                <div class="text-center h-25">
+                                                    <a href="/enable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-success">ENABLE</a>
+                                                </div>
+                                            @elseif($schedule == false)
+                                                <input type="hidden" name="s_id[]" value="0">
+                                                @include('templates.schedule-default-form')
                                                 <br>
-                                                <h4>OFF</h4>
-                                            </div>
-                                        @elseif ($schedule == 'sick')
-                                            <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
+                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
+                                            @else
+                                                <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
+                                                @include('templates.schedule-form')
                                                 <br>
-                                                <h4>SICK</h4>
-                                                <br>
-                                                <h4>LEAVE</h4>
-                                            </div>
-                                        @elseif ($schedule == 'annual')
-                                            <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
-                                                <br>
-                                                <h4>ANNUAL</h4>
-                                                <br>
-                                                <h4>LEAVE</h4>
-                                            </div>
-                                        @elseif ($schedule == 'govt')
-                                            <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
-                                                <br>
-                                                <h4>GOVERNMENT</h4>
-                                                <br>
-                                                <h4>HOLIDAY</h4>
-                                            </div>
-                                        @elseif($schedule == 'no-schedule')
-                                            <div class="text-center btn btn-outline-danger h-75">
-                                                <input type="hidden" name="s_id[]" value="off">
-                                                <h4>DAY OFF</h4>
-                                            </div>
-                                            <br><br>
-                                            <div class="text-center h-25">
-                                                <a href="/enable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-success">ENABLE</a>
-                                            </div>
-                                        @elseif($schedule == false)
-                                            <input type="hidden" name="s_id[]" value="0">
-                                            @include('templates.schedule-default-form')
-                                            <br>
-                                            <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
-                                        @else
-                                            <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
-                                            @include('templates.schedule-form')
-                                            <br>
-                                            <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
-                                        @endif
-                                    </div>
+                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
+                                            @endif
+                                        </div>
+                                    @endif
                                 @endforeach
                                 <div class="col-md-2 pt-2 text-center">
-                                    <button type="submit" class="btn btn-success btn-rounded">Save</button>
+                                    @if($days[6][1] <= $today)
+                                    
+                                    @else
+                                        <button type="submit" class="btn btn-success btn-rounded">Save</button>
+                                    @endif
                                 </div>
                             </div>
                         </form>
