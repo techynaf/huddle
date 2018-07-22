@@ -3,7 +3,7 @@
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
     <label for="entry_b[]" class="col-form-label">Entry Branch</label>
-    <select name="entry_b[]" class="form-control">
+    <select name="entry_b[]" class="form-control input-sm">
         <option value="{{$user->branch->id}}">{{$user->branch->name}}</option>
         @foreach($branches as $branch)
             <option value="{{$branch->id}}">{{$branch->name}}</option>
@@ -18,7 +18,7 @@
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
     <label for="exit_b[]" class="col-form-label">Exit Branch</label>
-    <select name="exit_b[]" class="form-control">
+    <select name="exit_b[]" class="form-control input-sm">
         <option value="{{$user->branch->id}}">{{$user->branch->name}}</option>
         @foreach($branches as $branch)
             <option value="{{$branch->id}}">{{$branch->name}}</option>
