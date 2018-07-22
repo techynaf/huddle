@@ -15,6 +15,7 @@ class CreateWeeklyLeavesTable extends Migration
     {
         Schema::create('weekly_leaves', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('branch_id');
             $table->integer('user_id');
             $table->date('start');
             $table->date('end');
