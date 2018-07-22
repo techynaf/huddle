@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            @if($leave == null)
+            @if(count($leave) == 0)
                 <div class="row">
                     <div class="col-12 card-box">
                         <hr>
@@ -18,72 +18,74 @@
                     </div>
                 </div>
             @else
-                <div class="row">
-                    <div class="card-box col-12">
-                        <div class="row">
-                            <div class="col-12">
-                                <h4><strong>Select Days</strong></h4>
-                            </div>
-                        </div>
-
-                        <br>
-                        <form action="/edit/weekly/{{auth()->user()->id}}" method="POST">
-                            @csrf
-                            <div class="row">
-                                <div class="col-2">
-                                    <label for="day_1" class="form-label-control">First Day</label>
-                                </div>
-                                <div class="col-4">
-                                    <select name="day_1" class="form-control">
-                                        <option value="{{$leave->day_1}}">{{$leave->day_1}}</option>
-                                        @foreach($days as $day)
-                                            <option value="{{$day}}">{{$day}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-2">
-                                    <label for="day_2" class="form-label-control">Second Day</label>
-                                </div>
-                                <div class="col-4">
-                                    <select name="day_2" class="form-control">
-                                        <option value="{{$leave->day_2}}">{{$leave->day_2}}</option>
-                                        @foreach($days as $day)
-                                            <option value="{{$day}}">{{$day}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <hr>
+                @foreach($leaves as $leave)
+                    <div class="row">
+                        <div class="card-box col-12">
                             <div class="row">
                                 <div class="col-12">
-                                    <h4><strong>Select Range</strong></h4>
+                                    <h4><strong>Select Days</strong></h4>
                                 </div>
                             </div>
+
                             <br>
-                            <div class="row">
-                                <div class="col-2">
-                                    <label for="start" class="form-label-control">Select Start Date</label>
+                            <form action="/edit/weekly/{{auth()->user()->id}}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-2">
+                                        <label for="day_1" class="form-label-control">First Day</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <select name="day_1" class="form-control">
+                                            <option value="{{$leave->day_1}}">{{$leave->day_1}}</option>
+                                            @foreach($days as $day)
+                                                <option value="{{$day}}">{{$day}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <label for="day_2" class="form-label-control">Second Day</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <select name="day_2" class="form-control">
+                                            <option value="{{$leave->day_2}}">{{$leave->day_2}}</option>
+                                            @foreach($days as $day)
+                                                <option value="{{$day}}">{{$day}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-4">
-                                    <input type="date" name="start" min="{{$start}}" class="form-control">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4><strong>Select Range</strong></h4>
+                                    </div>
                                 </div>
-                                <div class="col-2">
-                                    <label for="start" class="form-label-control">Select End Date</label>
+                                <br>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <label for="start" class="form-label-control">Select Start Date</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="date" name="start" min="{{$start}}" class="form-control" value="{{$leave->start}}">
+                                    </div>
+                                    <div class="col-2">
+                                        <label for="start" class="form-label-control">Select End Date</label>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="date" name="end" min="{{$end}}" class="form-control" value="{{$leave->end}}">
+                                    </div>
                                 </div>
-                                <div class="col-4">
-                                    <input type="date" name="end" min="{{$end}}" class="form-control">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-10"></div>
+                                    <div class="col-2">
+                                        <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-10"></div>
-                                <div class="col-2">
-                                    <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                @endforeach
             @endif
         </div>
     </div>

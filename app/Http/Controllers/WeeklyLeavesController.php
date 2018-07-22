@@ -31,40 +31,27 @@ class WeeklyLeavesController extends Controller
             'end' => 'required',
         ]);
 
+        $weekly = new WeeklyLeave;
+        $weekly->user_id = $id;
+        $weekly->start = Carbon::parse($request->start)->format('Y-m-d');
+        $weekly->end = Carbon::parse($request->end)->format('Y-m-d');
+
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
-        $leaves = WeeklyLeave::where('user_id', $id)->where('date_1', '>=', $start->copy()->format('Y-m-d'))->
-        where('date_2', '<=', $end->copy()->format('Y-m-d'))->get();
+        $leaves = WeeklyLeave::where('user_id', $id)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
 
         if (count($leaves) != 0) {
             return redirect('/')->with('error', 'Weekly Leaves already exits for this date range, please use edit to change them');
         }
 
-        $day_1 = null;
-        $day_2 = null;
-        $counter = 0;
-
-        for ($i = $start; $i <= $end; $i = $i->addDay()) {
-            if ($request->day_1 == $i->copy()->format('l')) {
-                $day_1 = $i;
-            }
-
-            if ($request->day_2 == $i->copy()->format('l')) {
-                $day_2 = $i;
-            }
-
-            if ($counter != 0 && $counter % 7 == 0) {
-                $leave = new WeeklyLeave;
-                $leave->user_id = $id;
-                $leave->date_1 = $day_1->copy()->format('Y-m-d');
-                $leave->date_2 = $day_2->copy()->format('Y-m-d');
-                $leave->day_1 = $request->day_1;
-                $leave->day_2 = $request->day_2;
-                $leave->approved = null;
-                $leave->save();
-            }
-            $counter++;
-        }
+        $weekly = new WeeklyLeave;
+        $weekly->user_id = $id;
+        $weekly->start = Carbon::parse($request->start)->format('Y-m-d');
+        $weekly->end = Carbon::parse($request->end)->format('Y-m-d');
+        $weekly->day_1 = $request->day_1;
+        $weekly->day_2 = $request->day_2;
+        $weekly->approved = null;
+        $weekly->save();
 
         return redirect('/dashboard')->with('success', 'Weekly day off successfully added, waiting for approval');
     }
@@ -73,17 +60,17 @@ class WeeklyLeavesController extends Controller
     {
         $now = new Carbon;
 
-        $l1 = WeeklyLeave::where('user_id', auth()->user()->id)->where('date_1', '>=',$now->copy()->format('Y-m-d'))->first();
+        $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->get();
 
         return view('weekly/edit')->with('start', $now->copy()->format('Y-m-d'))->
-        with('end', $now->copy()->addWeek()->format('Y-m-d'))->with('days', $this->days)->with('leave', $l1);
+        with('end', $now->copy()->addWeek()->format('Y-m-d'))->with('days', $this->days)->with('leaves', $leaves);
     }
 
     public function update (Request $request, $id)
     {
         $this->validate($request, [
-            'day_1' => 'required',
-            'day_2' => 'required',
+            'start' => 'required',
+            'end' => 'required',
             'start' => 'required',
             'end' => 'required',
         ]);
@@ -92,10 +79,10 @@ class WeeklyLeavesController extends Controller
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
 
-        $leaves = WeeklyLeave::where('user_id', $id)->where('date_1', '>=', $start->copy()->format('Y-m-d'))->
-        where('date_2', '<=', $end->copy()->format('Y-m-d'))->get();
+        $cleave = WeeklyLeave::where('user_id', $id)->where('end', '>', $now->copy()->format('Y-m-d'))->
+        where('start', '<=', $now->copy()->format('Y-m-d'))->first();
 
-        if (count($leaves) == 0) {
+        if ($cleaves == null) {
             return redirect('/dashboard')->with('error', 'There are no scheduled off days in the date range.');
         }
 
@@ -103,6 +90,10 @@ class WeeklyLeavesController extends Controller
         $day_2 = null;
         $counter = 0;
         $j = 0;
+
+        $now = new Carbon;
+        $cleave = WeeklyLeave::where('user_id', $id)->where('start', '<=', $now->copy()->format('Y-m-d'))->
+        where('end', '>', $now->copy()->format('Y-m-d'))->first();
 
         for ($i = $start; $i <= $end; $i = $i->addDay()) {
             if ($request->day_1 == $i->copy()->format('l')) {

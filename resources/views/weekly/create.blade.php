@@ -59,7 +59,7 @@
                                 <input type="date" name="start" min="{{$start}}" class="form-control">
                             </div>
                             <div class="col-2">
-                                <label for="start" class="form-label-control">Select End Date</label>
+                                <label for="end" class="form-label-control">Select End Date</label>
                             </div>
                             <div class="col-4">
                                 <input type="date" name="end" min="{{$end}}" class="form-control">
