@@ -78,10 +78,10 @@
                                                     <h4>HOLIDAY</h4>
                                                 </div>
                                             @elseif($schedule == 'no-schedule' || $schedule == false)
-                                                <div class="text-center btn btn-outline-danger h-100">
+                                                <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>NO</h4>
-                                                    <h4>SCHEDULE</h4>
+                                                    <h4>No</h4>
+                                                    <h4>Schedule</h4>
                                                 </div>
                                                 <br><br>
                                             @else
