@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            @if(count($leave) == 0)
+            @if(count($leaves) == 0)
                 <div class="row">
                     <div class="col-12 card-box">
                         <hr>

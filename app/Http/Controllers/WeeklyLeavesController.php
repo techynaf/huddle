@@ -16,8 +16,8 @@ class WeeklyLeavesController extends Controller
     public function create ()
     {
         $now = new Carbon;
-        $start = $this->findSun($now->addWeek());
-        $end = $start->addWeek()->addDays(-1)->format('Y-m-d');
+        $start = $this->findSun($now->addDays(7))->format('Y-m-d');
+        $end = $this->findSun($now->addDays(7))->addDays(-1)->format('Y-m-d');
 
         return view('weekly/create')->with('days', $this->days)->with('start', $start)->with('end', $end);
     }
@@ -63,8 +63,8 @@ class WeeklyLeavesController extends Controller
         $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->get();
 
         $now = new Carbon;
-        $start = $this->findSun($now->addWeek());
-        $end = $start->addWeek()->addDays(-1)->format('Y-m-d');
+        $start = $this->findSun($now->addDays(7))->format('Y-m-d');
+        $end = $this->findSun($now->addDays(7))->addDays(-1)->format('Y-m-d');
 
         return view('weekly/edit')->with('start', $start)->with('end', $end)->with('days', $this->days)->
         with('leaves', $leaves);
@@ -86,7 +86,7 @@ class WeeklyLeavesController extends Controller
         $cleave = WeeklyLeave::where('user_id', $id)->where('end', '>', $now->copy()->format('Y-m-d'))->
         where('start', '<=', $now->copy()->format('Y-m-d'))->first();
 
-        if ($cleaves == null) {
+        if ($cleave == null) {
             return redirect('/dashboard')->with('error', 'There are no scheduled off days in the date range.');
         }
 
@@ -133,6 +133,10 @@ class WeeklyLeavesController extends Controller
     {
         if ($date == null) {
             $date = new Carbon;
+        }
+
+        if ($date->copy()->format('l') == 'Sunday') {
+            return $date;
         }
 
         while ($date->copy()->format('l') != 'Sunday') {
