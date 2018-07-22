@@ -24,24 +24,11 @@
                 </div>
             </form>
             @if($flow)
-                <form action="/branch/user" method="GET">
-                    @csrf
-                    <div class="row">
-                        <div class="col-sm-8">	
-                            <h2 class="page-title">{{$branches->name}}</h2>
-                        </div>
-                        <div class="col-sm-1">
-                            <label for="user" for="id">Name Search</label>
-                        </div>
-                        <div class="col-2">
-                            <input type="hidden" value="{{$branches->id}}" name="id">
-                            <input type="text" placeholder="Name" name="name">
-                        </div>
-                        <div class="col-1">
-                            <button class="btn btn-primary btn-rounded" type="submit">Search</button>
-                        </div>
+                <div class="row">
+                    <div class="col-sm-8">	
+                        <h2 class="page-title">{{$branches->name}}</h2>
                     </div>
-                </form>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="card-box">
@@ -71,24 +58,11 @@
                             </div>
                         </div>
                     @else
-                        <form action="/branch/user" method="GET">
-                            @csrf
-                            <div class="row">
-                                <div class="col-sm-8">	
-                                    <h2 class="page-title">{{$branch->name}}</h2>
-                                </div>
-                                <div class="col-sm-1">
-                                    <label for="user" for="id">Name Search</label>
-                                </div>
-                                <div class="col-2">
-                                    <input type="hidden" value="{{$branch->id}}" name="id">
-                                    <input type="text" placeholder="Name" name="name">
-                                </div>
-                                <div class="col-1">
-                                    <button class="btn btn-primary btn-rounded" type="submit">Search</button>
-                                </div>
+                        <div class="row">
+                            <div class="col-sm-8">	
+                                <h2 class="page-title">{{$branch->name}}</h2>
                             </div>
-                        </form>
+                        </div>
                     @endif
                     <div class="row text-center">
                         <div class="col-12">
