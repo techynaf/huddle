@@ -73,11 +73,22 @@ class ScheduleController extends Controller
 
     public function dayOffChecker ($user, $date)
     {
-        if (WeeklyLeave::where('user_id', $user->id)->where('date_1', $date)->where('approved', true)->first() != null) {//checking if weekly off
+        $weekly = WeeklyLeave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->
+        where('approved', true)->first();
+        $day = Carbon::parse($date)->format('l');
+        
+        if ($weekly != null) {
+            $day1 = Carbon::parse($weekly->day_1)->format('l');
+            $day2 = Carbon::parse($weekly->day_2)->format('l');
+
+            if ($day == $day1 || $day == $day2) {
+                return 'day-off';
+            }
+        } elseif ($day == 'Friday' || $day == 'Saturday') {
             return 'day-off';
-        } elseif (WeeklyLeave::where('user_id', $user->id)->where('date_2', $date)->where('approved', true)->first() != null) {//checking if weekly off
-            return 'day-off';
-        } elseif (Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', true)->first() != null) {//checking if has approved leave
+        }
+        
+        if (Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', true)->first() != null) {//checking if has approved leave
             $l = Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', true)->first();
             if ($l->type == 2) {
                 return 'sick';
