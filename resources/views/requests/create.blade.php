@@ -26,12 +26,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="subject">Request Subject</label>
-                                            <div class="col-10">
-                                                <input type="text" name="subject" class="form-control" placeholder="Request Subject">
-                                            </div>
-                                        </div>
 
                                         <div class="form-group row">
                                             <label class="col-2 col-form-label" for="body">Request Body</label>

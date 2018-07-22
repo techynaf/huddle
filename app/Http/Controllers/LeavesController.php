@@ -22,7 +22,6 @@ class LeavesController extends Controller
     public function storeLeaveRequest (Request $request, $id)
     {
         $this->validate($request, [
-            'subject' => 'required',
             'body' => 'required',
             'type' => 'required',
             'start' => 'required',

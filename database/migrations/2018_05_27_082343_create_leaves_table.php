@@ -17,7 +17,6 @@ class CreateLeavesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('type');
-            $table->string('subject');
             $table->string('body');
             $table->date('start');
             $table->date('end');
