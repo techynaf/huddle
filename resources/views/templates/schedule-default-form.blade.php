@@ -1,8 +1,8 @@
-<label for="start[]">Entry Time</label>
-<input type="time" class="form-control input-sm" name="start[]" placeholder="HH:MM AM/PM" required>
+<label for="start[]" class="sm">Entry Time</label>
+<input type="time" class="form-control input-sm xm" name="start[]" placeholder="HH:MM AM/PM" required>
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
-    <label for="entry_b[]" class="col-form-label">Entry Branch</label>
+    <label for="entry_b[]" class="col-form-label sm">Entry Branch</label>
     <select name="entry_b[]" class="form-control input-sm">
         <option value="{{$user->branch->id}}">{{$user->branch->name}}</option>
         @foreach($branches as $branch)
@@ -13,11 +13,11 @@
     <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
 @endif
 
-<label>Exit Time</label>
-<input type="time" class="form-control input-sm" name="end[]" placeholder="HH:MM AM/PM" required>
+<label class="sm">Exit Time</label>
+<input type="time" class="form-control input-sm xm" name="end[]" placeholder="HH:MM AM/PM" required>
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
-    <label for="exit_b[]" class="col-form-label">Exit Branch</label>
+    <label for="exit_b[]" class="col-form-label sm">Exit Branch</label>
     <select name="exit_b[]" class="form-control input-sm">
         <option value="{{$user->branch->id}}">{{$user->branch->name}}</option>
         @foreach($branches as $branch)

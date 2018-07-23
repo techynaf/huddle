@@ -2,13 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Karla:400,700);
 @import url(https://fonts.googleapis.com/css?family=Rancho);
 
-/*
-  Custom Insertions
-*/
 
-.xm {
-  font-size: 8px;
-}
 
 /* =============
    Common
@@ -6362,4 +6356,16 @@ input.app-search-input:-ms-input-placeholder {
   .user-list .user-list-item .user-desc {
     margin-left: 0;
   }
+}
+
+/*
+  Custom Insertions
+*/
+
+.xm {
+  font-size: 10px;
+}
+
+.sm {
+  font-size: 12px;
 }

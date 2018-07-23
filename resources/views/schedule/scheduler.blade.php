@@ -56,39 +56,39 @@
                                             @if($schedule == 'day-off')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>DAY</h4>
-                                                    <h4>OFF</h4>
+                                                    <h6>DAY</h6>
+                                                    <h6>OFF</h6>
                                                 </div>
                                             @elseif ($schedule == 'sick')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>SICK</h4>
-                                                    <h4>LEAVE</h4>
+                                                    <h6>SICK</h6>
+                                                    <h6>LEAVE</h6>
                                                 </div>
                                             @elseif ($schedule == 'annual')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>ANNUAL</h4>
-                                                    <h4>LEAVE</h4>
+                                                    <h6>ANNUAL</h6>
+                                                    <h6>LEAVE</h6>
                                                 </div>
                                             @elseif ($schedule == 'govt')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>GOVERNMENT</h4>
-                                                    <h4>HOLIDAY</h4>
+                                                    <h6>GOVERNMENT</h6>
+                                                    <h6>HOLIDAY</h6>
                                                 </div>
                                             @elseif($schedule == 'no-schedule' || $schedule == false)
-                                                <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                <div class="text-center btn btn-outline-warning h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>NO</h4>
-                                                    <h4>RECORD</h4>
+                                                    <h6>NO</h6>
+                                                    <h6>SCHEDULE</h6>
                                                 </div>
                                                 <br><br>
                                             @else
                                                 <input type="hidden" name="s_id[]" value="off">
-                                                <h4 class="text-center">{{date("g:i A", strtotime($schedule->start))}}</h4>
+                                                <h6 class="text-center">{{date("g:i A", strtotime($schedule->start))}}</h6>
                                                 <br>
-                                                <h4 class="text-center">{{date("g:i A", strtotime($schedule->endforeach))}}</h4>
+                                                <h6 class="text-center">{{date("g:i A", strtotime($schedule->endforeach))}}</h6>
                                             @endif
                                         </div>
                                     @else
@@ -97,46 +97,46 @@
                                             @if($schedule == 'day-off')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>DAY</h4>
-                                                    <h4>OFF</h4>
+                                                    <h6>DAY</h6>
+                                                    <h6>OFF</h6>
                                                 </div>
                                             @elseif ($schedule == 'sick')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>SICK</h4>
-                                                    <h4>LEAVE</h4>
+                                                    <h6>SICK</h6>
+                                                    <h6>LEAVE</h6>
                                                 </div>
                                             @elseif ($schedule == 'annual')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>ANNUAL</h4>
-                                                    <h4>LEAVE</h4>
+                                                    <h6>ANNUAL</h6>
+                                                    <h6>LEAVE</h6>
                                                 </div>
                                             @elseif ($schedule == 'govt')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>GOVERNMENT</h4>
-                                                    <h4>HOLIDAY</h4>
+                                                    <h6>GOVERNMENT</h6>
+                                                    <h6>HOLIDAY</h6>
                                                 </div>
                                             @elseif($schedule == 'no-schedule')
                                                 <div class="text-center btn btn-outline-danger h-75">
                                                     <input type="hidden" name="s_id[]" value="off">
-                                                    <h4>DAY OFF</h4>
+                                                    <h6>DAY OFF</h6>
                                                 </div>
                                                 <br><br>
                                                 <div class="text-center h-25">
-                                                    <a href="/enable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-success">ENABLE</a>
+                                                    <a href="/enable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-success sm">ENABLE</a>
                                                 </div>
                                             @elseif($schedule == false)
                                                 <input type="hidden" name="s_id[]" value="0">
                                                 @include('templates.schedule-default-form')
                                                 <br>
-                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
+                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger sm">DISABLE</a>
                                             @else
                                                 <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
                                                 @include('templates.schedule-form')
                                                 <br>
-                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger">DISABLE</a>
+                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$path}}" class="text-center btn btn-outline-danger sm">DISABLE</a>
                                             @endif
                                         </div>
                                     @endif
