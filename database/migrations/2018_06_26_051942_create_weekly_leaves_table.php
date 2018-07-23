@@ -21,7 +21,7 @@ class CreateWeeklyLeavesTable extends Migration
             $table->date('end');
             $table->string('day_1');
             $table->string('day_2');
-            $table->boolean('approved')->nullable();
+            $table->integer('approved')->nullable();
             $table->timestamps();
         });
     }
