@@ -49,4 +49,9 @@ class BranchController extends Controller
 
         return redirect('/branch')->with('success', 'Branch Deleted');
     }
+
+    public function details (Request $request, $id)
+    {
+
+    }
 }

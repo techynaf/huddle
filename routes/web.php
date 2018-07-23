@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Home Ro
+//Home Routes
 Route::get('/', 'HomeController@index');
 Route::get('/branch/filter', 'HomeController@branchFilter');
 Route::get('branch/user', 'HomeController@userFilter')->middleware('auth');
@@ -59,6 +59,7 @@ Route::get('/branch/create', 'BranchController@create')->middleware('auth');
 Route::post('/branch/create', 'BranchController@store')->middleware('auth');
 Route::get('/branch/delete', 'BranchController@delete')->middleware('auth');
 Route::post('/branch/destroy', 'BranchController@destroy')->middleware('auth');
+Route::get('/branch/details', 'BranchController@details')->middleware('auth');
 
 //Late Routes
 Route::get('/late/check/{id}', 'LateController@check');

@@ -21,7 +21,7 @@
                         <tbody>
                             @foreach($branches as $branch)
                                 <tr>
-                                    <td>{{$branch->name}}</td>
+                                    <td><a href="/branch/details/{{$branch->id}}">{{$branch->name}}</a></td>
                                     <td>{{count($branch->users)}}</td>
                                     <td>Manager</td>
                                     <td>Assistant Manager</td>

@@ -189,7 +189,7 @@ class WeeklyLeavesController extends Controller
 
     public function process (Request $request, $id)
     {
-        $leave = WeeklyLeave::find($id);
+        $leave = WeeklyLeave::where('id', $id)->first();
         $leave->approved = $request->status;
         $leave->save();
         $message = 'Weekly has been ';
