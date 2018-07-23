@@ -65,7 +65,8 @@
                             <ul class="submenu">
                                 <li><a href="/create/weekly">Select Weekly Day Offs</a></li>
                                 <li><a href="/edit/weekly">Edit Weekly Day Offs</a></li>
-                                <li><a href="/view/requests">Show Requests</a></li>
+                                <li><a href="/view/requests">Leave Requests</a></li>
+                                <li><a href="/show/weekly">Day-off Requests</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">

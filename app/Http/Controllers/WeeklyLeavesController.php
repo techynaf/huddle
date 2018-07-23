@@ -50,6 +50,7 @@ class WeeklyLeavesController extends Controller
         $weekly->end = Carbon::parse($request->end)->format('Y-m-d');
         $weekly->day_1 = $request->day_1;
         $weekly->day_2 = $request->day_2;
+        $weekly->branch_id = auth()->user()->branch_id;
         $weekly->approved = null;
         $weekly->save();
 
@@ -60,7 +61,8 @@ class WeeklyLeavesController extends Controller
     {
         $now = new Carbon;
 
-        $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->get();
+        $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->
+        orderBy('start')->get();
 
         $now = new Carbon;
         $start = $this->findSun($now->addDays(7))->format('Y-m-d');
@@ -81,16 +83,27 @@ class WeeklyLeavesController extends Controller
 
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
-        $now = new Carbon;
+        
+        $l = WeeklyLeave::where('user_id', $id)->where('end', '<', $end->copy()->format('Y-m-d'))->
+        where('start', '>', $start->copy()->format('Y-m-d'))->first();
 
-        $cleave = WeeklyLeave::where('user_id', $id)->where('end', '>', $now->copy()->format('Y-m-d'))->
-        where('start', '<=', $now->copy()->format('Y-m-d'))->first();
+        if ($l != null) {
+            return redirect('/dashboard')->with('error', 'You have an overlapping leave');
+        }
+
+        $cleave = WeeklyLeave::where('user_id', $id)->where('end', '>=', $end->copy()->format('Y-m-d'))->
+        where('start', '<=', $start->copy()->format('Y-m-d'))->first();
 
         if ($cleave == null) {
             return redirect('/dashboard')->with('error', 'There are no scheduled off days in the date range.');
         }
 
-        if ($cleave->end  <= $end->copy()->format('Y-m-d')) {
+        if ($cleave->start == $start->copy()->format('Y-m-d') && $cleave->end == $end->copy()->format('Y-m-d')) {
+            $cleave->day_1 = $request->day_1;
+            $cleave->day_2 = $request->day_2;
+            $cleave->approved = null;
+            $cleave->save();
+        } elseif ($cleave->end  <= $end->copy()->format('Y-m-d') && $cleave->start < $start->copy()->format('Y-m-d')) {
             $end = $cleave->end;
             $cleave->end = $start->copy()->addDays(-1)->format('Y-m-d');
             $cleave->save();
@@ -101,16 +114,31 @@ class WeeklyLeavesController extends Controller
             $weekly->end = $end;
             $weekly->day_1 = $request->day_1;
             $weekly->day_2 = $request->day_2;
+            $weekly->branch_id = auth()->user()->branch_id;
             $weekly->approved = null;
             $weekly->save();
+        } elseif ($cleave->start == $start->copy()->format('Y-m-d') && $cleave->end > $end->copy()->format('Y-m-d')) {
+            $weekly = new WeeklyLeave;
+            $weekly->user_id = $id;
+            $weekly->start = $start->format('Y-m-d');
+            $weekly->end = $end->copy()->format('Y-m-d');
+            $weekly->day_1 = $request->day_1;
+            $weekly->day_2 = $request->day_2;
+            $weekly->branch_id = auth()->user()->branch_id;
+            $weekly->approved = null;
+            $weekly->save();
+
+            $cleave->start = $end->addDay()->format('Y-m-d');
+            $cleave->save();
         } else {
-            $weekly = new WeekyLeave;
+            $weekly = new WeeklyLeave;
             $weekly->user_id = $cleave->user_id;
             $weekly->start = $end->copy()->addDay()->format('Y-m-d');
             $weekly->end = $cleave->end;
             $weekly->day_1 = $cleave->day_1;
             $weekly->day_2 = $cleave->day_2;
-            $weekly->approved = true;
+            $weekly->branch_id = auth()->user()->branch_id;
+            $weekly->approved = $cleave->approved;
             $weekly->save();
 
             $cleave->end = $start->copy()->addDays(-1)->format('Y-m-d');
@@ -118,10 +146,11 @@ class WeeklyLeavesController extends Controller
 
             $leave = new WeeklyLeave;
             $leave->user_id = $cleave->user_id;
-            $leave->start = $start->copy()->addDay()->format('Y-m-d');
-            $leave->end = $end->copy()->addDay()->format('Y-m-d');
+            $leave->start = $start->copy()->format('Y-m-d');
+            $leave->end = $end->copy()->format('Y-m-d');
             $leave->day_1 = $request->day_1;
             $leave->day_2 = $request->day_2;
+            $leave->branch_id = auth()->user()->branch_id;
             $leave->approved = null;
             $leave->save();
         }
@@ -144,5 +173,23 @@ class WeeklyLeavesController extends Controller
         }
 
         return $date;
+    }
+
+    public function show ()
+    {
+        if (auth()->user()->roles->first()->name == 'barista') {
+            return redirect('/')->with('error', 'You are not authorized to view this');
+        }
+
+        $leaves = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->whereNull('approved')->
+        orderBy('user_id')->orderBy('start')->get();
+
+        return view('weekly/show')->with('leaves', $leaves);
+    }
+
+    public function process (Request $request, $id)
+    {
+        $l = WeeklyLeave::find($id);
+        dd($l);
     }
 }

@@ -51,6 +51,7 @@ Route::post('/create/weekly/{id}', 'WeeklyLeavesController@store')->middleware('
 Route::get('/edit/weekly', 'WeeklyLeavesController@edit')->middleware('auth');
 Route::post('/edit/weekly/{id}', 'WeeklyLeavesController@update')->middleware('auth');
 Route::get('/show/weekly', 'WeeklyLeavesController@show')->middleware('auth');
+Route::get('/weekly/{id}/process', 'WeeklyLeavesController@process')->middleware('auth');
 
 //Branch Routes
 Route::get('/branch', 'BranchController@show')->middleware('auth');
