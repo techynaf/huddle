@@ -18,6 +18,7 @@ Route::get('/home', 'HomeController@index')->middleware('auth');
 
 //Admin Routes
 Route::get('/view/employee/{id}', 'AdminController@show')->middleware('auth');
+Route::post('/admin/change/{id}', 'AdminController@branch')->middleware('auth');
 
 //Authentication Routes
 Route::get('/logout', 'Auth\LoginController@logout');
@@ -54,12 +55,12 @@ Route::get('/show/weekly', 'WeeklyLeavesController@show')->middleware('auth');
 Route::get('/weekly/{id}/process', 'WeeklyLeavesController@process')->middleware('auth');
 
 //Branch Routes
-Route::get('/branch', 'BranchController@show')->middleware('auth');
+Route::get('/branch', 'BranchController@showAll')->middleware('auth');
 Route::get('/branch/create', 'BranchController@create')->middleware('auth');
 Route::post('/branch/create', 'BranchController@store')->middleware('auth');
 Route::get('/branch/delete', 'BranchController@delete')->middleware('auth');
 Route::post('/branch/destroy', 'BranchController@destroy')->middleware('auth');
-Route::get('/branch/details', 'BranchController@details')->middleware('auth');
+Route::get('/branch/details/{id}', 'BranchController@show')->middleware('auth');
 
 //Late Routes
 Route::get('/late/check/{id}', 'LateController@check');

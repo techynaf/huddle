@@ -140,7 +140,6 @@ class ProfileController extends Controller
 
         $user = new User;
         $user->name = $request->name;
-        $user->phone = $request->phone;
         $user->branch_id = $request->branch;
         $user->pin = $pin;
         $user->password = bcrypt('bangladesh');
@@ -153,7 +152,9 @@ class ProfileController extends Controller
         $qr = QRCode::text($pin);
         $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
 
-        return view('profile-created')->with('pin', $pin)->with('name', $name)->with('e_id', $e_id);
+        $url = '/view/employee/'.$user->id;
+
+        return redirect($url);
     }
 
     public function createQR () {

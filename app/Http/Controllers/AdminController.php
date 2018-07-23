@@ -109,4 +109,24 @@ class AdminController extends Controller
 
         dd($leaves);
     }
+
+    public function branch (Request $request, $id)
+    {
+        if ($request->branch != null) {
+            $user = User::where('id', $id)->first();
+            $user->branch_id = $request->branch;
+            $user->save();
+        }
+
+        if ($request->role != null) {
+            $user = User::where('id', $id)->first();
+            $role = $user->roles->first()->id;
+
+            $user->roles()->detach($role);
+            $user->roles()->attach($request->role);
+        }
+
+        $url = '/branch/details/'.$request->b_id;
+        return redirect($url)->with('success', 'Change successfully made');
+    }
 }
