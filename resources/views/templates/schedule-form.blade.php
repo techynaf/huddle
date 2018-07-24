@@ -1,5 +1,5 @@
 <label for="start[]" class="sm">Entry Time</label>
-<input type="time"  class="form-control input-sm xm" name="start[]" value="{{$schedule->start}}" placeholder="HH:MM AM/PM" required>
+<input type="time"  class="form-control input-sm" name="start[]" value="{{$schedule->start}}" placeholder="HH:MM AM/PM" required>
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
     <label for="entry_b[]" class="col-form-label">Entry Branch</label>
@@ -14,7 +14,7 @@
 @endif
 
 <label>Exit Time</label>
-<input type="time" class="form-control input-sm xm" name="end[]" value="{{$schedule->end}}" placeholder="HH:MM AM/PM" required>
+<input type="time" class="form-control input-sm" name="end[]" value="{{$schedule->end}}" placeholder="HH:MM AM/PM" required>
 
 @if(auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
     <label for="exit_b[]" class="col-form-label sm">Exit Branch</label>

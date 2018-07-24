@@ -6363,9 +6363,15 @@ input.app-search-input:-ms-input-placeholder {
 */
 
 .xm {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .sm {
   font-size: 12px;
+}
+
+input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
 }
