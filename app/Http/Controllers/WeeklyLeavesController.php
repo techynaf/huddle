@@ -172,7 +172,7 @@ class WeeklyLeavesController extends Controller
             return redirect('/')->with('error', 'You are not authorized to view this');
         }
 
-        $leaves = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->whereNull('approved')->
+        $leaves = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->where('approved', 0)->
         orderBy('user_id')->orderBy('start')->get();
 
         return view('weekly/show')->with('leaves', $leaves)->with('notification', $notification);
