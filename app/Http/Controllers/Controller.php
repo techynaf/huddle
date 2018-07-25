@@ -40,7 +40,7 @@ class Controller extends BaseController
         }
 
         while ($date->copy()->format('l') != 'Saturday') {
-            $date = $date->addDays(-1);
+            $date = $date->addDays(1);
         }
 
         return $date;
