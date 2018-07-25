@@ -24,10 +24,14 @@ class LateController extends Controller
         return view('late/show-all')->with('lates', $lates)->with('dates', $dates);
     }
 
-    public function show (Request $request, $id)
+    public function store (Request $request, $id)
     {
         $late = Late::where('id', $id)->first();
+        $late->altered_by = auth()->user()->id;
+        $late->type = $request->type;
+        $late->comment = $request->comment;
+        $late->store;
 
-        return view('comment')->with('late', $late);
+        return redirect('lates');
     }
 }

@@ -64,6 +64,6 @@ Route::get('/branch/details/{id}', 'BranchController@show')->middleware('auth');
 
 //Late Routes
 Route::get('/lates', 'LateController@showAll');
-Route::get('/lates/{id}', 'LateController@show');
+Route::post('/lates/{id}', 'LateController@store');
 
 //Test Routes
