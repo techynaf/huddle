@@ -12,6 +12,7 @@ use App\Leave;
 use App\NoSchedule;
 use App\Late;
 use App\ScheduleEdit;
+use App\LogUpdate;
 
 class User extends Authenticatable
 {
@@ -80,8 +81,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Late', 'altered_by');
     }
 
-    public function edits ()
+    public function updated ()
     {
-        return $this->hasMany('App\ScheduleEdit');
+        return $this->hasMany('App\LogUpdate');
     }
 }

@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\Leave;
 use App\WeeklyLeave;
 use App\Late;
+use App\Log;
+use App\LogUpdate;
 
 class Controller extends BaseController
 {
@@ -57,6 +59,7 @@ class Controller extends BaseController
             if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
                 $leaves = Leave::where('is_approved', 0)->get();
                 $weekly = WeeklyLeave::where('approved', 0)->get();
+                $logs = 's';
                 
                 if (count($leaves) != 0) {
                     array_push($notification, true);

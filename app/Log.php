@@ -7,6 +7,7 @@ use App\User;
 use App\Branch;
 use App\Schedule;
 use App\Late;
+use App\LogUpdate;
 
 class Log extends Model
 {
@@ -28,5 +29,10 @@ class Log extends Model
     public function late ()
     {
         return $this->hasOne('App\Late');
+    }
+
+    public function updates ()
+    {
+        return $this->hasMany('App\LogUpdate');
     }
 }
