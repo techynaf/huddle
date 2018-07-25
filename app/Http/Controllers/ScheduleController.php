@@ -33,6 +33,7 @@ class ScheduleController extends Controller
             $start = $this->findSun(new Carbon);
         } else {
             $start = Carbon::parse($request->date);
+            $start = $this->findSun($start);
         }
 
         $dates = $this->findWeeks();
@@ -123,9 +124,13 @@ class ScheduleController extends Controller
         $s_branches = $request->entry_b;
         $e_branches = $request->exit_b;
         $counter = 0;
-        for ($i = 0; $i < sizeof($dates); $i++) {
-            if ($schedule_ids[$i] != 'off') {
+
+        for ($i = 0; $i < sizeof($schedule_ids); $i++) {
+            if ($schedule_ids[$i] == 'off') {
+
+            } else {
                 $schedule = null;
+
                 if ($schedule_ids[$i] == '0') {
                     $schedule = new Schedule;
                 } else {
@@ -141,6 +146,7 @@ class ScheduleController extends Controller
                 $schedule->date = $dates[$i];
                 $schedule->timestamps = false;
                 $schedule->save();
+
                 $counter++;
             }
         }
@@ -148,20 +154,6 @@ class ScheduleController extends Controller
         $url = '/scheduler?date='.$dates[0];
 
         return redirect($url)->with('success', 'Schedule created for '.$user->name);
-    }
-
-    public function findWeeks () {
-        $date = $this->findSun(new Carbon);
-        $dates = array();
-        $s = $date;
-        $e = $s->copy()->addDays(6);
-
-        for ($i = -4; $i <= 4; $i++) {
-            $d = array($s->copy()->addWeeks($i)->format('d-m-Y'), $e->copy()->addWeeks($i)->format('d-m-Y'));
-            array_push($dates, $d);
-        }
-
-        return $dates;
     }
 
     public function disable (Request $request, $id, $date, $url)

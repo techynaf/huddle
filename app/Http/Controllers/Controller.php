@@ -105,4 +105,18 @@ class Controller extends BaseController
             return $notification;
         }
     }
+
+    public function findWeeks () {
+        $date = $this->findSun(new Carbon);
+        $dates = array();
+        $s = $date;
+        $e = $s->copy()->addDays(6);
+
+        for ($i = -4; $i <= 4; $i++) {
+            $d = array($s->copy()->addWeeks($i)->format('d-m-Y'), $e->copy()->addWeeks($i)->format('d-m-Y'));
+            array_push($dates, $d);
+        }
+
+        return $dates;
+    }
 }

@@ -51,6 +51,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-2 pt-2">{{$user->name}}</div>
                                 @foreach($schedules[$loop->index] as $schedule)
+                                <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
                                     @if ($days[$loop->index][1] <= $today)
                                         <div class="col-md-1">
                                             @if($schedule == 'day-off')
@@ -93,7 +94,6 @@
                                         </div>
                                     @else
                                         <div class="col-md-1">
-                                            <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
                                             @if($schedule == 'day-off')
                                                 <div class="text-center btn btn-outline-danger h-100 w-100">
                                                     <input type="hidden" name="s_id[]" value="off">
