@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogsUpdateTable extends Migration
+class CreateLogUpdatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateLogsUpdateTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs_update', function (Blueprint $table) {
+        Schema::create('log_updates', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('log_id');
             $table->integer('user_id');
             $table->time('initial_start');
-            $table->time('initial_end');
+            $table->time('initial_end')->nullable();
             $table->time('final_start');
             $table->time('final_end');
             $table->timestamps();

@@ -68,4 +68,8 @@ Route::get('/branch/details/{id}', 'BranchController@show')->middleware('auth');
 Route::get('/lates', 'LateController@showAll');
 Route::post('/lates/{id}', 'LateController@store');
 
+//Log Routes
+Route::get('/logs', 'LogController@show')->middleware('auth');
+Route::post('/logs/{id}', 'LogController@store')->middleware('auth');
+
 //Test Routes

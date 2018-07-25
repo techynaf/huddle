@@ -81,7 +81,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Late', 'altered_by');
     }
 
-    public function updated ()
+    public function edited ()
     {
         return $this->hasMany('App\LogUpdate');
     }
