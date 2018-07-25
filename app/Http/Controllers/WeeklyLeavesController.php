@@ -113,6 +113,7 @@ class WeeklyLeavesController extends Controller
 
             $weekly = new WeeklyLeave;
             $weekly->user_id = $id;
+            $weekly->branch_id = auth()->user()->branch_id;
             $weekly->start = $start->format('Y-m-d');
             $weekly->end = $end;
             $weekly->day_1 = $request->day_1;
@@ -123,6 +124,7 @@ class WeeklyLeavesController extends Controller
         } elseif ($cleave->start == $start->copy()->format('Y-m-d') && $cleave->end > $end->copy()->format('Y-m-d')) {
             $weekly = new WeeklyLeave;
             $weekly->user_id = $id;
+            $weekly->branch_id = auth()->user()->branch_id;
             $weekly->start = $start->format('Y-m-d');
             $weekly->end = $end->copy()->format('Y-m-d');
             $weekly->day_1 = $request->day_1;
@@ -136,6 +138,7 @@ class WeeklyLeavesController extends Controller
         } else {
             $weekly = new WeeklyLeave;
             $weekly->user_id = $cleave->user_id;
+            $weekly->branch_id = auth()->user()->branch_id;
             $weekly->start = $end->copy()->addDay()->format('Y-m-d');
             $weekly->end = $cleave->end;
             $weekly->day_1 = $cleave->day_1;
@@ -148,6 +151,7 @@ class WeeklyLeavesController extends Controller
             $cleave->save();
 
             $leave = new WeeklyLeave;
+            $leave->branch_id = auth()->user()->branch_id;
             $leave->user_id = $cleave->user_id;
             $leave->start = $start->copy()->format('Y-m-d');
             $leave->end = $end->copy()->format('Y-m-d');
