@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Log;
 use App\User;
+use App\Branch;
 
 class Late extends Model
 {
@@ -21,5 +22,10 @@ class Late extends Model
     public function log ()
     {
         return $this->belongsTo('App\Log');
+    }
+
+    public function branch ()
+    {
+        return $this->belongsTo('App\Branch');
     }
 }

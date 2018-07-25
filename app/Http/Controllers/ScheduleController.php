@@ -148,19 +148,6 @@ class ScheduleController extends Controller
         return redirect($url)->with('success', 'Schedule created for '.$user->name);
     }
 
-    public function findSun ($date)
-    {
-        if ($date == null) {
-            $date = new Carbon;
-        }
-
-        while ($date->copy()->format('l') != 'Sunday') {
-            $date = $date->addDays(-1);
-        }
-
-        return $date;
-    }
-
     public function findWeeks () {
         $date = $this->findSun(new Carbon);
         $dates = array();

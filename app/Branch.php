@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Schedule;
 use App\Log;
+use App\Late;
 
 class Branch extends Model
 {
@@ -22,5 +23,10 @@ class Branch extends Model
     public function logs ()
     {
         return $this->hasMany('App\Log');
+    }
+
+    public function lates ()
+    {
+        return $this->hasMany('App\Late');
     }
 }

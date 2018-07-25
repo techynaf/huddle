@@ -63,6 +63,6 @@ Route::post('/branch/destroy', 'BranchController@destroy')->middleware('auth');
 Route::get('/branch/details/{id}', 'BranchController@show')->middleware('auth');
 
 //Late Routes
-Route::get('/late/check/{id}', 'LateController@check');
+Route::get('/lates', 'LateController@showAll');
 
 //Test Routes

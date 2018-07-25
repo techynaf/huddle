@@ -158,23 +158,6 @@ class WeeklyLeavesController extends Controller
         return redirect('/dashboard')->with('success', 'Weekly day off successfully edited, waiting for approval');
     }
 
-    public function findSun ($date)
-    {
-        if ($date == null) {
-            $date = new Carbon;
-        }
-
-        if ($date->copy()->format('l') == 'Sunday') {
-            return $date;
-        }
-
-        while ($date->copy()->format('l') != 'Sunday') {
-            $date = $date->addDays(-1);
-        }
-
-        return $date;
-    }
-
     public function show ()
     {
         if (auth()->user()->roles->first()->name == 'barista') {
