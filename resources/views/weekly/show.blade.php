@@ -4,7 +4,7 @@
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
-                <h2 class="page-title">Process Weekly</h2>
+                <h2 class="page-title">Process Weekly Day Offs</h2>
             </div>
             <div class="row">
                 <div class="col-sm-12 card-box">

@@ -110,4 +110,20 @@ class LeavesController extends Controller
 
         return redirect ('/view/requests')->with('success', $message);
     }
+
+    public function type ()
+    {
+        $notification = $this->checkNotifications();
+
+        return view('requests/type')->with('notification', $notification);
+    }
+
+    public function range (Request $request, $type)
+    {
+        $notification = $this->checkNotifications();
+        $type = LeaveTypes::where('name', $type)->first();
+        $type = $type->id;
+
+        return view('requests/range')->with('notification', $notification)->with('type', $type);
+    }
 }

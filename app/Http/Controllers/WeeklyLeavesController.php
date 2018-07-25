@@ -37,13 +37,18 @@ class WeeklyLeavesController extends Controller
         $weekly->user_id = $id;
         $weekly->start = Carbon::parse($request->start)->format('Y-m-d');
         $weekly->end = Carbon::parse($request->end)->format('Y-m-d');
-
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
-        $leaves = WeeklyLeave::where('user_id', $id)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
+        $leaves = WeeklyLeave::where('user_id', $id)->where('approved', 0)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
 
         if (count($leaves) != 0) {
-            return redirect('/')->with('error', 'Weekly Leaves already exits for this date range, please use edit to change them');
+            return redirect('/')->with('error', 'Weekly Leaves already exists for this date range, please use ‘Edit Weekly Day Offs’ to change them');
+        }
+
+        $leaves = WeeklyLeave::where('user_id', $id)->where('approved', 1)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
+
+        if (count($leaves) != 0) {
+            return redirect('/')->with('error', 'Weekly Leaves already exists for this date range, please use ‘Edit Weekly Day Offs’ to change them');
         }
 
         $weekly = new WeeklyLeave;
@@ -53,7 +58,7 @@ class WeeklyLeavesController extends Controller
         $weekly->day_1 = $request->day_1;
         $weekly->day_2 = $request->day_2;
         $weekly->branch_id = auth()->user()->branch_id;
-        $weekly->approved = null;
+        $weekly->approved = 0;
         $weekly->save();
 
         return redirect('/dashboard')->with('success', 'Weekly day off successfully added, waiting for approval');
@@ -65,7 +70,7 @@ class WeeklyLeavesController extends Controller
         $now = new Carbon;
 
         $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->
-        orderBy('start')->get();
+        orderBy('start')->where('approved', 1)->get();
 
         $now = new Carbon;
         $start = $this->findSun($now->addDays(7))->format('Y-m-d');
@@ -187,10 +192,12 @@ class WeeklyLeavesController extends Controller
 
         if ($request->status) {
             $message = $message.'approved';
+            $stat = 'success';
         } else {
             $message = $message.'declined';
+            $stat = 'error';
         }
 
-        return redirect ('/show/weekly')->with('success', $message);
+        return redirect ('/show/weekly')->with($stat, $message);
     }
 }
