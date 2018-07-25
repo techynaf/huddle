@@ -126,7 +126,7 @@ class ProfileController extends Controller
             'name' => 'required',
             'branch' => 'required',
             'role' => 'required',
-            'e_id' => 'required',
+            'employee_id' => 'required',
         ]);
 
         $pin = 0;
@@ -146,7 +146,14 @@ class ProfileController extends Controller
         $user->pin = $pin;
         $user->password = bcrypt('bangladesh');
         $user->logged_in = false;
-        $user->employee_id = $request->e_id;
+        $user->employee_id = $request->employee_id;
+        
+        if ($request->other == null) {
+            $user->religion = $request->religion;
+        } else {
+            $user->religion = $request->other;
+        }
+
         $role = Role::find($request->role);
         $user->save();
         $user->roles()->attach($role);

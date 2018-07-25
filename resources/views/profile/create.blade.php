@@ -17,17 +17,18 @@
                                     <form class="form-horizontal" role="form" action="/store/profile" method="POST">
                                         @csrf
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="name">Name</label>
+                                            <label class="col-1 text-right col-form-label" for="name">Name</label>
                                             <div class="col-4">
                                                 <input type="text" class="form-control" name="name" placeholder="Name">
                                             </div>
-                                            <label class="col-2 col-form-label" for="role">Employee ID</label>
+                                            <div class="col-1"></div>
+                                            <label class="col-1 text-right col-form-label" for="employee_id">Employee ID</label>
                                             <div class="col-4">
-                                                <input type="text" class="form-control" name="e_id" placeholder="Employee ID">
+                                                <input type="text" class="form-control" name="employee_id" placeholder="Employee ID">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="role">Job Title</label>
+                                            <label class="col-1 text-right col-form-label" for="role">Job Title</label>
                                             <div class="col-4">
                                                 <select name="role" class="form-control">
                                                     @foreach($roles as $role)
@@ -35,7 +36,8 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <label class="col-2 col-form-label" for="branch">Branch</label>
+                                            <div class="col-1"></div>
+                                            <label class="col-1 text-right col-form-label" for="branch">Branch</label>
                                             <div class="col-4">
                                                 <select name="branch" class="form-control">
                                                     @foreach($branches as $branch)
@@ -44,6 +46,24 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                                <label class="col-1 text-right col-form-label" for="religion">Religion</label>
+                                                <div class="col-4">
+                                                    <select name="religion" class="form-control">
+                                                        <option value=""></option>
+                                                        <option value="Islam">Islam</option>
+                                                        <option value="Hinduism">Hinduism</option>
+                                                        <option value="Buddhism">Buddhism</option>
+                                                        <option value="Christianity">Christianity</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-1"></div>
+                                                <label class="col-1 text-right col-form-label" for="other">Other</label>
+                                                <div class="col-4">
+                                                    <input type="text" class="form-control" name="other" placeholder="Other religion">
+                                                </div>
+                                            </div>
                                         
                                         <div class="row">
                                             <div class="col-11"></div>

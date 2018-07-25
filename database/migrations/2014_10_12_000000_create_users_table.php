@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('branch_id');
             $table->string('employee_id')->unique();
+            $table->string('religion');
             $table->text('img_url')->nullable();
             $table->rememberToken();
             $table->boolean('logged_in')->nullable();

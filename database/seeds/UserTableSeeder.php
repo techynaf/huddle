@@ -15,6 +15,7 @@ class UserTableSeeder extends Seeder
     {
         $pin = 999;
         $url = array('', '');
+        $rel = array('Islam', 'Hinduism', 'Buddhism', 'Christianity', 'Sikhism');
 
         for ($i = 1; $i <= 200; $i++) {
             $pin++;
@@ -23,6 +24,7 @@ class UserTableSeeder extends Seeder
                 'name' => 'user'.$i,
                 'pin' => $pin,
                 'employee_id' => 'something'.$i,
+                'religion' => $rel[rand(0, 4)],
                 'img_url' => '/frontend/images/users/avatar-1.jpg',
                 'password' => bcrypt('bangladesh'),
                 'branch_id' => rand(1, 6),
