@@ -7,6 +7,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
+use App\Leave;
+use App\WeeklyLeave;
+use App\Late;
 
 class Controller extends BaseController
 {
@@ -44,5 +47,62 @@ class Controller extends BaseController
         }
 
         return $date;
+    }
+
+    public function checkNotifications ()
+    {
+        if (auth()->user() != null) {
+            $notification = array();
+
+            if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
+                $leaves = Leave::where('is_approved', 0)->get();
+                $weekly = WeeklyLeave::where('approved', 0)->get();
+                
+                if (count($leaves) != 0) {
+                    array_push($notification, true);
+                } else {
+                    array_push($notification, false);
+                }
+    
+                if (count($weekly) != 0) {
+                    array_push($notification, true);
+                } else {
+                    array_push($notification, false);
+                }
+            } else {
+                $leaves = Leave::where('branch_id', auth()->user()->branch_id)->where('is_approved', 0)->get();
+                $weeklies = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->where('approved', 0)->get();
+                $bw = false;
+                $bl = false;
+
+                foreach ($leaves as $leave) {
+                    if ($leave->user->roles->first()->name == 'barista') {
+                        $bl = true;
+                        break;
+                    }
+                }
+
+                foreach ($weeklies as $weekly) {
+                    if ($weekly->user->roles->first()->name == 'barista') {
+                        $bw = true;
+                        break;
+                    }
+                }
+
+                if ($bl) {
+                    array_push($notification, true);
+                } else {
+                    array_push($notification, false);
+                }
+    
+                if ($bw) {
+                    array_push($notification, true);
+                } else {
+                    array_push($notification, false);
+                }
+            }
+
+            return $notification;
+        }
     }
 }

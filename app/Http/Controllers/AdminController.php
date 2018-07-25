@@ -14,6 +14,7 @@ class AdminController extends Controller
 {
     public function show (Request $request, $id)
     {
+        $notification = $this->checkNotifications();
         $now = new Carbon;
         $today = $now->format('d-m-Y');
         $user = User::where('id', $id)->first();
@@ -94,20 +95,8 @@ class AdminController extends Controller
         $path = '/'.'qrcodes/'.$user->pin.'.png';
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
-        with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->with('lates', $lates);
-    }
-
-    public function request ()
-    {
-        $user = auth()->user();
-
-        if ($user->roles->first()->name == 'barista') {
-            return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
-        }
-
-        $leaves = Leave::where('branch_id', $user->branch->id)->whereNull('approved')->get();
-
-        dd($leaves);
+        with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->
+        with('lates', $lates)->with('notification', $notification);
     }
 
     public function branch (Request $request, $id)

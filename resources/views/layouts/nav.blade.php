@@ -61,12 +61,28 @@
                         </li>
                     @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
                         <li class="has-submenu">
-                            <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Leave Form </span> </a>
+
+                            @if ($notification[0] == true || $notification[1] == true)
+                                <a href="/request" class="text-danger"><i class="mdi mdi-invert-colors text-danger"></i> <span> Leave Form </span> </a>
+                            @else
+                                <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Leave Form </span> </a>
+                            @endif
+
                             <ul class="submenu">
                                 <li><a href="/create/weekly">Select Weekly Day Offs</a></li>
                                 <li><a href="/edit/weekly">Edit Weekly Day Offs</a></li>
-                                <li><a href="/view/requests">Leave Requests</a></li>
-                                <li><a href="/show/weekly">Day-off Requests</a></li>
+                                
+                                @if ($notification[0] == true)
+                                    <li class="text-danger"><a href="/view/requests" class="text-danger">Leave Requests</a></li>
+                                @else
+                                    <li><a href="/view/requests">Leave Requests</a></li>
+                                @endif
+
+                                @if ($notification[1] == true)
+                                    <li class="text-danger"><a href="/show/weekly" class="text-danger">Day-off Requests</a></li>
+                                @else
+                                    <li><a href="/show/weekly">Day-off Requests</a></li>
+                                @endif
                             </ul>
                         </li>
                         <li class="has-submenu">

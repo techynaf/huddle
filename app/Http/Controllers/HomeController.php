@@ -70,6 +70,7 @@ class HomeController extends Controller
 
     public function homeView($branches)
     {
+        $notification = $this->checkNotifications();
         $users = null;
 
         if (count($branches) == 1) {
@@ -108,6 +109,7 @@ class HomeController extends Controller
         }
 
         return view('home')->with('users', $users)->with('branches', $branches)->with('days', $this->days)->
-        with('filters', $filters)->with('flow', false)->with('schedules', $schedules)->with('dates', $dates);
+        with('filters', $filters)->with('flow', false)->with('schedules', $schedules)->with('dates', $dates)->
+        with('notification', $notification);
     }
 }

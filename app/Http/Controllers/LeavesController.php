@@ -13,10 +13,11 @@ class LeavesController extends Controller
 {
     public function requestLeave ()
     {
+        $notification = $this->checkNotifications();
         $types = LeaveTypes::where('id', '!=', 1)->get();
         $id = auth()->user()->id;
 
-        return view('requests/create')->with('id', $id)->with('types', $types);
+        return view('requests/create')->with('id', $id)->with('types', $types)->with('notification', $notification);
     }
 
     public function storeLeaveRequest (Request $request, $id)
@@ -30,8 +31,8 @@ class LeavesController extends Controller
 
         $leave = new Leave;
         $leave->user_id = $id;
+        $leave->branch_id = auth()->user()->branch_id;
         $leave->is_approved = 0;
-        $leave->subject = $request->subject;
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
         $leave->body = $request->body;
@@ -44,6 +45,7 @@ class LeavesController extends Controller
 
     public function edit (Request $request, $id)
     {
+        $notification = $this->checkNotifications();
         $leave = Leave::where('id', $id)->first();
         $types = LeaveTypes::where('id', '!=', 1)->get();
 
@@ -51,14 +53,13 @@ class LeavesController extends Controller
             return redirect('/')->with('error', 'You cannot edit a leave if it is not pending');
         }
 
-        return view('requests/edit-leave')->with('leave', $leave)->with('types', $types);
+        return view('requests/edit-leave')->with('leave', $leave)->with('types', $types)->with('notification', $notification);
     }
 
     public function update (Request $request, $id)
     {
         $leave = Leave::where('id', $id)->first();
         $leave->type = $request->type;
-        $leave->subject = $request->subject;
         $leave->body = $request->body;
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
@@ -82,6 +83,7 @@ class LeavesController extends Controller
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
         }
 
+        $notification = $this->checkNotifications();
         $leaves = null;
 
         if (auth()->user()->roles->first()->name == 'manager') {
@@ -90,7 +92,7 @@ class LeavesController extends Controller
             $leaves = Leave::orderBy('created_at', 'desc')->get();
         }
 
-        return view('requests/show-leave')->with('leaves', $leaves);
+        return view('requests/show-leave')->with('leaves', $leaves)->with('notification', $notification);
     }
 
     public function process (Request $request, $id)

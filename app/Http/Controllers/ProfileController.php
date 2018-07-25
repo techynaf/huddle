@@ -18,6 +18,7 @@ class ProfileController extends Controller
 {
     public function index ()
     {
+        $notification = $this->checkNotifications();
         if(auth()->user() == null) {
             return redirect('/')->with('error', 'Please login');
         }
@@ -92,7 +93,8 @@ class ProfileController extends Controller
         $path = 'qrcodes/'.$user->pin.'.png';
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
-        with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->with('lates', $lates);
+        with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->
+        with('lates', $lates)->with('notification', $notification);
     }
 
     public function create ()
@@ -103,7 +105,7 @@ class ProfileController extends Controller
             }
         }
        
-
+        $notification = $this->checkNotifications();
         $roles = Role::all();
         $rs = array();
         $r = array('Owner', 'Admin', 'Manager', 'Barista', 'Super-admin');
@@ -115,7 +117,7 @@ class ProfileController extends Controller
         }
         $branches = Branch::all();
 
-        return view('profile/create')->with('branches', $branches)->with('roles', $rs);
+        return view('profile/create')->with('branches', $branches)->with('roles', $rs)->with('notification', $notification);
     }
 
     public function store (Request $request)

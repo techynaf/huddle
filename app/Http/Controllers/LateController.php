@@ -11,6 +11,7 @@ class LateController extends Controller
 {
     public function showAll ()
     {
+        $notification = $this->checkNotifications();
         $sat = $this->findSat(null);
         $sun = $this->findSun(null);
         $lates = Late::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $sun->format('Y-m-d'))->
@@ -18,7 +19,7 @@ class LateController extends Controller
         $dates = array();
 
         for ($i = $sun->copy(); $i->copy()->format('Y-m-d') <= $sat->copy()->format('Y-m-d'); $i->addDay()) {
-            array_push($dates, $i->copy()->format('Y-m-d'));
+            array_push($dates, $i->copy()->format('Y-m-d'))->with('notification', $notification);
         }
 
         return view('late/show-all')->with('lates', $lates)->with('dates', $dates);

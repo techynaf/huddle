@@ -11,10 +11,12 @@ class BranchController extends Controller
 {
     public function showAll ()
     {
+        $notification = $this->checkNotifications();
         $branches = Branch::all();
         $unassigned = User::where('branch_id', 0)->get();
 
-        return view('branch/show-all')->with('branches', $branches)->with('unassigned', $unassigned);
+        return view('branch/show-all')->with('branches', $branches)->with('unassigned', $unassigned)->
+        with('notification', $notification);
     }
 
     public function create ()
@@ -32,9 +34,10 @@ class BranchController extends Controller
 
     public function delete (Request $request)
     {
+        $notification = $this->checkNotifications();
         $branches = Branch::all();
 
-        return view('branch/delete')->with('branches', $branches);
+        return view('branch/delete')->with('branches', $branches)->with('notification', $notification);
     }
 
     public function destroy (Request $request)
@@ -54,6 +57,7 @@ class BranchController extends Controller
 
     public function show (Request $request, $id)
     {
+        $notification = $this->checkNotifications();
         $branches = Branch::all();
         $roles = Role::all();
         $users = User::where('branch_id', $id)->get();
@@ -66,10 +70,10 @@ class BranchController extends Controller
 
         if ($request->flow == null) {
             return view('branch/show')->with('branch', $branch)->with('branches', $branches)->with('roles', $roles)->
-            with('users', $users)->with('flow', true);
+            with('users', $users)->with('flow', true)->with('notification', $notification);
         } else {
             return view('branch/show')->with('branch', $branch)->with('branches', $branches)->with('roles', $roles)->
-            with('users', $users)->with('flow', $request->flow);
+            with('users', $users)->with('flow', $request->flow)->with('notification', $notification);
         }
     }
 }

@@ -15,11 +15,13 @@ class WeeklyLeavesController extends Controller
 
     public function create ()
     {
+        $notification = $this->checkNotifications();
         $now = new Carbon;
         $start = $this->findSun($now->addDays(7))->format('Y-m-d');
         $end = $this->findSun($now->addDays(7))->addDays(-1)->format('Y-m-d');
 
-        return view('weekly/create')->with('days', $this->days)->with('start', $start)->with('end', $end);
+        return view('weekly/create')->with('days', $this->days)->with('start', $start)->with('end', $end)->
+        with('notification', $notification);
     }
 
     public function store (Request $request, $id)
@@ -59,6 +61,7 @@ class WeeklyLeavesController extends Controller
 
     public function edit ()
     {
+        $notification = $this->checkNotifications();
         $now = new Carbon;
 
         $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->
@@ -69,7 +72,7 @@ class WeeklyLeavesController extends Controller
         $end = $this->findSun($now->addDays(7))->addDays(-1)->format('Y-m-d');
 
         return view('weekly/edit')->with('start', $start)->with('end', $end)->with('days', $this->days)->
-        with('leaves', $leaves);
+        with('leaves', $leaves)->with('notification', $notification);
     }
 
     public function update (Request $request, $id)
@@ -101,7 +104,7 @@ class WeeklyLeavesController extends Controller
         if ($cleave->start == $start->copy()->format('Y-m-d') && $cleave->end == $end->copy()->format('Y-m-d')) {
             $cleave->day_1 = $request->day_1;
             $cleave->day_2 = $request->day_2;
-            $cleave->approved = null;
+            $cleave->approved = 0;
             $cleave->save();
         } elseif ($cleave->end  <= $end->copy()->format('Y-m-d') && $cleave->start < $start->copy()->format('Y-m-d')) {
             $end = $cleave->end;
@@ -115,7 +118,7 @@ class WeeklyLeavesController extends Controller
             $weekly->day_1 = $request->day_1;
             $weekly->day_2 = $request->day_2;
             $weekly->branch_id = auth()->user()->branch_id;
-            $weekly->approved = null;
+            $weekly->approved = 0;
             $weekly->save();
         } elseif ($cleave->start == $start->copy()->format('Y-m-d') && $cleave->end > $end->copy()->format('Y-m-d')) {
             $weekly = new WeeklyLeave;
@@ -125,7 +128,7 @@ class WeeklyLeavesController extends Controller
             $weekly->day_1 = $request->day_1;
             $weekly->day_2 = $request->day_2;
             $weekly->branch_id = auth()->user()->branch_id;
-            $weekly->approved = null;
+            $weekly->approved = 0;
             $weekly->save();
 
             $cleave->start = $end->addDay()->format('Y-m-d');
@@ -151,7 +154,7 @@ class WeeklyLeavesController extends Controller
             $leave->day_1 = $request->day_1;
             $leave->day_2 = $request->day_2;
             $leave->branch_id = auth()->user()->branch_id;
-            $leave->approved = null;
+            $leave->approved = 0;
             $leave->save();
         }
 
@@ -160,6 +163,7 @@ class WeeklyLeavesController extends Controller
 
     public function show ()
     {
+        $notification = $this->checkNotifications();
         if (auth()->user()->roles->first()->name == 'barista') {
             return redirect('/')->with('error', 'You are not authorized to view this');
         }
@@ -167,7 +171,7 @@ class WeeklyLeavesController extends Controller
         $leaves = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->whereNull('approved')->
         orderBy('user_id')->orderBy('start')->get();
 
-        return view('weekly/show')->with('leaves', $leaves);
+        return view('weekly/show')->with('leaves', $leaves)->with('notification', $notification);
     }
 
     public function process (Request $request, $id)
