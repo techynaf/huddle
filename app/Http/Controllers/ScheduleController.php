@@ -23,6 +23,8 @@ class ScheduleController extends Controller
     public function scheduler (Request $request)
     {
         $notification = $this->checkNotifications();
+        $flow = false;
+
         if (auth()->user()->roles->first()->name == 'barista') {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
         }
@@ -31,6 +33,7 @@ class ScheduleController extends Controller
 
         if ($request->date == null) {
             $start = $this->findSun(new Carbon);
+            $flow = true;
         } else {
             $start = Carbon::parse($request->date);
             $start = $this->findSun($start);
@@ -71,7 +74,7 @@ class ScheduleController extends Controller
 
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
         with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today)->
-        with('notification', $notification);
+        with('notification', $notification)->with('flow', $flow);
     }
 
     public function dayOffChecker ($user, $date)

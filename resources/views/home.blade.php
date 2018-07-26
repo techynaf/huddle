@@ -12,7 +12,11 @@
                     </div>
                     <div class="col-2">
                         <select class="form-control" name="id">
-                            <option value="all">All</option>
+                            @if (count($branches) > 1)
+                                <option value="all">All</option>
+                            @else
+                                <option value="{{$branches[0]->id}}">{{$branches[0]->name}}</option>
+                            @endif
                             @foreach($filters as $filter)
                                 <option value="{{$filter->id}}">{{$filter->name}}</option>
                             @endforeach

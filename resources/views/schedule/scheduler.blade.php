@@ -14,9 +14,13 @@
                     </div>
                     <div class="col-2">
                         <select name="date" class="form-control">
-                            <option value="">Current Week</option>
+                            @if ($flow)
+                                <option value="">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
+                            @else
+                                <option value="">Current Week</option>
+                            @endif
                             @foreach($dates as $date)
-                                <option value="{{$date[0]}}">{{$date[0].' to '.$date[1]}}</option>
+                                <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
                             @endforeach
                         </select>
                     </div>
