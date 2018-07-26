@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <div class="row">
                 <h2 class="page-title">Select Leave Range</h2>
             </div>
@@ -35,6 +33,4 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
 @endsection

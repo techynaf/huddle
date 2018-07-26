@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <div class="row">
                 <h2 class="page-title">Branches</h2>
             </div>
@@ -39,6 +37,4 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
 @endsection

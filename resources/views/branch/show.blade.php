@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             @if ($branch == 'Unassigned')
                 <form action="/branch/details/0" method="GET">
             @else
@@ -94,6 +92,4 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-    </div>
 @endsection

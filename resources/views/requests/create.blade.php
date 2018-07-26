@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">	
                     <h2 class="page-title">Leave Request Form</h2>
@@ -65,6 +63,4 @@
                 </div><!-- end col -->
             </div>
             <!-- end row -->
-        </div>
-    </div>
 @endsection

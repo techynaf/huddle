@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <div class="row">
                 <h2 class="page-title">Process Weekly Day Offs</h2>
             </div>
@@ -83,6 +81,4 @@
                     @endif
                 </div>
             </div>
-        </div>
-    </div>
 @endsection

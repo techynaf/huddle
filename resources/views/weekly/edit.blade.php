@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <h4 class="page-title">Edit Weekly Leave</h4>
@@ -87,6 +85,4 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-    </div>
 @endsection

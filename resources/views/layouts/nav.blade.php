@@ -59,7 +59,7 @@
                         <li class="has-submenu">
                             <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
                         </li>
-                    @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
+                    @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin' || auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'assistant-manager')
                         <li class="has-submenu">
 
                             @if ($notification[0] == true || $notification[1] == true)
@@ -85,19 +85,27 @@
                                 @endif
                             </ul>
                         </li>
+
+                        <li class="has-submenu">
+                            <a href="/logs"><i class="mdi mdi-layers"></i> <span> Logs </span> </a>
+                            <ul class="submenu">
+                                <li><a href="/lates">Lates</a></li>
+                            </ul>
+                        </li>
+                        
                         <li class="has-submenu">
                             <a href="/scheduler"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
                         </li>
-                        @if(auth()->user()->roles->first()->name != 'manager')
-                            <li class="has-submenu">
-                                <a href="/create/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
-                            </li>
+                        @if(auth()->user()->roles->first()->name != 'manager' || auth()->user()->roles->first()->name != 'assistant-manager')
                             <li class="has-submenu">
                                 <a href="/branch"><i class="mdi mdi-google-pages"></i> <span> Branch </span> </a>
                                 <ul class="submenu">
                                     <li><a href="/branch/create">Create Branch</a></li>
                                     <li><a href="/branch/delete">Delete Branch</a></li>
                                 </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="/create/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
                             </li>
                         @endif
                         <li class="has-submenu">

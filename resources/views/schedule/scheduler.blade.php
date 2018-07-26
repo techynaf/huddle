@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <form action="/scheduler" method="get">
                 <div class="row">
                     <div class="col-sm-4">
@@ -158,6 +156,4 @@
                      @endforeach
                 </div>
             </div>
-        </div>
-    </div>
 @endsection

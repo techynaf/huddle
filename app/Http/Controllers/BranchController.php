@@ -21,7 +21,9 @@ class BranchController extends Controller
 
     public function create ()
     {
-        return view('branch/create');
+        $notification = $this->checkNotifications();
+
+        return view('branch/create')->with('notification', $notification);
     }
 
     public function store (Request $request)

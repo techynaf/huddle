@@ -19,10 +19,10 @@ class LateController extends Controller
         $dates = array();
 
         for ($i = $sun->copy(); $i->copy()->format('Y-m-d') <= $sat->copy()->format('Y-m-d'); $i->addDay()) {
-            array_push($dates, $i->copy()->format('Y-m-d'))->with('notification', $notification);
+            array_push($dates, $i->copy()->format('Y-m-d'));
         }
 
-        return view('late/show-all')->with('lates', $lates)->with('dates', $dates);
+        return view('late/show-all')->with('lates', $lates)->with('dates', $dates)->with('notification', $notification);
     }
 
     public function store (Request $request, $id)

@@ -47,41 +47,21 @@
         }
     </script>
 </head>
-@if(Request::is('/') || Request::is('branch'))
-    <body onload="JavaScript:AutoRefresh(60000);">
-        @guest
-            @if(Request::is('login'))
-                
-            @else
-                <br>
-                @include('layouts.guest-nav')
-            @endif
-        @else
-            <br>
-            @include('layouts.nav')
-        @endif
 
-        @include('layouts.messages')
-        @yield('content')
-        @include('layouts.footer')
-    </body>
-@else
-    <body>
-        @guest
-            @if(Request::is('login'))
-                
-            @else
-                <br>
-                @include('layouts.guest-nav')
-            @endif
-        @else
-            <br>
-            @include('layouts.nav')
-        @endif
+<body onload="JavaScript:AutoRefresh(60000);">
+    @guest
+        @include('layouts.guest-nav')
+    @else
+        <br>
+        @include('layouts.nav')
+    @endif
 
-        @include('layouts.messages')
-        @yield('content')
-        @include('layouts.footer')
-    </body>
-@endif
+    <div class="wrapper">
+        <div class="container-fluid">
+            @include('layouts.messages')
+            @yield('content')
+        </div>
+    </div>
+    @include('layouts.footer')
+</body>
 </html>

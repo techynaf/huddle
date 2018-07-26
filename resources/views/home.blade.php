@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <form action="/branch/filter" method="GET">
                 @csrf
                 <div class="row">
@@ -90,6 +88,4 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-    </div>
 @endsection

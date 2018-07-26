@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="wrapper">
-        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
                     <h4 class="page-title">Create New Profile</h4>
@@ -77,7 +75,5 @@
                         </div><!-- end row -->
                     </div> <!-- end card-box -->
                 </div><!-- end col -->
-            </div><!-- end row -->
-        </div>
-    </div>
+            </div>
 @endsection
