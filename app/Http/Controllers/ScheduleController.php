@@ -25,7 +25,7 @@ class ScheduleController extends Controller
         $notification = $this->checkNotifications();
         $flow = false;
 
-        if (auth()->user()->roles->first()->name == 'barista') {
+        if (auth()->user()->roles->first()->name == 'barista' || auth()->user()->roles->first()->name == 'HR') {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
         }
 
@@ -54,7 +54,14 @@ class ScheduleController extends Controller
             $d = $d->addDay();
         }
 
-        $users = User::where('branch_id', auth()->user()->branch->id)->get();
+        $users = null;
+
+        if (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager') {
+            $users = User::where('branch_id', auth()->user()->branch->id)->get();
+        } else {
+            $users = User::all();
+        }
+
         $branches = Branch::all();
         $schedules = array();
 
