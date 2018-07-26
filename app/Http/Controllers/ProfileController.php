@@ -61,7 +61,7 @@ class ProfileController extends Controller
                 $scheduled = Carbon::parse($schedule->start);
                 $actual = Carbon::parse($log->start);
 
-                if ($actual->diffInMinutes($scheduled) >= 10) { //checks if the person is late or not, late factor is 10 mins
+                if ($actual->diffInMinutes($scheduled) >= 1) { //checks if the person is late or not, late factor is 10 mins
                     $lates++;
                 }
             }
@@ -99,10 +99,8 @@ class ProfileController extends Controller
 
     public function create ()
     {
-        foreach (auth()->user()->roles as $role){
-            if ($role->name == 'manager' || $role->name == 'barista') {
-                return redirect('/dashboard')->with('error', 'You are not authorized to access this');
-            }
+        if ($this->manager() || $this->barista() || $this->dm()) {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this');
         }
        
         $notification = $this->checkNotifications();

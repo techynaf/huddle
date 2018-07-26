@@ -25,7 +25,7 @@ class ScheduleController extends Controller
         $notification = $this->checkNotifications();
         $flow = false;
 
-        if (auth()->user()->roles->first()->name == 'barista' || auth()->user()->roles->first()->name == 'HR') {
+        if ($this->barista() || $this->hr()) {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
         }
 
@@ -56,7 +56,7 @@ class ScheduleController extends Controller
 
         $users = null;
 
-        if (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager') {
+        if ($this->manager()) {
             $users = User::where('branch_id', auth()->user()->branch->id)->get();
         } else {
             $users = User::all();

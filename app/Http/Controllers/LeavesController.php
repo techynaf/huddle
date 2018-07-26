@@ -49,6 +49,10 @@ class LeavesController extends Controller
         $leave = Leave::where('id', $id)->first();
         $types = LeaveTypes::where('id', '!=', 1)->get();
 
+        if (auth()->user()->id != $leave->user->id) {
+            return redirect('/')->with('You are not authorized to make changes to others request');
+        }
+
         if ($leave->is_approved != 0) {
             return redirect('/')->with('error', 'You cannot edit a leave if it is not pending');
         }
@@ -59,6 +63,11 @@ class LeavesController extends Controller
     public function update (Request $request, $id)
     {
         $leave = Leave::where('id', $id)->first();
+
+        if (auth()->user()->id != $leave->user->id) {
+            return redirect('/')->with('You are not authorized to make changes to others request');
+        }
+
         $leave->type = $request->type;
         $leave->body = $request->body;
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
@@ -79,24 +88,57 @@ class LeavesController extends Controller
 
     public function show ()
     {
-        if (auth()->user()->roles->first()->name == 'barista') {
+        if ($this->barista() || $this->hr()) {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
         }
 
         $notification = $this->checkNotifications();
-        $leaves = null;
+        $leaves = array();
 
-        if (auth()->user()->roles->first()->name == 'manager') {
-            $leaves = Leave::where('branch_id', auth()->user()->branch_id)->orderBy('created_at', 'desc')->get();
-        } elseif (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
-            $leaves = Leave::orderBy('created_at', 'desc')->get();
+        if ($this->manager()) {
+            $leaves = Leave::where('branch_id', auth()->user()->branch_id)->orderBy('created_at', 'desc')->
+            where('is_removed', false)->get();
+        } else {
+            $leaves = Leave::orderBy('created_at', 'desc')->where('is_removed', false)->get();
         }
+
+        $leaves = $this->check($leaves);
 
         return view('requests/show-leave')->with('leaves', $leaves)->with('notification', $notification);
     }
 
+    public function check ($ls) {
+        $leaves = array ();
+
+        if ($this->manager()) {
+            foreach ($ls as $l) {
+                if ($l->user->roles->first()->name != 'manager' || $l->user->roles->first()->name != 'assistant-manager') {
+                    array_push($leaves, $l);
+                }
+            }
+        } elseif ($this->dm()) {
+            foreach ($ls as $l) {
+                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
+                    array_push($leaves, $l);
+                }
+            }
+        } else {
+            foreach ($ls as $l) {
+                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager' || $l->user->roles->first()->name == 'district-manager') {
+                    array_push($leaves, $l);
+                }
+            }
+        }
+
+        return $leaves;
+    }
+
     public function process (Request $request, $id)
     {
+        if ($this->barista() || $this->hr()) {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
+        }
+        
         $leave = Leave::where('id', $id)->first();
         $leave->is_approved = $request->status;
         $leave->save();

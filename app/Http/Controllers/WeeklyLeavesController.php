@@ -173,7 +173,7 @@ class WeeklyLeavesController extends Controller
     public function show ()
     {
         $notification = $this->checkNotifications();
-        if (auth()->user()->roles->first()->name == 'barista') {
+        if ($this->barista() || $this->hr()) {
             return redirect('/')->with('error', 'You are not authorized to view this');
         }
 

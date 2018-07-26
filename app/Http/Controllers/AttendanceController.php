@@ -149,9 +149,10 @@ class AttendanceController extends Controller
         $scheduled = Carbon::parse($schedule->start);
         $actual = Carbon::parse($log->start);
 
-        if ($actual->diffInMinutes($scheduled) >= 10) { //checks if the person is late or not, late factor is 10 mins
+        if ($actual->diffInMinutes($scheduled) >= 1) { //checks if the person is late or not, late factor is 10 mins
             $late = new Late;
             $late->date = $log->date;
+            $late->branch_id = $log->branch_id;
             $late->log_id = $log->id;
             $late->user_id = $log->user_id;
             $late->save();

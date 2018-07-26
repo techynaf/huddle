@@ -59,8 +59,9 @@ class Controller extends BaseController
             if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
                 $leaves = Leave::where('is_approved', 0)->get();
                 $weekly = WeeklyLeave::where('approved', 0)->get();
-                $logs = 's';
-                
+                $logs = Log::whereNull('end')->get();
+                $lates = Late::whereNull('altered_by')->get();
+
                 if (count($leaves) != 0) {
                     array_push($notification, true);
                 } else {
@@ -72,37 +73,61 @@ class Controller extends BaseController
                 } else {
                     array_push($notification, false);
                 }
+
+                if (count($logs) != 0) {
+                    array_push($notification, true);
+                } else {
+                    array_push($notification, false);
+                }
+
+                if (count($lates) != 0) {
+                    array_push($notification, true);
+                } else {
+                    array_push($notification, false);
+                }
             } else {
                 $leaves = Leave::where('branch_id', auth()->user()->branch_id)->where('is_approved', 0)->get();
                 $weeklies = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->where('approved', 0)->get();
-                $bw = false;
-                $bl = false;
+                $logs = Log::where('branch_id', auth()->user()->branch_id)->whereNull('end')->get();
+                $lates = Late::where('branch_id', auth()->user()->branch_id)->whereNull('altered_by')->get();
+                $bleave = false;
+                $bweekly = false;
+                $blog = false;
+                $blate = false;
+
 
                 foreach ($leaves as $leave) {
                     if ($leave->user->roles->first()->name == 'barista') {
-                        $bl = true;
+                        $bleave = true;
                         break;
                     }
                 }
 
                 foreach ($weeklies as $weekly) {
                     if ($weekly->user->roles->first()->name == 'barista') {
-                        $bw = true;
+                        $bweekly = true;
                         break;
                     }
                 }
 
-                if ($bl) {
-                    array_push($notification, true);
-                } else {
-                    array_push($notification, false);
+                foreach ($logs as $log) {
+                    if ($log->user->roles->first()->name == 'barista') {
+                        $blog = true;
+                        break;
+                    }
                 }
-    
-                if ($bw) {
-                    array_push($notification, true);
-                } else {
-                    array_push($notification, false);
+
+                foreach ($lates as $late) {
+                    if ($late->user->roles->first()->name == 'barista') {
+                        $blate = true;
+                        break;
+                    }
                 }
+
+                array_push($notification, $bleave);
+                array_push($notification, $bweekly);
+                array_push($notification, $blog);
+                array_push($notification, $blate);
             }
 
             return $notification;
@@ -121,5 +146,60 @@ class Controller extends BaseController
         }
 
         return $dates;
+    }
+
+    public function manager ()
+    {
+        $role = auth()->user()->roles->first()->name;
+
+        if ($role == 'manager' || $role == 'assistant-manager') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function dm ()
+    {
+        $role = auth()->user()->roles->first()->name;
+
+        if ($role == 'district-manager') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function hr ()
+    {
+        $role = auth()->user()->roles->first()->name;
+
+        if ($role == 'HR') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function superAdmin ()
+    {
+        $role = auth()->user()->roles->first()->name;
+
+        if ($role == 'super-admin') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function barista ()
+    {
+        $role = auth()->user()->roles->first()->name;
+
+        if ($role == 'barista') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -11,6 +11,10 @@ class BranchController extends Controller
 {
     public function showAll ()
     {
+        if ($this->barista() || $this->manager()) {
+            return redirect('/')->with('error', 'You are not authorized to access this page');
+        }
+
         $notification = $this->checkNotifications();
         $branches = Branch::all();
         $unassigned = User::where('branch_id', 0)->get();
@@ -21,6 +25,10 @@ class BranchController extends Controller
 
     public function create ()
     {
+        if ($this->barista() || $this->manager() || $this->dm()) {
+            return redirect('/')->with('error', 'You are not authorized to access this page');
+        }
+
         $notification = $this->checkNotifications();
 
         return view('branch/create')->with('notification', $notification);
@@ -28,6 +36,10 @@ class BranchController extends Controller
 
     public function store (Request $request)
     {
+        if ($this->barista() || $this->manager() || $this->dm()) {
+            return redirect('/')->with('error', 'You are not authorized to access make this change');
+        }
+
         $branch = new Branch;
         $branch->name = $request->name;
         $branch->save();
@@ -37,6 +49,10 @@ class BranchController extends Controller
 
     public function delete (Request $request)
     {
+        if ($this->barista() || $this->manager() || $this->dm()) {
+            return redirect('/')->with('error', 'You are not authorized to access this page');
+        }
+
         $notification = $this->checkNotifications();
         $branches = Branch::all();
 
@@ -45,6 +61,10 @@ class BranchController extends Controller
 
     public function destroy (Request $request)
     {
+        if ($this->barista() || $this->manager() || $this->dm()) {
+            return redirect('/')->with('error', 'You are not authorized to access make this change');
+        }
+        
         $branch = Branch::where('id', $request->id);
         $branch->delete();
 
@@ -60,6 +80,10 @@ class BranchController extends Controller
 
     public function show (Request $request, $id)
     {
+        if ($this->barista() || $this->manager()) {
+            return redirect('/')->with('error', 'You are not authorized to access this page');
+        }
+
         $notification = $this->checkNotifications();
         $branches = Branch::all();
         $roles = Role::all();

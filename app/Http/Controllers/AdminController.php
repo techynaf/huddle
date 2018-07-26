@@ -16,12 +16,11 @@ class AdminController extends Controller
     {
         $notification = $this->checkNotifications();
         $now = new Carbon;
-        $today = $now->format('d-m-Y');
         $user = User::where('id', $id)->first();
 
         $role = auth()->user()->roles->first()->name;
 
-        if ($role == 'barista') {
+        if ($this->barista()) {
             return redirect('/')->with('error', 'You are not authorized.');
         }
 
@@ -101,18 +100,30 @@ class AdminController extends Controller
 
     public function branch (Request $request, $id)
     {
+        if ($this->barista() || $this->manager()) {
+            return redirect('/')->with('error', 'You are not authorized.');
+        }
+
         if ($request->branch != null) {
-            $user = User::where('id', $id)->first();
-            $user->branch_id = $request->branch;
-            $user->save();
+            if ($this->hr()) {
+                return redirect('/')->with('error', 'You are not authorized to make this change');
+            } else {
+                $user = User::where('id', $id)->first();
+                $user->branch_id = $request->branch;
+                $user->save();
+            }
         }
 
         if ($request->role != null) {
-            $user = User::where('id', $id)->first();
-            $role = $user->roles->first()->id;
+            if ($this->dm()) {
+                return redirect('/')->with('error', 'You are not authorized to make this change');
+            } else {
+                $user = User::where('id', $id)->first();
+                $role = $user->roles->first()->id;
 
-            $user->roles()->detach($role);
-            $user->roles()->attach($request->role);
+                $user->roles()->detach($role);
+                $user->roles()->attach($request->role);
+            }
         }
 
         $url = '/branch/details/'.$request->b_id;

@@ -12,8 +12,11 @@ class LogController extends Controller
 {
     public function show ()
     {
+        if ($this->barista() || $this->hr()) {
+            return redirect('/')->with('error', 'You are not authorized to access this view');
+        }
+
         $notification = $this->checkNotifications();
-        $role = auth()->user()->roles->first()->name;
         $logs = null;
         $now = new Carbon;
         $today = $now->copy()->format('Y-m-d');
@@ -25,14 +28,10 @@ class LogController extends Controller
             array_push($dates, $now->addDays(-1)->format('Y-m-d'));
         }
 
-        if ($role == 'barista') {
-            return redirect()->with('error', 'You are not authorized to access this');
-        }
-
-        if ($role == 'manager' || $role == 'assistant-manager') {
+        if ($this->manager()) {
             $logs = Log::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $last)->
             where('date', '<=', $today)->whereNull('end')->get();
-        } elseif ($role == 'super-admin' || $role == 'district-manager') {
+        } elseif ($this->supeAdmin() || $this->dm()) {
             $logs = Log::where('date', '>=', $last)->where('date', '<=', $today)->whereNull('end')->get();
         }
 

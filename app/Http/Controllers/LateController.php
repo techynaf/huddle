@@ -11,11 +11,23 @@ class LateController extends Controller
 {
     public function showAll ()
     {
+        if ($this->barista() || $this->hr()) {
+            return redirect('/dashboard')->with('error', 'You are not authorized to access this');
+        }
+
+
         $notification = $this->checkNotifications();
         $sat = $this->findSat(null);
         $sun = $this->findSun(null);
-        $lates = Late::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $sun->format('Y-m-d'))->
-        where('date', '<=', $sat->format('Y-m-d'))->get();
+        $lates = null;
+        
+        if ($this->manager()) {
+            $lates = Late::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $sun->format('Y-m-d'))->
+            where('date', '<=', $sat->format('Y-m-d'))->get();
+        } else {
+            $lates = Late::where('date', '>=', $sun->format('Y-m-d'))->where('date', '<=', $sat->format('Y-m-d'))->get();
+        }
+
         $dates = array();
 
         for ($i = $sun->copy(); $i->copy()->format('Y-m-d') <= $sat->copy()->format('Y-m-d'); $i->addDay()) {
