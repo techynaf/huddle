@@ -102,7 +102,7 @@ class LeavesController extends Controller
         $leave->save();
         $message = 'Leave has been ';
 
-        if ($request->status) {
+        if ($request->status == 1) {
             $message = $message.'approved';
         } else {
             $message = $message.'declined';
