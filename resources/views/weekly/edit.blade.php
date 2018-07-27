@@ -30,7 +30,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-2">
-                                        <label for="day_1" class="form-label-control">First Day</label>
+                                        <label for="day_1" class="form-label-control align-middle float-right">First Day</label>
                                     </div>
                                     <div class="col-4">
                                         <select name="day_1" class="form-control">
@@ -41,7 +41,7 @@
                                         </select>
                                     </div>
                                     <div class="col-2">
-                                        <label for="day_2" class="form-label-control">Second Day</label>
+                                        <label for="day_2" class="form-label-control align-middle float-right">Second Day</label>
                                     </div>
                                     <div class="col-4">
                                         <select name="day_2" class="form-control">
@@ -61,13 +61,13 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-2">
-                                        <label for="start" class="form-label-control">Select Start Date</label>
+                                        <label for="start" class="form-label-control align-middle float-right">Select Start Date</label>
                                     </div>
                                     <div class="col-4">
                                         <input type="date" name="start" min="{{$start}}" class="form-control" value="{{$leave->start}}">
                                     </div>
                                     <div class="col-2">
-                                        <label for="start" class="form-label-control">Select End Date</label>
+                                        <label for="start" class="form-label-control align-middle float-right">Select End Date</label>
                                     </div>
                                     <div class="col-4">
                                         <input type="date" name="end" min="{{$end}}" class="form-control" value="{{$leave->end}}">

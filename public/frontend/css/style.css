@@ -6375,3 +6375,7 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
   -moz-appearance: none;
   margin: 0;
 }
+
+.align-middle {
+  padding-top: 8px;
+}

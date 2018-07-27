@@ -104,16 +104,16 @@ class ProfileController extends Controller
         }
        
         $notification = $this->checkNotifications();
-        $roles = Role::all();
-        $rs = array();
-        $r = array('Owner', 'Admin', 'Manager', 'Barista', 'Super-admin');
-        $i = 0;
-        foreach ($roles as $role) {
-            $composite = array($r[$i], $role->id);
-            array_push($rs, $composite);
-            $i++;
-        }
         $branches = Branch::all();
+        $rs = Role::all();
+        $roles = array();
+
+        foreach($rs as $r) {
+            if ($r->name != 'super-admin' || $r->name != 'HR') {
+                $x = array($r->id, ucfirst($r->name));
+                array_push($roles, $x);
+            }
+        }
 
         return view('profile/create')->with('branches', $branches)->with('roles', $rs)->with('notification', $notification);
     }
@@ -125,16 +125,29 @@ class ProfileController extends Controller
             'branch' => 'required',
             'role' => 'required',
             'employee_id' => 'required',
+            'religion' => 'required',
         ]);
 
         $pin = 0;
+        $role = Role::find($request->role);
 
-        while (true) {
-            $pin = rand(1000, 9999);
-            $check = User::where('pin', $pin)->get();
-
-            if (count($check) == 0) {
-                break;
+        if ($role->name == 'barista' || $role->name == 'shift-superviser') {
+            while (true) {
+                $pin = rand(1000, 9999);
+                $check = User::where('pin', $pin)->get();
+    
+                if (count($check) == 0) {
+                    break;
+                }
+            }
+        } else {
+            while (true) {
+                $pin = rand(100000, 999999);
+                $check = User::where('pin', $pin)->get();
+    
+                if (count($check) == 0) {
+                    break;
+                }
             }
         }
 
@@ -146,13 +159,16 @@ class ProfileController extends Controller
         $user->logged_in = false;
         $user->employee_id = $request->employee_id;
         
-        if ($request->other == null) {
-            $user->religion = $request->religion;
+        if ($request->religion == 'Other') {
+            if ($request->other != null) {
+                $user->religion = $request->other;
+            } else {
+                $user->religion = 'Nothing Specified';
+            }
         } else {
-            $user->religion = $request->other;
+            $user->religion = $request->religion;
         }
 
-        $role = Role::find($request->role);
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
@@ -184,5 +200,91 @@ class ProfileController extends Controller
         } else {
             return redirect ('/');
         }
+    }
+
+    public function edit (Request $request, $id)
+    {
+        if ($this->manager() || $this->barista() || $this->dm()) {
+            return redirect('/')->with('error', 'You are not authorized to access this view');
+        }
+        
+        $notification = $this->checkNotifications();
+        $user = User::where('id', $id)->first();
+        $branches = Branch::all();
+        $rs = Role::all();
+        $roles = array();
+
+        foreach($rs as $r) {
+            if ($r->name != 'super-admin' || $r->name != 'HR') {
+                $x = array($r->id, ucfirst($r->name));
+                array_push($roles, $x);
+            }
+        }
+
+
+        return view('profile/edit')->with('user', $user)->with('branches', $branches)->with('roles', $roles)->
+        with('notification', $notification);
+    }
+
+    public function update (Request $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+        $role = Role::find($request->role);
+
+        $userR = $user->roles->fisrt()->name;
+        $barista = ($role->name == 'barista' || $role->name == 'shift-superviser');
+        $manager = ($role->name == 'manager' || $role->name == 'assistant-manager');
+        $userB = ($userR == 'barista' || $userR == 'shift-superviser');
+        $userM = ($userR == 'manager' || $userR == 'assistant-manager');
+        $pin = 0;
+        $religion = null;
+
+        if (($barista && $userB) || ($manager && $userM)) {
+            $pin = $user->pin;
+        } elseif ($userB && $manager) {
+            while (true) {
+                $pin = rand(100000, 999999);
+                $check = User::where('pin', $pin)->get();
+    
+                if (count($check) == 0) {
+                    break;
+                }
+            }
+        } elseif ($userM && $barista) {
+            while (true) {
+                $pin = rand(1000, 9999);
+                $check = User::where('pin', $pin)->get();
+    
+                if (count($check) == 0) {
+                    break;
+                }
+            }
+        }
+
+
+        if ($request->religion == 'Other') {
+            if ($request->other == null) {
+                $religion = 'Other';
+            } else {
+                $religion = $request->other;
+            }
+        } else {
+            $religion = $request->religion;
+        }
+
+        $user->name = $request->name;
+        $user->employee_id = $request->employee_id;
+        $user->branch_id = $request->branch;
+        $user->religion = $religion;
+        $user->pin = $pin;
+        $user->save();
+        $user->roles()->attach($role);
+        $message = 'Profile updated! The pin and password for the profile is '.$pin.'.';
+        $qr = QRCode::text($pin);
+        $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
+
+        $url = '/view/employee/'.$user->id;
+
+        return redirect($url);
     }
 }

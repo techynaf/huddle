@@ -15,8 +15,10 @@
                                     <form class="form-horizontal" role="form" action="/request/{{auth()->user()->id}}" method="POST">
                                         @csrf
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label">Leave Type</label>
-                                            <div class="col-10">
+                                            <div class="col-1">
+                                                <label class="form-label-control float-right align-middle">Leave Type</label>
+                                            </div>
+                                            <div class="col-11">
                                                 <select class="form-control" name="type">
                                                     @foreach($types as $type)
                                                         <option value="{{$type->id}}">{{$type->name}}</option>
@@ -26,23 +28,25 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="body">Request Body</label>
-                                            <div class="col-10">
+                                            <div class="col-1">
+                                                <label class="form-label-control float-right align-middle" for="body">Request Body</label>
+                                            </div>
+                                            <div class="col-11">
                                                 <textarea name="body" class="form-control" rows="5" placeholder="Request Body"></textarea>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <div class="col-2">
-                                                <label for="start">Start Date</label>
+                                            <div class="col-1">
+                                                <label for="start" class="form-label-control float-right align-middle">Start Date</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-5">
                                                 <input type="date" name="start" class="form-control">
                                             </div>
-                                            <div class="col-2">
-                                                <label for="end">End Date</label>
+                                            <div class="col-1">
+                                                <label for="end" class="form-label-control float-right align-middle">End Date</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-5">
                                                 <input type="date" name="end" class="form-control">
                                             </div>
                                         </div>

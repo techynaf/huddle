@@ -196,7 +196,7 @@ class Controller extends BaseController
     {
         $role = auth()->user()->roles->first()->name;
 
-        if ($role == 'barista') {
+        if ($role == 'barista' || $role == 'shift-supervisor') {
             return true;
         } else {
             return false;

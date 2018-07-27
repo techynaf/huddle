@@ -1,7 +1,7 @@
 <a href="/view/employee/{{$user->id}}">
     <div class="row card-box btn-outline-primary">
         <div class="col-1">
-            <i class="far fa-user 2x"></i>
+            <i class="far fa-user 2x float-left"></i>
         </div>
         <div class="col-3">
             {{$user->name}}

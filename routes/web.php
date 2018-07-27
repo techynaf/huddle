@@ -29,7 +29,10 @@ Route::get('/qr', 'ProfileController@createQR')->middleware('auth');
 Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
 Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
 Route::get('/dashboard', 'ProfileController@index')->middleware('auth');
-Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth');
+Route::get('/logger', 'ProfileController@logger')->middleware('auth');
+Route::get('/edit/{id}', 'ProfileController@edit')->middleware('auth');
+Route::post('/edit/{id}', 'ProfileController@update')->middleware('auth');
+
 
 //Schedule Routes
 Route::get('/scheduler', 'ScheduleController@scheduler')->middleware('auth');
@@ -49,7 +52,7 @@ Route::get('/leave/type', 'LeavesController@type')->middleware('auth');
 Route::get('/leave/type/{type}', 'LeavesController@range')->middleware('auth');
 
 //Weekly Leave Routes
-Route::get('/logger', 'ProfileController@logger')->middleware('auth');
+Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth');
 Route::post('/create/weekly/{id}', 'WeeklyLeavesController@store')->middleware('auth');
 Route::get('/edit/weekly', 'WeeklyLeavesController@edit')->middleware('auth');
 Route::post('/edit/weekly/{id}', 'WeeklyLeavesController@update')->middleware('auth');

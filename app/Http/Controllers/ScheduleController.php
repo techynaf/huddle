@@ -55,6 +55,7 @@ class ScheduleController extends Controller
         }
 
         $users = null;
+        $branches = Branch::all();
 
         if ($this->manager()) {
             $users = User::where('branch_id', auth()->user()->branch->id)->get();
@@ -62,7 +63,6 @@ class ScheduleController extends Controller
             $users = User::all();
         }
 
-        $branches = Branch::all();
         $schedules = array();
 
         foreach ($users as $user) {
@@ -78,10 +78,11 @@ class ScheduleController extends Controller
         $path = $request->path();
         $now = new Carbon;
         $today = $now->copy()->format('Y-m-d');
+        $filters = Branch::all();
 
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
         with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today)->
-        with('notification', $notification)->with('flow', $flow);
+        with('notification', $notification)->with('flow', $flow)->with('filters', $filters);
     }
 
     public function dayOffChecker ($user, $date)

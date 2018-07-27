@@ -50,6 +50,9 @@
                                 <div class="col-3"></div>
                             </div>
                             <hr>
+                            <div class="row text-center">
+                                <a href="/edit/{{$user->id}}">Edit Profile</a>
+                            </div>
                         </div>
 
                 </div>
@@ -217,7 +220,7 @@
                                     <div class="row">
                                         @if($request->start != null)
                                             <div class="col-3">
-                                                Date range
+                                                {{$request->leavetype->name}}
                                             </div>
                                             <div class="col-3">
                                                 {{date("D d M", strtotime($request->start))}}

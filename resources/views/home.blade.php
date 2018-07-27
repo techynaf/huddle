@@ -5,7 +5,7 @@
                 @csrf
                 <div class="row">
                     <div class="col-8"></div>
-                    <div class="col-1">
+                    <div class="col-1 align-middle">
                         <label for="id" class="form-label-control">Filter Branch</label>
                     </div>
                     <div class="col-2">
