@@ -14,11 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             BranchesTableSeeder::class,
             UserTableSeeder::class,
-            WeeklyLeavesTableSeeder::class,
-            SchedulesTableSeeder::class,
-            LeavesTableSeeder::class,
             LeaveTypesTableSeeder::class,
-            LogsTableSeeder::class,
             RolesTableSeeder::class,
             RoleUserTableSeeder::class,
         ]);

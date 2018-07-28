@@ -10,8 +10,14 @@ use App\Log;
 
 class ReportController extends Controller
 {
-    public function user ()
+    public function hours ()
     {
-        return view ();
+        if ($this->barista() || $this->manager() || $this->dm()) {
+            return redirect()->with('error', 'You are not authorized to view this');
+        }
+
+        $users = User::all()->where('branch_id', '!=', 0)->groupBy('branch_id');
+
+        
     }
 }
