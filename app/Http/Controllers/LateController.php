@@ -19,13 +19,31 @@ class LateController extends Controller
         $notification = $this->checkNotifications();
         $sat = $this->findSat(null);
         $sun = $this->findSun(null);
-        $lates = null;
+        $lates = array();
         
         if ($this->manager()) {
-            $lates = Late::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $sun->format('Y-m-d'))->
+            $ls = Late::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $sun->format('Y-m-d'))->
             where('date', '<=', $sat->format('Y-m-d'))->get();
+
+            foreach ($ls as $l) {
+                if ($l->user->roles->first()->name != 'manager' || $l->user->roles->first()->name != 'assistant-manager') {
+                    array_push($lates, $l);
+                }
+            }
         } else {
-            $lates = Late::where('date', '>=', $sun->format('Y-m-d'))->where('date', '<=', $sat->format('Y-m-d'))->get();
+            $ls = Late::where('date', '>=', $sun->format('Y-m-d'))->where('date', '<=', $sat->format('Y-m-d'))->get();
+
+            foreach ($ls as $l) {
+                if (auth()->user()->roles->first()->name == 'district-manager') {
+                    if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
+                        array_push($lates, $l);
+                    }
+                } else {
+                    if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager' || $l->user->roles->first()->name == 'district-manager') {
+                        array_push($lates, $l);
+                    }
+                }
+            }
         }
 
         $dates = array();

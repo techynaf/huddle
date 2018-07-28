@@ -25,11 +25,7 @@ class AdminController extends Controller
         }
 
 
-        $now = new Carbon;
-
-        while ($now->copy()->format('l') != 'Sunday') {
-            $now = $now->copy()->subDay();
-        }
+        $now = $this->findSun(null);
 
         $month_start = $now->copy()->format('Y-m');
         $month_start = Carbon::parse($month_start.'-1');
@@ -115,7 +111,7 @@ class AdminController extends Controller
         }
 
         if ($request->role != null) {
-            if ($this->dm()) {
+            if ($this->dm() || $this->barista() || $this->manager()) {
                 return redirect('/')->with('error', 'You are not authorized to make this change');
             } else {
                 $user = User::where('id', $id)->first();

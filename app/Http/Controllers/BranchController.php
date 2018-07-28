@@ -86,7 +86,16 @@ class BranchController extends Controller
 
         $notification = $this->checkNotifications();
         $branches = Branch::all();
-        $roles = Role::all();
+        $role = Role::all();
+        $roles = array();
+
+
+        foreach ($role as $r) {
+            if ($r->name != 'district-manager' || $r->name != 'super-admin' || $r->name != 'HR') {
+                array_push($roles, $r);
+            }
+        }
+
         $users = User::where('branch_id', $id)->get();
 
         if ($id == 0) {

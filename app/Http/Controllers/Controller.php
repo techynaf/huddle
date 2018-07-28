@@ -62,29 +62,43 @@ class Controller extends BaseController
                 $logs = Log::whereNull('end')->get();
                 $lates = Late::whereNull('altered_by')->get();
 
-                if (count($leaves) != 0) {
-                    array_push($notification, true);
-                } else {
-                    array_push($notification, false);
-                }
-    
-                if (count($weekly) != 0) {
-                    array_push($notification, true);
-                } else {
-                    array_push($notification, false);
+                $mleave = false;
+                $mweekly = false;
+                $mlog = false;
+                $mlate = false;
+
+                foreach ($leaves as $leave) {
+                    if ($leave->user->roles->first()->name == 'manager' || $leave->user->roles->first()->name == 'assistant-manager') {
+                        $mleave = true;
+                        break;
+                    }
                 }
 
-                if (count($logs) != 0) {
-                    array_push($notification, true);
-                } else {
-                    array_push($notification, false);
+                foreach ($weekly as $w) {
+                    if ($w->user->roles->first()->name == 'manager' || $w->user->roles->first()->name == 'assistant-manager') {
+                        $mweekly = true;
+                        break;
+                    }
                 }
 
-                if (count($lates) != 0) {
-                    array_push($notification, true);
-                } else {
-                    array_push($notification, false);
+                foreach ($logs as $log) {
+                    if ($log->user->roles->first()->name == 'manager' || $log->user->roles->first()->name == 'assistant-manager') {
+                        $mlog = true;
+                        break;
+                    }
                 }
+
+                foreach ($lates as $late) {
+                    if ($late->user->roles->first()->name == 'manager' || $late->user->roles->first()->name == 'assistant-manager') {
+                        $mlate = true;
+                        break;
+                    }
+                }
+
+                array_push($notification, $mleave);
+                array_push($notification, $mweekly);
+                array_push($notification, $mlog);
+                array_push($notification, $mlate);
             } else {
                 $leaves = Leave::where('branch_id', auth()->user()->branch_id)->where('is_approved', 0)->get();
                 $weeklies = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->where('approved', 0)->get();

@@ -13,6 +13,10 @@ class LeavesController extends Controller
 {
     public function requestLeave ()
     {
+        if ($this->superAdmin()) {
+            return redirect('/')->with('error', 'Super-admin cannot request for leaves.');
+        }
+        
         $notification = $this->checkNotifications();
         $types = LeaveTypes::where('id', '!=', 1)->get();
         $id = auth()->user()->id;

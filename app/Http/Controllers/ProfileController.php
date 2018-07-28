@@ -109,7 +109,7 @@ class ProfileController extends Controller
         $roles = array();
 
         foreach($rs as $r) {
-            if ($r->name != 'super-admin' || $r->name != 'HR') {
+            if ($r->name != 'super-admin' || $r->name != 'HR' || $r->name != 'district-manager') {
                 $x = array($r->id, ucfirst($r->name));
                 array_push($roles, $x);
             }
@@ -131,7 +131,7 @@ class ProfileController extends Controller
         $pin = 0;
         $role = Role::find($request->role);
 
-        if ($role->name == 'barista' || $role->name == 'shift-superviser') {
+        if ($role->name == 'barista' || $role->name == 'shift-supervisor') {
             while (true) {
                 $pin = rand(1000, 9999);
                 $check = User::where('pin', $pin)->get();
@@ -232,9 +232,9 @@ class ProfileController extends Controller
         $role = Role::find($request->role);
 
         $userR = $user->roles->fisrt()->name;
-        $barista = ($role->name == 'barista' || $role->name == 'shift-superviser');
+        $barista = ($role->name == 'barista' || $role->name == 'shift-supervisor');
         $manager = ($role->name == 'manager' || $role->name == 'assistant-manager');
-        $userB = ($userR == 'barista' || $userR == 'shift-superviser');
+        $userB = ($userR == 'barista' || $userR == 'shift-supervisor');
         $userM = ($userR == 'manager' || $userR == 'assistant-manager');
         $pin = 0;
         $religion = null;

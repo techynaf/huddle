@@ -6379,3 +6379,35 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
 .align-middle {
   padding-top: 8px;
 }
+
+.roastery {
+  color: #000000;
+}
+
+.aisd {
+  color: #ff0000;
+}
+
+.lakeshore {
+  color: #4472c4;
+}
+
+.apollo {
+  color: #ff9900;
+}
+
+.cityscape {
+  color: #339966;
+}
+
+.lk-tower {
+  color: #00ffff;
+}
+
+.dhanmondi {
+  color: #99cc00;
+}
+
+.ascott {
+  color: #bf9000;
+}

@@ -22,6 +22,7 @@ class LogController extends Controller
         $today = $now->copy()->format('Y-m-d');
         $last = $now->copy()->addWeeks(-1)->addDay()->format('Y-m-d');
         $dates = array($now->copy()->format('Y-m-d'));
+        $ls = null;
         
 
         for ($i = 0; $i < 7; $i++) {
@@ -29,10 +30,30 @@ class LogController extends Controller
         }
 
         if ($this->manager()) {
-            $logs = Log::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $last)->
+            $ls = Log::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $last)->
             where('date', '<=', $today)->whereNull('end')->get();
         } elseif ($this->supeAdmin() || $this->dm()) {
-            $logs = Log::where('date', '>=', $last)->where('date', '<=', $today)->whereNull('end')->get();
+            $ls = Log::where('date', '>=', $last)->where('date', '<=', $today)->whereNull('end')->get();
+        }
+
+        if ($this->manager()) {
+            foreach ($ls as $l) {
+                if ($l->user->roles->first()->name != 'manager' || $l->user->roles->first()->name != 'assistant-manager') {
+                    array_push($logs, $l);
+                }
+            }
+        } elseif ($this->dm()) {
+            foreach ($ls as $l) {
+                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
+                    array_push($logs, $l);
+                }
+            }
+        } else {
+            foreach ($ls as $l) {
+                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager' || $l->user->roles->first()->name == 'district-manager') {
+                    array_push($logs, $l);
+                }
+            }
         }
 
         return view('logs/show')->with('notification', $notification)->with('logs', $logs)->with('dates', $dates);
