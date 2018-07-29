@@ -27,7 +27,6 @@ class LeavesController extends Controller
     public function storeLeaveRequest (Request $request, $id)
     {
         $this->validate($request, [
-            'body' => 'required',
             'type' => 'required',
             'start' => 'required',
             'end' => 'required'
@@ -39,7 +38,6 @@ class LeavesController extends Controller
         $leave->is_approved = 0;
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
-        $leave->body = $request->body;
         $leave->type = $request->type;
         $leave->is_removed = false;
         $leave->save();
@@ -73,7 +71,6 @@ class LeavesController extends Controller
         }
 
         $leave->type = $request->type;
-        $leave->body = $request->body;
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
         $leave->save();
