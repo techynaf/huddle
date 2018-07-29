@@ -39,5 +39,18 @@ class UserTableSeeder extends Seeder
             'employee_id' => 'something unique 3',
             'religion' => 'really?',
         ]);
+
+        $pin = 999;
+
+        for ($i = 1; $i <= 200; $i++) {
+            DB::table('users')->insert([
+                'name' => 'user '.$i,
+                'pin' => $pin + $i,
+                'password' => bcrypt('bangladesh'),
+                'branch_id' => rand(1, 8),
+                'employee_id' => 'something '.$i,
+                'religion' => 'really?',
+            ]);
+        }
     }
 }

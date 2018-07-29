@@ -12,7 +12,7 @@ class BranchesTableSeeder extends Seeder
      */
     public function run()
     {
-        $branches = array('Roastery', 'AISD', 'Lakeshore', 'Apollo', 'Cityscape', 'LK Tower', 'Dhanmondi',
+        $branches = array('Roastery', 'AISD', 'Lakeshore', 'Apollo', 'Cityscape', 'LK-Tower', 'Dhanmondi',
         'Ascott');
         foreach ($branches as $branch) {
             DB::table('branches')->insert([

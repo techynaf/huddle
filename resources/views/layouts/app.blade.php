@@ -48,20 +48,39 @@
     </script>
 </head>
 
-<body onload="JavaScript:AutoRefresh(60000);">
-    @guest
-        @include('layouts.guest-nav')
-    @else
-        <br>
-        @include('layouts.nav')
-    @endif
+@if (Request::is('/'))
+    <body onload="JavaScript:AutoRefresh(60000);">
+        @guest
+            @include('layouts.guest-nav')
+        @else
+            <br>
+            @include('layouts.nav')
+        @endif
 
-    <div class="wrapper">
-        <div class="container-fluid">
-            @include('layouts.messages')
-            @yield('content')
+        <div class="wrapper">
+            <div class="container-fluid">
+                @include('layouts.messages')
+                @yield('content')
+            </div>
         </div>
-    </div>
-    @include('layouts.footer')
-</body>
+        @include('layouts.footer')
+    </body>
+@else
+    <body>
+        @guest
+            @include('layouts.guest-nav')
+        @else
+            <br>
+            @include('layouts.nav')
+        @endif
+
+        <div class="wrapper">
+            <div class="container-fluid">
+                @include('layouts.messages')
+                @yield('content')
+            </div>
+        </div>
+        @include('layouts.footer')
+    </body>
+@endif
 </html>

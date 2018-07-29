@@ -109,13 +109,13 @@ class ProfileController extends Controller
         $roles = array();
 
         foreach($rs as $r) {
-            if ($r->name != 'super-admin' || $r->name != 'HR' || $r->name != 'district-manager') {
+            if (!($r->name == 'super-admin' || $r->name == 'HR' || $r->name == 'district-manager')) {
                 $x = array($r->id, ucfirst($r->name));
                 array_push($roles, $x);
             }
         }
 
-        return view('profile/create')->with('branches', $branches)->with('roles', $rs)->with('notification', $notification);
+        return view('profile/create')->with('branches', $branches)->with('roles', $roles)->with('notification', $notification);
     }
 
     public function store (Request $request)
@@ -158,17 +158,7 @@ class ProfileController extends Controller
         $user->password = bcrypt('bangladesh');
         $user->logged_in = false;
         $user->employee_id = $request->employee_id;
-        
-        if ($request->religion == 'Other') {
-            if ($request->other != null) {
-                $user->religion = $request->other;
-            } else {
-                $user->religion = 'Nothing Specified';
-            }
-        } else {
-            $user->religion = $request->religion;
-        }
-
+        $user->religion = $request->religion;
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
@@ -229,9 +219,9 @@ class ProfileController extends Controller
     public function update (Request $request, $id)
     {
         $user = User::where('id', $id)->first();
-        $role = Role::find($request->role);
+        $role = Role::where('id', $request->role)->first();
 
-        $userR = $user->roles->fisrt()->name;
+        $userR = $user->roles->first()->name;
         $barista = ($role->name == 'barista' || $role->name == 'shift-supervisor');
         $manager = ($role->name == 'manager' || $role->name == 'assistant-manager');
         $userB = ($userR == 'barista' || $userR == 'shift-supervisor');
@@ -283,8 +273,11 @@ class ProfileController extends Controller
         $qr = QRCode::text($pin);
         $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
 
+        $user->roles()->detach($user->roles->first()->id);
+        $user->roles()->attach($request->role);
+
         $url = '/view/employee/'.$user->id;
 
-        return redirect($url);
+        return redirect($url)->with('success', $message);
     }
 }

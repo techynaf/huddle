@@ -17,13 +17,13 @@ class LateController extends Controller
 
 
         $notification = $this->checkNotifications();
-        $sat = $this->findSat(null);
-        $sun = $this->findSun(null);
+        $sun = $this->findSun(null)->addWeeks(-1);
+        $today = new Carbon;
         $lates = array();
         
         if ($this->manager()) {
             $ls = Late::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $sun->format('Y-m-d'))->
-            where('date', '<=', $sat->format('Y-m-d'))->get();
+            where('date', '<=', $today->format('Y-m-d'))->get();
 
             foreach ($ls as $l) {
                 if ($l->user->roles->first()->name != 'manager' || $l->user->roles->first()->name != 'assistant-manager') {
@@ -31,24 +31,18 @@ class LateController extends Controller
                 }
             }
         } else {
-            $ls = Late::where('date', '>=', $sun->format('Y-m-d'))->where('date', '<=', $sat->format('Y-m-d'))->get();
+            $ls = Late::where('date', '>=', $sun->format('Y-m-d'))->where('date', '<=', $today->format('Y-m-d'))->get();
 
             foreach ($ls as $l) {
-                if (auth()->user()->roles->first()->name == 'district-manager') {
-                    if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
-                        array_push($lates, $l);
-                    }
-                } else {
-                    if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager' || $l->user->roles->first()->name == 'district-manager') {
-                        array_push($lates, $l);
-                    }
+                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
+                    array_push($lates, $l);
                 }
             }
         }
 
         $dates = array();
 
-        for ($i = $sun->copy(); $i->copy()->format('Y-m-d') <= $sat->copy()->format('Y-m-d'); $i->addDay()) {
+        for ($i = $sun->copy(); $i->copy()->format('Y-m-d') <= $today->copy()->format('Y-m-d'); $i->addDay()) {
             array_push($dates, $i->copy()->format('Y-m-d'));
         }
 

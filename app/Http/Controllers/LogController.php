@@ -17,23 +17,29 @@ class LogController extends Controller
         }
 
         $notification = $this->checkNotifications();
-        $logs = null;
-        $now = new Carbon;
-        $today = $now->copy()->format('Y-m-d');
-        $last = $now->copy()->addWeeks(-1)->addDay()->format('Y-m-d');
-        $dates = array($now->copy()->format('Y-m-d'));
+        $logs = array();
+        $today = new Carbon;
+        $last = null;
+
+        if ($today->copy()->format('l') == 'Sunday') {
+            $last = $today->copy()->addWeeks(-1)->format('Y-m-d');
+        } else {
+            $last = $this->findSun(null)->format('Y-m-d');
+        }
+
+        $start = $today->copy()->format('Y-m-d');
+        $dates = array();
         $ls = null;
         
-
-        for ($i = 0; $i < 7; $i++) {
-            array_push($dates, $now->addDays(-1)->format('Y-m-d'));
+        for (; $today->copy()->format('Y-m-d') >= $last; $today = $today->addDays(-1)) {
+            array_push($dates, $today->copy()->format('Y-m-d'));
         }
 
         if ($this->manager()) {
             $ls = Log::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $last)->
-            where('date', '<=', $today)->whereNull('end')->get();
-        } elseif ($this->supeAdmin() || $this->dm()) {
-            $ls = Log::where('date', '>=', $last)->where('date', '<=', $today)->whereNull('end')->get();
+            where('date', '<=', $start)->whereNull('end')->get();
+        } elseif ($this->superAdmin() || $this->dm()) {
+            $ls = Log::where('date', '>=', $last)->where('date', '<=', $start)->whereNull('end')->get();
         }
 
         if ($this->manager()) {
@@ -42,15 +48,9 @@ class LogController extends Controller
                     array_push($logs, $l);
                 }
             }
-        } elseif ($this->dm()) {
-            foreach ($ls as $l) {
-                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
-                    array_push($logs, $l);
-                }
-            }
         } else {
             foreach ($ls as $l) {
-                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager' || $l->user->roles->first()->name == 'district-manager') {
+                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
                     array_push($logs, $l);
                 }
             }

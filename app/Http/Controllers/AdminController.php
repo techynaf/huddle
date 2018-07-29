@@ -8,6 +8,7 @@ use App\User;
 use App\Branch;
 use App\Schedule;
 use App\Leave;
+use App\Role;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -100,6 +101,10 @@ class AdminController extends Controller
             return redirect('/')->with('error', 'You are not authorized.');
         }
 
+        $user = User::where('id', $id)->first();
+        $url = '/branch/details/'.$user->branch_id;
+        $message = null;
+
         if ($request->branch != null) {
             if ($this->hr()) {
                 return redirect('/')->with('error', 'You are not authorized to make this change');
@@ -107,6 +112,8 @@ class AdminController extends Controller
                 $user = User::where('id', $id)->first();
                 $user->branch_id = $request->branch;
                 $user->save();
+
+                $message = 'Branch successfully changes!';
             }
         }
 
@@ -114,15 +121,45 @@ class AdminController extends Controller
             if ($this->dm() || $this->barista() || $this->manager()) {
                 return redirect('/')->with('error', 'You are not authorized to make this change');
             } else {
-                $user = User::where('id', $id)->first();
-                $role = $user->roles->first()->id;
+                $url = $url.'?flow=false';
+                $role = Role::where('id', $request->role)->first();
+                $userR = $user->roles->first()->name;
+                $barista = ($role->name == 'barista' || $role->name == 'shift-supervisor');
+                $manager = ($role->name == 'manager' || $role->name == 'assistant-manager');
+                $userB = ($userR == 'barista' || $userR == 'shift-supervisor');
+                $userM = ($userR == 'manager' || $userR == 'assistant-manager');
+                $pin = 0;
+                $religion = null;
 
-                $user->roles()->detach($role);
+                if (($barista && $userB) || ($manager && $userM)) {
+                    $pin = $user->pin;
+                } elseif ($userB && $manager) {
+                    while (true) {
+                        $pin = rand(100000, 999999);
+                        $check = User::where('pin', $pin)->get();
+            
+                        if (count($check) == 0) {
+                            break;
+                        }
+                    }
+                } elseif ($userM && $barista) {
+                    while (true) {
+                        $pin = rand(1000, 9999);
+                        $check = User::where('pin', $pin)->get();
+            
+                        if (count($check) == 0) {
+                            break;
+                        }
+                    }
+                }
+
+                $user->roles()->detach($user->roles->first()->id);
                 $user->roles()->attach($request->role);
+
+                $message = 'Profile role changed! New pin is '.$pin;
             }
         }
 
-        $url = '/branch/details/'.$request->b_id;
-        return redirect($url)->with('success', 'Change successfully made');
+        return redirect($url)->with('success', $message);
     }
 }

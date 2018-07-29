@@ -23,7 +23,28 @@ class ScheduleController extends Controller
     public function scheduler (Request $request)
     {
         $notification = $this->checkNotifications();
-        $flow = false;
+        $times = array();
+        $b = null;
+
+        for ($i = 8; $i <= 12; $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                if ($j % 2 == 0) {
+                    array_push($times, $i.':00');
+                } else {
+                    array_push($times, $i.':30');
+                }
+            }
+        }
+
+        for ($i = 1; $i <= 11; $i++) {
+            for ($j = 0; $j < 2; $j++) {
+                if ($j % 2 == 0) {
+                    array_push($times, $i.':00');
+                } else {
+                    array_push($times, $i.':30');
+                }
+            }
+        }
 
         if ($this->barista() || $this->hr()) {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
@@ -33,7 +54,6 @@ class ScheduleController extends Controller
 
         if ($request->date == null) {
             $start = $this->findSun(new Carbon);
-            $flow = true;
         } else {
             $start = Carbon::parse($request->date);
             $start = $this->findSun($start);
@@ -60,7 +80,12 @@ class ScheduleController extends Controller
         if ($this->manager()) {
             $users = User::where('branch_id', auth()->user()->branch->id)->get();
         } else {
-            $users = User::all();
+            if ($request->branch == null) {
+                $users = User::all()->where('branch_id', '!=', 0);
+            } else {
+                $user = User::where('branch_id', $request->branch)->get();
+                $b = Branch::where('id', $request->branch)->first();
+            }
         }
 
         $schedules = array();
@@ -82,7 +107,8 @@ class ScheduleController extends Controller
 
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
         with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today)->
-        with('notification', $notification)->with('flow', $flow)->with('filters', $filters);
+        with('notification', $notification)->with('filters', $filters)->with('times', $times)->
+        with('b', $b);
     }
 
     public function dayOffChecker ($user, $date)
@@ -117,7 +143,7 @@ class ScheduleController extends Controller
             $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
             
             if ($schedule == null) {
-                return false;
+                return 'false';
             } else {
                 return $schedule;
             }
@@ -130,8 +156,10 @@ class ScheduleController extends Controller
 
         $dates = $request->date;
         $schedule_ids = $request->s_id;
-        $starts = $request->start;
-        $ends = $request->end;
+        $starts = $request->startT;
+        $sps = $request->sp;
+        $ends = $request->endT;
+        $eps = $request->ep;
         $s_branches = $request->entry_b;
         $e_branches = $request->exit_b;
         $counter = 0;
@@ -150,8 +178,8 @@ class ScheduleController extends Controller
 
                 $schedule->user_id = $user->id;
                 $schedule->branch_id = $user->branch_id;
-                $schedule->start = Carbon::parse($starts[$counter])->format('H:i:s');
-                $schedule->end = Carbon::parse($ends[$counter])->format('H:i:s');
+                $schedule->start = Carbon::parse($starts[$counter].' '.$sps[$counter])->format('H:i:s');
+                $schedule->end = Carbon::parse($ends[$counter].' '.$eps[$counter])->format('H:i:s');
                 $schedule->start_branch = $s_branches[$counter];
                 $schedule->end_branch = $e_branches[$counter];
                 $schedule->date = $dates[$i];
@@ -169,6 +197,9 @@ class ScheduleController extends Controller
 
     public function disable (Request $request, $id, $date, $url)
     {
+        $d = Carbon::parse($date);
+        $d = $this->findSun($d);
+        $url = $url.'?date='.$d->copy()->format('d-m-Y');
         $noSchedule = new NoSchedule;
         $noSchedule->date = $date;
         $noSchedule->user_id = $id;
@@ -182,6 +213,10 @@ class ScheduleController extends Controller
     {
         $noSchedule = NoSchedule::where('user_id', $id)->where('date', $date)->first();
         $noSchedule->delete();
+
+        $d = Carbon::parse($date);
+        $d = $this->findSun($d);
+        $url = $url.'?date='.$d->copy()->format('d-m-Y');
 
         return redirect($url);
     }

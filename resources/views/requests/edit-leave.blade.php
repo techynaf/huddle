@@ -27,13 +27,6 @@
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-2 col-form-label" for="body">Request Body</label>
-                                            <div class="col-10">
-                                                <textarea name="body" class="form-control" rows="5" placeholder="Request Body">{{$leave->body}}</textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
                                             <div class="col-2">
                                                 <label for="start">Start Date</label>
                                             </div>

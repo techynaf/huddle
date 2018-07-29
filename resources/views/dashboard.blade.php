@@ -32,6 +32,10 @@
                                         <td>Branch</td>
                                         <td>{{$user->branch->name}}</td>
                                     </tr>
+                                    <tr>
+                                        <td>Religion</td>
+                                        <td>{{$user->religion}}</td>
+                                    </tr>
                                     @if(auth()->user()->branch->name == 'HR and Admin' || auth()->user()->roles->first()->name == 'super-admin')
                                         <tr>
                                             <td>QR Code</td>
@@ -117,10 +121,10 @@
                                                         {{$days[$loop->index]}}
                                                     </div>
                                                     
-                                                        <div class="col-sm-4 text-center">
+                                                        <div class="col-sm-4 text-center {{strtolower($schedule->startingBranch->name)}}">
                                                             <strong>{{date("g:i A", strtotime($schedule->start))}}</strong>
                                                         </div>
-                                                        <div class="col-sm-4 text-center">
+                                                        <div class="col-sm-4 text-center {{strtolower($schedule->endingBranch->name)}}">
                                                             <strong>{{date("g:i A", strtotime($schedule->end))}}</strong>    
                                                         </div>
                                                 </div>

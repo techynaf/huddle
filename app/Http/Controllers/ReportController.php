@@ -16,8 +16,10 @@ class ReportController extends Controller
             return redirect()->with('error', 'You are not authorized to view this');
         }
 
+        $notification = $this->checkNotifications();
+
         $users = User::all()->where('branch_id', '!=', 0)->groupBy('branch_id');
 
-        
+        return view('test')->with('notification', $notification);
     }
 }

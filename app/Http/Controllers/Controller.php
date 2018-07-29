@@ -111,28 +111,28 @@ class Controller extends BaseController
 
 
                 foreach ($leaves as $leave) {
-                    if ($leave->user->roles->first()->name == 'barista') {
+                    if ($leave->user->roles->first()->name == 'barista' || $leave->user->roles->first()->name == 'shift-supervisor') {
                         $bleave = true;
                         break;
                     }
                 }
 
                 foreach ($weeklies as $weekly) {
-                    if ($weekly->user->roles->first()->name == 'barista') {
+                    if ($weekly->user->roles->first()->name == 'barista' || $weekly->user->roles->first()->name == 'shift-supervisor') {
                         $bweekly = true;
                         break;
                     }
                 }
 
                 foreach ($logs as $log) {
-                    if ($log->user->roles->first()->name == 'barista') {
+                    if ($log->user->roles->first()->name == 'barista' || $log->user->roles->first()->name == 'shift-supervisor') {
                         $blog = true;
                         break;
                     }
                 }
 
                 foreach ($lates as $late) {
-                    if ($late->user->roles->first()->name == 'barista') {
+                    if ($late->user->roles->first()->name == 'barista' || $late->user->roles->first()->name == 'shift-supervisor') {
                         $blate = true;
                         break;
                     }
@@ -154,7 +154,7 @@ class Controller extends BaseController
         $s = $date;
         $e = $s->copy()->addDays(6);
 
-        for ($i = -4; $i <= 4; $i++) {
+        for ($i = -1; $i <= 2; $i++) {
             $d = array($s->copy()->addWeeks($i)->format('d-m-Y'), $e->copy()->addWeeks($i)->format('d-m-Y'));
             array_push($dates, $d);
         }

@@ -29,15 +29,6 @@
 
                                         <div class="form-group row">
                                             <div class="col-1">
-                                                <label class="form-label-control float-right align-middle" for="body">Request Body</label>
-                                            </div>
-                                            <div class="col-11">
-                                                <textarea name="body" class="form-control" rows="5" placeholder="Request Body"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <div class="col-1">
                                                 <label for="start" class="form-label-control float-right align-middle">Start Date</label>
                                             </div>
                                             <div class="col-5">

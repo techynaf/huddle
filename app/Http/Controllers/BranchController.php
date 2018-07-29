@@ -42,6 +42,7 @@ class BranchController extends Controller
 
         $branch = new Branch;
         $branch->name = $request->name;
+        $branch->timestamps = false;
         $branch->save();
         
         return redirect('/branch')->with('success', 'Branch Created');

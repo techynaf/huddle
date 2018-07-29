@@ -56,11 +56,6 @@
                                                         <option value="Other">Other</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-1"></div>
-                                                <label class="col-1 text-right col-form-label" for="other">Other</label>
-                                                <div class="col-4">
-                                                    <input type="text" class="form-control" name="other" placeholder="Other religion">
-                                                </div>
                                             </div>
                                         
                                         <div class="row">
