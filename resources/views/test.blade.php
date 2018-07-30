@@ -4,52 +4,40 @@
     <div class="row">
         <h2 class="page-title">This is a test case</h2>
     </div>
-    <div class="row">
-        <div class="col-12 card-box">
-            <div class="row">
-                <div class="col-xl border-left border-right" style="background: red">
-                    This is something that I am doing to test things
+    
+    @foreach($branches as $branch)
+        <div class="row">
+            <h2 class="page-title">{{$branch->name}}</h2>
+        </div>
+        <div class="row">
+            <div class="col-12 card-box">
+                <div class="row">
+                    <div class="col">Name</div>
+                    <div class="col">Religion</div>
+                    @foreach($weeks as $week)
+                        <div class="col">
+                            {{date("d M", strtotime($week[0])).' - '.date("d M", strtotime($week[1]))}}
+                        </div>
+                    @endforeach
+                    <div class="col">Total</div>
                 </div>
-                <div class="col-xl border-left border-right" style="background: green">
-        
-                </div>
-                <div class="col-xl border-left border-right" style="background: blue">
-        
-                </div>
-                <div class="col border-left border-right" style="background: red">
-
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col border-left border-right" style="background: red">
-
-                </div>
-                <div class="col border-left border-right" style="background: green">
-                    This is something that I am doing to test things
-                </div>
-                <div class="col border-left border-right" style="background: blue">
-        
-                </div>
-                <div class="col border-left border-right" style="background: red">
-
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col border-left border-right" style="background: red">
-
-                </div>
-                <div class="col border-left border-right" style="background: green">
-        
-                </div>
-                <div class="col border-left border-right" style="background: blue">
-                    This is something that I am doing to test things
-                </div>
-                <div class="col-1 border-left border-right" style="background: red">
-
-                </div>
+                <hr>
+                
+                @foreach ($users as $user)
+                    @if ($user->branch_id == $branch->id)
+                        <div class="row">
+                            <div class="col">{{$user->name}}</div>
+                            <div class="col">{{$user->religion}}</div>
+                            @foreach($hours[$x++] as $hour)
+                                <div class="col">
+                                    {{$hour}}
+                                </div>
+                            @endforeach
+                        </div>
+                        <hr>
+                    @endif
+                @endforeach
             </div>
         </div>
-    </div>
+    @endforeach
 @endsection
