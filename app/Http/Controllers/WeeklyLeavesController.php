@@ -33,12 +33,6 @@ class WeeklyLeavesController extends Controller
             'end' => 'required',
         ]);
 
-        $weekly = new WeeklyLeave;
-        $weekly->user_id = $id;
-        $weekly->start = Carbon::parse($request->start)->format('Y-m-d');
-        $weekly->end = Carbon::parse($request->end)->format('Y-m-d');
-        $start = Carbon::parse($request->start);
-        $end = Carbon::parse($request->end);
         $leaves = WeeklyLeave::where('user_id', $id)->where('approved', 0)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
 
         if (count($leaves) != 0) {
@@ -70,7 +64,7 @@ class WeeklyLeavesController extends Controller
         $now = new Carbon;
 
         $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->
-        orderBy('start')->where('approved', 1)->get();
+        orderBy('start')->where('approved', 0)->get();
 
         $now = new Carbon;
         $start = $this->findSun($now->addDays(7))->format('Y-m-d');

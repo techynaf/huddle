@@ -6411,3 +6411,8 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
 .ascott {
   color: #bf9000;
 }
+
+.hint {
+  font-style: italic;
+  color: #A9A9A9;
+}

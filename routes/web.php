@@ -30,8 +30,8 @@ Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
 Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
 Route::get('/dashboard', 'ProfileController@index')->middleware('auth');
 Route::get('/logger', 'ProfileController@logger')->middleware('auth');
-Route::get('/edit/{id}', 'ProfileController@edit')->middleware('auth');
-Route::post('/edit/{id}', 'ProfileController@update')->middleware('auth');
+Route::get('/edit/profile/{id}', 'ProfileController@edit')->middleware('auth');
+Route::post('/edit/profile/{id}', 'ProfileController@update')->middleware('auth');
 
 
 //Schedule Routes

@@ -12,7 +12,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="p-20">
-                                    <form class="form-horizontal" role="form" action="/edit/{{$user->id}}" method="POST">
+                                    <form class="form-horizontal" role="form" action="/edit/profile/{{$user->id}}" method="POST">
                                         @csrf
                                         <div class="form-group row">
                                             <label class="col-1 text-right col-form-label" for="name">Name</label>

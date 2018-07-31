@@ -55,7 +55,7 @@
                             </div>
                             <hr>
                             <div class="row text-center">
-                                <a href="/edit/{{$user->id}}">Edit Profile</a>
+                                <a href="/edit/profile/{{$user->id}}">Edit Profile</a>
                             </div>
                         </div>
 
