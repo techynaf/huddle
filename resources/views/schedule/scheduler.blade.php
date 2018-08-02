@@ -14,7 +14,7 @@
                             </div>
                             <div class="col-6">
                                 <select name="date" class="form-control">
-                                    <option value="">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
+                                    <option value="{{date("d M", strtotime($days[0][1]))}}">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
                                     @foreach($dates as $date)
                                         <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
                                     @endforeach
@@ -32,7 +32,7 @@
                                         @if ($b == null)
                                             <option value="">All</option>
                                         @else
-                                            <option value="">{{$b->name}}</option>
+                                            <option value="{{$b->id}}">{{$b->name}}</option>
                                         @endif
                                         @foreach($branches as $branch)
                                             <option value="{{$branch->id}}">{{$branch->name}}</option>

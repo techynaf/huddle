@@ -74,9 +74,9 @@ class ScheduleController extends Controller
             $users = User::where('branch_id', auth()->user()->branch->id)->get();
         } else {
             if ($request->branch == null) {
-                $users = User::all()->where('branch_id', '!=', 0);
+                $users = User::where('branch_id', '!=', 0)->get();
             } else {
-                $user = User::where('branch_id', $request->branch)->get();
+                $users = User::where('branch_id', $request->branch)->get();
                 $b = Branch::where('id', $request->branch)->first();
             }
         }
