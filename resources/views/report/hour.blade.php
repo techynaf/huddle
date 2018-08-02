@@ -9,6 +9,7 @@
             <div class="col-12 card-box">
                 <div class="row">
                     <div class="col">Name</div>
+                    <div class="col">Designation</div>
                     <div class="col">Religion</div>
                     @foreach($weeks as $week)
                         <div class="col">
@@ -24,6 +25,7 @@
                     @if ($user->branch_id == $branch->id)
                         <div class="row">
                             <div class="col">{{$user->name}}</div>
+                            <div class="col">{{ucfirst($user->roles->first()->name)}}</div>
                             <div class="col">{{$user->religion}}</div>
                             @foreach($hours[$x++] as $hour)
                                 <div class="col">
