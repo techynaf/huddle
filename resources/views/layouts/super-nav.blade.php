@@ -54,6 +54,14 @@
 </li>
 
 <li class="has-submenu">
+    <a href=""><i class="fas fa-newspaper"></i> <span> Reports </span> </a>
+    <ul class="submenu">
+        <li><a href="/hour">Hours Report</a></li>
+        <li><a href="/branch/delete">Late Report</a></li>
+    </ul>
+</li>
+
+<li class="has-submenu">
     <a href="/create/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
 </li>
 
