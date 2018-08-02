@@ -59,9 +59,15 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-1"></div>
-                                                <label class="col-1 text-right col-form-label" for="other">Other</label>
+                                                <label class="col-1 text-right col-form-label" for="status">Status</label>
                                                 <div class="col-4">
-                                                    <input type="text" class="form-control" name="other" placeholder="Other religion">
+                                                    <select name="status" class="form-control" required>
+                                                        <option value="{{$user->status}}">{{$user->status}}</option>
+                                                        <option value="Probation">Probation</option>
+                                                        <option value="Permanent">Permanent</option>
+                                                        <option value="Part Time">Part Time</option>
+                                                        <option value="Contratual">Contratual</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         
