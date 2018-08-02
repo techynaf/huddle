@@ -126,6 +126,7 @@ class ProfileController extends Controller
             'role' => 'required',
             'employee_id' => 'required',
             'religion' => 'required',
+            'status' => 'required',
         ]);
 
         $pin = 0;
@@ -153,6 +154,7 @@ class ProfileController extends Controller
 
         $user = new User;
         $user->name = $request->name;
+        $user->status = $request->status;
         $user->branch_id = $request->branch;
         $user->pin = $pin;
         $user->password = bcrypt('bangladesh');
@@ -263,6 +265,7 @@ class ProfileController extends Controller
         }
 
         $user->name = $request->name;
+        $user->status = $request->status;
         $user->employee_id = $request->employee_id;
         $user->branch_id = $request->branch;
         $user->religion = $religion;
