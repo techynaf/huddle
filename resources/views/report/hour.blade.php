@@ -1,9 +1,12 @@
 @extends ('layouts.app')
 
 @section('content')
+    <div class="row">
+        <h2>Hour Report</h2>
+    </div>
     @foreach($branches as $branch)
         <div class="row">
-            <h2 class="page-title">{{$branch->name}}</h2>
+            <h4 class="page-title">{{$branch->name}}</h4>
         </div>
         <div class="row">
             <div class="col-12 card-box">

@@ -5,7 +5,7 @@
             <div class="col-3"></div>
             <h2 class="page-title">Select Date</h2>
         </div>
-        <form action="/hour" method="GET">
+        <form action="{{$url}}" method="GET">
             <div class="row">
                 <div class="col"></div>
                 <div class="col-6 card-box">

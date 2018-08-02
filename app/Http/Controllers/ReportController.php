@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\User;
 use App\Schedule;
+use App\Late;
 use App\Log;
 use App\Branch;
 
@@ -23,6 +24,7 @@ class ReportController extends Controller
         }
 
         $notification = $this->checkNotifications();
+        $url = '/hour';
 
         if ($request->month == null) {
             $i = Carbon::parse(null)->format('Y');
@@ -32,7 +34,7 @@ class ReportController extends Controller
                 array_push($years, $i);
             }
 
-            return view('report/date')->with('notification', $notification)->with('months', $this->months)->with('years', $years);
+            return view('report/date')->with('notification', $notification)->with('months', $this->months)->with('years', $years)->with('url', $url);
         } else {
             if ($this->barista() || $this->manager() || $this->dm()) {
                 return redirect()->with('error', 'You are not authorized to view this');
@@ -103,6 +105,51 @@ class ReportController extends Controller
     
             return view('report/hour')->with('notification', $notification)->with('branches', $branches)->
             with('users', $users)->with('hours', $hours)->with('weeks', $weeks)->with('x', $x);
+        }
+    }
+
+    public function lateReport (Request $request)
+    {
+        if ($this->barista() || $this->manager() || $this->dm()) {
+            return redirect('/')->with('error', 'You are not authorized to access this view');
+        }
+
+        $notification = $this->checkNotifications();
+        $url = '/late';
+
+        if ($request->month == null) {
+            $i = Carbon::parse(null)->format('Y');
+            $years = array();
+
+            for ($i = Carbon::parse(null)->format('Y'); $i >= $this->base; $i--) {
+                array_push($years, $i);
+            }
+
+            return view('report/date')->with('notification', $notification)->with('months', $this->months)->with('years', $years)->with('url', $url);
+        } else {
+            $start = $request->year.'-'.$this->start[$request->month];
+            $end = null;
+
+            if ($request->month == 11) {
+                $end = ($request->year + 1).'-'.$this->end[$request->month];
+            } else {
+                $end = $request->year.'-'.$this->end[$request->month];
+            }
+
+            $branches = Branch::all();
+            $lates = Late::where('date', '>=', $start)->where('date', '<=', $end)->orderBy('branch_id')->get();
+            $duration = array();
+
+            foreach ($lates as $late) {
+                $log = $late->log;
+                $schedule = $log->schedule;
+                $actualTime = Carbon::parse($log->start);
+                $scheduledTime = Carbon::parse($schedule->start);
+                array_push($duration, $scheduledTime->diffInMinutes($actualTime));
+            }
+
+            return view('report/late')->with('notification', $notification)->with('branches', $branches)->
+            with('lates', $lates)->with('x', 0)->with('duration', $duration);
         }
     }
 }
