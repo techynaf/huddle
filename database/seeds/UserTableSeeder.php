@@ -15,6 +15,7 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Super Admin',
+            'status' => 'Permanent',
             'pin' => 1234567890,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 0,
@@ -24,6 +25,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'HR',
+            'status' => 'Permanent',
             'pin' => 109876,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 0,
@@ -33,6 +35,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'District Manager',
+            'status' => 'Permanent',
             'pin' => 543210,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 0,
@@ -45,6 +48,7 @@ class UserTableSeeder extends Seeder
         for ($i = 1; $i <= 200; $i++) {
             DB::table('users')->insert([
                 'name' => 'user '.$i,
+                'status' => 'Permanent',
                 'pin' => $pin + $i,
                 'password' => bcrypt('bangladesh'),
                 'branch_id' => rand(1, 8),
