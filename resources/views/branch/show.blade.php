@@ -58,7 +58,7 @@
 
                             <div class="row">
                                 <div class="col-3">{{$user->name}}</div>
-                                <div class="col-2">{{$user->roles->first()->name}}</div>
+                                <div class="col-2">{{ucfirst($user->roles->first()->name)}}</div>
                                 <div class="col-2">{{$user->employee_id}}</div>
                                 @if (auth()->user()->roles->first()->name == 'district-manager' || (auth()->user()->roles->first()->name == 'super-admin' && $flow == 'true'))
                                     <div class="col-3">
@@ -76,9 +76,9 @@
                                 @else
                                     <div class="col-3">
                                         <select name="role" class="form-control">
-                                            <option value="">{{$user->roles->first()->name}}</option>
+                                            <option value="">{{ucfirst($user->roles->first()->name)}}</option>
                                             @foreach($roles as $role)
-                                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                                <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
                                             @endforeach
                                         </select>
                                     </div>

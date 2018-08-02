@@ -13,7 +13,7 @@
                                 <th>Employees</th>
                                 <th>Manager</th>
                                 <th>Assistant Manager</th>
-                                <th>Shift Managers</th>
+                                <th>Shift Supervisors</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -21,9 +21,33 @@
                                 <tr>
                                     <td><a href="/branch/details/{{$branch->id}}">{{$branch->name}}</a></td>
                                     <td>{{count($branch->users)}}</td>
-                                    <td>Manager</td>
-                                    <td>Assistant Manager</td>
-                                    <td>Shift Managers</td>
+                                    @if ($managers[$loop->index] != null)
+                                        <td>
+                                            @foreach ($managers[$loop->index] as $manager)
+                                                <a href="/view/employee/{{$manager->id}}" target="_blank">{{$manager->name}}</a> <br>
+                                            @endforeach
+                                        </td>
+                                    @else
+                                        <td>No managers</td>
+                                    @endif
+                                    @if ($assistant_managers[$loop->index] != null)
+                                        <td>
+                                            @foreach ($assistant_managers[$loop->index] as $manager)
+                                                <a href="/view/employee/{{$manager->id}}" target="_blank">{{$manager->name}}</a> <br>
+                                            @endforeach
+                                        </td>
+                                    @else
+                                        <td>No assistant managers</td>
+                                    @endif
+                                    @if ($supervisors[$loop->index] != null)
+                                        <td>
+                                            @foreach ($supervisors[$loop->index] as $supervisor)
+                                                <a href="/view/employee/{{$supervisor->id}}" target="_blank">{{$supervisor->name}}</a> <br>
+                                            @endforeach
+                                        </td>
+                                    @else
+                                        <td>No shift supervisors</td>
+                                    @endif
                                 </tr>
                             @endforeach
                             <tr>

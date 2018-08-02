@@ -76,4 +76,4 @@ Route::get('/logs', 'LogController@show')->middleware('auth');
 Route::post('/logs/{id}', 'LogController@store')->middleware('auth');
 
 //Report Routes
-Route::get('/test', 'ReportController@hours')->middleware('auth');
+Route::get('/hour', 'ReportController@hours')->middleware('auth');

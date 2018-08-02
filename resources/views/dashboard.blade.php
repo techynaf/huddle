@@ -28,14 +28,16 @@
                                         <td>PIN</td>
                                         <td>{{$user->pin}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Branch</td>
-                                        <td>{{$user->branch->name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Religion</td>
-                                        <td>{{$user->religion}}</td>
-                                    </tr>
+                                    @if ($user->branch_id != 0)
+                                        <tr>
+                                            <td>Branch</td>
+                                            <td>{{$user->branch->name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Religion</td>
+                                            <td>{{$user->religion}}</td>
+                                        </tr>
+                                    @endif
                                     @if(auth()->user()->roles->first()->name == 'HR' || auth()->user()->roles->first()->name == 'super-admin')
                                         <tr>
                                             <td>QR Code</td>

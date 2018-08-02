@@ -6,7 +6,6 @@
     @endif
 
     <ul class="submenu">
-        <li><a href="/create/weekly">Select Weekly Day Offs</a></li>
         <li><a href="/edit/weekly">Edit Weekly Day Offs</a></li>
         
         @if ($notification[0] == true)

@@ -1,10 +1,6 @@
 @extends ('layouts.app')
 
 @section('content')
-    <div class="row">
-        <h2 class="page-title">This is a test case</h2>
-    </div>
-    
     @foreach($branches as $branch)
         <div class="row">
             <h2 class="page-title">{{$branch->name}}</h2>
@@ -16,7 +12,8 @@
                     <div class="col">Religion</div>
                     @foreach($weeks as $week)
                         <div class="col">
-                            {{date("d M", strtotime($week[0])).' - '.date("d M", strtotime($week[1]))}}
+                            {{date("d M", strtotime($week[0]))}} <br>
+                            {{date("d M", strtotime($week[1]))}}
                         </div>
                     @endforeach
                     <div class="col">Total</div>
