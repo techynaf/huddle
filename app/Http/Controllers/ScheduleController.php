@@ -188,11 +188,11 @@ class ScheduleController extends Controller
         return redirect($url)->with('success', 'Schedule created for '.$user->name);
     }
 
-    public function disable (Request $request, $id, $date, $url)
+    public function disable (Request $request, $id, $date, $branch)
     {
         $d = Carbon::parse($date);
         $d = $this->findSun($d);
-        $url = $url.'?date='.$d->copy()->format('d-m-Y');
+        $url = '/scheduler?date='.$d->copy()->format('d-m-Y').'&branch='.$branch;
         $noSchedule = new NoSchedule;
         $noSchedule->date = $date;
         $noSchedule->user_id = $id;
@@ -202,14 +202,14 @@ class ScheduleController extends Controller
         return redirect($url);
     }
 
-    public function enable (Request $request, $id, $date, $url)
+    public function enable (Request $request, $id, $date, $branch)
     {
         $noSchedule = NoSchedule::where('user_id', $id)->where('date', $date)->first();
         $noSchedule->delete();
 
         $d = Carbon::parse($date);
         $d = $this->findSun($d);
-        $url = $url.'?date='.$d->copy()->format('d-m-Y');
+        $url = '/scheduler?date='.$d->copy()->format('d-m-Y').'&branch='.$branch;
 
         return redirect($url);
     }

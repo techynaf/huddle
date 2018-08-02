@@ -37,8 +37,8 @@ Route::post('/edit/profile/{id}', 'ProfileController@update')->middleware('auth'
 //Schedule Routes
 Route::get('/scheduler', 'ScheduleController@scheduler')->middleware('auth');
 Route::post('/scheduler/{id}', 'ScheduleController@schedule')->middleware('auth');
-Route::get('/disable/{id}/{date}/{url}', 'ScheduleController@disable')->middleware('auth');
-Route::get('/enable/{id}/{date}/{url}', 'ScheduleController@enable')->middleware('auth');
+Route::get('/disable/{id}/{date}/{branch}', 'ScheduleController@disable')->middleware('auth');
+Route::get('/enable/{id}/{date}/{branch}', 'ScheduleController@enable')->middleware('auth');
 
 //Leave Routes
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');

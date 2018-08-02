@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-7">
         <select name="startT[]" class="form-control" required>
-            <option value="{{date("g:i", strtotime($schedule->start))}}"></option>
+            <option value="{{date("g:i", strtotime($schedule->start))}}">{{date("g:i", strtotime($schedule->start))}}</option>
             @foreach ($times as $time)
                 <option value="{{$time}}">{{$time}}</option>
             @endforeach
@@ -10,7 +10,7 @@
     </div>
     <div class="col-5">
         <select name="sp[]" class="form-control" required>
-            <option value="{{date("A", strtotime($schedule->start))}}"></option>
+            <option value="{{date("A", strtotime($schedule->start))}}">{{date("A", strtotime($schedule->start))}}</option>
             <option value="AM">AM</option>
             <option value="PM">PM</option>
         </select>
@@ -33,7 +33,7 @@
 <div class="row">
         <div class="col-7">
             <select name="endT[]" class="form-control" required>
-                <option value="{{date("g:i", strtotime($schedule->end))}}"></option>
+                <option value="{{date("g:i", strtotime($schedule->end))}}">{{date("g:i", strtotime($schedule->end))}}</option>
                 @foreach ($times as $time)
                     <option value="{{$time}}">{{$time}}</option>
                 @endforeach
@@ -41,7 +41,7 @@
         </div>
         <div class="col-5">
             <select name="ep[]" class="form-control" required>
-                <option value="{{date("A", strtotime($schedule->end))}}"></option>
+                <option value="{{date("A", strtotime($schedule->end))}}">{{date("A", strtotime($schedule->end))}}</option>
                 <option value="AM">AM</option>
                 <option value="PM">PM</option>
             </select>
