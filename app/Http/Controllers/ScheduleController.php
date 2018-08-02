@@ -23,26 +23,19 @@ class ScheduleController extends Controller
     public function scheduler (Request $request)
     {
         $notification = $this->checkNotifications();
+        $intervals = array(':00', ':15', ':30', ':45');
         $times = array();
         $b = null;
 
         for ($i = 8; $i <= 12; $i++) {
-            for ($j = 0; $j < 2; $j++) {
-                if ($j % 2 == 0) {
-                    array_push($times, $i.':00');
-                } else {
-                    array_push($times, $i.':30');
-                }
+            foreach ($intervals as $interval) {
+                array_push($times, $i.$interval);
             }
         }
 
         for ($i = 1; $i <= 11; $i++) {
-            for ($j = 0; $j < 2; $j++) {
-                if ($j % 2 == 0) {
-                    array_push($times, $i.':00');
-                } else {
-                    array_push($times, $i.':30');
-                }
+            foreach ($intervals as $interval) {
+                array_push($times, $i.$interval);
             }
         }
 
