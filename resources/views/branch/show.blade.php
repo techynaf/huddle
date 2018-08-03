@@ -36,10 +36,16 @@
                         <div class="col-3"><strong>Employee Name</strong></div>
                         <div class="col-2"><strong>Role</strong></div>
                         <div class="col-2"><strong>Employee ID</strong></div>
-                        @if ((auth()->user()->roles->first()->name == 'super-admin' && $flow == 'true'))
-                            <div class="col-3"><strong>Change Branch</strong></div>
-                        @else
+                        @if (auth()->user()->roles->first()->name == 'super-admin')
+                            @if ((auth()->user()->roles->first()->name == 'super-admin' && $flow == 'true'))
+                                <div class="col-3"><strong>Change Branch</strong></div>
+                            @else
+                                <div class="col-3"><strong>Change Role</strong></div>
+                            @endif
+                        @elseif (auth()->user()->roles->first()->name == 'HR')
                             <div class="col-3"><strong>Change Role</strong></div>
+                        @else
+                            <div class="col-3"><strong>Change Branch</strong></div>
                         @endif
                         <div class="col-1"></div>
                     </div>
