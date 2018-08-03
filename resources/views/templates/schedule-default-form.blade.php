@@ -1,18 +1,7 @@
 <label for="start[]" class="">Entry Time</label>
 <div class="row">
-    <div class="col-7">
-        <select name="startT[]" class="form-control" required>
-            <option value=""></option>
-            @foreach ($times as $time)
-                <option value="{{$time}}">{{$time}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="col-5">
-        <select name="sp[]" class="form-control" required>
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-        </select>
+    <div class="col-12">
+        <input type="time" name="start[]" class="form-control input-sm">
     </div>
 </div>
 
@@ -30,19 +19,8 @@
 
 <label class="">Exit Time</label>
 <div class="row">
-    <div class="col-7">
-        <select name="endT[]" class="form-control" required>
-            <option value=""></option>
-            @foreach ($times as $time)
-                <option value="{{$time}}">{{$time}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="col-5">
-        <select name="ep[]" class="form-control" required>
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-        </select>
+    <div class="col-12">
+        <input type="time" name="end[]" class="form-control input-sm">
     </div>
 </div>
 

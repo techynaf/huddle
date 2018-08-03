@@ -149,10 +149,8 @@ class ScheduleController extends Controller
 
         $dates = $request->date;
         $schedule_ids = $request->s_id;
-        $starts = $request->startT;
-        $sps = $request->sp;
-        $ends = $request->endT;
-        $eps = $request->ep;
+        $starts = $request->start;
+        $ends = $request->end;
         $s_branches = $request->entry_b;
         $e_branches = $request->exit_b;
         $counter = 0;
@@ -171,8 +169,8 @@ class ScheduleController extends Controller
 
                 $schedule->user_id = $user->id;
                 $schedule->branch_id = $user->branch_id;
-                $schedule->start = Carbon::parse($starts[$counter].' '.$sps[$counter])->format('H:i:s');
-                $schedule->end = Carbon::parse($ends[$counter].' '.$eps[$counter])->format('H:i:s');
+                $schedule->start = Carbon::parse($starts[$counter])->format('H:i:s');
+                $schedule->end = Carbon::parse($ends[$counter])->format('H:i:s');
                 $schedule->start_branch = $s_branches[$counter];
                 $schedule->end_branch = $e_branches[$counter];
                 $schedule->date = $dates[$i];
@@ -192,7 +190,7 @@ class ScheduleController extends Controller
     {
         $d = Carbon::parse($date);
         $d = $this->findSun($d);
-        $url = '/scheduler?date='.$d->copy()->format('d-m-Y').'&branch='.$branch;
+        $url = '/scheduler?date='.$d->copy()->format('d-m-Y').'&branch='.$branch.'#'.$id;
         $noSchedule = new NoSchedule;
         $noSchedule->date = $date;
         $noSchedule->user_id = $id;
@@ -209,7 +207,7 @@ class ScheduleController extends Controller
 
         $d = Carbon::parse($date);
         $d = $this->findSun($d);
-        $url = '/scheduler?date='.$d->copy()->format('d-m-Y').'&branch='.$branch;
+        $url = '/scheduler?date='.$d->copy()->format('d-m-Y').'&branch='.$branch.'#'.$id;
 
         return redirect($url);
     }
