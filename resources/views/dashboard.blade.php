@@ -132,43 +132,30 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
-                                            <div class="col-sm-6">
-                                                @if(count($logs[$loop->index]) == 0)
-                                                    <div class="row">
-                                                        <hr>
-                                                        No records yet
-                                                        <hr>
-                                                    </div>
-                                                @else
-                                                    @foreach($logs[$loop->index] as $log)
-                                                        <div class="row">
-                                                            <div class="col-sm-6 text-center">
-                                                                <strong>{{date("g:i A", strtotime($log->start))}}</strong>
-                                                            </div>
-                                                            <div class="col-sm-6 text-center">
-                                                                @if($log->end == null)
-                                                                    Logged in
-                                                                @else
-                                                                <strong>{{date("g:i A", strtotime($log->end))}}</strong>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        @else
-                                            <div class="col-sm-6">
+                                        <div class="col-sm-6">
+                                            @if(count($logs[$loop->index]) == 0)
                                                 <div class="row">
-                                                    @if ($schedule == null)
-                                                        <div class="col-12 text-center">No Schedule for this day</div>
-                                                    @else
-                                                        <div class="col-6 text-center">{{$schedule->startingBranch->name}}</div>
-                                                        <div class="col-6 text-center">{{$schedule->endingBranch->name}}</div>
-                                                    @endif
+                                                    <hr>
+                                                    No records yet
+                                                    <hr>
                                                 </div>
-                                            </div>
-                                        @endif
+                                            @else
+                                                @foreach($logs[$loop->index] as $log)
+                                                    <div class="row">
+                                                        <div class="col-sm-6 text-center">
+                                                            <strong>{{date("g:i A", strtotime($log->start))}}</strong>
+                                                        </div>
+                                                        <div class="col-sm-6 text-center">
+                                                            @if($log->end == null)
+                                                                Logged in
+                                                            @else
+                                                            <strong>{{date("g:i A", strtotime($log->end))}}</strong>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6"><hr></div>

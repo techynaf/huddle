@@ -14,6 +14,7 @@
                                 <option value="all">All</option>
                             @else
                                 <option value="{{$branches[0]->id}}">{{$branches[0]->name}}</option>
+                                <option value="all">All</option>
                             @endif
                             @foreach($filters as $filter)
                                 <option value="{{$filter->id}}">{{$filter->name}}</option>

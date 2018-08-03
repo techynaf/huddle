@@ -27,7 +27,7 @@
                                                         <input type="radio" name="type" id="option3" autocomplete="off" value="3"> Annual Leave
                                                     </label>
                                                     <label class="btn btn-success">
-                                                        <input type="radio" name="type" id="option3" autocomplete="off" value="4"> Govenment Leave
+                                                        <input type="radio" name="type" id="option3" autocomplete="off" value="4"> Government Leave
                                                     </label>
                                                   </div>
                                             </div>
