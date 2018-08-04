@@ -20,7 +20,7 @@
 <label>Exit Time</label>
 <div class="row">
     <div class="col-12">
-        <input type="time" name="end[]" class="form-control input-sm" value="{{$schedule->endß}}">
+        <input type="time" name="end[]" class="form-control input-sm" value="{{$schedule->end}}">
     </div>
 </div>
 
