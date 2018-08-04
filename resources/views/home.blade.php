@@ -35,20 +35,46 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card-box">
-                            <div class="row">
-                                <div class="col-1"></div>
-                                <div class="col-3">Name</div>
-                                <div class="col-1">Logged In</div>
-                                @foreach($days as $day)
-                                    <div class="col-1">{{$day}}</div>
-                                @endforeach
-                            </div>
-                            <hr>
-                            @foreach($users as $user)
-                                @if($user->branch_id == $branch->id)
-                                    @include('templates.user-card')
-                                @endif
-                            @endforeach
+                            <table class="table text-center">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Logged In</th>
+                                        <th>Sunday</th>
+                                        <th>Monday</th>
+                                        <th>Tuesday</th>
+                                        <th>Wednesday</th>
+                                        <th>Thursday</th>
+                                        <th>Friday</th>
+                                        <th>Saturday</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($users as $user)
+                                        @if($user->branch_id == $branch->id)
+                                            <tr>
+                                                <td>{{$user->name}}</td>
+                                                <td>
+                                                    @if($user->logged_in)
+                                                        <i class="fas fa-check 2x"></i>
+                                                    @else
+                                                        <i class="fas fa-times 2x"></i>
+                                                    @endif
+                                                </td>
+                                                @foreach($schedules[$loop->index] as $schedule)
+                                                    @if($schedule == null)
+                                                        <td>OFF</td>
+                                                    @else
+                                                        <td>
+                                                            {{date("g:i A", strtotime($schedule->start)).'-'.date("g:i A", strtotime($schedule->end))}}
+                                                        </td>
+                                                    @endif
+                                                @endforeach
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -67,23 +93,49 @@
                             </div>
                         </div>
                     @endif
-                    <div class="row text-center">
+                    <div class="row">
                         <div class="col-12">
                             <div class="card-box">
-                                <div class="row">
-                                    <div class="col-1"></div>
-                                    <div class="col-3">Name</div>
-                                    <div class="col-1">Logged In</div>
-                                    @foreach($days as $day)
-                                        <div class="col-1">{{$day}}</div>
-                                    @endforeach
-                                </div>
-                                <hr>
-                                @foreach($users as $user)
-                                    @if($user->branch_id == $branch->id)
-                                        @include('templates.user-card')
-                                    @endif
-                                @endforeach
+                                <table class="table text-center">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Logged In</th>
+                                            <th>Sunday</th>
+                                            <th>Monday</th>
+                                            <th>Tuesday</th>
+                                            <th>Wednesday</th>
+                                            <th>Thursday</th>
+                                            <th>Friday</th>
+                                            <th>Saturday</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($users as $user)
+                                            @if($user->branch_id == $branch->id)
+                                                <tr>
+                                                    <td>{{$user->name}}</td>
+                                                    <td>
+                                                        @if($user->logged_in)
+                                                            <i class="fas fa-check 2x"></i>
+                                                        @else
+                                                            <i class="fas fa-times 2x"></i>
+                                                        @endif
+                                                    </td>
+                                                    @foreach($schedules[$loop->index] as $schedule)
+                                                        @if($schedule == null)
+                                                            <td>OFF</td>
+                                                        @else
+                                                            <td>
+                                                                {{date("g:i A", strtotime($schedule->start)).'-'.date("g:i A", strtotime($schedule->end))}}
+                                                            </td>
+                                                        @endif
+                                                    @endforeach
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
