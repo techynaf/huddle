@@ -153,6 +153,8 @@ class AdminController extends Controller
                     }
                 }
 
+                $user->pin = $pin;
+                $user->save();
                 $user->roles()->detach($user->roles->first()->id);
                 $user->roles()->attach($request->role);
 

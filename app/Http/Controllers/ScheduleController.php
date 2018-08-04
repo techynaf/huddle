@@ -117,8 +117,6 @@ class ScheduleController extends Controller
             if ($day == $day1 || $day == $day2) {
                 return 'day-off';
             }
-        } elseif ($day == 'Friday' || $day == 'Saturday') {
-            return 'day-off';
         }
         
         if (Leave::where('user_id', $user->id)->where('start', '<=', $date)->where('end', '>=', $date)->where('is_approved', 1)->first() != null) {//checking if has approved leave
