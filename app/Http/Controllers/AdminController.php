@@ -27,12 +27,10 @@ class AdminController extends Controller
 
 
         $now = $this->findSun(null);
-
-        $month_start = $now->copy()->format('Y-m');
-        $month_start = Carbon::parse($month_start.'-1');
-        $month_end = $month_start->copy()->addMonth()->subDay();
-        $logs = Log::where('user_id', $user->id)->where('date', '>=', $month_start)->
-        where('date', '<=', $month_end)->get();
+        $start = $now->copy()->format('Y-m-d');
+        $end = $now->addDays(6)->format('Y-m-d');
+        $logs = Log::where('user_id', $user->id)->where('date', '>=', $start)->
+        where('date', '<=', $end)->get();
 
         $minutes = 0;
         $hours = 0;
@@ -49,8 +47,8 @@ class AdminController extends Controller
         $minutes = $minutes % 60;
         $lates = 0;
 
-        $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $month_start)->
-        where('date', '<=', $month_end)->get();
+        $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $start)->
+        where('date', '<=', $end)->get();
 
         foreach ($schedules as $schedule) {
             $log = Log::where('user_id', $user->id)->where('date', $schedule->date)->first();
@@ -59,7 +57,7 @@ class AdminController extends Controller
                 $scheduled = Carbon::parse($schedule->start);
                 $actual = Carbon::parse($log->start);
 
-                if ($actual->diffInMinutes($scheduled) >= 10) { //checks if the person is late or not, late factor is 10 mins
+                if ($actual->diffInMinutes($scheduled) >= 1) { //checks if the person is late or not, late factor is 10 mins
                     $lates++;
                 }
             }

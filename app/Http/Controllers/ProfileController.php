@@ -30,11 +30,11 @@ class ProfileController extends Controller
             $now = $now->copy()->subDay();
         }
 
-        $month_start = $now->copy()->format('Y-m');
-        $month_start = Carbon::parse($month_start.'-1');
-        $month_end = $month_start->copy()->addMonth()->subDay();
-        $logs = Log::where('user_id', $user->id)->where('date', '>=', $month_start)->
-        where('date', '<=', $month_end)->get();
+        $now = $this->findSun(null);
+        $start = $now->copy()->format('Y-m-d');
+        $end = $now->addDays(6)->format('Y-m-d');
+        $logs = Log::where('user_id', $user->id)->where('date', '>=', $start)->
+        where('date', '<=', $end)->get();
 
         $minutes = 0;
         $hours = 0;
@@ -51,8 +51,8 @@ class ProfileController extends Controller
         $minutes = $minutes % 60;
         $lates = 0;
 
-        $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $month_start)->
-        where('date', '<=', $month_end)->get();
+        $schedules = Schedule::where('user_id', $user->id)->where('date', '>=', $start)->
+        where('date', '<=', $end)->get();
 
         foreach ($schedules as $schedule) {
             $log = Log::where('user_id', $user->id)->where('date', $schedule->date)->first();
