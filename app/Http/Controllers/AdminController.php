@@ -27,8 +27,9 @@ class AdminController extends Controller
 
 
         $now = $this->findSun(null);
-        $start = $now->copy()->format('Y-m-d');
-        $end = $now->addDays(6)->format('Y-m-d');
+
+        $start = $this->findSun(null)->format('Y-m-d');
+        $end = $this->findSun(null)->addDays(6)->format('Y-m-d');
         $logs = Log::where('user_id', $user->id)->where('date', '>=', $start)->
         where('date', '<=', $end)->get();
 
@@ -57,7 +58,7 @@ class AdminController extends Controller
                 $scheduled = Carbon::parse($schedule->start);
                 $actual = Carbon::parse($log->start);
 
-                if ($actual->diffInMinutes($scheduled) >= 1) { //checks if the person is late or not, late factor is 10 mins
+                if ($actual->diffInMinutes($scheduled) >= 10) { //checks if the person is late or not, late factor is 10 mins
                     $lates++;
                 }
             }

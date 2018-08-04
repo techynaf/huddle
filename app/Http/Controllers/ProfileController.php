@@ -30,9 +30,8 @@ class ProfileController extends Controller
             $now = $now->copy()->subDay();
         }
 
-        $now = $this->findSun(null);
-        $start = $now->copy()->format('Y-m-d');
-        $end = $now->addDays(6)->format('Y-m-d');
+        $start = $this->findSun(null)->format('Y-m-d');
+        $end = $this->findSun(null)->addDays(6)->format('Y-m-d');
         $logs = Log::where('user_id', $user->id)->where('date', '>=', $start)->
         where('date', '<=', $end)->get();
 
