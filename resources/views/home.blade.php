@@ -53,7 +53,7 @@
                                     @foreach($users as $user)
                                         @if($user->branch_id == $branch->id)
                                             <tr>
-                                                <td>{{$user->name}}</td>
+                                                <td><a href="/view/employee/{{$user->id}}">{{$user->name}}</a></td>
                                                 <td>
                                                     @if($user->logged_in)
                                                         <i class="fas fa-check 2x"></i>
@@ -114,7 +114,7 @@
                                         @foreach($users as $user)
                                             @if($user->branch_id == $branch->id)
                                                 <tr>
-                                                    <td>{{$user->name}}</td>
+                                                    <td><a href="/view/employee/{{$user->id}}">{{$user->name}}</a></td>
                                                     <td>
                                                         @if($user->logged_in)
                                                             <i class="fas fa-check 2x"></i>
