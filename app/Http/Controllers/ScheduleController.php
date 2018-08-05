@@ -134,7 +134,14 @@ class ScheduleController extends Controller
             $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
             
             if ($schedule == null) {
-                return 'false';
+                $date = Carbon::parse($date)->addDays(-7)->format('Y-m-d');
+                $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
+
+                if ($schedule == null) {
+                    return 'false';
+                } else {
+                    return $schedule;
+                }
             } else {
                 return $schedule;
             }

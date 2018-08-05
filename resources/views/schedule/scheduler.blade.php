@@ -115,12 +115,21 @@
                                                 <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger ">DISABLE</a>
                                             </div>
                                         @else
-                                            <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
-                                            @include('templates.schedule-form')
-                                            <br>
-                                            <div class="col text-center">
-                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger ">DISABLE</a>
-                                            </div>
+                                            @if ($schedule->date != $days[$loop->index][1])
+                                                <input type="hidden" name="s_id[]" value="0">
+                                                @include('templates.schedule-form')
+                                                <br>
+                                                <div class="col text-center">
+                                                    <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger ">DISABLE</a>
+                                                </div>
+                                            @else
+                                                <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
+                                                @include('templates.schedule-form')
+                                                <br>
+                                                <div class="col text-center">
+                                                    <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger ">DISABLE</a>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                 @endforeach
