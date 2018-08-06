@@ -72,14 +72,16 @@ class HomeController extends Controller
     {
         $notification = $this->checkNotifications();
         $users = null;
+        $filters = Branch::all();
 
         if (count($branches) == 1) {
             $users = User::where('branch_id', $branches[0]->id)->get();
+            $filters = Branch::where('id', '!=', $branches[0]->id)->get();
         } else {
             $users = User::all();
         }
 
-        $filters = Branch::all();
+        
         $now = new Carbon;
         $dates = array();
 
