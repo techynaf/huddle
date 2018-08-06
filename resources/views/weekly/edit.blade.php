@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-12 card-box">
                         <hr>
-                        <h2 class="page-title text-center">There are no weekly day offs, please <a href="/create/weekly">select new day offs</a>.</h2>
+                        <h2 class="page-title text-center">There are no pending weekly day offs, please <a href="/create/weekly">select new day offs</a>.</h2>
                         <hr>
                     </div>
                 </div>
