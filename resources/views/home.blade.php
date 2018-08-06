@@ -127,7 +127,13 @@
                                                             <td>OFF</td>
                                                         @else
                                                             <td>
-                                                                {{date("g:i A", strtotime($schedule->start)).'-'.date("g:i A", strtotime($schedule->end))}}
+                                                                <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
+                                                                    {{date("g:i A", strtotime($schedule->start))}}
+                                                                </div>
+                                                                
+                                                                <div class="text-center {{strtolower($schedule->endingBranch->name)}}">
+                                                                    {{date("g:i A", strtotime($schedule->end))}}   
+                                                                </div>
                                                             </td>
                                                         @endif
                                                     @endforeach
