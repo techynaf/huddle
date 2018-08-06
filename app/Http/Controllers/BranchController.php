@@ -73,7 +73,7 @@ class BranchController extends Controller
 
     public function create ()
     {
-        if ($this->barista() || $this->manager() || $this->dm()) {
+        if ($this->barista() || $this->manager()) {
             return redirect('/')->with('error', 'You are not authorized to access this page');
         }
 
@@ -98,7 +98,7 @@ class BranchController extends Controller
 
     public function delete (Request $request)
     {
-        if ($this->barista() || $this->manager() || $this->dm()) {
+        if ($this->barista() || $this->manager()) {
             return redirect('/')->with('error', 'You are not authorized to access this page');
         }
 
