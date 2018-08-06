@@ -16,7 +16,9 @@
                                 <select name="date" class="form-control">
                                     <option value="{{date("d M", strtotime($days[0][1]))}}">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
                                     @foreach($dates as $date)
-                                        <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
+                                        @if($days[0][1] != date("Y-m-d", strtotime($date[0])))
+                                            <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>

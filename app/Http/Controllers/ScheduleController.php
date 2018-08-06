@@ -27,18 +27,6 @@ class ScheduleController extends Controller
         $times = array();
         $b = null;
 
-        for ($i = 8; $i <= 12; $i++) {
-            foreach ($intervals as $interval) {
-                array_push($times, $i.$interval);
-            }
-        }
-
-        for ($i = 1; $i <= 11; $i++) {
-            foreach ($intervals as $interval) {
-                array_push($times, $i.$interval);
-            }
-        }
-
         if ($this->barista() || $this->hr()) {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
         }
@@ -100,8 +88,7 @@ class ScheduleController extends Controller
 
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
         with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today)->
-        with('notification', $notification)->with('filters', $filters)->with('times', $times)->
-        with('b', $b);
+        with('notification', $notification)->with('filters', $filters)->with('b', $b);
     }
 
     public function dayOffChecker ($user, $date)
