@@ -16,6 +16,8 @@
                     <div class="col">Name</div>
                     <div class="col">Status</div>
                     <div class="col">Religion</div>
+                    <div class="col">Scheduled</div>
+                    <div class="col">Actual</div>
                     <div class="col">Late Type</div>
                     <div class="col">Date</div>
                     <div class="col">Duration</div>
@@ -31,6 +33,8 @@
                     <div class="col">{{$late->user->name}}</div>
                     <div class="col">{{$late->user->status}}</div>
                     <div class="col">{{$late->user->religion}}</div>
+                    <div class="col">{{date("g:i A", strtotime($late->log->schedule->start))}}</div>
+                    <div class="col">{{date("g:i A", strtotime($late->log->start))}}</div>
                     <div class="col">{{$late->type}}</div>
                     <div class="col">{{$late->date}}</div>
                     <div class="col">{{$duration[$x++]}}</div>
