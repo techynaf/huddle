@@ -54,9 +54,8 @@
 </li>
 
 <li class="has-submenu">
-    <a href=""><i class="fas fa-newspaper"></i> <span> Reports </span> </a>
+    <a href="/hour"><i class="fas fa-newspaper"></i> <span> Reports </span> </a>
     <ul class="submenu">
-        <li><a href="/hour">Hours Report</a></li>
         <li><a href="/late">Late Report</a></li>
     </ul>
 </li>
