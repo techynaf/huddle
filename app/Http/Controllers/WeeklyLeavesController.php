@@ -16,6 +16,11 @@ class WeeklyLeavesController extends Controller
     public function create ()
     {
         $notification = $this->checkNotifications();
+
+        if ($this->superAdmin() || $this->dm() || $this->hr()) {
+            return redirect('/')->with('error', 'Super admins, HR and district managers cannot apply for weekly leaves');
+        }
+
         $now = new Carbon;
         $start = $this->findSun($now->addDays(7))->format('Y-m-d');
         $end = $this->findSun($now->addDays(7))->addDays(-1)->format('Y-m-d');
@@ -32,6 +37,8 @@ class WeeklyLeavesController extends Controller
             'start' => 'required',
             'end' => 'required',
         ]);
+
+        $start = Carbon::parse($request->start);
 
         $leaves = WeeklyLeave::where('user_id', $id)->where('approved', 0)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
 

@@ -40,10 +40,6 @@ class LeavesController extends Controller
             'end' => 'required'
         ]);
 
-        if ($request->type == 1) {
-            return $this->storeWeekly($request, $id);
-        }
-
         $leave = new Leave;
         $leave->user_id = $id;
         $leave->branch_id = auth()->user()->branch_id;
@@ -55,43 +51,6 @@ class LeavesController extends Controller
         $leave->save();
 
         return redirect('/dashboard')->with('success', 'Your request has been successfully added, waiting for approval.');
-    }
-
-    public function storeWeekly (Request $request, $id)
-    {
-        $start = $this->findSun(Carbon::parse($request->start));
-        $end = $this->findSun(Carbon::parse($request->end)->addDays(6));
-
-        if ($request->flow == 'true') {
-            $s = Carbon::parse($request->s);
-            $e = Carbon::parse($request->e);
-            $start = $this->findSun($s);
-            $end = $this->findSat($e);
-        }
-        
-        $leaves = WeeklyLeave::where('user_id', $id)->where('approved', 0)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
-
-        if (count($leaves) != 0) {
-            return redirect('/')->with('error', 'Weekly Leaves already exists for this date range, please use ‘Edit Weekly Day Offs’ to change them');
-        }
-
-        $leaves = WeeklyLeave::where('user_id', $id)->where('approved', 1)->where('end', '>', $start->copy()->format('Y-m-d'))->get();
-
-        if (count($leaves) != 0) {
-            return redirect('/')->with('error', 'Weekly Leaves already exists for this date range, please use ‘Edit Weekly Day Offs’ to change them');
-        }
-
-        $weekly = new WeeklyLeave;
-        $weekly->user_id = $id;
-        $weekly->start = $start->format('Y-m-d');
-        $weekly->end = $end->format('Y-m-d');
-        $weekly->day_1 = Carbon::parse($request->start)->format('l');
-        $weekly->day_2 = Carbon::parse($request->end)->format('l');
-        $weekly->branch_id = auth()->user()->branch_id;
-        $weekly->approved = 0;
-        $weekly->save();
-
-        return redirect('/dashboard')->with('success', 'Weekly day off successfully added, waiting for approval');
     }
 
     public function edit (Request $request, $id)
