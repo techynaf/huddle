@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 0,
             'employee_id' => 'something unique',
-            'religion' => 'really?',
+            'religion' => 'Not Applicable',
         ]);
 
         DB::table('users')->insert([
@@ -31,7 +31,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 0,
             'employee_id' => 'something unique 2',
-            'religion' => 'really?',
+            'religion' => 'Not Applicable',
         ]);
 
         DB::table('users')->insert([
@@ -41,7 +41,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 0,
             'employee_id' => 'something unique 3',
-            'religion' => 'really?',
+            'religion' => 'Not Applicable',
         ]);
 
         $pin = 1000;
@@ -144,7 +144,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 1,
             'employee_id' => 1107,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -154,7 +154,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 1,
             'employee_id' => 3084,
-            'religion' => 'Islam',
+            'religion' => 'Hinduism',
         ]);
 
         DB::table('users')->insert([
@@ -169,7 +169,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Ayesha Akter Asha',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 1,
@@ -189,12 +189,12 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Bikash Paul',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 1,
             'employee_id' => 3025,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -224,7 +224,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 1,
             'employee_id' => 3082,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         //AISD
@@ -255,7 +255,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 2,
             'employee_id' => 1128,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -295,7 +295,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 2,
             'employee_id' => 3050,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -305,7 +305,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 2,
             'employee_id' => 3051,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         //Lakeshore
@@ -336,7 +336,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 3,
             'employee_id' => 3009,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -351,7 +351,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Newaz Hossain Babu',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 3,
@@ -371,7 +371,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Md. Nazim Uddin (Sagor)',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 3,
@@ -381,7 +381,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Md. Shakil Mahmud',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 3,
@@ -396,7 +396,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 3,
             'employee_id' => 3078,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         //Apollo
@@ -407,7 +407,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 4,
             'employee_id' => 1066,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -447,7 +447,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 4,
             'employee_id' => 1085,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -457,12 +457,12 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 4,
             'employee_id' => 1147,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
             'name' => 'Md. Zalalur Rahaman (Noyon)',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 4,
@@ -477,7 +477,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 4,
             'employee_id' => 3001,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -492,7 +492,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Saed Farhad Faysal ',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 4,
@@ -512,7 +512,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Asif Hossain Khan',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 4,
@@ -528,7 +528,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 5,
             'employee_id' => 1052,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -548,7 +548,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 5,
             'employee_id' => 1059,
-            'religion' => 'Islam',
+            'religion' => 'Buddhism',
         ]);
 
         DB::table('users')->insert([
@@ -558,7 +558,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 5,
             'employee_id' => 1116,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -568,7 +568,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 5,
             'employee_id' => 1142,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -598,7 +598,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 5,
             'employee_id' => 3033,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -608,12 +608,12 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 5,
             'employee_id' => 3077,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
             'name' => 'Md. Tofayel Hossen',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 5,
@@ -659,7 +659,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 6,
             'employee_id' => 1083,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -669,7 +669,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 6,
             'employee_id' => 1135,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -694,12 +694,12 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Protyasha Ghosh',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 6,
             'employee_id' => 3066,
-            'religion' => 'Islam',
+            'religion' => 'Hinduism',
         ]);
 
         DB::table('users')->insert([
@@ -714,7 +714,7 @@ class UserTableSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Md. Raisul Islam ',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 6,
@@ -729,12 +729,12 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 6,
             'employee_id' => 3015,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
             'name' => 'Sabrina Anjum',
-            'status' => 'Permanent',
+            'status' => 'Probation',
             'pin' => $pin++,
             'password' => bcrypt('bangladesh'),
             'branch_id' => 6,
@@ -760,7 +760,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 7,
             'employee_id' => 1011,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -770,7 +770,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 7,
             'employee_id' => 1124,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -780,7 +780,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 7,
             'employee_id' => 1144,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -820,7 +820,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 7,
             'employee_id' => 3020,
-            'religion' => 'Islam',
+            'religion' => 'Buddism',
         ]);
 
         DB::table('users')->insert([
@@ -840,7 +840,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 7,
             'employee_id' => 3030,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
@@ -871,7 +871,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('bangladesh'),
             'branch_id' => 8,
             'employee_id' => 1060,
-            'religion' => 'Islam',
+            'religion' => 'Christianity',
         ]);
 
         DB::table('users')->insert([
