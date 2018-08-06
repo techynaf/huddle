@@ -75,7 +75,9 @@
                                                 <option value="">{{$branch->name}}</option>
                                             @endif
                                             @foreach($branches as $b)
-                                                <option value="{{$b->id}}">{{$b->name}}</option>
+                                                @if($b->id != $user->branch_id)
+                                                    <option value="{{$b->id}}">{{$b->name}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
