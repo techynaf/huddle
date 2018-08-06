@@ -56,9 +56,11 @@
                                 <div class="col-3"></div>
                             </div>
                             <hr>
-                            <div class="row text-center">
-                                <a href="/edit/profile/{{$user->id}}">Edit Profile</a>
-                            </div>
+                            @if(auth()->user()->roles->first()->name == 'HR' || auth()->user()->roles->first()->name == 'super-admin')
+                                <div class="row text-center">
+                                    <a href="/edit/profile/{{$user->id}}">Edit Profile</a>
+                                </div>
+                            @endif
                         </div>
 
                 </div>
