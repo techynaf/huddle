@@ -78,11 +78,7 @@
                             @else
                             <div class="row text-center">
                                 <div class="col-sm-6 text-center"><h4>Scheduled</h4></div>
-                                @if (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'super-admin')
-                                    <div class="col-sm-6 text-center"><h4>Actual</h4></div>
-                                @else
-                                    <div class="col-sm-6 text-center"><h4>Branch</h4></div>
-                                @endif
+                                <div class="col-sm-6 text-center"><h4>Actual</h4></div>
                             </div>
                             <div class="row">
                                     <div class="col-sm-6"><hr></div>
@@ -96,8 +92,8 @@
                                     <div class="col-3 text-center">Login Time</div>
                                     <div class="col-3 text-center">Logout Time</div>
                                 @else
-                                    <div class="col-3 text-center">Starting Branch</div>
-                                    <div class="col-3 text-center">Ending Branch</div>
+                                    <div class="col-3 text-center">Punch in time</div>
+                                    <div class="col-3 text-center">Punch out time</div>
                                 @endif
                             </div>
                             <div class="row">
