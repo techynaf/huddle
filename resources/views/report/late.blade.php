@@ -7,7 +7,7 @@
 
     @foreach($branches as $branch)
         <div class="row">
-            <h4>{{$branch->name}}</h4>
+            <u><h3>{{$branch->name}}</h3></u>
         </div>
 
         <div class="card-box">
