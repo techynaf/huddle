@@ -1,7 +1,7 @@
 <label for="start[]" class="sm">Entry Time</label>
 <div class="row">
     <div class="col-12">
-        <input type="time" name="start[]" class="form-control input-sm" value="{{$schedule->start}}">
+        <input type="time" name="start[]" class="form-control input-sm" value="{{$schedule->start}}" required>
     </div>
 </div>
 
@@ -20,7 +20,7 @@
 <label>Exit Time</label>
 <div class="row">
     <div class="col-12">
-        <input type="time" name="end[]" class="form-control input-sm" value="{{$schedule->end}}">
+        <input type="time" name="end[]" class="form-control input-sm" value="{{$schedule->end}}" required>
     </div>
 </div>
 

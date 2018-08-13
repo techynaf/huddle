@@ -150,10 +150,10 @@ class ScheduleController extends Controller
         $e_branches = $request->exit_b;
         $counter = 0;
 
-        for ($i = 0; $i < sizeof($schedule_ids); $i++) {
-            if ($schedule_ids[$i] == 'off') {
+        //dd(Carbon::parse($starts[0]), $ends, $schedule_ids);
 
-            } else {
+        for ($i = 0; $i < sizeof($schedule_ids); $i++) {
+            if ($schedule_ids[$i] != 'off') {
                 $schedule = null;
 
                 if ($schedule_ids[$i] == '0') {

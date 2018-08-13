@@ -1,7 +1,7 @@
 <label for="start[]" class="">Entry Time</label>
 <div class="row">
     <div class="col-12">
-        <input type="time" name="start[]" class="form-control input-sm">
+        <input type="time" name="start[]" class="form-control input-sm" required>
     </div>
 </div>
 
@@ -20,7 +20,7 @@
 <label class="">Exit Time</label>
 <div class="row">
     <div class="col-12">
-        <input type="time" name="end[]" class="form-control input-sm">
+        <input type="time" name="end[]" class="form-control input-sm" required>
     </div>
 </div>
 
