@@ -18,7 +18,8 @@
                             <div class="col-11">
                                 @foreach($lates as $late)
                                     @if($late->date == $date)
-                                        <form action="/late/{{$late->id}}" method="POST">
+                                        <form action="/lates/{{$late->id}}" method="POST">
+                                            @csrf
                                             <hr>
                                             <div class="row">
                                                 <div class="col-2 border-right">

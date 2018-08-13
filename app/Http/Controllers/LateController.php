@@ -56,6 +56,7 @@ class LateController extends Controller
         $late->type = $request->type;
         $late->comment = $request->comment;
         $late->store;
+        $late->save();
 
         return redirect('lates');
     }
