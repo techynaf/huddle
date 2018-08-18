@@ -16,6 +16,11 @@ class BranchController extends Controller
         }
 
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $branches = Branch::all();
         $unassigned = User::where('branch_id', 0)->get();
         $managers  = array();
@@ -79,6 +84,10 @@ class BranchController extends Controller
 
         $notification = $this->checkNotifications();
 
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         return view('branch/create')->with('notification', $notification);
     }
 
@@ -103,6 +112,11 @@ class BranchController extends Controller
         }
 
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $branches = Branch::all();
 
         return view('branch/delete')->with('branches', $branches)->with('notification', $notification);
@@ -134,6 +148,11 @@ class BranchController extends Controller
         }
 
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+        
         $branches = Branch::all();
         $roles = Role::where('name', '!=', 'super-admin')->where('name', '!=', 'HR')->where('name', '!=', 'district-manager')->get();
         $users = User::where('branch_id', $id)->get();

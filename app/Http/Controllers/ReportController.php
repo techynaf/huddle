@@ -24,6 +24,11 @@ class ReportController extends Controller
         }
 
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $url = '/hour';
 
         if ($request->month == null) {
@@ -115,6 +120,11 @@ class ReportController extends Controller
         }
 
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+        
         $url = '/late';
 
         if ($request->month == null) {

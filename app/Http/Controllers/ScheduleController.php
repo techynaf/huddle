@@ -23,6 +23,11 @@ class ScheduleController extends Controller
     public function scheduler (Request $request)
     {
         $notification = $this->checkNotifications();
+        
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $intervals = array(':00', ':15', ':30', ':45');
         $times = array();
         $b = null;

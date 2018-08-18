@@ -17,6 +17,11 @@ class AdminController extends Controller
     public function show (Request $request, $id)
     {
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+        
         $now = new Carbon;
         $user = User::where('id', $id)->first();
 
@@ -134,7 +139,7 @@ class AdminController extends Controller
                 if (($barista && $userB) || ($manager && $userM)) {
                     $pin = $user->pin;
                 } elseif ($userB && $manager) {
-                    $manager = new Manager;
+                    $manager = new Managers;
                     while (true) {
                         $pin = rand(100000, 999999);
                         $check = User::where('pin', $pin)->get();
@@ -148,7 +153,7 @@ class AdminController extends Controller
                     $manager->user_id = $user->id;
                     $manager->save();
                 } elseif ($userM && $barista) {
-                    $manager = Manager::where('user_id', $user->id)->first();
+                    $manager = Managers::where('user_id', $user->id)->first();
                     $manager->delete();
                     $pin = $user->pin;
                 }

@@ -38,6 +38,14 @@
                                             <td>{{$user->religion}}</td>
                                         </tr>
                                     @endif
+
+                                    @if ($user->manager != null)
+                                        <tr>
+                                            <td>Manager Pin</td>
+                                            <td>{{$user->manager->pin}}</td>
+                                        </tr>
+                                    @endif
+
                                     @if(auth()->user()->roles->first()->name == 'HR' || auth()->user()->roles->first()->name == 'super-admin')
                                         <tr>
                                             <td>QR Code</td>

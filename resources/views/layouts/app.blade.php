@@ -47,7 +47,6 @@
         }
     </script>
 </head>
-
 @if (Request::is('/'))
     <body onload="JavaScript:AutoRefresh(60000);">
         @guest

@@ -25,6 +25,11 @@ class LeavesController extends Controller
         }
         
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $types = LeaveTypes::where('id', '!=', 1)->get();
         $id = auth()->user()->id;
 
@@ -56,6 +61,11 @@ class LeavesController extends Controller
     public function edit (Request $request, $id)
     {
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $leave = Leave::where('id', $id)->first();
         $types = LeaveTypes::where('id', '!=', 1)->get();
 
@@ -102,6 +112,11 @@ class LeavesController extends Controller
         }
 
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $leaves = array();
 
         if ($this->manager()) {
@@ -166,12 +181,21 @@ class LeavesController extends Controller
     {
         $notification = $this->checkNotifications();
 
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         return view('requests/type')->with('notification', $notification);
     }
 
     public function range (Request $request, $type)
     {
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+        
         $type = LeaveTypes::where('name', $type)->first();
         $type = $type->id;
 

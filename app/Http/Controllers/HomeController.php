@@ -71,6 +71,11 @@ class HomeController extends Controller
     public function homeView($branches)
     {
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+        
         $users = null;
         $filters = Branch::all();
 

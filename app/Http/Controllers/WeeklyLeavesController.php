@@ -17,6 +17,10 @@ class WeeklyLeavesController extends Controller
     {
         $notification = $this->checkNotifications();
 
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         if ($this->superAdmin() || $this->dm() || $this->hr()) {
             return redirect('/')->with('error', 'Super admins, HR and district managers cannot apply for weekly leaves');
         }
@@ -68,6 +72,11 @@ class WeeklyLeavesController extends Controller
     public function edit ()
     {
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $now = new Carbon;
 
         $leaves = WeeklyLeave::where('user_id', auth()->user()->id)->where('end', '>', $now->copy()->format('Y-m-d'))->
@@ -174,6 +183,11 @@ class WeeklyLeavesController extends Controller
     public function show ()
     {
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+        
         if ($this->barista() || $this->hr()) {
             return redirect('/')->with('error', 'You are not authorized to view this');
         }

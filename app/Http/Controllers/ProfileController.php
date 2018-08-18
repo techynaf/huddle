@@ -20,6 +20,11 @@ class ProfileController extends Controller
     public function index ()
     {
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         if(auth()->user() == null) {
             return redirect('/')->with('error', 'Please login');
         }
@@ -104,6 +109,11 @@ class ProfileController extends Controller
         }
        
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $branches = Branch::all();
         $rs = Role::all();
         $roles = array();
@@ -159,14 +169,14 @@ class ProfileController extends Controller
         if ($role->name == 'manager' || $role->name == 'assistant-manager') {
             while (true) {
                 $pin = rand(100000, 999999);
-                $check = Manager::where('pin', $pin)->get();
+                $check = Managers::where('pin', $pin)->get();
     
                 if (count($check) == 0) {
                     break;
                 }
             }
 
-            $manager = new Manager;
+            $manager = new Managers;
             $manager->user_id = $user->id;
             $manager->pin = $pin;
             $manager->save();
@@ -193,6 +203,12 @@ class ProfileController extends Controller
         if (auth()->user() == null) {
             return redirect ('/login');
         } elseif (auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager' || auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
+            if (auth()->user()->manager != null) {
+                if (auth()->user()->manager->logged_in == false) {
+                    return view ('profile/manager');
+                }
+            }
+
             return redirect ('/scheduler');
         } else {
             return redirect ('/');
@@ -206,6 +222,11 @@ class ProfileController extends Controller
         }
         
         $notification = $this->checkNotifications();
+
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $user = User::where('id', $id)->first();
         $branches = Branch::all();
         $rs = Role::all();
@@ -248,12 +269,12 @@ class ProfileController extends Controller
                 }
             }
 
-            $manager = new Manager;
+            $manager = new Managers;
             $manager->pin = $pin;
             $manager->user_id = $user->id;
             $manager->save();
         } elseif ($userM && $barista) {
-            $manager = Manager::where('user_id', $user->id)->first();
+            $manager = xs::where('user_id', $user->id)->first();
             $manager->delete();
         }
 

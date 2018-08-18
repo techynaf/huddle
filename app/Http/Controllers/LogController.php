@@ -17,6 +17,11 @@ class LogController extends Controller
         }
 
         $notification = $this->checkNotifications();
+        
+        if (count($notification) == 1) {
+            return view('profile/manager');
+        }
+
         $logs = array();
         $today = new Carbon;
         $last = null;
