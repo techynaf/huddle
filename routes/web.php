@@ -70,8 +70,8 @@ Route::post('/branch/destroy', 'BranchController@destroy')->middleware('auth');
 Route::get('/branch/details/{id}', 'BranchController@show')->middleware('auth');
 
 //Late Routes
-Route::get('/lates', 'LateController@showAll');
-Route::post('/lates/{id}', 'LateController@store');
+Route::get('/lates', 'LateController@showAll')->middleware('auth');
+Route::post('/lates/{id}', 'LateController@store')->middleware('auth');
 
 //Log Routes
 Route::get('/logs', 'LogController@show')->middleware('auth');

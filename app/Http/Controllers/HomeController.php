@@ -72,8 +72,10 @@ class HomeController extends Controller
     {
         $notification = $this->checkNotifications();
 
-        if (!is_array($notification)) {
-            return view('profile/manager');
+        if (auth()->user() != null) {
+            if (!is_array($notification)) {
+                return view('profile/manager');
+            }
         }
         
         $users = null;
