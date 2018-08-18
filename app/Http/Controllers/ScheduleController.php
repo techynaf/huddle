@@ -24,7 +24,7 @@ class ScheduleController extends Controller
     {
         $notification = $this->checkNotifications();
         
-        if (count($notification) == 1) {
+        if (!is_array($notification)) {
             return view('profile/manager');
         }
 
