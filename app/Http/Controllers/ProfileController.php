@@ -12,6 +12,7 @@ use App\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRole;
+use App\Manager;
 use QRCode;
 
 class ProfileController extends Controller
@@ -131,23 +132,12 @@ class ProfileController extends Controller
         $pin = 0;
         $role = Role::find($request->role);
 
-        if ($role->name == 'barista' || $role->name == 'shift-supervisor') {
-            while (true) {
-                $pin = rand(1000, 9999);
-                $check = User::where('pin', $pin)->get();
-    
-                if (count($check) == 0) {
-                    break;
-                }
-            }
-        } else {
-            while (true) {
-                $pin = rand(100000, 999999);
-                $check = User::where('pin', $pin)->get();
-    
-                if (count($check) == 0) {
-                    break;
-                }
+        while (true) {
+            $pin = rand(1000, 9999);
+            $check = User::where('pin', $pin)->get();
+
+            if (count($check) == 0) {
+                break;
             }
         }
 
@@ -165,6 +155,22 @@ class ProfileController extends Controller
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
         $qr = QRCode::text($pin);
         $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
+
+        if ($role->name == 'manager' || $role->name == 'assistant-manager') {
+            while (true) {
+                $pin = rand(100000, 999999);
+                $check = Manager::where('pin', $pin)->get();
+    
+                if (count($check) == 0) {
+                    break;
+                }
+            }
+
+            $manager = new Manager;
+            $manager->user_id = $user->id;
+            $manager->pin = $pin;
+            $manager->save();
+        }
 
         $url = '/view/employee/'.$user->id;
 
@@ -241,7 +247,23 @@ class ProfileController extends Controller
                     break;
                 }
             }
+
+            $manager = new Manager;
+            $manager->pin = $pin;
+            $manager->user_id = $user->id;
+
+            while (true) {
+                $pin = rand(1000, 9999);
+                $check = User::where('pin', $pin)->get();
+    
+                if (count($check) == 0) {
+                    break;
+                }
+            }
         } elseif ($userM && $barista) {
+            $manager = Manager::where('user_id', $user->id)->first();
+            $manager->delete();
+
             while (true) {
                 $pin = rand(1000, 9999);
                 $check = User::where('pin', $pin)->get();
