@@ -9,6 +9,7 @@ use App\Branch;
 use App\Schedule;
 use App\Leave;
 use App\Role;
+use App\Managers;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -133,6 +134,7 @@ class AdminController extends Controller
                 if (($barista && $userB) || ($manager && $userM)) {
                     $pin = $user->pin;
                 } elseif ($userB && $manager) {
+                    $manager = new Manager;
                     while (true) {
                         $pin = rand(100000, 999999);
                         $check = User::where('pin', $pin)->get();
@@ -141,18 +143,16 @@ class AdminController extends Controller
                             break;
                         }
                     }
+
+                    $manager->pin = $pin;
+                    $manager->user_id = $user->id;
+                    $manager->save();
                 } elseif ($userM && $barista) {
-                    while (true) {
-                        $pin = rand(1000, 9999);
-                        $check = User::where('pin', $pin)->get();
-            
-                        if (count($check) == 0) {
-                            break;
-                        }
-                    }
+                    $manager = Manager::where('user_id', $user->id)->first();
+                    $manager->delete();
+                    $pin = $user->pin;
                 }
 
-                $user->pin = $pin;
                 $user->save();
                 $user->roles()->detach($user->roles->first()->id);
                 $user->roles()->attach($request->role);

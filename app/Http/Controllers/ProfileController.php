@@ -12,7 +12,7 @@ use App\Branch;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRole;
-use App\Manager;
+use App\Managers;
 use QRCode;
 
 class ProfileController extends Controller
@@ -251,27 +251,10 @@ class ProfileController extends Controller
             $manager = new Manager;
             $manager->pin = $pin;
             $manager->user_id = $user->id;
-
-            while (true) {
-                $pin = rand(1000, 9999);
-                $check = User::where('pin', $pin)->get();
-    
-                if (count($check) == 0) {
-                    break;
-                }
-            }
+            $manager->save();
         } elseif ($userM && $barista) {
             $manager = Manager::where('user_id', $user->id)->first();
             $manager->delete();
-
-            while (true) {
-                $pin = rand(1000, 9999);
-                $check = User::where('pin', $pin)->get();
-    
-                if (count($check) == 0) {
-                    break;
-                }
-            }
         }
 
 
@@ -290,7 +273,6 @@ class ProfileController extends Controller
         $user->employee_id = $request->employee_id;
         $user->branch_id = $request->branch;
         $user->religion = $religion;
-        $user->pin = $pin;
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile updated! The pin and password for the profile is '.$pin.'.';

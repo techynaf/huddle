@@ -13,6 +13,7 @@ use App\NoSchedule;
 use App\Late;
 use App\ScheduleEdit;
 use App\LogUpdate;
+use App\Managers;
 
 class User extends Authenticatable
 {
@@ -88,6 +89,6 @@ class User extends Authenticatable
 
     public function manager ()
     {
-        return $this->hasOne('App\Manager');
+        return $this->hasOne('App\Managers');
     }
 }

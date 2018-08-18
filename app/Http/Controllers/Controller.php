@@ -11,7 +11,7 @@ use App\Leave;
 use App\WeeklyLeave;
 use App\Late;
 use App\Log;
-use App\Manager;
+use App\Managers;
 use App\LogUpdate;
 
 class Controller extends BaseController
