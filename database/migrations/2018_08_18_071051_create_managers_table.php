@@ -17,6 +17,7 @@ class CreateManagersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('pin');
+            $table->boolean('logged_in')->nullable();
             $table->timestamps();
         });
     }

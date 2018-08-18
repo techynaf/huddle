@@ -33,6 +33,8 @@ Route::get('/logger', 'ProfileController@logger')->middleware('auth');
 Route::get('/edit/profile/{id}', 'ProfileController@edit')->middleware('auth');
 Route::post('/edit/profile/{id}', 'ProfileController@update')->middleware('auth');
 
+//Manager Route
+Route::post('/manager-login', 'Controller@managerLogin')->middleware('auth');
 
 //Schedule Routes
 Route::get('/scheduler', 'ScheduleController@scheduler')->middleware('auth');

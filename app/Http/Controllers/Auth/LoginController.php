@@ -43,6 +43,10 @@ class LoginController extends Controller
 
     public function logout()
     {
+        if (auth()->user()->manager != null) {
+            return $this->managerLogout();
+        }
+
         auth()->logout();
 
         return redirect('/');

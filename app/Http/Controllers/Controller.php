@@ -11,11 +11,36 @@ use App\Leave;
 use App\WeeklyLeave;
 use App\Late;
 use App\Log;
+use App\Manager;
 use App\LogUpdate;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function managerLogin (Request $request)
+    {
+        $manager = auth()->user()->manager;
+
+        if ($manager->pin != $request->pin) {
+            return view('profile/manager')->with('error', 'Manager pin does not match with our records');
+        }
+
+        $manager->logged_in = true;
+        $manager->save();
+
+        return redirect('/scheduler');
+    }
+
+    public function managerLogout ()
+    {
+        $manager = auth()->user()->manager;
+        $manager->logged_in = false;
+        $manager->save();
+        auth()->logout();
+
+        return redirect('/');
+    }
 
     public function findSun ($date)
     {
@@ -55,6 +80,14 @@ class Controller extends BaseController
     {
         if (auth()->user() != null) {
             $notification = array();
+
+            if (auth()->user()->roles->first()->name == 'assistant-manager' || auth()->user()->roles->first()->name == 'manager') {
+                $manager = auth()->user()->manager;
+
+                if ($manager->logged_in == false) {
+                    return view ('profile/manager');
+                }
+            }
 
             if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
                 $leaves = Leave::where('is_approved', 0)->get();
