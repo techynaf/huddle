@@ -32,6 +32,7 @@ Route::get('/dashboard', 'ProfileController@index')->middleware('auth');
 Route::get('/logger', 'ProfileController@logger')->middleware('auth');
 Route::get('/edit/profile/{id}', 'ProfileController@edit')->middleware('auth');
 Route::post('/edit/profile/{id}', 'ProfileController@update')->middleware('auth');
+Route::get('/delete/profile/{id}', 'ProfileController@delete')->middleware('auth');
 
 //Manager Route
 Route::post('/manager-login', 'Controller@managerLogin')->middleware('auth');
@@ -80,3 +81,8 @@ Route::post('/logs/{id}', 'LogController@store')->middleware('auth');
 //Report Routes
 Route::get('/hour', 'ReportController@hours')->middleware('auth');
 Route::get('/late', 'ReportController@lateReport')->middleware('auth');
+
+//Test Routes
+Route::get('/test', function () {
+    return view('report/printable-hour');
+});

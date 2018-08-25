@@ -307,4 +307,14 @@ class ProfileController extends Controller
 
         return redirect($url)->with('success', $message);
     }
+
+    public function delete (Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->branch_id = 0;
+        $user->save();
+        $url = '/view/employee/'.$id;
+
+        return redirect($url)->with('success', 'Emplpoyee successfully deleted');
+    }
 }
