@@ -6416,3 +6416,11 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
   font-style: italic;
   color: #A9A9A9;
 }
+
+@media all {
+	.page-break	{ display: none; }
+}
+
+@media print {
+	.page-break	{ display: block; page-break-before: always; }
+}

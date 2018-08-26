@@ -2,46 +2,58 @@
 
 @section('content')
     <div class="row">
-        <h2>Hour Report</h2>
+        <h4 class="page-title">Please use Crtl + P to download</h4>
     </div>
     @foreach($branches as $branch)
-        <div class="row">
-            <h4 class="page-title">{{$branch->name}}</h4>
-        </div>
-        <div class="row">
-            <div class="col-12 card-box">
-                <div class="row">
-                    <div class="col">Name</div>
-                    <div class="col">Status</div>
-                    <div class="col">Designation</div>
-                    <div class="col">Religion</div>
-                    @foreach($weeks as $week)
-                        <div class="col">
-                            {{date("d M", strtotime($week[0]))}} <br>
-                            {{date("d M", strtotime($week[1]))}}
-                        </div>
-                    @endforeach
-                    <div class="col">Total</div>
-                </div>
-                <hr>
-                
-                @foreach ($users as $user)
-                    @if ($user->branch_id == $branch->id)
-                        <div class="row">
-                            <div class="col">{{$user->name}}</div>
-                            <div class="col">{{$user->status}}</div>
-                            <div class="col">{{ucfirst($user->roles->first()->name)}}</div>
-                            <div class="col">{{$user->religion}}</div>
-                            @foreach($hours[$x++] as $hour)
-                                <div class="col">
-                                    {{$hour}}
-                                </div>
-                            @endforeach
-                        </div>
-                        <hr>
-                    @endif
-                @endforeach
+        <section>
+            <div class="row">
+                <h2>{{$branch->name}} Hour Report</h2>
             </div>
-        </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 table-responsive text-center">
+                        <table class="table table-striped table-bordered bg-white">
+                            <thead>
+                                <tr class="bg-warning">
+                                <th scope="col">Name</th>
+                                <th scope="col">Designation</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Employee Code</th>
+                                <th scope="col">Religion</th>
+            
+                                @foreach($weeks as $week)
+                                    <th scope="col">
+                                        {{date("d M", strtotime($week[0]))}} <br>
+                                        {{date("d M", strtotime($week[1]))}}
+                                    </th>
+                                @endforeach
+            
+                                <th scope="col">Total Working Hour</th>
+                                </tr>  
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    @if ($user->branch_id == $branch->id)
+                                    <tr>
+                                        <td>{{$user->name}}</td>
+                                        <td>{{ucfirst($user->roles->first()->name)}}</td>
+                                        <td>{{$user->status}}</td>
+                                        <td>{{$user->employee_id}}</td>
+                                        <td>{{$user->religion}}</td>
+                                        @foreach($hours[$x++] as $hour)
+                                            <td>{{$hour}}</td>
+                                                
+                                        @endforeach
+                                    </tr>
+                                    @endif
+                                @endforeach
+                                <tr>
+                            </tbody>
+                        </table> 
+                    </div>
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+        <div class="page-break"></div>
     @endforeach
 @endsection
