@@ -2,59 +2,71 @@
 
 @section('content')
     <div class="row">
-        <h2>Late Report</h2>
+        <h4 class="page-title">Please use Crtl + P to download</h4>
     </div>
 
     @foreach($branches as $branch)
-        <div class="row">
-            <u><h3>{{$branch->name}}</h3></u>
-        </div>
-
-        <div class="card-box">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col">Name</div>
-                        <div class="col">Status</div>
-                        <div class="col">Religion</div>
-                        <div class="col">Scheduled</div>
-                        <div class="col">Actual</div>
-                        <div class="col">Late Type</div>
-                        <div class="col">Date</div>
-                        <div class="col">Duration</div>
-                        <div class="col">Comment</div>
-                        <div class="col">Commented by</div>
-                    </div>
+        <section>
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <h2>{{$branch->name}} Late Report</h2>
                 </div>
-            </div>
-
-            <hr>
-
-            @foreach ($lates as $late)
-                @if ($late->user->branch_id == $branch->id)
-                    <div class="row">
-                        <div class="col">{{$late->user->name}}</div>
-                        <div class="col">{{$late->user->status}}</div>
-                        <div class="col">{{$late->user->religion}}</div>
-                        <div class="col">{{date("g:i A", strtotime($late->log->schedule->start))}}</div>
-                        <div class="col">{{date("g:i A", strtotime($late->log->start))}}</div>
-                        <div class="col">{{$late->type}}</div>
-                        <div class="col">{{$late->date}}</div>
-                        <div class="col">{{$duration[$x++].' mins'}}</div>
-                        <div class="col">{{$late->comment}}</div>
-                        <div class="col">
-                            @if ($late->alteredBy == null)
-                                <strong>NOT COMMENTED</strong>
-                            @else
-                                <a href="/view/employee/{{$late->alteredBy->id}}" target="_blank">
-                                    {{$late->alteredBy->name}}
-                                </a>
-                            @endif
-                        </div>
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12 table-responsive text-center">
+                        <table class="table table-bordered bg-white">
+                            <thead>
+                                <tr class="bg-warning">
+                                <th scope="col">Name</th>
+                                <th scope="col">Designation</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Employee Code</th>
+                                <th scope="col">Religion</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Actual Schedule</th>
+                                <th scope="col">Login Time</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Late Type</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Commented By</th>
+                                </tr>  
+                            </thead>
+                            <tbody>
+                                @foreach ($lates as $late)
+                                    @if ($late->user->branch_id == $branch->id)
+                                        <tr>
+                                            <td>{{$late->user->name}}</td>
+                                            <td>{{ucfirst($late->user->roles->first()->name)}}</td>
+                                            <td>{{$late->user->status}}</td>
+                                            <td>{{$late->user->employee_id}}</td>
+                                            <td>{{$late->user->religion}}</td>
+                                            <td>{{$late->date}}</td>
+                                            <td>{{date("g:i A", strtotime($late->log->schedule->start))}}</td>
+                                            <td>{{date("g:i A", strtotime($late->log->start))}}</td>
+                                            <td>{{$duration[$x++].' mins'}}</td>
+                                            <td>{{$late->type}}</td>
+                                            <td>{{$late->comment}}</td>
+                                            <td>
+                                                @if ($late->alteredBy == null)
+                                                    <strong>NOT COMMENTED</strong>
+                                                @else
+                                                    <a href="/view/employee/{{$late->alteredBy->id}}" target="_blank">
+                                                        {{$late->alteredBy->name}}
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endif
+    
+                                @endforeach
+                            </tbody>
+                        </table> 
                     </div>
-                @endif
-                <hr>
-            @endforeach
-        </div>
+                </div> <!-- end row -->
+            </div> <!-- end container -->
+        </section>
+        <div class="page-break"></div>
+        <br><br><br>
     @endforeach
 @endsection
