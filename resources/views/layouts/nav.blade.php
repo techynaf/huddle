@@ -45,7 +45,7 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
-                    @if(auth()->user()->roles->first()->name == 'barista')
+                    @if(auth()->user()->roles->first()->name == 'barista' || auth()->user()->roles->first()->name == 'employee')
                         @include('layouts.barista-nav')
                     @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager')
                         @include('layouts.manager-nav')

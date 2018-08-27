@@ -250,9 +250,9 @@ class ProfileController extends Controller
         $role = Role::where('id', $request->role)->first();
 
         $userR = $user->roles->first()->name;
-        $barista = ($role->name == 'barista' || $role->name == 'shift-supervisor');
+        $barista = ($role->name == 'barista' || $role->name == 'shift-supervisor' || $role->name == 'employee');
         $manager = ($role->name == 'manager' || $role->name == 'assistant-manager');
-        $userB = ($userR == 'barista' || $userR == 'shift-supervisor');
+        $userB = ($userR == 'barista' || $userR == 'shift-supervisor' || $userR == 'employee');
         $userM = ($userR == 'manager' || $userR == 'assistant-manager');
         $pin = 0;
         $religion = null;
