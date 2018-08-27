@@ -7,11 +7,6 @@
 
     <section>
         <div class="container-fluid">
-            <!-- Page-Title -->
-            <div class="row">
-                <h2>{{$branch->name}} Late Report</h2>
-            </div>
-            <!-- end page title end breadcrumb -->
             <div class="row">
                 <div class="col-12 table-responsive text-center">
                     <table class="table table-bordered bg-white">
