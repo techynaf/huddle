@@ -65,9 +65,19 @@
                                                     @if($schedule == null)
                                                         <td>OFF</td>
                                                     @else
-                                                        <td>
-                                                            {{date("g:i A", strtotime($schedule->start)).'-'.date("g:i A", strtotime($schedule->end))}}
-                                                        </td>
+                                                        @if (count($user->noSchedule->where('date', $schedule->date)->first()) != 0)
+                                                            <td>OFF</td>
+                                                        @else
+                                                            <td>
+                                                                <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
+                                                                    {{date("g:i A", strtotime($schedule->start))}}
+                                                                </div>
+                                                                
+                                                                <div class="text-center {{strtolower($schedule->endingBranch->name)}}">
+                                                                    {{date("g:i A", strtotime($schedule->end))}}   
+                                                                </div>
+                                                            </td>
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             </tr>
@@ -126,15 +136,21 @@
                                                         @if($schedule == null)
                                                             <td>OFF</td>
                                                         @else
-                                                            <td>
-                                                                <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
-                                                                    {{date("g:i A", strtotime($schedule->start))}}
-                                                                </div>
-                                                                
-                                                                <div class="text-center {{strtolower($schedule->endingBranch->name)}}">
-                                                                    {{date("g:i A", strtotime($schedule->end))}}   
-                                                                </div>
-                                                            </td>
+
+                                                            @if (count($user->noSchedule->where('date', $schedule->date)->first()) != 0)
+                                                                <td>OFF</td>
+                                                            @else
+                                                                <td>
+                                                                    <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
+                                                                        {{date("g:i A", strtotime($schedule->start))}}
+                                                                    </div>
+                                                                    
+                                                                    <div class="text-center {{strtolower($schedule->endingBranch->name)}}">
+                                                                        {{date("g:i A", strtotime($schedule->end))}}   
+                                                                    </div>
+                                                                </td>
+                                                            @endif
+                                                            
                                                         @endif
                                                     @endforeach
                                                 </tr>

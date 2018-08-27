@@ -123,6 +123,17 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        @elseif (count($user->noSchedule->where('date', $schedule->date)) != 0)
+                                            <div class="col-sm-6">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        {{$days[$loop->index]}}
+                                                    </div>
+                                                    <div class="col-sm-8 text-center">
+                                                        No Schedule for this day
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @else
                                             <div class="col-sm-6">
                                                 <div class="row">
