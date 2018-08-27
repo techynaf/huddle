@@ -65,7 +65,7 @@
                                                     @if($schedule == null)
                                                         <td>OFF</td>
                                                     @else
-                                                        @if (sizeof($user->noSchedule->where('date', $schedule->date)->first()) != 0)
+                                                        @if (($user->noSchedule->where('date', $schedule->date)->first()) != null)
                                                             <td>OFF</td>
                                                         @else
                                                             <td>
