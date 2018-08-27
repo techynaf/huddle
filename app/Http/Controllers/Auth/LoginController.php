@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Managers;
 
 class LoginController extends Controller
@@ -45,10 +47,12 @@ class LoginController extends Controller
     public function logout()
     {
         if (auth()->user()->manager != null) {
-            return $this->managerLogout();
+            $manager = auth()->user()->manager;
+            $manager->logged_in = false;
+            $manager->save();
         }
 
-        auth()->logout();
+        Auth::logout();
 
         return redirect('/');
     }
