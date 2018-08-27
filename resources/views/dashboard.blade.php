@@ -123,7 +123,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @elseif (count($user->noSchedule->where('date', $schedule->date)) != 0)
+                                        @elseif (sizeof($user->noSchedule->where('date', $schedule->date)) != 0)
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <div class="col-sm-4">
