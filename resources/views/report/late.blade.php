@@ -5,34 +5,37 @@
         <h4 class="page-title">Please use Crtl + P to download</h4>
     </div>
 
-    @foreach($branches as $branch)
-        <section>
-            <div class="container-fluid">
-                <!-- Page-Title -->
-                <div class="row">
-                    <h2>{{$branch->name}} Late Report</h2>
-                </div>
-                <!-- end page title end breadcrumb -->
-                <div class="row">
-                    <div class="col-12 table-responsive text-center">
-                        <table class="table table-bordered bg-white">
-                            <thead>
-                                <tr class="bg-warning">
-                                <th scope="col">Name</th>
-                                <th scope="col">Designation</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Employee Code</th>
-                                <th scope="col">Religion</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Actual Schedule</th>
-                                <th scope="col">Login Time</th>
-                                <th scope="col">Duration</th>
-                                <th scope="col">Late Type</th>
-                                <th scope="col">Comment</th>
-                                <th scope="col">Commented By</th>
-                                </tr>  
-                            </thead>
-                            <tbody>
+    <section>
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <h2>{{$branch->name}} Late Report</h2>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-12 table-responsive text-center">
+                    <table class="table table-bordered bg-white">
+                        <thead>
+                            <tr class="bg-warning">
+                            <th scope="col">Name</th>
+                            <th scope="col">Designation</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Employee Code</th>
+                            <th scope="col">Religion</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Actual Schedule</th>
+                            <th scope="col">Login Time</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Late Type</th>
+                            <th scope="col">Comment</th>
+                            <th scope="col">Commented By</th>
+                            </tr>  
+                        </thead>
+                        <tbody>
+                            @foreach($branches as $branch)
+                                <tr>
+                                    <th class="bg-secondary" colspan="14" scope="row">{{$branch->name}}</th>
+                                </tr>
                                 @foreach ($lates as $late)
                                     @if ($late->user->branch_id == $branch->id)
                                         <tr>
@@ -58,15 +61,12 @@
                                             </td>
                                         </tr>
                                     @endif
-    
                                 @endforeach
-                            </tbody>
-                        </table> 
-                    </div>
-                </div> <!-- end row -->
-            </div> <!-- end container -->
-        </section>
-        <div class="page-break"></div>
-        <br><br><br>
-    @endforeach
+                            @endforeach
+                        </tbody>
+                    </table> 
+                </div>
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section>
 @endsection
