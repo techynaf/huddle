@@ -86,3 +86,6 @@ Route::get('/late', 'ReportController@lateReport')->middleware('auth');
 Route::get('/test', function () {
     return view('report/printable-hour');
 });
+
+//Obtain pins list
+Route::get('/pins', 'AdminController@pins')->middleware('auth');

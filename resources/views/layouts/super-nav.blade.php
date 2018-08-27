@@ -59,6 +59,9 @@
 
 <li class="has-submenu">
     <a href="/create/employee"><i class="mdi mdi-view-list"></i> <span> Employee </span> </a>
+    <ul class="submenu">
+        <li><a href="/pins">Pins</a></li>
+    </ul>
 </li>
 
 <li class="has-submenu">

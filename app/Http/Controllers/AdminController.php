@@ -168,4 +168,28 @@ class AdminController extends Controller
 
         return redirect($url)->with('success', $message);
     }
+
+    public function pins ()
+    {
+        if ($this->barista() || $this->manager()) {
+            return redirect('/')->with('error', 'You are not authorized to access this view');
+        }
+
+        $branches = Branch::all();
+        $flow = 1;
+
+        if ($this->dm()) {
+            $flow = 2;
+        }
+
+        if ($this->hr()) {
+            $flow = 3;
+        }
+
+        if ($this->superAdmin()) {
+            $flow = 1;
+        }
+
+        return view('profile/pins')->with('branches', $branches)->with('notification', $this->checkNotifications())->with('flow', $flow);
+    }
 }
