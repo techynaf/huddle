@@ -141,7 +141,7 @@ class AdminController extends Controller
                 } elseif ($userB && $manager) {
                     $manager = new Managers;
                     while (true) {
-                        $pin = rand(100000, 999999);
+                        $pin = rand(1000, 9999);
                         $check = User::where('pin', $pin)->get();
             
                         if (count($check) == 0) {

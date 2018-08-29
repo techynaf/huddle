@@ -168,7 +168,7 @@ class ProfileController extends Controller
 
         if ($role->name == 'manager' || $role->name == 'assistant-manager') {
             while (true) {
-                $pin = rand(100000, 999999);
+                $pin = rand(1000, 9999);
                 $check = Managers::where('pin', $pin)->get();
     
                 if (count($check) == 0) {
@@ -261,7 +261,7 @@ class ProfileController extends Controller
             $pin = $user->pin;
         } elseif ($userB && $manager) {
             while (true) {
-                $pin = rand(100000, 999999);
+                $pin = rand(1000, 9999);
                 $check = User::where('pin', $pin)->get();
     
                 if (count($check) == 0) {
