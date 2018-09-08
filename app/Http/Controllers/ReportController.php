@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\User;
 use App\Schedule;
 use App\Late;
+use App\Leave;
 use App\Log;
 use App\Branch;
 
@@ -84,9 +85,29 @@ class ReportController extends Controller
                 foreach ($weeks as $week) {
                     $logs = Log::where('user_id', $user->id)->where('date', '>=', $week[0])->
                     where('date', '<=', $week[1])->get();
+                    $govs = Leave::where('user_id', $user->id)->where('start', '>=', $week[0])->where('start', '<=', $week[1])->
+                    where('type', 4)->where('is_approved', 1)->get();
+                    $sicks = Leave::where('user_id', $user->id)->where('start', '>=', $week[0])->where('start', '<=', $week[1])->
+                    where('type', 2)->where('is_approved', 1)->get();
     
                     $x = 0;
+
+                    foreach ($govs as $gov) {
+                        $d1 = Carbon::parse($gov->start);
+                        $d2 = Carbon::parse($gov->end);
+                        $y = $d1->diffInDays($d2) + 1;
+
+                        $x += ($y * 8 * 60);
+                    }
     
+                    foreach ($sicks as $sick) {
+                        $d1 = Carbon::parse($sick->start);
+                        $d2 = Carbon::parse($sick->end);
+                        $y = $d1->diffInDays($d2) + 1;
+
+                        $x += ($y * 8 * 60);
+                    }
+
                     foreach ($logs as $log) {
                         $s = Carbon::parse($log->start);
                         $e = Carbon::parse($log->end);
