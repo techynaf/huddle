@@ -317,4 +317,59 @@ class ProfileController extends Controller
 
         return redirect($url)->with('success', 'Emplpoyee successfully deleted');
     }
+
+    public function pin (Request $request, $id, $stat)
+    {
+        $user = User::find($id);
+        $pin = rand(1000, 9999);
+
+        if ($stat == 'false') {
+            while (true) {
+                $person = User::where('pin', $pin)->first();
+
+                if ($person == null) {
+                    break;
+                }
+                
+                $pin = rand(1000, 9999);
+            }
+
+            $user->pin = $pin;
+            $user->save();
+        } elseif ($stat == 'super-admin' || $stat == 'district-manager' || $stat == 'HR') {
+            $pin = rand(100000, 999999);
+
+            while (true) {
+                $person = User::where('pin', $pin)->first();
+
+                if ($person == null) {
+                    break;
+                }
+
+                $pin = rand(100000, 999999);
+            }
+
+            $user->pin = $pin;
+            $user->save();
+        } else {
+            $manager = $user->manager;
+
+            while (true) {
+                $person = Managers::where('pin', $pin)->first();
+
+                if ($person == null) {
+                    break;
+                }
+
+                $pin = rand(1000, 9999);
+            }
+
+            $manager->pin = $pin;
+            $manager->save();
+        }
+
+        $url = '/view/employee/'.$id;
+
+        return redirect($url)->with('success', 'New pin is '. $pin);
+    }
 }

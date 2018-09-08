@@ -26,7 +26,17 @@
                                     </tr>
                                     <tr>
                                         <td>PIN</td>
-                                        <td>{{$user->pin}}</td>
+                                        <td>{{$user->pin}}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                            @if ($user->roles->first()->name == 'super-admin' || $user->roles->first()->name == 'district-manager' || $user->roles->first()->name == 'HR')
+                                                @if (auth()->user()->roles->first()->name == 'super-admin') 
+                                                    <a href="/pin/change/{{$user->id}}/{{$user->roles->first()->name}}">Change Pin</a>
+                                                @endif
+                                            @else
+                                                @if (auth()->user()->roles->first()->name == 'super-admin' || auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'hr')
+                                                    <a href="/pin/change/{{$user->id}}/false">Change Pin</a>
+                                                @endif
+                                            @endif
+                                        </td>
                                     </tr>
                                     @if ($user->branch_id != 0)
                                         <tr>
@@ -42,7 +52,17 @@
                                     @if ($user->manager != null)
                                         <tr>
                                             <td>Manager Pin</td>
-                                            <td>{{$user->manager->pin}}</td>
+                                            <td>{{$user->manager->pin}}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                                                @if ($user->roles->first()->name == 'super-admin' || $user->roles->first()->name == 'district-manager' || $user->roles->first()->name == 'HR')
+                                                    @if ($user->roles->first()->name == auth()->user()->roles->first()->name || auth()->user()->roles->first()->name == 'super-admin') 
+                                                        <a href="/pin/change/{{$user->id}}/true">Change Pin</a>
+                                                    @endif
+                                                @else
+                                                    @if (auth()->user()->roles->first()->name == 'super-admin' || auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'hr')
+                                                        <a href="/pin/change/{{$user->id}}/true">Change Pin</a>
+                                                    @endif
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endif
 

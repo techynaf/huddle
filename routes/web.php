@@ -33,6 +33,7 @@ Route::get('/logger', 'ProfileController@logger')->middleware('auth');
 Route::get('/edit/profile/{id}', 'ProfileController@edit')->middleware('auth');
 Route::post('/edit/profile/{id}', 'ProfileController@update')->middleware('auth');
 Route::get('/delete/profile/{id}', 'ProfileController@delete')->middleware('auth');
+Route::get('/pin/change/{id}/{stat}', 'ProfileController@pin')->middleware('auth');
 
 //Manager Route
 Route::post('/manager-login', 'Controller@managerLogin')->middleware('auth');
