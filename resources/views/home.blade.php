@@ -26,6 +26,7 @@
                     </div>
                 </div>
             </form>
+            <div class="page-break"></div>
             @if($flow)
                 <div class="row">
                     <div class="col-sm-8">	
@@ -161,6 +162,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="page-break"></div>
                 @endforeach
             @endif
 @endsection
