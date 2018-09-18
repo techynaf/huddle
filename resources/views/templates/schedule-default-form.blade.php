@@ -1,7 +1,15 @@
-<label for="start[]" class="">Entry Time</label>
 <div class="row">
     <div class="col-12">
-        <input type="time" name="start[]" class="form-control input-sm" required>
+        <div class="row">
+            <div class="col-6">
+                <label for="start[]" class="schedule-label">Entry Time</label>
+                <input type="time" name="start[]" class="form-control input-sm-schedule" required>
+            </div>
+            <div class="col-6">
+                <label class="schedule-label">Exit Time</label>
+                <input type="time" name="end[]" class="form-control input-sm-schedule" required>
+            </div>
+        </div>
     </div>
 </div>
 
