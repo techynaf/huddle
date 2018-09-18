@@ -66,7 +66,7 @@
                         @endforeach
                         <div class="col-md-1 text-center">Action</div>
                     </div><!-- row -->
-                    <hr>
+                    <hr class="schedule-header-hr">
                 </div>
 
                  <div class="table">
@@ -108,14 +108,14 @@
                                             </div>
                                             <br><br>
                                             <div class="col text-center">
-                                                <a href="/enable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-success ">ENABLE</a>
+                                                <a href="/enable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-success enable-btn">ENABLE</a>
                                             </div>
                                         @elseif($schedule == 'false')
                                             <input type="hidden" name="s_id[]" value="0">
                                             @include('templates.schedule-default-form')
                                             <br>
                                             <div class="col text-center">
-                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger ">DISABLE</a>
+                                                <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger disable-btn ">DISABLE</a>
                                             </div>
                                         @else
                                             @if ($schedule->date != $days[$loop->index][1])
@@ -123,14 +123,14 @@
                                                 @include('templates.schedule-form')
                                                 <br>
                                                 <div class="col text-center">
-                                                    <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger ">DISABLE</a>
+                                                    <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger disable-btn ">DISABLE</a>
                                                 </div>
                                             @else
                                                 <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
                                                 @include('templates.schedule-form')
                                                 <br>
                                                 <div class="col text-center">
-                                                    <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger ">DISABLE</a>
+                                                    <a href="/disable/{{$user->id.'/'.$days[$loop->index][1].'/'.$user->branch_id}}" class="text-center btn btn-outline-danger disable-btn ">DISABLE</a>
                                                 </div>
                                             @endif
                                         @endif
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                         </form>
-                        <hr>
+                        <hr class="schedule-hr">
                      @endforeach
                 </div>
             </div>
