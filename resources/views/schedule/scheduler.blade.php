@@ -52,19 +52,19 @@
                     </div>
                 </div>    
             </form>
-<br>
+            <br>
             <div class="bg-white">
                 <div class="header bg-light">
-                    <div class="row pt-5">
-                        <div class="col-md pt-2 text-center">Name</div>
+                    <div class="row pt-3">
+                        <div class="col-md text-center">Name</div>
                         @foreach($days as $day)
-                            <div class="col-md">
+                            <div class="col-md text-center">
                                 {{date("D d M", strtotime($day[1]))}}
-                                <br>
+                                
                                 {{date("Y", strtotime($day[1]))}}
                             </div>
                         @endforeach
-                        <div class="col-md-1 pt-2 text-center">Action</div>
+                        <div class="col-md-1 text-center">Action</div>
                     </div><!-- row -->
                     <hr>
                 </div>
