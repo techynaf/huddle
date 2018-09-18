@@ -2,32 +2,15 @@
 
 @section('content')
             <form action="/scheduler" method="get">
-                <div class="row">
-                    <div class="col--4">
-                        <h4 class="page-title">Scheduler for {{date("D d M", strtotime($days[0][1])).' to '.date("D d M", strtotime($days[6][1]))}}</h4>
-                    </div>
-                    <div class="col-3"></div>
-                    <div class="col-4">
-                        <div class="row">
-                            <div class="col-6">
-                                <h5>Select another date range</h5>
-                            </div>
-                            <div class="col-6">
-                                <select name="date" class="form-control">
-                                    <option value="{{date("d M", strtotime($days[0][1]))}}">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
-                                    @foreach($dates as $date)
-                                        @if($days[0][1] != date("Y-m-d", strtotime($date[0])))
-                                            <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col--4">
+                            <h4 class="schedule-page-title">Scheduler for {{date("D d M", strtotime($days[0][1])).' to '.date("D d M", strtotime($days[6][1]))}}</h4>
                         </div>
-                        @if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
-                            <br>
+                        <div class="col-4">
                             <div class="row">
                                 <div class="col-6">
-                                    <h5>Select a branch</h5>
+                                    <h5 class="text-right">Select a branch</h5>
                                 </div>
                                 <div class="col-6">
                                     <select name="branch" class="form-control">
@@ -41,17 +24,35 @@
                                         @endforeach
                                         <option value="">All</option>
                                     </select>
+                                </div>     
+                            </div>        
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="text-right">Select date range</h5>
+                                </div>
+                                <div class="col-6">
+                                    <select name="date" class="form-control">
+                                        <option value="{{date("d M", strtotime($days[0][1]))}}">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
+                                        @foreach($dates as $date)
+                                            @if($days[0][1] != date("Y-m-d", strtotime($date[0])))
+                                                <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                            <br>
-                        @endif
+                            @if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
+                            @endif
+                        </div>
+                        <div class="col-1">
+                            <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                        </div>
                     </div>
-                    <div class="col-1">
-                        <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
-                    </div>
-                </div>
+                </div>    
             </form>
-
+<br>
             <div class="bg-white">
                 <div class="header bg-light">
                     <div class="row pt-5">
@@ -67,7 +68,7 @@
                     </div><!-- row -->
                     <hr>
                 </div>
-                
+
                  <div class="table">
                      @foreach($users as $user)
                         <form action="/scheduler/{{$user->id}}" method="POST">
