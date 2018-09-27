@@ -15,18 +15,16 @@
                         @endif
                     </div>
                     <div class="col-6"></div>
-                    @if(auth()->user()->roles->first()->name == 'super-admin')
-                        @if($flow == 'true')
-                            <div class="col-2">
-                                <input type="hidden" name="flow" value="false">
-                                <button class="btn btn-warning" type="submit">Switch to HR view</button>
-                            </div>
-                        @else
-                            <div class="col-2">
-                                <input type="hidden" name="flow" value="true">
-                                <button class="btn btn-warning" type="submit">Switch to DM view</button>
-                            </div>
-                        @endif
+                    @if($flow == 'true')
+                        <div class="col-2">
+                            <input type="hidden" name="flow" value="false">
+                            <button class="btn btn-warning" type="submit">Switch to HR view</button>
+                        </div>
+                    @else
+                        <div class="col-2">
+                            <input type="hidden" name="flow" value="true">
+                            <button class="btn btn-warning" type="submit">Switch to DM view</button>
+                        </div>
                     @endif
                 </div>
             </form>
@@ -36,16 +34,10 @@
                         <div class="col-3"><strong>Employee Name</strong></div>
                         <div class="col-2"><strong>Role</strong></div>
                         <div class="col-2"><strong>Employee ID</strong></div>
-                        @if (auth()->user()->roles->first()->name == 'super-admin')
-                            @if ((auth()->user()->roles->first()->name == 'super-admin' && $flow == 'true'))
-                                <div class="col-3"><strong>Change Branch</strong></div>
-                            @else
-                                <div class="col-3"><strong>Change Role</strong></div>
-                            @endif
-                        @elseif (auth()->user()->roles->first()->name == 'HR')
-                            <div class="col-3"><strong>Change Role</strong></div>
-                        @else
+                        @if ($flow == 'true')
                             <div class="col-3"><strong>Change Branch</strong></div>
+                        @else
+                            <div class="col-3"><strong>Change Role</strong></div>
                         @endif
                         <div class="col-1"></div>
                     </div>
@@ -66,7 +58,7 @@
                                 <div class="col-3">{{$user->name}}</div>
                                 <div class="col-2">{{ucfirst($user->roles->first()->name)}}</div>
                                 <div class="col-2">{{$user->employee_id}}</div>
-                                @if (auth()->user()->roles->first()->name == 'district-manager' || (auth()->user()->roles->first()->name == 'super-admin' && $flow == 'true'))
+                                @if ($flow == 'true')
                                     <div class="col-3">
                                         <select name="branch" class="form-control">
                                             @if ($branch == 'Unassigned')

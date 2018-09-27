@@ -21,8 +21,8 @@ class WeeklyLeavesController extends Controller
             return view('profile/manager');
         }
 
-        if ($this->superAdmin() || $this->dm() || $this->hr()) {
-            return redirect('/')->with('error', 'Super admins, HR and district managers cannot apply for weekly leaves');
+        if ($this->superAdmin() || $this->hr()) {
+            return redirect('/')->with('error', 'Super admins and HR cannot apply for weekly leaves');
         }
 
         $now = new Carbon;

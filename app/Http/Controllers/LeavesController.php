@@ -14,8 +14,8 @@ class LeavesController extends Controller
 {
     public function requestLeave (Request $request)
     {
-        if ($this->superAdmin() || $this->hr() || $this->dm()) {
-            return redirect('/')->with('error', 'Super-admin cannot request for leaves.');
+        if ($this->superAdmin() || $this->hr()) {
+            return redirect('/')->with('error', 'Super-admin and HR cannot request for leaves.');
         }
 
         $flow = 'false';

@@ -20,7 +20,7 @@ class ReportController extends Controller
     
     public function hours (Request $request)
     {
-        if ($this->barista() || $this->manager() || $this->dm()) {
+        if ($this->barista() || $this->manager()) {
             return redirect('/')->with('error', 'You are not authorized to access this view');
         }
 
@@ -32,6 +32,7 @@ class ReportController extends Controller
 
         $url = '/hour';
 
+
         if ($request->month == null) {
             $i = Carbon::parse(null)->format('Y');
             $years = array();
@@ -42,7 +43,7 @@ class ReportController extends Controller
 
             return view('report/date')->with('notification', $notification)->with('months', $this->months)->with('years', $years)->with('url', $url);
         } else {
-            if ($this->barista() || $this->manager() || $this->dm()) {
+            if ($this->barista() || $this->manager()) {
                 return redirect()->with('error', 'You are not authorized to view this');
             }
     
@@ -136,7 +137,7 @@ class ReportController extends Controller
 
     public function lateReport (Request $request)
     {
-        if ($this->barista() || $this->manager() || $this->dm()) {
+        if ($this->barista() || $this->manager()) {
             return redirect('/')->with('error', 'You are not authorized to access this view');
         }
 

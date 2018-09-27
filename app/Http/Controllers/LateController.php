@@ -11,7 +11,7 @@ class LateController extends Controller
 {
     public function showAll ()
     {
-        if ($this->barista() || $this->hr()) {
+        if ($this->barista()) {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this');
         }
 

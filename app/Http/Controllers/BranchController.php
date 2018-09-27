@@ -163,16 +163,6 @@ class BranchController extends Controller
             $branch = Branch::where('id', $id)->first();
         }
 
-        if ($this->hr() || $this->dm()) {
-            if ($this->hr()) {
-                return view('branch/show')->with('branch', $branch)->with('branches', $branches)->with('roles', $roles)->
-                with('users', $users)->with('flow', false)->with('notification', $notification);
-            } else {
-                return view('branch/show')->with('branch', $branch)->with('branches', $branches)->with('roles', $roles)->
-                with('users', $users)->with('flow', true)->with('notification', $notification);
-            }
-        }
-
         if ($request->flow == null) {
             return view('branch/show')->with('branch', $branch)->with('branches', $branches)->with('roles', $roles)->
             with('users', $users)->with('flow', true)->with('notification', $notification);

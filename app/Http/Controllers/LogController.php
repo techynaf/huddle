@@ -12,7 +12,7 @@ class LogController extends Controller
 {
     public function show ()
     {
-        if ($this->barista() || $this->hr()) {
+        if ($this->barista()) {
             return redirect('/')->with('error', 'You are not authorized to access this view');
         }
 
@@ -43,7 +43,7 @@ class LogController extends Controller
         if ($this->manager()) {
             $ls = Log::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $last)->
             where('date', '<=', $start)->whereNull('end')->get();
-        } elseif ($this->superAdmin() || $this->dm()) {
+        } elseif ($this->superAdmin() || $this->dm() || $this->hr()) {
             $ls = Log::where('date', '>=', $last)->where('date', '<=', $start)->whereNull('end')->get();
         }
 

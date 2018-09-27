@@ -17,6 +17,8 @@
         @else
             <li><a href="/show/weekly">Day-off Requests</a></li>
         @endif
+        <li><a href="/create/weekly">Create Weekly Day Offs</a></li>
+        <li><a href="/edit/weekly">Edit Weekly Day Offs</a></li>
     </ul>
 </li>
 
@@ -39,6 +41,13 @@
         @else
             <li><a href="/lates">Lates</a></li>
         @endif
+    </ul>
+</li>
+
+<li class="has-submenu">
+    <a href="/hour"><i class="fas fa-newspaper"></i> <span> Reports </span> </a>
+    <ul class="submenu">
+        <li><a href="/late">Late Report</a></li>
     </ul>
 </li>
 

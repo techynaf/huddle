@@ -32,7 +32,7 @@
                                                     <a href="/pin/change/{{$user->id}}/{{$user->roles->first()->name}}">Change Pin</a>
                                                 @endif
                                             @else
-                                                @if (auth()->user()->roles->first()->name == 'super-admin' || auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'hr')
+                                                @if (auth()->user()->roles->first()->name == 'super-admin' || auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'HR')
                                                     <a href="/pin/change/{{$user->id}}/false">Change Pin</a>
                                                 @endif
                                             @endif
