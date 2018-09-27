@@ -32,7 +32,7 @@ class ScheduleController extends Controller
         $times = array();
         $b = null;
 
-        if ($this->barista() || $this->hr()) {
+        if ($this->barista()) {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view.');
         }
 
@@ -158,7 +158,8 @@ class ScheduleController extends Controller
         //dd(Carbon::parse($starts[0]), $ends, $schedule_ids);
 
         for ($i = 0; $i < sizeof($schedule_ids); $i++) {
-            if ($schedule_ids[$i] != 'off') {
+            if ($schedule_ids[$i] != 'off' && $starts[$counter] != null && $ends[$counter] != null) {
+                dd('here');
                 $schedule = null;
 
                 if ($schedule_ids[$i] == '0') {
