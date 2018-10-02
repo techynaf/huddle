@@ -36,12 +36,12 @@
 
             <div class="clearfix"></div>
         </div> <!-- end container -->
-        <img src="/frontend/images/beans.png" class="img-fluid beans">
+        <!-- <img src="/frontend/images/beans.png" class="img-fluid beans"> -->
     </div>
     <!-- end topbar-main -->
 
     <div class="navbar-custom">
-        <div class="container-fluid">
+        <div class="container-fluid text-center">
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
