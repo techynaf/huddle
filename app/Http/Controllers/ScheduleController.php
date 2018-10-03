@@ -159,7 +159,6 @@ class ScheduleController extends Controller
 
         for ($i = 0; $i < sizeof($schedule_ids); $i++) {
             if ($schedule_ids[$i] != 'off' && $starts[$counter] != null && $ends[$counter] != null) {
-                dd('here');
                 $schedule = null;
 
                 if ($schedule_ids[$i] == '0') {

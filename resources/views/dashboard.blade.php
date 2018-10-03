@@ -143,7 +143,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @elseif (($user->noSchedule->where('date', $schedule->date)) != null)
+                                        @elseif (count($user->noSchedule->where('date', $schedule->date)) != 0)
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <div class="col-sm-4">
@@ -161,12 +161,12 @@
                                                         {{$days[$loop->index]}}
                                                     </div>
                                                     
-                                                        <div class="col-sm-4 text-center {{strtolower($schedule->startingBranch->name)}}">
-                                                            <strong>{{date("g:i A", strtotime($schedule->start))}}</strong>
-                                                        </div>
-                                                        <div class="col-sm-4 text-center {{strtolower($schedule->endingBranch->name)}}">
-                                                            <strong>{{date("g:i A", strtotime($schedule->end))}}</strong>    
-                                                        </div>
+                                                    <div class="col-sm-4 text-center {{strtolower($schedule->startingBranch->name)}}">
+                                                        <strong>{{date("g:i A", strtotime($schedule->start))}}</strong>
+                                                    </div>
+                                                    <div class="col-sm-4 text-center {{strtolower($schedule->endingBranch->name)}}">
+                                                        <strong>{{date("g:i A", strtotime($schedule->end))}}</strong>    
+                                                    </div>
                                                 </div>
                                             </div>
                                         @endif
@@ -282,6 +282,7 @@
                                     </div>
                                     <hr>
                                 @endforeach
+                                {{ $requests->links() }}
                             @endif
                         </div>
                 </div>
