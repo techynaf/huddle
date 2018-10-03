@@ -6,6 +6,7 @@
     @endif
 
     <ul class="submenu">
+        <li><a href="/create/leave">Create Leave</a></li>
         <li><a href="/create/weekly">Create Weekly Day Offs</a></li>
         <li><a href="/edit/weekly">Edit Weekly Day Offs</a></li>
         

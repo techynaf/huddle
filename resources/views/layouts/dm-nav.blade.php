@@ -17,6 +17,7 @@
         @else
             <li><a href="/show/weekly">Day-off Requests</a></li>
         @endif
+        <li><a href="/create/leave">Create Leave</a></li>
         <li><a href="/create/weekly">Create Weekly Day Offs</a></li>
         <li><a href="/edit/weekly">Edit Weekly Day Offs</a></li>
     </ul>
