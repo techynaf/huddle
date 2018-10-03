@@ -11,7 +11,7 @@ class LeaveTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        $types = array('Weekly', 'Sick Leave', 'Annual', 'Government Holiday');
+        $types = array('Weekly', 'Sick Leave', 'Annual', 'Government Holiday', 'Casual');
 
         foreach ($types as $type) {
             DB::table('leave_types')->insert([

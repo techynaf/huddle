@@ -45,6 +45,8 @@ Route::get('/disable/{id}/{date}/{branch}', 'ScheduleController@disable')->middl
 Route::get('/enable/{id}/{date}/{branch}', 'ScheduleController@enable')->middleware('auth');
 
 //Leave Routes
+Route::get('/create/leave', 'LeavesController@createLeave')->middleware('auth');
+Route::post('/create/leave', 'LeavesController@storeLeave')->middleware('auth');
 Route::get('/request', 'LeavesController@requestLeave')->middleware('auth');
 Route::post('/request/{id}', 'LeavesController@storeLeaveRequest')->middleware('auth');
 Route::post('/request/{id}/process', 'LeavesController@process')->middleware('auth');

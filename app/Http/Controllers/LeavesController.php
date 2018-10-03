@@ -17,12 +17,6 @@ class LeavesController extends Controller
         if ($this->superAdmin() || $this->hr()) {
             return redirect('/')->with('error', 'Super-admin and HR cannot request for leaves.');
         }
-
-        $flow = 'false';
-
-        if ($request->flow != null) {
-            $flow = $request->flow;
-        }
         
         $notification = $this->checkNotifications();
 
@@ -33,8 +27,7 @@ class LeavesController extends Controller
         $types = LeaveTypes::where('id', '!=', 1)->get();
         $id = auth()->user()->id;
 
-        return view('requests/create')->with('id', $id)->with('types', $types)->with('notification', $notification)->
-        with('flow', $flow);
+        return view('requests/create')->with('id', $id)->with('types', $types)->with('notification', $notification);
     }
 
     public function storeLeaveRequest (Request $request, $id)
@@ -52,6 +45,7 @@ class LeavesController extends Controller
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
         $leave->type = $request->type;
+        $leave->comment = $request->comment;
         $leave->is_removed = false;
         $leave->save();
 
@@ -91,9 +85,10 @@ class LeavesController extends Controller
         $leave->type = $request->type;
         $leave->start = Carbon::parse($request->start)->format('Y-m-d');
         $leave->end = Carbon::parse($request->end)->format('Y-m-d');
+        $leave->comment = $request->comment;
         $leave->save();
 
-        return redirect('/')->with('success', 'Leave application successfully edited.');
+        return redirect('/dashboard')->with('success', 'Leave application successfully edited.');
     }
 
     public function remove (Request $request, $id)
@@ -200,5 +195,60 @@ class LeavesController extends Controller
         $type = $type->id;
 
         return view('requests/range')->with('notification', $notification)->with('type', $type);
+    }
+
+    public function createLeave ()
+    {
+        if ($this->barista()) {
+            return redirect('/')->with('error', 'You are not authorized to access this view.');
+        }
+
+        $notification = $this->checkNotifications();
+
+        if (!is_array($notification)) {
+            return view('profile/manager');
+        }
+
+        $types = LeaveTypes::where('id', '!=', 1)->get();
+        $users = User::where('branch_id', '>=', 1)->get();
+
+        if ($this->manager()) {
+            $users = User::where('branch_id', auth()->user()->branch_id)->get();
+        }
+
+        return view('requests/issue')->with('notification', $notification)->with('users', $users)->with('types', $types);
+    }
+
+    public function storeLeave (Request $request)
+    {
+        $this->validate($request, [
+            'type' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+            'id' => 'required'
+        ]);
+
+        $l = Leave::where('user_id', $request->id)->where('start', '<=', Carbon::parse($request->start)->format('Y-m-d'))->
+        where('end', '>=', Carbon::parse($request->end)->format('Y-m-d'))->where('is_approved', 1)->get();
+
+        if (count($l) != 0) {
+            return redirect('/create/leave')->with('error', 'Employee already has a leave in that range');
+        }
+
+        $user = User::find($request->id);
+        $leave = new Leave;
+        $leave->user_id = $user->id;
+        $leave->branch_id = $user->branch_id;
+        $leave->is_approved = 1;
+        $leave->start = Carbon::parse($request->start)->format('Y-m-d');
+        $leave->end = Carbon::parse($request->end)->format('Y-m-d');
+        $leave->type = $request->type;
+        $leave->comment = $request->comment;
+        $leave->is_removed = false;
+        $leave->save();
+
+        $url = '/view/employee/'.$user->id;
+
+        return redirect($url)->with('success', 'Leave successfully created');
     }
 }

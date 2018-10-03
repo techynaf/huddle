@@ -41,6 +41,14 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <div class="col-2">
+                                                <label for="start">Start Date</label>
+                                            </div>
+                                            <div class="col-10">
+                                                <textarea name="comment" class="form-control" cols="30" rows="10">{{$leave->comment}}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <div class="col-11"></div>
                                             <div class="col-1">
                                                 <button type="submit" class="btn btn-primary btn-rounded">Submit</button>

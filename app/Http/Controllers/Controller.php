@@ -197,7 +197,7 @@ class Controller extends BaseController
         return $dates;
     }
 
-    public function manager ()
+    public static function manager ()
     {
         $role = auth()->user()->roles->first()->name;
 
@@ -208,7 +208,7 @@ class Controller extends BaseController
         }
     }
 
-    public function dm ()
+    public static function dm ()
     {
         $role = auth()->user()->roles->first()->name;
 
@@ -219,7 +219,7 @@ class Controller extends BaseController
         }
     }
 
-    public function hr ()
+    public static function hr ()
     {
         $role = auth()->user()->roles->first()->name;
 
@@ -230,7 +230,7 @@ class Controller extends BaseController
         }
     }
 
-    public function superAdmin ()
+    public static function superAdmin ()
     {
         $role = auth()->user()->roles->first()->name;
 
@@ -241,7 +241,7 @@ class Controller extends BaseController
         }
     }
     
-    public function barista ()
+    public static function barista ()
     {
         $role = auth()->user()->roles->first()->name;
 

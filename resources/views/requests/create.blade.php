@@ -15,17 +15,13 @@
                                     <form class="form-horizontal" role="form" action="/request/{{auth()->user()->id}}" method="POST">
                                         @csrf
                                         <div class="form-group row">
-                                            <div class="col-8">
+                                            <div class="col-12 text-center">
                                                 <div class="btn-group btn-group-toggle mt-3 mb-4" data-toggle="buttons">
-                                                    <label class="btn btn-success">
-                                                        <input type="radio" name="type" id="option2" autocomplete="off" value="2"> Sick Leave
-                                                    </label>
-                                                    <label class="btn btn-success">
-                                                        <input type="radio" name="type" id="option3" autocomplete="off" value="3"> Annual Leave
-                                                    </label>
-                                                    <label class="btn btn-success">
-                                                        <input type="radio" name="type" id="option3" autocomplete="off" value="4"> Government Leave
-                                                    </label>
+                                                    @foreach ($types as $type)
+                                                        <label class="btn btn-success p-3">
+                                                            <input type="radio" name="type" autocomplete="off" value="{{$type->id}}"> {{$type->name}}
+                                                        </label>
+                                                    @endforeach
                                                   </div>
                                             </div>
                                         </div>
@@ -45,6 +41,14 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <div class="col-1">
+                                                <label for="comment" class="form-label-control float-right align-middle">Comment</label>
+                                            </div>
+                                            <div class="col-11">
+                                                <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <div class="col-11"></div>
                                             <div class="col-1">
                                                 <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
@@ -53,12 +57,8 @@
                                     </form>
                                 </div>
                             </div>
-
                         </div>
-                        <!-- end row -->
-
-                    </div> <!-- end card-box -->
-                </div><!-- end col -->
+                    </div>
+                </div>
             </div>
-            <!-- end row -->
 @endsection
