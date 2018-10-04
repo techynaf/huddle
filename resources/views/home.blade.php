@@ -4,7 +4,15 @@
             <form action="/branch/filter" method="GET">
                 @csrf
                 <div class="row">
-                    <div class="col-8"></div>
+                    <div class="col-8">
+                        @if (auth()->user() != null)
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a href="/schedule/print" class="btn btn-primary w-100">Print</a>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                     <div class="col-1 align-middle">
                         <label for="id" class="form-label-control">Filter Branch</label>
                     </div>
@@ -36,18 +44,18 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card-box">
-                            <table class="table text-center">
+                            <table class="table">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>Name</th>
-                                        <th>Logged In</th>
-                                        <th>Sunday</th>
-                                        <th>Monday</th>
-                                        <th>Tuesday</th>
-                                        <th>Wednesday</th>
-                                        <th>Thursday</th>
-                                        <th>Friday</th>
-                                        <th>Saturday</th>
+                                        <th class="text-center">Logged In</th>
+                                        <th class="text-center">Sunday</th>
+                                        <th class="text-center">Monday</th>
+                                        <th class="text-center">Tuesday</th>
+                                        <th class="text-center">Wednesday</th>
+                                        <th class="text-center">Thursday</th>
+                                        <th class="text-center">Friday</th>
+                                        <th class="text-center">Saturday</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,7 +63,7 @@
                                         @if($user->branch_id == $branch->id)
                                             <tr>
                                                 <td><a href="/view/employee/{{$user->id}}">{{$user->name}}</a></td>
-                                                <td>
+                                                <td class="text-center">
                                                     @if($user->logged_in)
                                                         <i class="fas fa-check 2x"></i>
                                                     @else
@@ -64,12 +72,12 @@
                                                 </td>
                                                 @foreach($schedules[$loop->index] as $schedule)
                                                     @if($schedule == null)
-                                                        <td>OFF</td>
+                                                        <td class="text-center">OFF</td>
                                                     @else
                                                         @if (($user->noSchedule->where('date', $schedule->date)->first()) != null)
                                                             <td>OFF</td>
                                                         @else
-                                                            <td>
+                                                            <td class="text-center">
                                                                 <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
                                                                     {{date("g:i A", strtotime($schedule->start))}}
                                                                 </div>
@@ -107,18 +115,18 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-box">
-                                <table class="table text-center">
+                                <table class="table">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>Name</th>
-                                            <th>Logged In</th>
-                                            <th>Sunday</th>
-                                            <th>Monday</th>
-                                            <th>Tuesday</th>
-                                            <th>Wednesday</th>
-                                            <th>Thursday</th>
-                                            <th>Friday</th>
-                                            <th>Saturday</th>
+                                            <th class="text-center">Logged In</th>
+                                            <th class="text-center">Sunday</th>
+                                            <th class="text-center">Monday</th>
+                                            <th class="text-center">Tuesday</th>
+                                            <th class="text-center">Wednesday</th>
+                                            <th class="text-center">Thursday</th>
+                                            <th class="text-center">Friday</th>
+                                            <th class="text-center">Saturday</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -126,7 +134,7 @@
                                             @if($user->branch_id == $branch->id)
                                                 <tr>
                                                     <td><a href="/view/employee/{{$user->id}}">{{$user->name}}</a></td>
-                                                    <td>
+                                                    <td class="text-center">
                                                         @if($user->logged_in)
                                                             <i class="fas fa-check 2x"></i>
                                                         @else
@@ -135,13 +143,13 @@
                                                     </td>
                                                     @foreach($schedules[$loop->index] as $schedule)
                                                         @if($schedule == null)
-                                                            <td>OFF</td>
+                                                            <td class="text-center">OFF</td>
                                                         @else
 
                                                             @if (($user->noSchedule->where('date', $schedule->date)->first()) != null)
-                                                                <td>OFF</td>
+                                                                <td class="text-center">OFF</td>
                                                             @else
-                                                                <td>
+                                                                <td class="text-center">
                                                                     <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
                                                                         {{date("g:i A", strtotime($schedule->start))}}
                                                                     </div>

@@ -15,6 +15,7 @@ Route::get('/', 'HomeController@index');
 Route::get('/branch/filter', 'HomeController@branchFilter');
 Route::get('branch/user', 'HomeController@userFilter')->middleware('auth');
 Route::get('/home', 'HomeController@index')->middleware('auth');
+Route::get('/schedule/print', 'HomeController@print')->middleware('auth');
 
 //Admin Routes
 Route::get('/view/employee/{id}', 'AdminController@show')->middleware('auth');

@@ -36,38 +36,6 @@ class HomeController extends Controller
         return $this->homeView($branch);
     }
 
-    public function userFilter (Request $request)
-    {
-        $this->validate($request, [
-            'id' => 'required',
-        ]);
-
-        $user = User::where('name', $request->name)->get();
-
-        $now = new Carbon;
-        $dates = array();
-
-        while ($now->copy()->format('l') != 'Sunday') {
-            $now = $now->addDays(-1);
-        }
-
-        array_push($dates, $now->copy()->format('Y-m-d'));
-        $now = $now->addDay();
-
-        while ($now->copy()->format('l') != 'Sunday') {
-            array_push($dates, $now->copy()->format('Y-m-d'));
-            $now = $now->addDay();
-        }
-
-        if (count($user) == 0) {
-            return redirect('/')->with('error', 'There are no employee with name '.$request->name);
-        } elseif (count($user) == 1) {
-            $url = '/view/employee/'.$user->first()->id;
-            
-            return redirect($url);
-        }
-    }
-
     public function homeView($branches)
     {
         $notification = $this->checkNotifications();
@@ -120,5 +88,49 @@ class HomeController extends Controller
         return view('home')->with('users', $users)->with('branches', $branches)->with('days', $this->days)->
         with('filters', $filters)->with('flow', false)->with('schedules', $schedules)->with('dates', $dates)->
         with('notification', $notification);
+    }
+
+    public function print (Request $request)
+    {
+        if ($request->id == null) {
+            $branches = Branch::all();
+
+            return view('schedule/branch-select')->with('branches', $branches)->with('notification', $this->checkNotifications());
+        } else {
+            $sun = $this->findSun(null);
+            $dates = array($sun->copy()->format('Y-m-d'));
+            $sun->addDay();
+
+            if ($request->id == 'all') {
+                $branches = Branch::all();
+            } else {
+                $branches = Branch::find($request->id);
+            }
+
+            $notification = $this->checkNotifications();
+
+            if (auth()->user() != null) {
+                if (!is_array($notification)) {
+                    return view('profile/manager');
+                }
+            }
+            
+            $now = new Carbon;
+
+            while ($now->copy()->format('l') != 'Sunday') {
+                $now->addDays(-1);
+            }
+
+            $dates = array();
+            array_push($dates, $now->copy());
+            $now->addDay();
+
+            while ($now->copy()->format('l') != 'Sunday') {
+                array_push($dates, $now->copy());
+                $now = $now->addDay();
+            }
+
+            return view('schedule/print')->with('branches', $branches)->with('dates', $dates)->with('notification', $notification);
+        }
     }
 }
