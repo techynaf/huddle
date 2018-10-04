@@ -6424,3 +6424,59 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
 @media print {
 	.page-break	{ display: block; page-break-before: always; }
 }
+
+.bb {
+  border-bottom: solid black 1px;
+}
+
+.bt {
+  border-top: solid black 1px;
+}
+
+.bl {
+  border-left: solid black 1px;
+}
+
+.br {
+  border-right: solid black 1px;
+}
+
+.printable {
+  background: #FFFFFF;
+}
+
+.roasteryb {
+  background: #000000;
+  color: white;
+}
+
+.aisdb {
+  background: #ff0000;
+  color: white;
+}
+
+.lakeshoreb {
+  background: #4472c4;
+}
+
+.apollob {
+  background: #ff9900;
+}
+
+.cityscapeb {
+  background: #339966;
+  color: white;
+}
+
+.lk-towerb {
+  background: #00ffff;
+  color: white;
+}
+
+.dhanmondib {
+  background: #99cc00;
+}
+
+.ascottb {
+  background: #bf9000;
+}
