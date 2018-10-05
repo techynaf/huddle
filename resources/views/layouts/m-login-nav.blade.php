@@ -37,7 +37,7 @@
             <div class="clearfix"></div>
 
         </div> <!-- end container -->
-        
+        <img src="/frontend/images/beans.png" class="img-fluid beans">
     </div>
     <!-- end topbar-main -->
 
