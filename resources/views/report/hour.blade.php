@@ -55,4 +55,7 @@
             </div> <!-- end row -->
         </div> <!-- end container -->
     </section>
+    {{-- <script>
+        window.print();
+    </script> --}}
 @endsection

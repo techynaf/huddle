@@ -251,4 +251,19 @@ class Controller extends BaseController
             return false;
         }
     }
+
+    public function leaveHours ($leaves)
+    {
+        $x = 0;
+
+        foreach ($leaves as $leave) {
+            $d1 = Carbon::parse($leave->start);
+            $d2 = Carbon::parse($gov->end);
+            $y = $d1->diffInDays($d2) + 1;
+
+            $x += ($y * 8 * 60);
+        }
+
+        return $x;
+    }
 }
