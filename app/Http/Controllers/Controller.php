@@ -251,4 +251,15 @@ class Controller extends BaseController
             return false;
         }
     }
+
+    public static function admin ()
+    {
+        $role = auth()->user()->roles->first()->name;
+
+        if ($role == 'super-admin' || $role == 'HR' || $role == 'district-manager') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

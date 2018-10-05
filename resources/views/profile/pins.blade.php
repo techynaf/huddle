@@ -69,11 +69,16 @@
                                 <?php $user = App\User::where('id', 2)->first()?>
                                 <tr>
                                     <td>{{$user->name}}</td>
-                                    <td>{{$user->branch->name}}</td>
+                                    <td>Administrative</td>
                                     <td>{{ucfirst($user->roles->first()->name)}}</td>
                                     <td>{{$user->pin}}</td>
-                                    <td>------</td>
+                                    @if ($user->manager != null)
+                                        <td>{{$user->manager->pin}}</td>
+                                    @else
+                                        <td>------</td>
+                                    @endif
                                 </tr>
+                                
                             @endif
                             @foreach($branches as $branch)
                                 <tr>

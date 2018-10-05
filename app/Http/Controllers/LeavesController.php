@@ -251,4 +251,19 @@ class LeavesController extends Controller
 
         return redirect($url)->with('success', 'Leave successfully created');
     }
+
+    public function delete ($id)
+    {
+        $leave = Leave::find($id);
+        $user = $leave->user;
+        $leave->delete();
+
+        if ($this->admin()) {
+            $url = '/view/employee/'.$user->id;
+
+            return redirect($url)->with('success', 'Leave deleted');
+        } else {
+            return redirect('/dashboard')->with('success', 'Leave deleted');
+        }
+    }
 }

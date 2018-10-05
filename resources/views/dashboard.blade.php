@@ -239,9 +239,14 @@
                             <hr>
                                 @foreach($requests as $request)
                                     <div class="row">
-                                        <div class="col-10">
+                                        <div class="col-8">
                                             <h4>{{$request->subject}}</h4>
                                         </div>
+                                        @if (App\Http\Controllers\Controller::admin() || auth()->user()->id == $user->id)
+                                            <div class="col-2 text-right">
+                                                <a href="/delete/request/{{$request->id}}" class="btn">Delete</a>
+                                            </div>
+                                        @endif
                                         @if($request->is_approved == 0)
                                             <div class="col-2 text-center">
                                                 <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>

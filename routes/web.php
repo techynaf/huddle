@@ -57,6 +57,7 @@ Route::post('/request/remove/{id}', 'LeavesController@remove')->middleware('auth
 Route::get('/view/requests', 'LeavesController@show')->middleware('auth');
 Route::get('/leave/type', 'LeavesController@type')->middleware('auth');
 Route::get('/leave/type/{type}', 'LeavesController@range')->middleware('auth');
+Route::get('/delete/request/{id}', 'LeavesController@delete')->middleware('auth');
 
 //Weekly Leave Routes
 Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth');
