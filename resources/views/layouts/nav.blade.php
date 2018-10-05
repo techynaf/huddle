@@ -45,9 +45,7 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
-                    @if(auth()->user()->roles->first()->name == 'barista' || auth()->user()->roles->first()->name == 'employee')
-                        @include('layouts.barista-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager')
+                    @if(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager')
                         @include('layouts.manager-nav')
                     @elseif(auth()->user()->roles->first()->name == 'district-manager')
                         @include('layouts.dm-nav')
@@ -55,6 +53,8 @@
                         @include('layouts.hr-nav')
                     @elseif(auth()->user()->roles->first()->name == 'super-admin')
                         @include('layouts.super-nav')
+                    @else
+                        @include('layouts.barista-nav')
                     @endif
                     {{-- <li class="has-submenu">
                         <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
