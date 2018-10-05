@@ -14,6 +14,9 @@
             </div>
             <!-- End Logo container-->
 
+            <div>
+                <a href="/login" class="btn btn-primary huddle-login-btn">LOGIN</a>
+            </div>
 
             <div class="menu-extras topbar-custom">
 
@@ -46,9 +49,9 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
-                    <li class="has-submenu">
+                    <!-- <li class="has-submenu">
                         <a href="/login"><i class="fas fa-power-off"></i> <span> Login </span> </a>
-                    </li>
+                    </li> -->
                     {{-- <li class="has-submenu">
                         <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
                         <ul class="submenu">

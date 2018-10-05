@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 p-t-100">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="pin" class="col-sm-4 col-form-label text-md-right">Pin</label>
+                            <label for="pin" class="col-sm-4 col-form-label text-md-right pin">PIN</label>
 
                             <div class="col-md-6">
                                 <input id="pin" type="password" class="form-control" name="pin" value="{{ old('pin') }}" required autofocus>
@@ -28,7 +28,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary huddle-brown-btn">
                                     {{ __('Login') }}
                                 </button>
                             </div>

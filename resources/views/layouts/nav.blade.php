@@ -8,7 +8,7 @@
                     <!-- Image Logo -->
                     <a href="/" class="logo">
                         <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
-                        <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
+                        <img src="/frontend/images/logo.png" alt="" height="45" class="logo-large">
                     </a>
 
                 </div>
