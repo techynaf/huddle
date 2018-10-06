@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+        <div class="home-page-search">
             <form action="/branch/filter" method="GET">
                 @csrf
                 <div class="row">
-                    <div class="col-8"></div>
+                    <div class="col-1"></div>
                     <div class="col-1 align-middle">
-                        <label for="id" class="form-label-control">Filter Branch</label>
+                        <label for="id" class="form-label-control huddle-color">Filter Branch</label>
                     </div>
-                    <div class="col-2">
-                        <select class="form-control" name="id">
+                    <div class="col-4">
+                        <select class="form-control huddle-color" name="id">
                             @if (count($branches) > 1)
                                 <option value="all">All</option>
                             @else
@@ -22,18 +23,20 @@
                         </select>
                     </div>
                     <div class="col-1">
-                        <button class="btn btn-primary btn-rounded" type="submit">Go</button>
+                        <button class="btn btn-primary btn-rounded huddle-go-btn" type="submit">GO</button>
                     </div>
+                    <div class="col-5"></div>
                 </div>
             </form>
-            <div class="page-break"></div>
+        </div>    
+            <div class="page-break m-t-120"></div>
             @if($flow)
-                <div class="row">
+                <div class="row m-t-120">
                     <div class="col-sm-8">	
                         <h2 class="page-title">{{$branches->name}}</h2>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row m-t-120">
                     <div class="col-12">
                         <div class="card-box">
                             <table class="table text-center">

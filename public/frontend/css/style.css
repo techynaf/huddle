@@ -235,6 +235,10 @@ a:focus {
   margin-top: 40px !important;
 }
 
+.m-t-120 {
+  margin-top: 120px !important;
+}
+
 .m-b-5 {
   margin-bottom: 5px !important;
 }
@@ -2074,6 +2078,21 @@ pre {
   background-color: white !important;
   color: #40180b !important;
   border: 1px solid #40180b !important;
+}
+
+.huddle-go-btn {
+  background-color: #77786B !important;
+  color: white !important;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #77786B !important;
+  padding: 7px 35px;
+}
+
+.huddle-go-btn:hover {
+  background-color: white !important;
+  color: #40180b !important;
+  border: 1px solid white !important;
 }
 
 .pin {
@@ -6614,4 +6633,21 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
     display: block;
     page-break-before: always;
   }
+}
+
+
+
+/* New design's CSS */
+.home-page-search {
+  background-color: #CCCCCC;
+  margin-top: 19px;
+  padding: 10px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+}
+
+.huddle-color {
+  color: #40180b;
 }
