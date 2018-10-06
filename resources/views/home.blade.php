@@ -29,19 +29,20 @@
                 </div>
             </form>
         </div>    
-            <div class="page-break m-t-120"></div>
+            <div class="page-break"></div>
+            <br><br><br><br><br><br>
             @if($flow)
-                <div class="row m-t-120">
-                    <div class="col-sm-8">	
+                <div class="row">
+                    <div class="col-sm-12">	
                         <h2 class="page-title">{{$branches->name}}</h2>
                     </div>
                 </div>
-                <div class="row m-t-120">
+                <div class="row">
                     <div class="col-12">
                         <div class="card-box">
                             <table class="table text-center">
                                 <thead class="thead-light">
-                                    <tr>
+                                    <tr> 
                                         <th>Name</th>
                                         <th>Logged In</th>
                                         <th>Sunday</th>
@@ -57,12 +58,12 @@
                                     @foreach($users as $user)
                                         @if($user->branch_id == $branch->id)
                                             <tr>
-                                                <td><a href="/view/employee/{{$user->id}}">{{$user->name}}</a></td>
+                                                <td><a href="/view/employee/{{$user->id}}" class="name-left-aligned huddle-color">{{$user->name}}</a></td>
                                                 <td>
                                                     @if($user->logged_in)
-                                                        <i class="fas fa-check 2x"></i>
+                                                        <i class="fas fa-check 2x huddle-color"></i>
                                                     @else
-                                                        <i class="fas fa-times 2x"></i>
+                                                        <i class="fas fa-times 2x huddle-color"></i>
                                                     @endif
                                                 </td>
                                                 @foreach($schedules[$loop->index] as $schedule)
@@ -96,13 +97,13 @@
                 @foreach($branches as $branch)
                     @if(count($branches) > 1)
                         <div class="row">
-                            <div class="col-sm-8">	
+                            <div class="col-sm-12">	
                                 <h2 class="page-title">{{$branch->name}}</h2>
                             </div>
                         </div>
                     @else
                         <div class="row">
-                            <div class="col-sm-8">	
+                            <div class="col-sm-12">	
                                 <h2 class="page-title">{{$branch->name}}</h2>
                             </div>
                         </div>
@@ -128,7 +129,7 @@
                                         @foreach($users as $user)
                                             @if($user->branch_id == $branch->id)
                                                 <tr>
-                                                    <td><a href="/view/employee/{{$user->id}}">{{$user->name}}</a></td>
+                                                    <td><a href="/view/employee/{{$user->id}}" class="huddle-color">{{$user->name}}</a></td>
                                                     <td>
                                                         @if($user->logged_in)
                                                             <i class="fas fa-check 2x"></i>

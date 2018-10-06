@@ -146,8 +146,12 @@ a:focus {
   font-size: 20px;
   margin-bottom: 0;
   margin-top: 0;
-  line-height: 70px;
+  padding-left: 100px;
+  line-height: 60px;
   font-weight: 600;
+  background-color: #40180b;
+  color: white;
+  border-radius: 25px 25px 0px 0px;
 }
 
 .header-title {
@@ -235,10 +239,6 @@ a:focus {
   margin-top: 40px !important;
 }
 
-.m-t-120 {
-  margin-top: 120px !important;
-}
-
 .m-b-5 {
   margin-bottom: 5px !important;
 }
@@ -261,6 +261,10 @@ a:focus {
 
 .m-b-30 {
   margin-bottom: 30px !important;
+}
+
+.m-b-120 {
+  margin-top: 120px !important;
 }
 
 .w-xs {
@@ -396,11 +400,12 @@ a:focus {
 
 /* Card Box */
 .card-box {
-  padding: 20px;
+  padding: 0px;
   box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);
   border-radius: 5px;
   margin-bottom: 20px;
   background-color: #ffffff;
+  border-radius: 0px 0px 25px 25px;
 }
 
 .card-box .card-drop {
@@ -6650,4 +6655,11 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
 
 .huddle-color {
   color: #40180b;
+}
+
+.table .thead-light th {
+  background-color: #BBBAB6;
+  color: white;
+  font-weight: normal;
+  font-size: 16px;
 }
