@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8 p-t-100">
+        <div class="col-md-8 p-t-120">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -11,7 +11,7 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                        <div class="form-group row">
+                        <div class="form-group row pt-5">
                             <label for="pin" class="col-sm-4 col-form-label text-md-right pin">PIN</label>
 
                             <div class="col-md-6">
@@ -27,7 +27,7 @@
                         <input type="hidden" name="password" value="bangladesh">
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-8 offset-md-4 pb-5">
                                 <button type="submit" class="btn btn-primary huddle-brown-btn">
                                     {{ __('Login') }}
                                 </button>
