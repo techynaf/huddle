@@ -8,12 +8,14 @@
                 <!-- Image Logo -->
                 <a href="/" class="logo">
                     <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
-                    <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
+                    <img src="/frontend/images/logo.png" alt="" height="45" class="logo-large">
                 </a>
 
             </div>
             <!-- End Logo container-->
-
+            <div>
+                <a href="/logout" class="btn btn-primary huddle-login-btn"> LOGOUT </a>
+            </div>
 
             <div class="menu-extras topbar-custom">
 
@@ -41,18 +43,16 @@
     </div>
     <!-- end topbar-main -->
 
-    <div class="navbar-custom">
+    <!-- <div class="navbar-custom">
         <div class="container-fluid">
             <div id="navigation">
-                <!-- Navigation Menu-->
                 <ul class="navigation-menu">
                     <li class="has-submenu">
                         <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
                     </li>
                 </ul>
-                <!-- End navigation menu -->
-            </div> <!-- end #navigation -->
-        </div> <!-- end container -->
-    </div> <!-- end navbar-custom -->
+            </div> 
+        </div> 
+    </div>  -->
 </header>
 <!-- End Navigation Bar-->

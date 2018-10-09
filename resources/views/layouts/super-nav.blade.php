@@ -68,6 +68,6 @@
     <a href="/dashboard"><i class="fa fa-th-large"></i> <span> Dashboard </span> </a>
 </li>
 
-<li class="has-submenu">
+<!-- <li class="has-submenu">
     <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
-</li>
+</li> -->
