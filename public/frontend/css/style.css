@@ -5736,17 +5736,17 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 #topnav .navigation-menu > li {
   display: inline-block;
   position: relative;
-  padding: 11px;
+  padding: 3px;
 }
 
 #topnav .navigation-menu > li > a {
   display: block;
   color: #435966;
-  font-size: 15px;
+  font-size: 16px;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
   line-height: 20px;
-  padding: 20px 60px 20px 60px;
+  padding: 20px 50px 20px 50px;
 }
 
 #topnav .navigation-menu > li > a:hover {
@@ -5762,11 +5762,11 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 }
 
 #topnav .navigation-menu > li > a i {
-  font-size: 16px;
+  font-size: 35px;
   margin-right: 5px;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
-  vertical-align: text-top;
+  vertical-align: middle;
 }
 
 #topnav .navigation-menu > li > a:hover, #topnav .navigation-menu > li > a:focus {
