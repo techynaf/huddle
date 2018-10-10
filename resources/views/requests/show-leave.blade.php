@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-sm-12">
-                    <h2 class="page-title">Leave Requests</h2>
+                    <h2 class="page-title-leave-request">Leave Requests</h2>
                 </div>
-            </div>
+            </div> -->
 
             <div class="row">
                 <div class="col-12">
                     <div class="card-box">
-                        <hr>
+                    <h2 class="page-title-leave-request">Leave Requests</h2>
                         @if(count($leaves) == 0)
-                            <h2 class="text-center">No pending requests</h2>
-                            <hr>
+                            <h2 class="text-center py-5">No pending requests</h2>
+                            
                         @else
                             @foreach($leaves as $leave)
                                 <form action="/request/{{$leave->id}}/process" method="POST">
