@@ -32,4 +32,7 @@
             <br><br>
         @endforeach
     </div>
+    <script>
+        window.print();
+    </script>
 @endsection

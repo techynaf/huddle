@@ -59,7 +59,7 @@
             </div> <!-- end row -->
         </div> <!-- end container -->
     </section>
-    {{-- <script>
+    <script>
         window.print();
-    </script> --}}
+    </script>
 @endsection
