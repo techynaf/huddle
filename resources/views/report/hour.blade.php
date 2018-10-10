@@ -12,20 +12,24 @@
                     <table class="table table-striped table-bordered bg-white">
                         <thead>
                             <tr class="bg-warning">
-                            <th scope="col">Name</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Employee Code</th>
-                            <th scope="col">Religion</th>
+                            <th scope="col table-header">Name</th>
+                            <th scope="col table-header">Designation</th>
+                            <th scope="col table-header">Status</th>
+                            <th scope="col table-header">Employee Code</th>
+                            <th scope="col table-header">Religion</th>
         
                             @foreach($weeks as $week)
-                                <th scope="col">
-                                    {{date("d M", strtotime($week[0]))}} <br>
-                                    {{date("d M", strtotime($week[1]))}}
+                                <th scope="col table-header">
+                                    <div class="table-header">
+                                        {{date("d M", strtotime($week[0]))}} <br>
+                                        {{date("d M", strtotime($week[1]))}}
+                                    </div>
                                 </th>
                             @endforeach
         
-                            <th scope="col">Total Working Hour</th>
+                            <th scope="col table-header">
+                                Total Working Hour
+                            </th>
                             </tr>  
                         </thead>
                         <tbody>

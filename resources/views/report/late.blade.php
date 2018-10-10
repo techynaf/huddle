@@ -12,18 +12,18 @@
                     <table class="table table-bordered bg-white">
                         <thead>
                             <tr class="bg-warning">
-                            <th scope="col">Name</th>
-                            <th scope="col">Designation</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Employee Code</th>
-                            <th scope="col">Religion</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Actual Schedule</th>
-                            <th scope="col">Login Time</th>
-                            <th scope="col">Duration</th>
-                            <th scope="col">Late Type</th>
-                            <th scope="col">Comment</th>
-                            <th scope="col">Commented By</th>
+                            <th scope="col table-header">Name</th>
+                            <th scope="col table-header">Designation</th>
+                            <th scope="col table-header">Status</th>
+                            <th scope="col table-header">Employee Code</th>
+                            <th scope="col table-header">Religion</th>
+                            <th scope="col table-header">Date</th>
+                            <th scope="col table-header">Actual Schedule</th>
+                            <th scope="col table-header">Login Time</th>
+                            <th scope="col table-header">Duration</th>
+                            <th scope="col table-header">Late Type</th>
+                            <th scope="col table-header">Comment</th>
+                            <th scope="col table-header">Commented By</th>
                             </tr>  
                         </thead>
                         <tbody>
