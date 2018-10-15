@@ -2181,6 +2181,24 @@ pre {
   border: 1px solid #40180b !important;
 }
 
+.huddle-brown-btn-schedule {
+  background-color: #40180b !important;
+  color: white;
+  font-size: 20px;
+  padding: 4px 40px;
+  border-radius: 10px;
+  border: 1px solid #40180b !important;
+}
+
+.huddle-brown-btn-schedule:hover {
+  background-color: transparent !important;
+  color: #40180b !important;
+  font-size: 20px;
+  padding: 4px 40px;
+  border-radius: 10px;
+  border: 1px solid #40180b !important;
+}
+
 .huddle-login-btn {
   background-color: white !important;
   color: #40180b !important;
@@ -6797,7 +6815,9 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
 
 .scheduler-header {
   background-color: #C4B29C;
-  margin: 40px 10px 20px 10px;
+  color: white;
+  margin: 40px 0px 20px 0px;
+  padding: 10px 5px 5px 5px;
   box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.08), 0 2px 0px 0 rgba(0, 0, 0, 0.05);
   border-radius: 5px;
 }

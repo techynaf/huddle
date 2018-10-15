@@ -2,15 +2,16 @@
 
 @section('content')
             <form action="/scheduler" method="get">
+
+            <div class="container-fluid">
                 <div class="row scheduler-header">
                     <div class="col-4">
-                        <h4 class="page-title-scheduler">Scheduler for {{date("D d M", strtotime($days[0][1])).' to '.date("D d M", strtotime($days[6][1]))}}</h4>
+                        <h4 class="page-title-scheduler">Scheduler for <br> {{date("D d M", strtotime($days[0][1])).' to '.date("D d M", strtotime($days[6][1]))}}</h4>
                     </div>
-                    <div class="col-3"></div>
-                    <div class="col-4">
+                    <div class="col-3 my-3">
                         <div class="row">
                             <div class="col-6">
-                                <h5>Select another date range</h5>
+                                <h5>Select date range</h5>
                             </div>
                             <div class="col-6">
                                 <select name="date" class="form-control">
@@ -23,13 +24,15 @@
                                 </select>
                             </div>
                         </div>
+                        </div>    
                         @if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
                             <br>
+                            <div class="col-3 mt-3 mb-0">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-5">
                                     <h5>Select a branch</h5>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-7">
                                     <select name="branch" class="form-control">
                                         @if ($b == null)
                                             <option value="">All</option>
@@ -46,10 +49,11 @@
                             <br>
                         @endif
                     </div>
-                    <div class="col-1">
-                        <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                    <div class="col-2 mt-3">
+                        <button class="btn btn-primary huddle-brown-btn-schedule" type="submit">Submit</button>
                     </div>
                 </div>
+                </div>    
             </form>
 
             <div class="bg-white scheduler">
