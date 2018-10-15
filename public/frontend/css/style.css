@@ -451,6 +451,15 @@ a:focus {
   padding: 25px;
 }
 
+.card-box-late-report {
+  padding: 0px;
+  box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.08), 0 2px 0px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border-radius: 0px 0px 25px 25px;
+}
+
 .card-box .card-drop {
   color: #98a6ad;
   font-size: 20px;

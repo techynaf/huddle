@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-3"></div>
-            <h2 class="page-title">Select Date</h2>
+            <h2 class="page-title w-50">Select Date</h2>
         </div>
         <form action="{{$url}}" method="GET">
             <div class="row">
                 <div class="col"></div>
-                <div class="col-6 card-box">
+                <div class="col-6 card-box-late-report py-5 px-5">
                     <div class="row">
                         <div class="col-8">
                             <select name="month" class="form-control">
@@ -29,7 +29,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-12"><button type="submit" class="btn btn-primary btn-rounded">Submit</button></div>
+                        <div class="col-12"><button type="submit" class="btn btn-primary huddle-brown-btn">Submit</button></div>
                     </div>
                 </div>
                 <div class="col"></div>
