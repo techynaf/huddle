@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-            <div class="row">
+            <div class="row mt-5">
                 <div class="col-sm-12">
                     <h4 class="page-title">Create New Profile</h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="card-box">
-                        <div class="row">
+                    <div class="card-box-employee">
+                        <div class="row pt-4">
                             <div class="col-12">
                                 <div class="p-20">
                                     <form class="form-horizontal" role="form" action="/store/profile" method="POST">
@@ -72,9 +72,9 @@
                                         </div>
                                         
                                         <div class="row">
-                                            <div class="col-11"></div>
-                                            <div class="col-1">
-                                                <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                                            <div class="col-1"></div>
+                                            <div class="col-11">
+                                                <button class="btn btn-primary huddle-brown-btn my-4" type="submit">Submit</button>
                                             </div>
                                         </div>
                                     </form>
