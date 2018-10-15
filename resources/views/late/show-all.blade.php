@@ -3,14 +3,14 @@
 @section('content')
 
             <div class="row">
-                <h2 class="page-title">Lates</h2>
+                <h2 class="page-title-logs mt-5 mb-4">Lates</h2>
             </div>
 
             @foreach($dates as $date)
                 <div class="row">
-                    <div class="col-12 card-box">
+                    <div class="col-12 card-box-logs">
                         <div class="row">
-                            <div class="col-1 border-right">
+                            <div class="col-1 border-right ml-3">
                                 {{date("D d M", strtotime($date))}}
                                 <br>
                                 {{date("Y", strtotime($date))}}

@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-            <div class="row">
+            <!-- <div class="row">
                 <h2 class="page-title">Branches</h2>
-            </div>
-            <div class="row card-box">
+            </div> -->
+            <div class="row">
                 <div class="col-sm-12">
+                <div class="card-box">
+                <h2 class="page-title-leave-request">BRANCHES</h2>
                     <table class="table">
-                        <thead class="table-header">
+                        <thead class="table-header thead-light">
                             <tr>
                                 <th>Branch Name</th>
                                 <th>Employees</th>
@@ -59,6 +61,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
 @endsection

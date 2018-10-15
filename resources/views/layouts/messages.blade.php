@@ -1,6 +1,6 @@
 @if(count($errors) > 0)
     @foreach($errors->all() as $error)
-        <div class="row text-center alert alert-danger">
+        <div class="row text-center alert alert-danger mt-5">
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 {{$error}}
@@ -11,7 +11,7 @@
 @endif
 
 @if(session('success'))
-    <div class="row text-center alert alert-success">
+    <div class="row text-center alert alert-success mt-5">
         <div class="col-md-4"></div>
         <div class="col-md-4">
             {{session('success')}}
@@ -21,7 +21,7 @@
 @endif
 
 @if(session('error'))
-    <div class="row text-center alert alert-danger">
+    <div class="row text-center alert alert-danger mt-5">
         <div class="col-md-4"></div>
         <div class="col-md-4">
             {{session('error')}}
