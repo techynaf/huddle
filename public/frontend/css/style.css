@@ -178,6 +178,19 @@ a:focus {
   border-radius: 25px 25px 0px 0px;
 }
 
+.page-title-leave {
+  font-size: 30px;
+  margin-bottom: 0;
+  margin-top: 50px;
+  padding-left: 30px;
+  line-height: 60px;
+  font-weight: 600;
+  background-color: #3E3E3E;
+  color: #C4B29C;
+  border-radius: 25px 25px 0px 0px;
+  text-align: center;
+}
+
 .page-title-logs {
   font-size: 50px;
   margin-bottom: 0;
@@ -186,6 +199,19 @@ a:focus {
   line-height: 60px;
   font-weight: 600;
   color: #505050;
+}
+
+.page-title-create-daysoff {
+  font-size: 30px;
+  margin-bottom: 0;
+  margin-top: 50px;
+  padding-left: 30px;
+  line-height: 60px;
+  font-weight: 600;
+  background-color: #3E3E3E;
+  color: #C4B29C;
+  border-radius: 25px 25px 0px 0px;
+  text-align: center;
 }
 
 .header-title {
@@ -461,6 +487,15 @@ a:focus {
 }
 
 .card-box-employee {
+  padding: 0px;
+  box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.08), 0 2px 0px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border-radius: 0px 0px 25px 25px;
+}
+
+.card-box-create-daysoff {
   padding: 0px;
   box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.08), 0 2px 0px 0 rgba(0, 0, 0, 0.05);
   border-radius: 5px;
@@ -2168,6 +2203,20 @@ pre {
   background-color: white !important;
   color: #40180b !important;
   border: 1px solid white !important;
+}
+
+.huddle-leave-btn {
+  background-color: #E0D9CF !important;
+  color: #3E3F3D !important;
+  font-size: 20px;
+  padding: 5px 40px;
+  border-radius: 5px;
+  border: 1px solid #E0D9CF !important;
+}
+
+.huddle-leave-btn:hover {
+  background-color: #77786B !important;
+  border: #77786B !important;
 }
 
 .pin {

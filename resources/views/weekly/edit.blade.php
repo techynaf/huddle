@@ -1,26 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-            <div class="row">
-                <div class="col-sm-12">
-                    <h4 class="page-title">Edit Weekly Leave</h4>
-                </div>
-            </div>
 
             @if(count($leaves) == 0)
                 <div class="row">
-                    <div class="col-12 card-box">
+                <h4 class="page-title-leave w-100">Edit Weekly Leave</h4>
+                    <div class="col-12 card-box-employee">
                         <hr>
-                        <h2 class="page-title text-center">There are no pending weekly day offs, please <a href="/create/weekly">select new day offs</a>.</h2>
+                        <h2 class="text-center">There are no pending weekly day offs, please <a href="/create/weekly">select new day offs</a>.</h2>
                         <hr>
                     </div>
                 </div>
             @else
                 @foreach($leaves as $leave)
-                    <div class="row">
-                        <div class="card-box col-12">
+                    <div class="row text-center">
+                    <h4 class="page-title-leave w-100">Edit Weekly Leave</h4>
+                        <div class="card-box-employee col-12">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 mt-3">
                                     <h4><strong>Select Days</strong></h4>
                                 </div>
                             </div>
@@ -29,8 +26,9 @@
                             <form action="/edit/weekly/{{auth()->user()->id}}" method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-2">
-                                        <label for="day_1" class="form-label-control align-middle float-right">First Day</label>
+                                <div class="col-1"></div>
+                                    <div class="col-1">
+                                        <label for="day_1" class="form-label-control align-middle float-right font-weight-bold">First Day</label>
                                     </div>
                                     <div class="col-4">
                                         <select name="day_1" class="form-control">
@@ -40,8 +38,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-2">
-                                        <label for="day_2" class="form-label-control align-middle float-right">Second Day</label>
+                                    <div class="col-1">
+                                        <label for="day_2" class="form-label-control align-middle float-right font-weight-bold">Second Day</label>
                                     </div>
                                     <div class="col-4">
                                         <select name="day_2" class="form-control">
@@ -51,7 +49,9 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="col-1"></div>
                                 </div>
+                                <br>
                                 <hr>
                                 <div class="row">
                                     <div class="col-12">
@@ -61,23 +61,23 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-2">
-                                        <label for="start" class="form-label-control align-middle float-right">Select Start Date</label>
+                                        <label for="start" class="form-label-control align-middle float-right font-weight-bold">Select Start Date</label>
                                     </div>
                                     <div class="col-4">
                                         <input type="date" name="start" min="{{$start}}" class="form-control" value="{{$leave->start}}">
                                     </div>
-                                    <div class="col-2">
-                                        <label for="start" class="form-label-control align-middle float-right">Select End Date</label>
+                                    <div class="col-1">
+                                        <label for="start" class="form-label-control align-middle float-right font-weight-bold">End Date</label>
                                     </div>
                                     <div class="col-4">
                                         <input type="date" name="end" min="{{$end}}" class="form-control" value="{{$leave->end}}">
                                     </div>
+                                    <div class="col-1"></div>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-10"></div>
-                                    <div class="col-2">
-                                        <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                                
+                                <div class="row my-5">
+                                    <div class="col-12 text-center">
+                                        <button class="btn btn-success px-5" type="submit">Submit</button>
                                     </div>
                                 </div>
                             </form>
