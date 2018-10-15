@@ -2,9 +2,9 @@
 
 @section('content')
             <form action="/scheduler" method="get">
-                <div class="row">
-                    <div class="col--4">
-                        <h4 class="page-title">Scheduler for {{date("D d M", strtotime($days[0][1])).' to '.date("D d M", strtotime($days[6][1]))}}</h4>
+                <div class="row scheduler-header">
+                    <div class="col-4">
+                        <h4 class="page-title-scheduler">Scheduler for {{date("D d M", strtotime($days[0][1])).' to '.date("D d M", strtotime($days[6][1]))}}</h4>
                     </div>
                     <div class="col-3"></div>
                     <div class="col-4">
@@ -52,18 +52,18 @@
                 </div>
             </form>
 
-            <div class="bg-white">
-                <div class="header bg-light">
-                    <div class="row pt-5">
-                        <div class="col-md pt-2 text-center">Name</div>
+            <div class="bg-white scheduler">
+                <div class="header page-title-schedule text-uppercase">
+                    <div class="row pt-3">
+                        <div class="col-md text-center">Name</div>
                         @foreach($days as $day)
                             <div class="col-md">
                                 {{date("D d M", strtotime($day[1]))}}
-                                <br>
+                                
                                 {{date("Y", strtotime($day[1]))}}
                             </div>
                         @endforeach
-                        <div class="col-md-1 pt-2 text-center">Action</div>
+                        <div class="col-md-1 text-center">Action</div>
                     </div><!-- row -->
                     <hr>
                 </div>
@@ -140,7 +140,6 @@
                                 </div>
                             </div>
                         </form>
-                        <hr>
                      @endforeach
                 </div>
             </div>

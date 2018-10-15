@@ -214,6 +214,14 @@ a:focus {
   text-align: center;
 }
 
+.page-title-schedule {
+  font-size: 12px;
+  background-color: #3E3E3E;
+  color: #C4B29C;
+  text-align: center;
+  border-radius: 5px 5px 0px 0px;
+}
+
 .header-title {
   font-size: 16px;
   font-weight: 600;
@@ -6785,4 +6793,16 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
   color: white;
   font-weight: normal;
   font-size: 16px;
+}
+
+.scheduler-header {
+  background-color: #C4B29C;
+  margin: 40px 10px 20px 10px;
+  box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.08), 0 2px 0px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+
+.scheduler {
+  border-radius: 5px;
+  box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.08), 0 2px 0px 0 rgba(0, 0, 0, 0.05);
 }
