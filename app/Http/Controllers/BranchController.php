@@ -99,6 +99,7 @@ class BranchController extends Controller
 
         $branch = new Branch;
         $branch->name = $request->name;
+        $branch->color = $request->color;
         $branch->timestamps = false;
         $branch->save();
         

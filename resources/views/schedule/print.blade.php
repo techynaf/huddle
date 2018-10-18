@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('templates.color-style')
     <div class="printable">
         @foreach($branches as $branch)
             <div class="container-fluid">
