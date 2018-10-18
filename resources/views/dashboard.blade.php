@@ -214,149 +214,70 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
                         
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-8">
-                        <div class="row text-center">
-                                <div class="col-md-6">
-                                    <div class="card-box">
-                                        <div class="card-title py-1">
-                                            <h2>Employee Analytics</h2>
-                                        </div>
+                <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                                <div class="card-box">
+                                    <div class="card-title py-1 text-center">
+                                        <h2>Employee Analytics</h2>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-6">Lates</div>
-                                        <div class="col-6">{{$lates}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        <div class="card-title py-1">
-                            <h2>Requests Made</h2>
-                        </div>
-                        <div class="widget-container">
-                            @if(count($requests) == 0)
-                                <p class="text-center">No requests made yet</p>
-                            @else
-                            <hr>
-                                @foreach($requests as $request)
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <h4>{{$request->subject}}</h4>
-                                        </div>
-                                        @if (App\Http\Controllers\Controller::admin() || auth()->user()->id == $user->id)
-                                            <div class="col-2 text-right">
-                                                <a href="/delete/request/{{$request->id}}" class="btn">Delete</a>
-                                            </div>
-                                        @endif
-                                        @if($request->is_approved == 0)
-                                            <div class="col-2 text-center">
-                                                <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    
                                     <div class="widget-container">
-                                        <div class="row py-1">
-                                            <div class="col-6">
-                                                Working time
-                                            </div>
-                                            <div class="col-6">
-                                                {{$hours}} hours {{$minutes}} minutes
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row pb-4">
+                                        <div class="row pl-4">
                                             <div class="col-6">Lates</div>
                                             <div class="col-6">{{$lates}}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
-                            <div class="col-md-6">
+                            <div class="col-sm-12 col-md-8">
                                 <div class="card-box">
-                                    <div class="card-title py-1">
+                                    <div class="card-title py-1 text-center">
                                         <h2>Requests Made</h2>
                                     </div>
-                                    <div class="widget-container py-4">
+                                    <div class="widget-container">
                                         @if(count($requests) == 0)
-                                            
                                             <p class="text-center">No requests made yet</p>
-                                            
                                         @else
                                         <hr>
                                             @foreach($requests as $request)
                                                 <div class="row">
-                                                    <div class="col-10">
+                                                    <div class="col-8">
                                                         <h4>{{$request->subject}}</h4>
                                                     </div>
+                                                    @if (App\Http\Controllers\Controller::admin() || auth()->user()->id == $user->id)
+                                                        <div class="col-2 text-right">
+                                                            <a href="/delete/request/{{$request->id}}" class="btn">Delete</a>
+                                                        </div>
+                                                    @endif
                                                     @if($request->is_approved == 0)
                                                         <div class="col-2 text-center">
                                                             <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>
                                                         </div>
                                                     @endif
                                                 </div>
-                                                <div class="row">
-                                                    @if($request->start != null)
-                                                        <div class="col-3">
-                                                            {{$request->leavetype->name}}
+                                                
+                                                <div class="widget-container">
+                                                    <div class="row py-1">
+                                                        <div class="col-6">
+                                                            Working time
                                                         </div>
-                                                        <div class="col-3">
-                                                            {{date("D d M", strtotime($request->start))}}
+                                                        <div class="col-6">
+                                                            {{$hours}} hours {{$minutes}} minutes
                                                         </div>
-                                                        <div class="col-3">
-                                                            {{date("D d M", strtotime($request->end))}}
-                                                        </div>
-                                                        <div class="col-1"></div>
-                                                    @else
-                                                        <div class="col-2">
-                                                            Request Body
-                                                        </div>
-                                                        <div class="col-8">
-                                                            {{$request->body}}
-                                                        </div>
-                                                    @endif
-                                                    <div class="col-1">
-                                                        @if($request->is_approved === 1)
-                                                            <div class="btn btn-success">Approved</div>
-                                                        @else
-                                                            @if($request->is_approved === 2)
-                                                                <div class="btn btn-danger">Declined</div>
-                                                            @else
-                                                                <div class="btn btn-secondary">Pending</div>
-                                                            @endif
-                                                        @endif
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row pb-4">
+                                                        <div class="col-6">Lates</div>
+                                                        <div class="col-6">{{$lates}}</div>
                                                     </div>
                                                 </div>
-                                                <hr>
                                             @endforeach
+                                            {{ $requests->links() }}
                                         @endif
                                     </div>
-                                    <hr>
-                                @endforeach
-                                {{ $requests->links() }}
-                            @endif
-                        </div>
-
-
-                    </div>
+                                </div>
+                            </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
 @endsection
