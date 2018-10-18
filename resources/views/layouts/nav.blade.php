@@ -6,12 +6,12 @@
             <!-- Logo container-->
             <div class="logo">
                     <!-- Image Logo -->
-                    <a href="/" class="logo">
-                        <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
-                        <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
-                    </a>
+                <a href="/" class="logo">
+                    <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
+                    <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
+                </a>
 
-                </div>
+            </div>
                 <!-- End Logo container-->
 
             <div class="menu-extras topbar-custom">
@@ -42,72 +42,85 @@
 
     <div class="navbar-custom">
         <div class="container-fluid">
-            <div id="navigation">
-                <!-- Navigation Menu-->
-                <ul class="navigation-menu">
-                    @if(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager')
-                        @include('layouts.manager-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'district-manager')
-                        @include('layouts.dm-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'HR')
-                        @include('layouts.hr-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'super-admin')
-                        @include('layouts.super-nav')
-                    @else
-                        @include('layouts.barista-nav')
-                    @endif
-                    {{-- <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
-                        <ul class="submenu">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Registration</a></li>
-                            <li><a href="recoverpw.html">Forget Password</a></li>
-                        </ul>
-                    </li>
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            @if(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager')
+                                @include('layouts.manager-nav')
+                            @elseif(auth()->user()->roles->first()->name == 'district-manager')
+                                @include('layouts.dm-nav')
+                            @elseif(auth()->user()->roles->first()->name == 'HR')
+                                @include('layouts.hr-nav')
+                            @elseif(auth()->user()->roles->first()->name == 'super-admin')
+                                @include('layouts.super-nav')
+                            @else
+                                @include('layouts.barista-nav')
+                            @endif
+                            {{-- <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
+                                <ul class="submenu">
+                                    <li><a href="login.html">Login</a></li>
+                                    <li><a href="register.html">Registration</a></li>
+                                    <li><a href="recoverpw.html">Forget Password</a></li>
+                                </ul>
+                            </li>
 
-                    <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-view-list"></i> <span> Section 3 </span> </a>
-                        <ul class="submenu">
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-chart-donut-variant"></i><span> Section 4 </span> </a>
-                        <ul class="submenu">
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-google-pages"></i><span> Section 5 </span> </a>
-                        <ul class="submenu">
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="has-submenu">
-                        <a href="#"><i class="mdi mdi-layers"></i><span> Section 6 </span> </a>
-                        <ul class="submenu megamenu">
-                            <li>
-                                <ul>
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-view-list"></i> <span> Section 3 </span> </a>
+                                <ul class="submenu">
                                     <li><a href="#">1</a></li>
                                     <li><a href="#">2</a></li>
                                     <li><a href="#">3</a></li>
                                 </ul>
                             </li>
+
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-chart-donut-variant"></i><span> Section 4 </span> </a>
+                                <ul class="submenu">
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-google-pages"></i><span> Section 5 </span> </a>
+                                <ul class="submenu">
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#"><i class="mdi mdi-layers"></i><span> Section 6 </span> </a>
+                                <ul class="submenu megamenu">
+                                    <li>
+                                        <ul>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li> --}}
                         </ul>
-                    </li> --}}
-                </ul>
-                <!-- End navigation menu -->
-            </div> <!-- end #navigation -->
+                        <!-- End navigation menu -->
+                    </div> <!-- end #navigation -->
+                </div>
+                <div class="col-md-3 text-right p-2">
+                    <a href="/dashboard" class="no-style">
+                        @if (auth()->user() != null)
+                            <div class="name">{{auth()->user()->name}}</div>
+                            <div class="role">{{ucfirst(auth()->user()->roles->first()->name)}}</div>
+                        @endif
+                    </a>
+                </div>
+            </div>
         </div> <!-- end container -->
     </div> <!-- end navbar-custom -->
 </header>
 <!-- End Navigation Bar-->
+<br><br>

@@ -6484,3 +6484,26 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
 .table-header {
   font-size: 9px;
 }
+
+.name {
+  font-size: 1.5em;
+  margin: 0;
+  padding: 0;
+}
+
+.role {
+  margin: 0;
+  padding: 0;
+}
+
+.no-style:link {
+  text-decoration: inherit;
+  color: inherit;
+  cursor: auto;
+}
+
+a.no-style:visited {
+  text-decoration: inherit;
+  color: inherit;
+  cursor: auto;
+}
