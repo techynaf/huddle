@@ -223,8 +223,17 @@
                                     <div class="card-title py-1 text-center">
                                         <h2>Employee Analytics</h2>
                                     </div>
-                                    <div class="widget-container">
-                                        <div class="row pl-4">
+                                    <div class="widget-container pl-3">
+                                        <div class="row py-1">
+                                            <div class="col-6">
+                                                Working time
+                                            </div>
+                                            <div class="col-6">
+                                                {{$hours}} hours {{$minutes}} minutes
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row pb-4">
                                             <div class="col-6">Lates</div>
                                             <div class="col-6">{{$lates}}</div>
                                         </div>
@@ -238,7 +247,11 @@
                                     </div>
                                     <div class="widget-container">
                                         @if(count($requests) == 0)
+                                            <br>
+                                            <hr>
                                             <p class="text-center">No requests made yet</p>
+                                            <hr>
+                                            <br>
                                         @else
                                         <hr>
                                             @foreach($requests as $request)
@@ -256,22 +269,6 @@
                                                             <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>
                                                         </div>
                                                     @endif
-                                                </div>
-                                                
-                                                <div class="widget-container">
-                                                    <div class="row py-1">
-                                                        <div class="col-6">
-                                                            Working time
-                                                        </div>
-                                                        <div class="col-6">
-                                                            {{$hours}} hours {{$minutes}} minutes
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row pb-4">
-                                                        <div class="col-6">Lates</div>
-                                                        <div class="col-6">{{$lates}}</div>
-                                                    </div>
                                                 </div>
                                             @endforeach
                                             {{ $requests->links() }}
