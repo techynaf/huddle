@@ -8,12 +8,15 @@
                 <!-- Image Logo -->
                 <a href="/" class="logo">
                     <img src="/frontend/images/logo-sm.png" alt="" height="50" class="logo-small">
-                    <img src="/frontend/images/logo.png" alt="" height="27" class="logo-large">
+                    <img src="/frontend/images/logo.png" alt="" height="45" class="logo-large">
                 </a>
 
             </div>
             <!-- End Logo container-->
 
+            <div>
+                <a href="/login" class="btn btn-primary huddle-login-btn">LOGIN</a>
+            </div>
 
             <div class="menu-extras topbar-custom">
 
@@ -37,6 +40,7 @@
             <div class="clearfix"></div>
 
         </div> <!-- end container -->
+        <img src="/frontend/images/beans.png" class="img-fluid beans">
     </div>
     <!-- end topbar-main -->
 
@@ -45,9 +49,9 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
-                    <li class="has-submenu">
+                    <!-- <li class="has-submenu">
                         <a href="/login"><i class="fas fa-power-off"></i> <span> Login </span> </a>
-                    </li>
+                    </li> -->
                     {{-- <li class="has-submenu">
                         <a href="#"><i class="mdi mdi-texture"></i><span> Other pages </span> </a>
                         <ul class="submenu">

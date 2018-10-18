@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-            <div class="row">
+            <!-- <div class="row">
                 <h2 class="page-title">Process Weekly Day Offs</h2>
-            </div>
+            </div> -->
             <div class="row">
-                <div class="col-sm-12 card-box">
-                    <hr>
+                <div class="col-sm-12">
+                <div class="card-box">
+                <h2 class="page-title-weekly-dayoffs">Process Weekly Day Offs</h2>
                     @if(count($leaves) == 0)
-                        <h2 class="text-center">No pending requests</h2>
-                        <hr>
+                        <h2 class="text-center py-5">No pending requests</h2>
+                       
                     @else
                         @foreach($leaves as $leave)
                             @if($leave->user->roles->first()->name != 'manager' || $leave->user->roles->first()->name != 'assitant-manager' || $leave->user_id != auth()->user()->id)
@@ -79,6 +80,7 @@
                             @endif
                         @endforeach
                     @endif
+                    </div>
                 </div>
             </div>
 @endsection
