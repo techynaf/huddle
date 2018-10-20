@@ -44,7 +44,7 @@ class LogController extends Controller
             $ls = Log::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $last)->
             where('date', '<=', $start)->whereNull('end')->get();
         } elseif ($this->superAdmin() || $this->dm() || $this->hr()) {
-            $ls = Log::where('date', '>=', $last)->where('date', '<=', $start)->whereNull('end')->get();
+            $ls = Log::whereNull('end')->orderBy('date')->get();
         }
 
         if ($this->manager()) {
