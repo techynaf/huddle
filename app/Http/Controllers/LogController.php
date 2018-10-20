@@ -45,8 +45,6 @@ class LogController extends Controller
             where('date', '<=', $start)->whereNull('end')->get();
         } elseif ($this->superAdmin() || $this->dm() || $this->hr()) {
             $ls = Log::where('date', '>=', $last)->where('date', '<=', $start)->whereNull('end')->get();
-
-            dd($ls);
         }
 
         if ($this->manager()) {

@@ -118,6 +118,7 @@ class Controller extends BaseController
 
                 if (count($logs) != 0) {
                     $mlog = true;
+                    dd('here');
                 }
 
                 foreach ($lates as $late) {
