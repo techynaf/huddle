@@ -54,11 +54,7 @@ class LogController extends Controller
                 }
             }
         } else {
-            foreach ($ls as $l) {
-                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
-                    array_push($logs, $l);
-                }
-            }
+            return view('logs/show')->with('notification', $notification)->with('logs', $ls)->with('dates', $dates);
         }
 
         return view('logs/show')->with('notification', $notification)->with('logs', $logs)->with('dates', $dates);

@@ -195,6 +195,10 @@ class WeeklyLeavesController extends Controller
         $leaves = WeeklyLeave::where('branch_id', auth()->user()->branch_id)->where('approved', 0)->
         orderBy('user_id')->orderBy('start')->get();
 
+        if ($this->superAdmin()) {
+            $leaves = WeeklyLeave::where('approved', 0)->orderBy('user_id')->orderBy('start')->get();
+        }
+
         return view('weekly/show')->with('leaves', $leaves)->with('notification', $notification);
     }
 
