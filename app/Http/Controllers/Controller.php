@@ -116,11 +116,8 @@ class Controller extends BaseController
                     }
                 }
 
-                foreach ($logs as $log) {
-                    if ($log->user->roles->first()->name == 'manager' || $log->user->roles->first()->name == 'assistant-manager') {
-                        $mlog = true;
-                        break;
-                    }
+                if (count($logs) != 0) {
+                    $mlog = true;
                 }
 
                 foreach ($lates as $late) {
