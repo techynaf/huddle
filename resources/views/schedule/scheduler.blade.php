@@ -24,10 +24,10 @@
                                 </select>
                             </div>
                         </div>
-                        </div>    
-                        @if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
-                            <br>
-                            <div class="col-3 mt-4 mb-0">
+                    </div>
+                    @if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
+                        <br>
+                        <div class="col-3 mt-4 mb-0">
                             <div class="row">
                                 <div class="col-5">
                                     <h5>Select a branch</h5>
@@ -46,9 +46,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <br>
-                        @endif
-                    </div>
+                        </div>
+                        <br>
+                    @endif
                     <div class="col-2 mt-4">
                         <button class="btn btn-primary huddle-brown-btn-schedule" type="submit">Submit</button>
                     </div>
