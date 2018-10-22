@@ -1,12 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row">
-        <h4 class="page-title">Please use Crtl + P to download</h4>
-    </div>
-
     <section>
         <div class="container-fluid">
+        <h4 class="page-title mt-5">Please use Crtl + P to download</h4>
             <div class="row">
                 <div class="col-12 table-responsive text-center">
                     <table class="table table-bordered bg-white">

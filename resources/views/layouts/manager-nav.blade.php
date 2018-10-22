@@ -1,8 +1,8 @@
 <li class="has-submenu">
     @if ($notification[0] == true || $notification[1] == true)
-        <a href="/request" class="text-danger"><i class="mdi mdi-invert-colors text-danger"></i> <span> Leave Form </span> </a>
+        <a href="/request" class="text-danger"><i class="fa fa-file-text-o text-danger"></i> <span> Leave Form </span> </a>
     @else
-        <a href="/request"><i class="mdi mdi-invert-colors"></i> <span> Leave Form </span> </a>
+        <a href="/request"><i class="fa fa-file-text-o"></i> <span> Leave Form </span> </a>
     @endif
 
     <ul class="submenu">
@@ -26,9 +26,9 @@
 
 <li class="has-submenu">
     @if ($notification[2] || $notification[3])
-        <a href="/scheduler" class="text-danger"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
+        <a href="/scheduler" class="text-danger"><i class="fa fa-clock-ot"></i> <span> Schedule </span> </a>
     @else
-        <a href="/scheduler"><i class="mdi mdi-chart-donut-variant"></i> <span> Schedule </span> </a>
+        <a href="/scheduler"><i class="fa fa-clock-o"></i> <span> Schedule </span> </a>
     @endif
 
     <ul class="submenu">
@@ -47,9 +47,9 @@
 </li>
 
 <li class="has-submenu">
-    <a href="/dashboard"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
+    <a href="/dashboard"><i class="fa fa-th-large"></i> <span> Dashboard </span> </a>
 </li>
 
-<li class="has-submenu">
+<!-- <li class="has-submenu">
     <a href="/logout"><i class="fas fa-power-off"></i> <span> Logout </span> </a>
-</li>
+</li> -->
