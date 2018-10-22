@@ -104,7 +104,7 @@ class HomeController extends Controller
             if ($request->id == 'all') {
                 $branches = Branch::all();
             } else {
-                $branches = Branch::find($request->id);
+                $branches = Branch::where('id', $request->id)->get();
             }
 
             $notification = $this->checkNotifications();
