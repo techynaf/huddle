@@ -213,7 +213,11 @@ class LeavesController extends Controller
         $users = User::where('branch_id', '>=', 1)->get();
 
         if ($this->manager()) {
-            $users = User::where('branch_id', auth()->user()->branch_id)->get();
+            $users = DB::table("users")->whereIn('id', function ($query) {
+                $query->from("role_user")
+                    ->where("role_id", '>=',6)
+                    ->select("user_id");
+            })->where('branch_id', auth()->user()->branch_id)->get();
         }
 
         return view('requests/issue')->with('notification', $notification)->with('users', $users)->with('types', $types);
