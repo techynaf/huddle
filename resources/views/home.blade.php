@@ -43,7 +43,7 @@
             </form>
         </div>    
             <div class="page-break"></div>
-            <br><br><br><br><br><br>
+            <br>
             @if($flow)
                 <div class="row">
                     <div class="col-sm-12">	
