@@ -1,6 +1,6 @@
-@import url(https: //fonts.googleapis.com/css?family=Roboto:400,300,500,700);
-@import url(https: //fonts.googleapis.com/css?family=Karla:400,700);
-@import url(https: //fonts.googleapis.com/css?family=Rancho);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700);
+@import url(https://fonts.googleapis.com/css?family=Karla:400,700);
+@import url(https://fonts.googleapis.com/css?family=Rancho);
 
 
 
@@ -6783,7 +6783,6 @@ input[type=time]::-webkit-inner-spin-button, input[type=time]::-webkit-outer-spi
 }
 
 @media print {
-<<<<<<< HEAD
 	.page-break	{ display: block; page-break-before: always; }
 }
 
@@ -6868,14 +6867,13 @@ a.no-style:visited {
   text-decoration: inherit;
   color: inherit;
   cursor: auto;
-=======
-  .page-break {
-    display: block;
-    page-break-before: always;
-  }
+
 }
 
-
+.page-break {
+  display: block;
+  page-break-before: always;
+}
 
 /* New design's CSS */
 .home-page-search {
@@ -6883,7 +6881,7 @@ a.no-style:visited {
   margin-top: 19px;
   padding: 10px;
   width: 100%;
-  position: fixed;
+  /* position: fixed; */
   z-index: 1;
   left: 0;
 }
@@ -6911,5 +6909,4 @@ a.no-style:visited {
 .scheduler {
   border-radius: 5px;
   box-shadow: 0 0px 15px 0 rgba(0, 0, 0, 0.08), 0 2px 0px 0 rgba(0, 0, 0, 0.05);
->>>>>>> origin/new-design
 }
