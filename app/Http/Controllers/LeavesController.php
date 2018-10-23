@@ -131,7 +131,7 @@ class LeavesController extends Controller
 
         if ($this->manager()) {
             foreach ($ls as $l) {
-                if ($l->user->roles->first()->name != 'manager' || $l->user->roles->first()->name != 'assistant-manager') {
+                if ($l->user->roles->first()->name == 'barista' || $l->user->roles->first()->name == 'employee' || $l->user->roles->first()->name == 'shift-supervisor') {
                     array_push($leaves, $l);
                 }
             }

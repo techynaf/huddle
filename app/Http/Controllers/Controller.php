@@ -15,6 +15,7 @@ use App\Late;
 use App\Log;
 use App\Managers;
 use App\LogUpdate;
+use DB;
 
 class Controller extends BaseController
 {
@@ -174,19 +175,24 @@ class Controller extends BaseController
                 $blog = false;
                 $blate = false;
 
+                $leaves = DB::table("leaves")->whereIn('user_id', function ($query) {
+                    $query->from("role_user")
+                        ->where("role_id", '>=',6)
+                        ->select("user_id");
+                })->where('branch_id', auth()->user()->branch_id)->where('is_approved', 0)->get();
 
-                foreach ($leaves as $leave) {
-                    if ($leave->user->roles->first()->name == 'barista' || $leave->user->roles->first()->name == 'shift-supervisor') {
-                        $bleave = true;
-                        break;
-                    }
+                if (count($leaves) != 0) {
+                    $bleave = true;
                 }
 
-                foreach ($weeklies as $weekly) {
-                    if ($weekly->user->roles->first()->name == 'barista' || $weekly->user->roles->first()->name == 'shift-supervisor') {
-                        $bweekly = true;
-                        break;
-                    }
+                $weeklies = DB::table("weekly_leaves")->whereIn('user_id', function ($query) {
+                    $query->from("role_user")
+                        ->where("role_id", '>=',6)
+                        ->select("user_id");
+                })->where('branch_id', auth()->user()->branch_id)->where('approved', 0)->get();
+
+                if (count($weeklies) != 0) {
+                    $bweekly = true;
                 }
 
                 foreach ($logs as $log) {
