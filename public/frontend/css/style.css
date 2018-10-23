@@ -312,6 +312,10 @@ a:focus {
   margin-top: 40px !important;
 }
 
+.m-t--40 {
+  margin-top: -20px !important;
+}
+
 .m-b-5 {
   margin-bottom: 5px !important;
 }
@@ -2399,6 +2403,22 @@ pre {
 .huddle-leave-btn:hover {
   background-color: #77786B !important;
   border: #77786B !important;
+}
+
+.huddle-name-btn {
+  background-color: #E0D9CF !important;
+  color: #40180b !important;
+  font-size: 10px;
+  padding: 1.5px 40px;
+  border-radius: 10px;
+  border: 1px solid #E0D9CF !important;
+  float: right;
+  margin: 18px 15px 0px 0px;
+}
+
+.huddle-name-btn:hover {
+  background-color: #c4c0ba !important;
+  border: 1px solid #c4c0ba !important;
 }
 
 .pin {

@@ -18,6 +18,17 @@
                     <a href="/logout" class="btn btn-primary huddle-login-btn"> LOGOUT </a>
                 </div>
 
+                <div>
+                    <a href="/dashboard" class="text-white btn btn-primary huddle-name-btn">
+                        @if (auth()->user() != null)
+                            <div class="name">{{auth()->user()->name}}</div>
+                            <div class="role">{{ucfirst(auth()->user()->roles->first()->name)}}</div>
+                        @endif
+                    </a>
+                </div>
+
+                
+
             <div class="menu-extras topbar-custom">
 
                 <ul class="list-unstyled topbar-right-menu float-right mb-0">
@@ -63,14 +74,7 @@
                         <!-- End navigation menu -->
                     </div> <!-- end #navigation -->
                 </div>
-                <div class="col-md-11 text-right p-2">
-                    <a href="/dashboard" class="no-style">
-                        @if (auth()->user() != null)
-                            <div class="name">{{auth()->user()->name}}</div>
-                            <div class="role">{{ucfirst(auth()->user()->roles->first()->name)}}</div>
-                        @endif
-                    </a>
-                </div>
+                
             </div>
         </div> <!-- end container -->
     </div> <!-- end navbar-custom -->
