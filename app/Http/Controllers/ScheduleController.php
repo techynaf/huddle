@@ -157,8 +157,10 @@ class ScheduleController extends Controller
 
         //dd(Carbon::parse($starts[0]), $ends, $schedule_ids);
 
-        for ($i = 0; $i < sizeof($schedule_ids); $i++) {
-            if ($schedule_ids[$i] != 'off' && $starts[$counter] != null && $ends[$counter] != null) {
+        // dd($request);
+
+        for ($i = 0; $i < 7; $i++) {
+            if (!($starts[$i] == null || $starts[$i] == null)) {
                 $schedule = null;
 
                 if ($schedule_ids[$i] == '0') {
@@ -169,15 +171,18 @@ class ScheduleController extends Controller
 
                 $schedule->user_id = $user->id;
                 $schedule->branch_id = $user->branch_id;
-                $schedule->start = Carbon::parse($starts[$counter])->format('H:i:s');
-                $schedule->end = Carbon::parse($ends[$counter])->format('H:i:s');
-                $schedule->start_branch = $s_branches[$counter];
-                $schedule->end_branch = $e_branches[$counter];
+                $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
+                $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
+                $schedule->start_branch = $s_branches[$i];
+                $schedule->end_branch = $e_branches[$i];
                 $schedule->date = $dates[$i];
                 $schedule->timestamps = false;
                 $schedule->save();
+            }
 
-                $counter++;
+            if ($starts[$i] == null && $starts[$i] == null && $schedule_ids[$i] != '0') {
+                $schedule = Schedule::where('id', $schedule_ids[$i])->first();
+                $schedule->delete();
             }
         }
 

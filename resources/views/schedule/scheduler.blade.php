@@ -83,7 +83,11 @@
                                     <div class="col-md">
                                         @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
                                             <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
+                                                <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
+                                                <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
+                                                <input type="hidden" value="" name="end[]">
+                                                <input type="hidden" value="" name="start[]">
+                                                <input type="hidden" name="s_id[]" value="0">
                                                 <h6>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</h6>
                                             </div>
                                         @elseif($schedule == 'false')
