@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="row">
-        <h2 class="page-title">Logs</h2>
+        <h2 class="">Logs</h2>
     </div>
     @if (App\Http\Controllers\Controller::admin())
         @foreach ($logs as $log)
             <div class="row">
-                <div class="col-12 card-box">
+                <div class="col-12 card-box p-3">
                     <div class="row">
                         <div class="col-1 border-right">
                             {{date("D d M", strtotime($log->date))}}
