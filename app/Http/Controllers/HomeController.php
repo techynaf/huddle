@@ -87,7 +87,7 @@ class HomeController extends Controller
 
         return view('home')->with('users', $users)->with('branches', $branches)->with('days', $this->days)->
         with('filters', $filters)->with('flow', false)->with('schedules', $schedules)->with('dates', $dates)->
-        with('notification', $notification);
+        with('notification', $notification)->with('date', $this->findSun(null));
     }
 
     public function print (Request $request)

@@ -80,7 +80,9 @@
                                                     @endif
                                                 </td>
                                                 @foreach($schedules[$loop->index] as $schedule)
-                                                    @if($schedule == null)
+                                                    @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first() != null)
+                                                        <td>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first()->leavetype->name}}</td>
+                                                    @elseif($schedule == null)
                                                         <td class="text-center">OFF</td>
                                                     @else
                                                         @if (($user->noSchedule->where('date', $schedule->date)->first()) != null)
@@ -151,7 +153,9 @@
                                                         @endif
                                                     </td>
                                                     @foreach($schedules[$loop->index] as $schedule)
-                                                        @if($schedule == null)
+                                                        @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first() != null)
+                                                            <td class="text-center">{{App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first()->leavetype->name}}</td>
+                                                        @elseif($schedule == null)
                                                             <td class="text-center">OFF</td>
                                                         @else
 

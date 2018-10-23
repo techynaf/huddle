@@ -97,7 +97,7 @@ class AdminController extends Controller
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
         with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->
-        with('lates', $lates)->with('notification', $notification);
+        with('lates', $lates)->with('notification', $notification)->with('date', $this->findSun(null));
     }
 
     public function branch (Request $request, $id)
