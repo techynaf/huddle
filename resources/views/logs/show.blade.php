@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <h2 class="">Logs</h2>
+        <h2 class="page-title-logs mt-5 mb-4">Logs</h2>
     </div>
     @if (App\Http\Controllers\Controller::admin())
         @foreach ($logs as $log)
