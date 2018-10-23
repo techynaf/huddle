@@ -81,33 +81,10 @@
                                 @foreach($schedules[$loop->index] as $schedule)
                                 <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
                                     <div class="col-md">
-                                        @if($schedule == 'day-off')
+                                        @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
                                             <div class="text-center btn btn-outline-danger h-100 w-100">
                                                 <input type="hidden" name="s_id[]" value="off">
-                                                <h6>DAY OFF</h6>
-                                            </div>
-                                        @elseif ($schedule == 'sick')
-                                            <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
-                                                <h6>SICK</h6>
-                                                <h6>LEAVE</h6>
-                                            </div>
-                                        @elseif ($schedule == 'annual')
-                                            <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
-                                                <h6>ANNUAL</h6>
-                                                <h6>LEAVE</h6>
-                                            </div>
-                                        @elseif ($schedule == 'govt')
-                                            <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
-                                                <h6>GOVERNMENT</h6>
-                                                <h6>HOLIDAY</h6>
-                                            </div>
-                                        @elseif($schedule == 'no-schedule')
-                                            <div class="text-center btn btn-outline-danger h-75 w-100">
-                                                <input type="hidden" name="s_id[]" value="off">
-                                                <h6>DAY OFF</h6>
+                                                <h6>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</h6>
                                             </div>
                                         @elseif($schedule == 'false')
                                             <input type="hidden" name="s_id[]" value="0">

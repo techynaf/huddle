@@ -140,14 +140,14 @@
                             
                                 @foreach($schedules as $schedule)
                                     <div class="row">
-                                        @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first() != null)
+                                        @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
                                             <div class="col-sm-6">
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         {{$days[$loop->index]}}
                                                     </div>
                                                     <div class="col-sm-8 text-center">
-                                                        {{App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first()->leavetype->name}}
+                                                        {{App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}
                                                     </div>
                                                 </div>
                                             </div>

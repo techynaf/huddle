@@ -153,8 +153,8 @@
                                                         @endif
                                                     </td>
                                                     @foreach($schedules[$loop->index] as $schedule)
-                                                        @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first() != null)
-                                                            <td class="text-center">{{App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->first()->leavetype->name}}</td>
+                                                        @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
+                                                            <td class="text-center">{{App\Leave::where('user_id', $user->id)->where('start', '<=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $date->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</td>
                                                         @elseif($schedule == null)
                                                             <td class="text-center">OFF</td>
                                                         @else
