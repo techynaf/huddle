@@ -123,7 +123,7 @@ class AdminController extends Controller
         }
 
         if ($request->role != null) {
-            if ($this->dm() || $this->barista() || $this->manager()) {
+            if ($this->barista() || $this->manager()) {
                 return redirect('/')->with('error', 'You are not authorized to make this change');
             } else {
                 $url = $url.'?flow=false';

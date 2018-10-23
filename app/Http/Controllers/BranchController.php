@@ -93,7 +93,7 @@ class BranchController extends Controller
 
     public function store (Request $request)
     {
-        if ($this->barista() || $this->manager() || $this->dm()) {
+        if ($this->barista() || $this->manager()) {
             return redirect('/')->with('error', 'You are not authorized to access make this change');
         }
 

@@ -91,7 +91,40 @@ class Controller extends BaseController
                 }
             }
 
-            if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin') {
+            if (auth()->user()->roles->first()->name == 'super-admin') {
+                $leaves = Leave::where('is_approved', 0)->get();
+                $weekly = WeeklyLeave::where('approved', 0)->get();
+                $logs = Log::whereNull('end')->get();
+                $lates = Late::whereNull('altered_by')->get();
+
+                $mleave = false;
+                $mweekly = false;
+                $mlog = false;
+                $mlate = false;
+
+                if (count($leaves) != 0) {
+                    $mleave = true;
+                }
+                
+                if (count($weekly) != 0) {
+                    $mweekly = true;
+                }
+
+                if (count($logs) != 0) {
+                    $mlog = true;
+                }
+
+                if (count($lates) != 0) {
+                    $mlate = true;
+                }
+
+                array_push($notification, $mleave);
+                array_push($notification, $mweekly);
+                array_push($notification, $mlog);
+                array_push($notification, $mlate);
+            }
+
+            if (auth()->user()->roles->first()->name == 'district-manager') {
                 $leaves = Leave::where('is_approved', 0)->get();
                 $weekly = WeeklyLeave::where('approved', 0)->get();
                 $logs = Log::whereNull('end')->get();
@@ -103,14 +136,14 @@ class Controller extends BaseController
                 $mlate = false;
 
                 foreach ($leaves as $leave) {
-                    if ($leave->user->roles->first()->name == 'manager' || $leave->user->roles->first()->name == 'assistant-manager') {
+                    if ($leave->user->roles->first()->name == 'manager' || $leave->user->roles->first()->name == 'assistant-manager' || $leave->user->roles->first()->name == 'barista' || $leave->user->roles->first()->name == 'employee') {
                         $mleave = true;
                         break;
                     }
                 }
 
                 foreach ($weekly as $w) {
-                    if ($w->user->roles->first()->name == 'manager' || $w->user->roles->first()->name == 'assistant-manager') {
+                    if ($w->user->roles->first()->name == 'manager' || $w->user->roles->first()->name == 'assistant-manager' || $leave->user->roles->first()->name == 'barista' || $leave->user->roles->first()->name == 'employee') {
                         $mweekly = true;
                         break;
                     }
@@ -121,7 +154,7 @@ class Controller extends BaseController
                 }
 
                 foreach ($lates as $late) {
-                    if ($late->user->roles->first()->name == 'manager' || $late->user->roles->first()->name == 'assistant-manager') {
+                    if ($late->user->roles->first()->name == 'manager' || $late->user->roles->first()->name == 'assistant-manager' || $leave->user->roles->first()->name == 'barista' || $leave->user->roles->first()->name == 'employee') {
                         $mlate = true;
                         break;
                     }

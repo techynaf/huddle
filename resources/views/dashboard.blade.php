@@ -256,7 +256,7 @@
                                     <div class="card-title py-1 text-center">
                                         <h2>Requests Made</h2>
                                     </div>
-                                    <div class="widget-container">
+                                    <div class="widget-container p-4">
                                         @if(count($requests) == 0)
                                             <br>
                                             <hr>
@@ -268,7 +268,10 @@
                                             @foreach($requests as $request)
                                                 <div class="row">
                                                     <div class="col-8">
-                                                        <h4>{{$request->subject}}</h4>
+                                                        {{$request->leavetype->name}} <br>
+                                                        {{$request->comment}} <br>
+                                                        From {{Carbon\Carbon::parse($request->start)->format('d M Y')}} <br>
+                                                        To {{Carbon\Carbon::parse($request->end)->format('d M Y')}}
                                                     </div>
                                                     @if (App\Http\Controllers\Controller::admin() || auth()->user()->id == $user->id)
                                                         <div class="col-2 text-right">
