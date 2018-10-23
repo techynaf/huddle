@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-sm-12">	
-        <h2 class="page-title">Leave Request Form</h2>
-    </div>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="card-box">
+                <div class="card-title py-1 pl-4">
+                    <h2>Create Leave Request</h2>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="p-20">
