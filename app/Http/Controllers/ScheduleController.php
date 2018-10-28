@@ -94,8 +94,6 @@ class ScheduleController extends Controller
             $branches = Branch::where('id', '!=', $b->id)->get();
         }
 
-        dd($schedules);
-
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
         with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today)->
         with('notification', $notification)->with('b', $b)->with('leaveDate', $this->findSun(null));

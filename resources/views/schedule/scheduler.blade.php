@@ -90,10 +90,10 @@
                                                 <input type="hidden" name="s_id[]" value="0">
                                                 <h6>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</h6>
                                             </div>
-                                        @elseif($schedule == 'false')
+                                        @elseif ($schedule == 'false')
                                             <input type="hidden" name="s_id[]" value="0">
                                             @include('templates.schedule-default-form')
-                                        @else
+                                        @elseif (is_a($schedule, 'Illuminate\Database\Eloquent\Collection'))
                                             @if ($schedule->date != $days[$loop->index][1])
                                                 <input type="hidden" name="s_id[]" value="0">
                                                 @include('templates.schedule-form')
@@ -101,6 +101,8 @@
                                                 <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
                                                 @include('templates.schedule-form')
                                             @endif
+                                        @else
+                                            <h6>{{$schedule}}</h6>
                                         @endif
                                     </div>
                                 @endforeach
