@@ -93,7 +93,16 @@
                                         @elseif ($schedule == 'false')
                                             <input type="hidden" name="s_id[]" value="0">
                                             @include('templates.schedule-default-form')
-                                        @elseif (is_a($schedule, 'Illuminate\Database\Eloquent\Collection'))
+                                        @elseif (is_string($schedule))
+                                            <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
+                                                <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
+                                                <input type="hidden" value="" name="end[]">
+                                                <input type="hidden" value="" name="start[]">
+                                                <input type="hidden" name="s_id[]" value="0">
+                                                <h6>{{ucfirst($schedule)}}</h6>
+                                            </div>
+                                        @else
                                             @if ($schedule->date != $days[$loop->index][1])
                                                 <input type="hidden" name="s_id[]" value="0">
                                                 @include('templates.schedule-form')
@@ -101,8 +110,6 @@
                                                 <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
                                                 @include('templates.schedule-form')
                                             @endif
-                                        @else
-                                            <h6>{{$schedule}}</h6>
                                         @endif
                                     </div>
                                 @endforeach
