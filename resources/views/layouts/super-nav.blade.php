@@ -55,6 +55,7 @@
     <a href="/hour"><i class="fa fa-line-chart"></i> <span> Reports </span> </a>
     <ul class="submenu">
         <li><a href="/late">Late Report</a></li>
+        <li><a href="/leave">Leave Report</a></li>
     </ul>
 </li>
 

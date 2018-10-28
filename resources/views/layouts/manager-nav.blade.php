@@ -47,6 +47,10 @@
 </li>
 
 <li class="has-submenu">
+    <a href="/leave"><i class="fa fa-line-chart"></i> <span> Reports </span> </a>
+</li>
+
+<li class="has-submenu">
     <a href="/dashboard"><i class="fa fa-th-large"></i> <span> Dashboard </span> </a>
 </li>
 
