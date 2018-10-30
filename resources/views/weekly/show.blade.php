@@ -16,7 +16,7 @@
                             @if($leave->user->roles->first()->name != 'manager' || $leave->user->roles->first()->name != 'assitant-manager' || $leave->user_id != auth()->user()->id)
                                 <form action="/weekly/{{$leave->id}}/process" method="POST">
                                     @csrf
-                                    <div class="row ml-3">
+                                    <div class="row ml-3 my-3">
                                         <div class="col-1 border-right">
                                             <div class="row">
                                                 <h4>Weekly</h4>
