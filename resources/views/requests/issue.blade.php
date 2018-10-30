@@ -16,7 +16,7 @@
                                     <div class="col-6 text-center">
                                         <div class="btn-group btn-group-toggle mt-3 mb-4" data-toggle="buttons">
                                             @foreach ($types as $type)
-                                                <label class="btn btn-success p-3">
+                                                <label class="btn btn-success huddle-brown-btn p-3">
                                                     <input type="radio" name="type" autocomplete="off" value="{{$type->id}}"> {{$type->name}}
                                                 </label>
                                             @endforeach
@@ -62,9 +62,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-11"></div>
-                                    <div class="col-1">
-                                        <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
+                                    <div class="col-10"></div>
+                                    <div class="col-2 text-right">
+                                        <button type="submit" class="btn btn-primary huddle-brown-btn">Submit</button>
                                     </div>
                                 </div>
                             </form>
