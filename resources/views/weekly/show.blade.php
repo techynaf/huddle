@@ -44,7 +44,7 @@
                                                 {{date("D d M", strtotime($leave->end))}}
                                             </div>
                                         </div>
-                                        <div class="col-5 ml-3 border-right">
+                                        <div class="col-4 ml-3 border-right">
                                             <div class="row text-center h-100">
                                                 <div class="col-6 border-right">
                                                     <br>
@@ -56,7 +56,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-3 ml-2">
+                                        <div class="col-3 my-auto">
                                             <select name="status" class="form-control">
                                                 @if($leave->is_approved == 0)
                                                     <option value="0">Pending</option>
@@ -71,8 +71,8 @@
                                                 @endif
                                             </select>
                                         </div>
-                                        <div class="col-1 mx-auto">
-                                            <button class="btn btn-primary btn-rounded" type="submit">Submit</button>
+                                        <div class="col-2 my-auto text-right">
+                                            <button class="btn btn-primary huddle-brown-btn" type="submit">Submit</button>
                                         </div>
                                     </div>
                                 </form>
