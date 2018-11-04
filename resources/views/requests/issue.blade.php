@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card-box">
-                <div class="card-title py-1 pl-4">
+                <div class="card-title py-1 pl-4 mt-5">
                     <h2>Create Leave Request</h2>
                 </div>
                 <div class="row">
