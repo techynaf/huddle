@@ -113,8 +113,8 @@
                                         @endif
                                     </div>
                                 @endforeach
-                                <div class="col-md-1 pt-2 text-center">
-                                    <button type="submit" class="btn btn-success btn-rounded">Save</button>
+                                <div class="col-md-1 text-center my-auto">
+                                    <button type="submit" class="btn btn-success px-3">Save</button>
                                 </div>
                             </div>
                         </form>
