@@ -57,7 +57,7 @@
             </form>
 
             <div class="bg-white scheduler">
-                <div class="header page-title-schedule text-uppercase">
+                <div class="header page-title-schedule text-uppercase font-weight-bold">
                     <div class="row pt-3">
                         <div class="col-md text-center">Name</div>
                         @foreach($days as $day)
