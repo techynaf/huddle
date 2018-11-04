@@ -7,12 +7,12 @@
             <div class="col-md-12">
                 <br>
                 <form action="/leave" method="GET">
-                    <div class="row m-1">
-                        <div class="col-md-1">From: </div>
+                    <div class="row m-2">
+                        <div class="col-md-1 text-right my-auto">From: </div>
                         <div class="col-md-3"><input type="date" name="from" class="form-control" required></div>
-                        <div class="col-md-1">To: </div>
+                        <div class="col-md-1 text-right my-auto">To: </div>
                         <div class="col-md-3"><input type="date" name="to" class="form-control" required></div>
-                        <div class="col-md-1">Branch: </div>
+                        <div class="col-md-1 text-right my-auto">Branch: </div>
                         <div class="col-md-3">
                             <select name="branch" class="form-control" required>
                                 <option value="all">All</option>
@@ -23,34 +23,34 @@
                         </div>
                     </div>
                     <br>
-                    <div class="row m-1">
-                        <div class="col-md-1">Status: </div>
-                            <div class="col-md-2">
+                    <div class="row m-2 my-auto">
+                        <div class="col-md-1 text-right my-auto">Status: </div>
+                            <div class="col-md-2 my-auto">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" id="requested" name="requested" onchange="disableAll();" type="checkbox" value="1" >
                                     <label class="form-check-label" for="requested">Requested</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 my-auto">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" id="approved" name="approved" onchange="disableRequest()" type="checkbox" value="1">
                                     <label class="form-check-label" for="approved">Approved</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 my-auto">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" id="declined" name="declined" onchange="disableRequest()" type="checkbox" value="1">
                                     <label class="form-check-label" for="declined">Declined</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 my-auto">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" id="pending" name="pending" onchange="disableRequest()" type="checkbox" value="1">
                                     <label class="form-check-label" for="pending">Pending</label>
                                 </div>
                             </div>
                         <div class="col-md-3">
-                            <button class="btn btn-primary w-100" type="submit">Filter</button>
+                            <button class="btn btn-primary huddle-brown-btn w-100" type="submit">Filter</button>
                         </div>
                     </div>
                 </form>
