@@ -1,27 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-        <div class="home-page-search">
+        <div class="home-page-search mt-5">
             <form action="/branch/filter" method="GET">
                 @csrf
+                <div class="container-fluid mb-2">
+
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-6">
                         @if (auth()->user() != null)
-                            <div class="row text-center">
+                            <div class="row text-center align-middle">
                                 <div class="col-md-3">
-                                    <a href="/schedule/print" class="btn btn-primary w-100">Print</a>
+                                    <a href="/schedule/print" class="btn btn-primary huddle-go-btn">Print</a>
                                 </div>
                             </div>
                         @endif
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="row">
                             <div class="col-12 align-middle">
-                                <label for="id" class="form-label-control huddle-color">Filter Branch</label>
+                                <!-- <label for="id" class="form-label-control huddle-color">Filter Branch</label> -->
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-9">
+            
+                            <div class="col-2 text-right align-middle">
+                                <label for="id" class="form-label-control huddle-color">Filter Branch</label>
+                            </div>
+
+                            <div class="col-7">
                                 <select class="form-control huddle-color" name="id">
                                     @if (count($branches) > 1)
                                         <option value="all">All</option>
@@ -39,6 +46,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
                 </div>
             </form>
         </div>    
