@@ -881,8 +881,9 @@ textarea.form-control {
 }
 
 .input-sm {
-  height: 30px;
-  padding: 5px 10px;
+  font-weight: bold;
+  height: 28px;
+  padding: 2px 5px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
@@ -7028,7 +7029,8 @@ input.app-search-input:-ms-input-placeholder {
 }
 
 input[type=time]::-webkit-inner-spin-button,
-input[type=time]::-webkit-outer-spin-button {
+input[type=time]::-webkit-outer-spin-button,
+input[type=time]::-webkit-clear-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   margin: 0;
@@ -7217,8 +7219,15 @@ a.no-style:visited {
 }
 
 .hoveree {
-  display:none;
+  display: none;
 }
+
 .hoverer:hover .hoveree {
-  display:block;
+  display: block;
+}
+
+.schedular-branch-font-size {
+  font-size: 12px;
+  font-weight: bold;
+  height: 30px !important;
 }
