@@ -77,7 +77,7 @@
                         <form action="/scheduler/{{$user->id}}" method="POST">
                             @csrf
                             <div class="row">
-                                <div class="col-md pt-2 text-center" id="{{$user->id}}">{{$user->name}}</div>
+                                <div class="col-md pt-2 text-center my-auto font-weight-bold" id="{{$user->id}}">{{$user->name}}</div>
                                 @foreach($schedules[$loop->index] as $schedule)
                                 <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
                                     <div class="col-md">
