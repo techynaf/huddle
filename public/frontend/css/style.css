@@ -5996,15 +5996,15 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 }
 
 #topnav .has-submenu.active a {
-  color: #71b6f9;
+  color: #C4B29C;
 }
 
 #topnav .has-submenu.active a i {
-  color: #71b6f9;
+  color: #C4B29C;
 }
 
 #topnav .has-submenu.active .submenu li.active>a {
-  color: #71b6f9;
+  color: #C4B29C;
 }
 
 #topnav .topbar-main {
@@ -6157,7 +6157,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 
 #topnav .navigation-menu>li>a {
   display: block;
-  color: #435966;
+  color: #3d180b;
   font-size: 16px;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
@@ -6166,15 +6166,15 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 }
 
 #topnav .navigation-menu>li>a:hover {
-  color: #71b6f9;
+  color: #C4B29C;
 }
 
 #topnav .navigation-menu>li>a:focus {
-  color: #71b6f9;
+  color: #C4B29C;
 }
 
 #topnav .navigation-menu>li>a:active {
-  color: #71b6f9;
+  color: #C4B29C;
 }
 
 #topnav .navigation-menu>li>a i {
@@ -6224,16 +6224,16 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   }
 
   #topnav .navigation-menu>li:hover a {
-    color: #71b6f9;
+    color: #C4B29C;
   }
 
   #topnav .navigation-menu>li:hover a i {
-    color: #71b6f9;
+    color: #C4B29C;
   }
 
   #topnav .navigation-menu>li>ul>li.has-submenu:active>a,
   #topnav .navigation-menu>li>ul>li.has-submenu:hover>a {
-    color: #71b6f9;
+    color: #C4B29C;
   }
 
   #topnav .navigation-menu>li .submenu {
@@ -6304,7 +6304,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   }
 
   #topnav .navigation-menu>li .submenu li a:hover {
-    color: #71b6f9;
+    color: #C4B29C;
   }
 
   #topnav .navigation-menu>li .submenu li span {
@@ -6379,7 +6379,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   }
 
   #topnav .navigation-menu>li .submenu li a:hover {
-    color: #71b6f9;
+    color: #C4B29C;
   }
 
   #topnav .navigation-menu>li .submenu li.has-submenu>a:after {
@@ -6418,7 +6418,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   }
 
   #topnav .navigation-menu>li.has-submenu.open>a {
-    color: #71b6f9;
+    color: #C4B29C;
   }
 
   #topnav .navbar-header {
@@ -6451,7 +6451,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   #topnav .has-submenu.active a:active,
   #topnav .has-submenu.active a:focus,
   #topnav .has-submenu.active a i {
-    color: #71b6f9;
+    color: #C4B29C;
   }
 }
 
