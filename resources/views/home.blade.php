@@ -97,14 +97,10 @@
                                                         @if (($user->noSchedule->where('date', $schedule->date)->first()) != null)
                                                             <td>OFF</td>
                                                         @else
+                                                        {{-- Edit needed here --}}
                                                             <td class="text-center">
-                                                                <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
-                                                                    {{date("g:i A", strtotime($schedule->start))}}
-                                                                </div>
-                                                                
-                                                                <div class="text-center {{strtolower($schedule->endingBranch->name)}}">
-                                                                    {{date("g:i A", strtotime($schedule->end))}}   
-                                                                </div>
+                                                                <span class="text-center my-0 py-0 {{strtolower($schedule->startingBranch->name)}}">{{date("g:i A", strtotime($schedule->start))}}</span>
+                                                                <span class="text-center my-0 py-0 {{strtolower($schedule->endingBranch->name)}}">{{date("g:i A", strtotime($schedule->end))}}</span>
                                                             </td>
                                                         @endif
                                                     @endif
@@ -171,14 +167,10 @@
                                                             @if (($user->noSchedule->where('date', $schedule->date)->first()) != null)
                                                                 <td class="text-center">OFF</td>
                                                             @else
+                                                            {{-- Edit needed here --}}
                                                                 <td class="text-center">
-                                                                    <div class="text-center {{strtolower($schedule->startingBranch->name)}}">
-                                                                        {{date("g:i A", strtotime($schedule->start))}}
-                                                                    </div>
-                                                                    
-                                                                    <div class="text-center {{strtolower($schedule->endingBranch->name)}}">
-                                                                        {{date("g:i A", strtotime($schedule->end))}}   
-                                                                    </div>
+                                                                    <span class="text-center my-0 py-0 {{strtolower($schedule->startingBranch->name)}}">{{date("g:i A", strtotime($schedule->start))}}</span><br>
+                                                                    <span class="text-center my-0 py-0 {{strtolower($schedule->endingBranch->name)}}">{{date("g:i A", strtotime($schedule->end))}}</span>
                                                                 </td>
                                                             @endif
                                                             
