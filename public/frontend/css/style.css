@@ -7222,3 +7222,7 @@ a.no-style:visited {
 .hoverer:hover .hoveree {
   display:block;
 }
+
+.input-sm-clock {
+  font-size: 11px;
+}
