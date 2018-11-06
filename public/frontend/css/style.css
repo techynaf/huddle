@@ -7223,6 +7223,7 @@ a.no-style:visited {
 }
 
 .hoverer:hover .hoveree {
+<<<<<<< HEAD
   display: block;
 }
 
@@ -7230,4 +7231,11 @@ a.no-style:visited {
   font-size: 12px;
   font-weight: bold;
   height: 30px !important;
+=======
+  display:block;
+}
+
+.input-sm-clock {
+  font-size: 11px;
+>>>>>>> caa08ce52d43dda553b2dbc932ddda4be5d80e2b
 }
