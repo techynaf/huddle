@@ -15,7 +15,7 @@ here
                         <br>
                         {{date("Y", strtotime($late->date))}}
                     </div>
-                    <div class="col-11">
+                    <div class="col-10">
                         <form action="/lates/{{$late->id}}" method="POST">
                             @csrf
                             <hr>
