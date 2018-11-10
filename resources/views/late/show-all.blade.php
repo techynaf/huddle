@@ -15,7 +15,6 @@
                         <br>
                         {{date("Y", strtotime($date))}}
                     </div>
-                            here
                     <div class="col-11">
                         <form action="/lates/{{$late->id}}" method="POST">
                             @csrf

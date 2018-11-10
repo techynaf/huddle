@@ -36,7 +36,7 @@ class LateController extends Controller
                 }
             }
         } else {
-            $ls = Late::where('date', '>=', $sun->format('Y-m-d'))->where('date', '<=', $today->format('Y-m-d'))->get();
+            $ls = Late::whereNull('alterted_by')->get();
 
             foreach ($ls as $l) {
                 array_push($lates, $l);
