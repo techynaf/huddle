@@ -11,9 +11,9 @@ here
             <div class="col-12 card-box-logs">
                 <div class="row">
                     <div class="col-1 border-right ml-3">
-                        {{date("D d M", strtotime($date))}}
+                        {{date("D d M", strtotime($late->date))}}
                         <br>
-                        {{date("Y", strtotime($date))}}
+                        {{date("Y", strtotime($late->date))}}
                     </div>
                     <div class="col-11">
                         <form action="/lates/{{$late->id}}" method="POST">
