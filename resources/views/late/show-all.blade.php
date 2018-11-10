@@ -5,7 +5,7 @@
     <div class="row">
         <h2 class="page-title-logs mt-5 mb-4">Lates</h2>
     </div>
-
+here
     @foreach($lates as $late)
         <div class="row">
             <div class="col-12 card-box-logs">
