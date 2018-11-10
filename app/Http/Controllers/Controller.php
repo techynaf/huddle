@@ -129,7 +129,11 @@ class Controller extends BaseController
                 $leaves = Leave::where('is_approved', 0)->get();
                 $weekly = WeeklyLeave::where('approved', 0)->get();
                 $logs = Log::whereNull('end')->get();
-                $lates = Late::whereNull('altered_by')->get();
+                $lates = DB::table("lates")->whereIn('user_id', function ($query) {
+                    $query->from("role_user")
+                        ->where("role_id", '<',6)
+                        ->select("user_id");
+                })->whereNull('altered_by')->get();
 
                 $mleave = false;
                 $mweekly = false;
