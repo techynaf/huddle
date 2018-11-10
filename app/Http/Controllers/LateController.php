@@ -39,9 +39,7 @@ class LateController extends Controller
             $ls = Late::where('date', '>=', $sun->format('Y-m-d'))->where('date', '<=', $today->format('Y-m-d'))->get();
 
             foreach ($ls as $l) {
-                if ($l->user->roles->first()->name == 'manager' || $l->user->roles->first()->name == 'assistant-manager') {
-                    array_push($lates, $l);
-                }
+                array_push($lates, $l);
             }
         }
 
