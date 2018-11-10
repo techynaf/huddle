@@ -36,7 +36,7 @@ class LateController extends Controller
                 }
             }
         } else {
-            $ls = Late::whereNull('alterted_by')->get();
+            $ls = Late::whereNull('altered_by')->get();
 
             foreach ($ls as $l) {
                 array_push($lates, $l);
