@@ -124,16 +124,8 @@
                                                     @include('templates.schedule-form')
                                                 @endif
                                             @endif
-<<<<<<< HEAD
-                                        @endif
-                                    </div>
-                                @endforeach
-                                <div class="col-md-1 text-center my-auto">
-                                    <button type="submit" class="btn btn-success px-3 font-weight-bold">Save</button>
-=======
                                         </div>
                                     @endforeach
->>>>>>> caa08ce52d43dda553b2dbc932ddda4be5d80e2b
                                 </div>
                             </form>
                             <hr>
