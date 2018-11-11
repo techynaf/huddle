@@ -79,7 +79,7 @@
                             <div class="row">
                                 <div class="col-md text-center my-auto font-weight-bold" id="{{$user->id}}">{{$user->name}}</div>
                                 @foreach($schedules[$loop->index] as $schedule)
-                                <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
+                                    <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
                                     <div class="col-md">
                                         @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
                                             <div class="text-center btn btn-outline-danger h-100 w-100">
@@ -125,7 +125,6 @@
                                                 @endif
                                             @endif
                                         </div>
-                                    @endforeach
                                 </div>
                             </form>
                             <hr>
