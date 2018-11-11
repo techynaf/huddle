@@ -2368,7 +2368,7 @@ pre {
   border-radius: 10px;
   border: 1px solid #40180b !important;
   float: right;
-  margin: 17px 0px 0px 0px;
+  margin: 7px 0px 0px 0px;
 }
 
 .huddle-login-btn:hover {
@@ -2414,7 +2414,7 @@ pre {
   border-radius: 10px;
   border: 1px solid #E0D9CF !important;
   float: right;
-  margin: 18px 15px 0px 0px;
+  margin: 8px 7px 0px 0px;
 }
 
 .huddle-name-btn:hover {
@@ -6019,7 +6019,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   line-height: 58px;
   text-transform: uppercase;
   float: left;
-  padding: 5px;
+  padding: 0px;
 }
 
 #topnav .topbar-main .logo-small {
@@ -6146,7 +6146,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 #topnav .navigation-menu {
   list-style: none;
   margin: 0;
-  padding: 0px;
+  padding: 0;
 }
 
 #topnav .navigation-menu>li {
@@ -6158,11 +6158,11 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 #topnav .navigation-menu>li>a {
   display: block;
   color: #3d180b;
-  font-size: 16px;
+  font-size: 14px;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
   line-height: 20px;
-  padding: 20px 50px 20px 50px;
+  padding: 20px 30px 20px 30px;
 }
 
 #topnav .navigation-menu>li>a:hover {
@@ -6178,7 +6178,7 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 }
 
 #topnav .navigation-menu>li>a i {
-  font-size: 35px;
+  font-size: 30px;
   margin-right: 5px;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
@@ -6190,10 +6190,6 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
   background-color: transparent;
 }
 
-.beans {
-  height: 100%;
-}
-
 .nav-a-color {
   background-color: #6F4F3B;
 }
@@ -6203,8 +6199,8 @@ div.hopscotch-bubble .hopscotch-bubble-arrow-container.down .hopscotch-bubble-ar
 */
 @media (min-width: 992px) {
   #topnav .navigation-menu>li>a {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   #topnav .navigation-menu>li:first-of-type>a {
@@ -7230,7 +7226,7 @@ a.no-style:visited {
   font-size: 12px;
   font-weight: bold;
   height: 30px !important;
-  display:block;
+  display: block;
 }
 
 .input-sm-clock {
