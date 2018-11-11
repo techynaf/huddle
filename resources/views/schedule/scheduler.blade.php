@@ -2,7 +2,7 @@
 
 @section('content')
             <form action="/scheduler" method="get">
-            <br><br><br><br>
+            <br><br>
             <div class="container-fluid">
                 <div class="row scheduler-header">
                     <div class="col-4">
