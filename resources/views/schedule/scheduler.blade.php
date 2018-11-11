@@ -84,9 +84,9 @@
                                         <div class="row">
                                             @foreach($schedules[$loop->index] as $schedule)
                                             <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
-                                                <div class="col-md">
+                                                <div class="col-md mx-0 pl-1 pr-3">
                                                     @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
-                                                        <div class="text-center btn btn-outline-danger h-100 w-100 mx-0 pl-1 pr-2">
+                                                        <div class="text-center btn btn-outline-danger h-100 w-100">
                                                             <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
                                                             <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
                                                             <input type="hidden" value="" name="end[]">
@@ -98,7 +98,7 @@
                                                         <input type="hidden" name="s_id[]" value="0">
                                                         @include('templates.schedule-default-form')
                                                     @elseif (is_string($schedule))
-                                                        <div class="text-center btn btn-outline-danger h-100 w-100 mx-0 pl-1 pr-2">
+                                                        <div class="text-center btn btn-outline-danger h-100 w-100">
                                                             <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
                                                             <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
                                                             <input type="hidden" value="" name="end[]">

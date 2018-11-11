@@ -16,7 +16,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6 mx-0 px-0">
-                    <select name="entry_b[]" class="form-control input-sm">
+                    <select name="entry_b[]" class="form-control schedular-branch-font-size input-sm">
                         <option value="{{$schedule->startingBranch->id}}">{{$schedule->startingBranch->name}}</option>
                         @foreach($branches as $branch)
                             <option value="{{$branch->id}}">{{$branch->name}}</option>
@@ -24,7 +24,7 @@
                     </select>
                 </div>
                 <div class="col-md-6 mx-0 pl-0 pr-2">
-                    <select name="exit_b[]" class="form-control input-sm">
+                    <select name="exit_b[]" class="form-control schedular-branch-font-size input-sm">
                         <option value="{{$schedule->endingBranch->id}}">{{$schedule->endingBranch->name}}</option>
                         @foreach($branches as $branch)
                             <option value="{{$branch->id}}">{{$branch->name}}</option>
