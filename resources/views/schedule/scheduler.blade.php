@@ -80,41 +80,45 @@
                                     <div class="col-md-1 text-center" id="{{$user->id}}">{{$user->name}}
                                         <button type="submit" class="btn btn-success btn-rounded">Save</button>
                                     </div>
-                                    @foreach($schedules[$loop->index] as $schedule)
-                                    <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
-                                        <div class="col-md">
-                                            @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
-                                                <div class="text-center btn btn-outline-danger h-100 w-100 mx-0 px-0">
-                                                    <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
-                                                    <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
-                                                    <input type="hidden" value="" name="end[]">
-                                                    <input type="hidden" value="" name="start[]">
-                                                    <input type="hidden" name="s_id[]" value="0">
-                                                    <h6>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</h6>
+                                    <div class="col-md-11">
+                                        <div class="row">
+                                            @foreach($schedules[$loop->index] as $schedule)
+                                            <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
+                                                <div class="col-md">
+                                                    @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
+                                                        <div class="text-center btn btn-outline-danger h-100 w-100 mx-0 px-0">
+                                                            <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
+                                                            <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
+                                                            <input type="hidden" value="" name="end[]">
+                                                            <input type="hidden" value="" name="start[]">
+                                                            <input type="hidden" name="s_id[]" value="0">
+                                                            <h6>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</h6>
+                                                        </div>
+                                                    @elseif ($schedule == 'false')
+                                                        <input type="hidden" name="s_id[]" value="0">
+                                                        @include('templates.schedule-default-form')
+                                                    @elseif (is_string($schedule))
+                                                        <div class="text-center btn btn-outline-danger h-100 w-100 mx-0 px-0">
+                                                            <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
+                                                            <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
+                                                            <input type="hidden" value="" name="end[]">
+                                                            <input type="hidden" value="" name="start[]">
+                                                            <input type="hidden" name="s_id[]" value="0">
+                                                            <h6>{{ucfirst($schedule)}}</h6>
+                                                        </div>
+                                                    @else
+                                                        @if ($schedule->date != $days[$loop->index][1])
+                                                            <input type="hidden" name="s_id[]" value="0">
+                                                            @include('templates.schedule-form')
+                                                        @else
+                                                            <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
+                                                            @include('templates.schedule-form')
+                                                        @endif
+                                                    @endif
                                                 </div>
-                                            @elseif ($schedule == 'false')
-                                                <input type="hidden" name="s_id[]" value="0">
-                                                @include('templates.schedule-default-form')
-                                            @elseif (is_string($schedule))
-                                                <div class="text-center btn btn-outline-danger h-100 w-100 mx-0 px-0">
-                                                    <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
-                                                    <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
-                                                    <input type="hidden" value="" name="end[]">
-                                                    <input type="hidden" value="" name="start[]">
-                                                    <input type="hidden" name="s_id[]" value="0">
-                                                    <h6>{{ucfirst($schedule)}}</h6>
-                                                </div>
-                                            @else
-                                                @if ($schedule->date != $days[$loop->index][1])
-                                                    <input type="hidden" name="s_id[]" value="0">
-                                                    @include('templates.schedule-form')
-                                                @else
-                                                    <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
-                                                    @include('templates.schedule-form')
-                                                @endif
-                                            @endif
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </div>
                             </form>
                             <hr>
