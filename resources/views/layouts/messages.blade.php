@@ -11,7 +11,7 @@
 @endif
 
 @if(session('success'))
-<br><br><br><br>
+<br>
     <div class="row text-center alert alert-success m-t--40">
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -22,7 +22,7 @@
 @endif
 
 @if(session('error'))
-<br><br><br><br>
+<br>
     <div class="row text-center alert alert-danger m-t--40">
         <div class="col-md-4"></div>
         <div class="col-md-4">

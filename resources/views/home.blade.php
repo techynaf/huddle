@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-        <div class="home-page-search mt-5">
+        <div class="home-page-search mt-1">
             <form action="/branch/filter" method="GET">
                 @csrf
                 <div class="container-fluid mb-2">
@@ -24,11 +24,11 @@
                         </div>
                         <div class="row">
             
-                            <div class="col-2 text-right align-middle">
+                            <div class="col-3 text-right align-middle">
                                 <label for="id" class="form-label-control huddle-color">Filter Branch</label>
                             </div>
 
-                            <div class="col-7">
+                            <div class="col-6">
                                 <select class="form-control huddle-color" name="id">
                                     @if (count($branches) > 1)
                                         <option value="all">All</option>
