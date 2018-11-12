@@ -78,7 +78,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-1 text-center" id="{{$user->id}}">{{$user->name}}
-                                        <button type="submit" class="btn btn-success btn-rounded">Save</button>
+                                        <button type="submit" class="btn btn-success btn-rounded my-0 py-0">Save</button>
                                     </div>
                                     <div class="col-md-11">
                                         <div class="row">
