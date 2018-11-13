@@ -82,7 +82,7 @@ class ProfileController extends Controller
 
         $days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
         $schedules = array();
-        $requests = Leave::where('user_id', $user->id)->where('is_removed', false)->orderBy('id', 'desc')->paginate(3);
+        $requests = Leave::where('user_id', $user->id)->where('is_removed', false)->orderBy('id', 'desc')->paginate(4);
         $logs = array();
 
         foreach ($dates as $date) {

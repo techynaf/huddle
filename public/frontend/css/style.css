@@ -7236,3 +7236,7 @@ a.no-style:visited {
 .hidden {
   display: none;
 }
+
+.leave-type {
+  font-size: 1.5em;
+}

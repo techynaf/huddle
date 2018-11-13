@@ -265,26 +265,37 @@
                                             <br>
                                         @else
                                         <hr>
-                                            @foreach($requests as $request)
-                                                <div class="row">
-                                                    <div class="col-8">
-                                                        {{$request->leavetype->name}} <br>
-                                                        {{$request->comment}} <br>
+                                        <div class="row">
+                                            @foreach ($requests as $request)
+                                                @if ($loop->index % 2 == 0 && $loop->index != 0)
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                @endif
+                                                <div class="col-md-6 {{$loop->index % 2 == 0 ? 'br' : ''}}">
+                                                    <div class="row">
+                                                        <div class="leave-type col-md-8">{{$request->leavetype->name}}</div>
+                                                        <div class="col-2 text-right">
+                                                            @if($request->is_approved == 0)
+                                                                <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>
+                                                            @endif
+                                                        </div>
+                                                        <div class="col-2 text-right">
+                                                            @if (App\Http\Controllers\Controller::admin() || auth()->user()->id == $user->id)
+                                                                <a href="/delete/request/{{$request->id}}" class="btn">Delete</a>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    {{$request->comment != null ? $request->comment : "No comments made"}} <br><br>
+                                                    @if (Carbon\Carbon::parse($request->start)->format('d M Y') != Carbon\Carbon::parse($request->end)->format('d M Y'))
                                                         From {{Carbon\Carbon::parse($request->start)->format('d M Y')}} <br>
                                                         To {{Carbon\Carbon::parse($request->end)->format('d M Y')}}
-                                                    </div>
-                                                    @if (App\Http\Controllers\Controller::admin() || auth()->user()->id == $user->id)
-                                                        <div class="col-2 text-right">
-                                                            <a href="/delete/request/{{$request->id}}" class="btn">Delete</a>
-                                                        </div>
-                                                    @endif
-                                                    @if($request->is_approved == 0)
-                                                        <div class="col-2 text-center">
-                                                            <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>
-                                                        </div>
+                                                    @else
+                                                        On {{Carbon\Carbon::parse($request->end)->format('d M Y')}}
                                                     @endif
                                                 </div>
                                             @endforeach
+                                        </div>
                                             {{ $requests->links() }}
                                         @endif
                                     </div>
