@@ -232,6 +232,13 @@ class LeavesController extends Controller
             'id' => 'required'
         ]);
 
+        if ($request->type == 6) {
+            $this->validate($request, [
+                'day_1' => 'required',
+                'day_2' => 'required',
+            ]);
+        }
+
         $l = Leave::where('user_id', $request->id)->where('start', '<=', Carbon::parse($request->start)->format('Y-m-d'))->
         where('end', '>=', Carbon::parse($request->end)->format('Y-m-d'))->where('is_approved', 1)->get();
 
@@ -240,20 +247,32 @@ class LeavesController extends Controller
         }
 
         $user = User::find($request->id);
-        $leave = new Leave;
-        $leave->user_id = $user->id;
-        $leave->branch_id = $user->branch_id;
-        $leave->is_approved = 1;
-        $leave->start = Carbon::parse($request->start)->format('Y-m-d');
-        $leave->end = Carbon::parse($request->end)->format('Y-m-d');
-        $leave->type = $request->type;
-        $leave->comment = $request->comment;
-        $leave->is_removed = false;
+        
+        if ($request->type != 6) {
+            $leave = new Leave;
+            $leave->user_id = $user->id;
+            $leave->branch_id = $user->branch_id;
+            $leave->is_approved = 1;
+            $leave->start = Carbon::parse($request->start)->format('Y-m-d');
+            $leave->end = Carbon::parse($request->end)->format('Y-m-d');
+            $leave->type = $request->type;
+            $leave->comment = $request->comment;
+            $leave->is_removed = false;
+        } else {
+            $leave = new WeeklyLeave;
+            $leave->user_id = $user->id;
+            $leave->branch_id = $user->branch_id;
+            $leave->approved = 1;
+            $leave->start = Carbon::parse($request->start)->format('Y-m-d');
+            $leave->end = Carbon::parse($request->end)->format('Y-m-d');
+            $leave->day_1 = $request->day_1;
+            $leave->day_2 = $request->day_2;
+            $leave->comment = $request->comment;
+        }
+
         $leave->save();
 
-        $url = '/view/employee/'.$user->id;
-
-        return redirect($url)->with('success', 'Leave successfully created');
+        return redirect('/create/leave')->with('success', 'Leave successfully created');
     }
 
     public function delete ($id)

@@ -2318,7 +2318,7 @@ pre {
 .huddle-brown-btn {
   background-color: #40180b !important;
   color: white;
-  font-size: 20px;
+  font-size: 14px;
   padding: 5px 40px;
   border-radius: 10px;
   border: 1px solid #40180b !important;
@@ -7231,4 +7231,8 @@ a.no-style:visited {
 
 .input-sm-clock {
   font-size: 11px;
+}
+
+.hidden {
+  display: none;
 }
