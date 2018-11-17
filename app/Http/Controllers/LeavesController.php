@@ -229,7 +229,10 @@ class LeavesController extends Controller
             'type' => 'required',
             'start' => 'required',
             'end' => 'required',
-            'id' => 'required'
+            'id' => 'required',
+            'comment' => 'nullable',
+            'day_1' => 'nullable',
+            'day_2' => 'nullable',
         ]);
 
         if ($request->type == 6) {

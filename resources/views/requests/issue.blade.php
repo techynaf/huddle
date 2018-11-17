@@ -27,7 +27,11 @@
                                     </div>
                                     <div class="col-md-5 pt-4">
                                         <select name="id" class="form-control" required>
-                                            <option value="">Please select an employee</option>
+                                            @if (old('id') != null)
+                                                <option value="{{ old('id') }}">{{ App\User::find(old('id'))->name }}</option>
+                                            @else
+                                                <option value="">Please select an employee</option>
+                                            @endif
                                             @foreach($users as $user)
                                                 @if (App\Http\Controllers\Controller::manager())
                                                     <option value="{{$user->id}}">{{$user->name}}</option>
@@ -42,11 +46,15 @@
                                 <div class="hidden" id="day">
                                     <div class="form-group row" >
                                         <div class="col-1">
-                                            <label for="day_2" class="form-label-control float-right align-middle">Day 1</label>
+                                            <label for="day_1" class="form-label-control float-right align-middle">Day 1</label>
                                         </div>
                                         <div class="col-5">
                                             <select name="day_1" class="form-control" id="day-1">
-                                                <option value="">Please select day one</option>
+                                                @if (old('day_1') != null)
+                                                    <option value="{{ old('day_1') }}">{{ old('day_1') }}</option>
+                                                @else
+                                                    <option value="">Please select day one</option>
+                                                @endif
                                                 <option value="Sunday">Sunday</option>
                                                 <option value="Monday">Monday</option>
                                                 <option value="Tuesday">Tuesday</option>
@@ -61,7 +69,11 @@
                                         </div>
                                         <div class="col-5">
                                             <select name="day_2" class="form-control" id="day-2">
-                                                <option value="">Please select day one</option>
+                                                @if (old('day_2') != null)
+                                                    <option value="{{ old('day_2') }}">{{ old('day_2') }}</option>
+                                                @else
+                                                    <option value="">Please select day one</option>
+                                                @endif
                                                 <option value="Sunday">Sunday</option>
                                                 <option value="Monday">Monday</option>
                                                 <option value="Tuesday">Tuesday</option>
@@ -79,13 +91,13 @@
                                         <label for="start" class="form-label-control float-right align-middle">Date 1</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="date" name="start" class="form-control" required>
+                                        <input type="date" name="start" class="form-control" value="{{ old('start') }}" required>
                                     </div>
                                     <div class="col-1">
                                         <label for="end" class="form-label-control float-right align-middle">Date 2</label>
                                     </div>
                                     <div class="col-5">
-                                        <input type="date" name="end" class="form-control" required>
+                                        <input type="date" name="end" class="form-control" value="{{ old('end') }}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -93,7 +105,7 @@
                                         <label for="comment" class="form-label-control float-right align-middle">Comment</label>
                                     </div>
                                     <div class="col-11">
-                                        <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                                        <textarea name="comment" class="form-control" cols="30" rows="10">{{ old('comment') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
