@@ -94,3 +94,6 @@ Route::get('/test', function () {
 
 //Obtain pins list
 Route::get('/pins', 'AdminController@pins')->middleware('auth');
+
+//Assign Barista roles to all
+Route::get('/assign', 'AdminController@assignRole')->middleware('auth');
