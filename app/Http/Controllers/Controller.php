@@ -158,11 +158,8 @@ class Controller extends BaseController
                     $mlog = true;
                 }
 
-                foreach ($lates as $late) {
-                    if ($late->user->roles->first()->name == 'manager' || $late->user->roles->first()->name == 'assistant-manager' || $leave->user->roles->first()->name == 'barista' || $leave->user->roles->first()->name == 'employee') {
-                        $mlate = true;
-                        break;
-                    }
+                if (count($lates) != 0) {
+                    $mlate = true;
                 }
 
                 array_push($notification, $mleave);
