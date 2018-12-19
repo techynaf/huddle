@@ -91,7 +91,7 @@ Route::get('/leave', 'ReportController@leaveReport')->middleware('auth');
 Route::get('/test', function () {
     $qr = QRCode::text('QR Code Generator for Laravel!');
     
-    $qr->setOutFile('/qrcodes/test.png')->png();
+    $qr->setOutFile('public/qrcodes/test.png')->png();
     
     // $qr->move('/public/qrcodes/test.png');
     $qr = '/qrcodes/test.png';
