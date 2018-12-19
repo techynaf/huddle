@@ -94,9 +94,15 @@ class ScheduleController extends Controller
             $branches = Branch::where('id', '!=', $b->id)->get();
         }
 
+        $leaveDate = $this->findSun(null);
+
+        if ($request->date != null) {
+            $leaveDate = Carbon::parse($request->date);
+        }
+
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
         with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today)->
-        with('notification', $notification)->with('b', $b)->with('leaveDate', $this->findSun(null));
+        with('notification', $notification)->with('b', $b)->with('leaveDate', $leaveDate);
     }
 
     public function dayOffChecker ($user, $date)
