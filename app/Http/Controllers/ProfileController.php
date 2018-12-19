@@ -368,6 +368,9 @@ class ProfileController extends Controller
             $manager->save();
         }
 
+        $qr = QRCode::text($user->pin);
+        $qr->setOutFile('qrcodes/'.$user->pin.'.png')->png();
+
         $url = '/view/employee/'.$id;
 
         return redirect($url)->with('success', 'New pin is '. $pin);
