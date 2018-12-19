@@ -193,18 +193,18 @@ class AdminController extends Controller
         return view('profile/pins')->with('branches', $branches)->with('notification', $this->checkNotifications())->with('flow', $flow);
     }
 
-    // public function assignRole ()
-    // {
-    //     if (auth()->user()->roles()->first()->name != 'super-admin') {
-    //         return redirect('/')->with('error', 'You are not authorized to perform this action');
-    //     }
+    public function assignRole ()
+    {
+        if (auth()->user()->roles()->first()->name != 'super-admin') {
+            return redirect('/')->with('error', 'You are not authorized to perform this action');
+        }
 
-    //     $users = User::where('id', '>', 17)->get();
+        $users = User::where('id', '>', 17)->get();
 
-    //     foreach ($users as $user) {
-    //         $user->roles()->attach(7);
-    //     }
+        foreach ($users as $user) {
+            $user->roles()->attach(7);
+        }
 
-    //     return redirect('/');
-    // }
+        return redirect('/');
+    }
 }
