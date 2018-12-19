@@ -92,7 +92,7 @@ Route::get('/leave', 'ReportController@leaveReport')->middleware('auth');
 Route::get('/pins', 'AdminController@pins')->middleware('auth');
 
 //Assign Barista roles to all
-Route::get('/assign', 'AdminController@assignRole')->middleware('auth');
+// Route::get('/assign', 'AdminController@assignRole')->middleware('auth');
 
 //Excel Export Routes
 Route::post('/export/hour', 'ExportsController@hourExport')->middleware('auth');
