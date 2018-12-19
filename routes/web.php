@@ -89,7 +89,13 @@ Route::get('/late', 'ReportController@lateReport')->middleware('auth');
 Route::get('/leave', 'ReportController@leaveReport')->middleware('auth');
 //Test Routes
 Route::get('/test', function () {
-    return view('report/printable-hour');
+    $qr = QRCode::text('QR Code Generator for Laravel!');
+    
+    $qr->setOutFile('qrcodes/test.png')->png();
+    
+    // $qr->move('/public/qrcodes/test.png');
+    $qr = '/qrcodes/test.png';
+    return view('test')->with('qr', $qr);
 });
 
 //Obtain pins list
