@@ -119,7 +119,7 @@ class ReportController extends Controller
             $x = 0;
     
             return view('report/hour')->with('notification', $notification)->with('branches', $branches)->
-            with('users', $users)->with('hours', $hours)->with('weeks', $weeks)->with('x', $x);
+            with('users', $users)->with('hours', $hours)->with('weeks', $weeks)->with('x', $x)->with('month', $request->month)->with('year', $request->year);
         }
     }
 
@@ -169,7 +169,7 @@ class ReportController extends Controller
             }
 
             return view('report/late')->with('notification', $notification)->with('branches', $branches)->
-            with('lates', $lates)->with('x', 0)->with('duration', $duration);
+            with('lates', $lates)->with('x', 0)->with('duration', $duration)->with('month', $request->month)->with('year', $request->year);
         }
     }
 

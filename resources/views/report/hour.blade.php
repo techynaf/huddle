@@ -4,7 +4,18 @@
     
     <section>
         <div class="container-fluid">
-        <h4 class="page-title mt-5">Please use Crtl + P to download</h4>
+            <form action="/export/hour" method="POST">
+                @csrf
+                <input type="hidden" name="year" value="{{ $year }}">
+                <input type="hidden" name="month" value="{{ $month }}">
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100">Export Excel</button>
+                    </div>
+                </div>
+            </form>
+            <h4 class="page-title mt-5">Please use Crtl + P to download <span class="text-right">here</span></h4>
             <div class="row">
                 <div class="col-12 table-responsive text-center">
                     <table class="table table-striped table-bordered bg-white">
@@ -57,7 +68,7 @@
             </div> <!-- end row -->
         </div> <!-- end container -->
     </section>
-    <script>
+    {{-- <script>
         window.print();
-    </script>
+    </script> --}}
 @endsection
