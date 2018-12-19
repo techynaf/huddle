@@ -87,16 +87,6 @@ Route::post('/logs/{id}', 'LogController@store')->middleware('auth');
 Route::get('/hour', 'ReportController@hours')->middleware('auth');
 Route::get('/late', 'ReportController@lateReport')->middleware('auth');
 Route::get('/leave', 'ReportController@leaveReport')->middleware('auth');
-//Test Routes
-Route::get('/test', function () {
-    $qr = QRCode::text('QR Code Generator for Laravel!');
-    
-    $qr->setOutFile('public/qrcodes/test.png')->png();
-    
-    // $qr->move('/public/qrcodes/test.png');
-    $qr = '/qrcodes/test.png';
-    return view('test')->with('qr', $qr);
-});
 
 //Obtain pins list
 Route::get('/pins', 'AdminController@pins')->middleware('auth');
