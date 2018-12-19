@@ -96,10 +96,6 @@ class ExportsController extends Controller
         }
 
         $name = 'Hourly report of '.$this->months[$request->month].' '.$request->year;
-        // dd($response);
-        // $response->headers->set('Access-Control-Allow-Origin' , '*');
-        // $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-        // $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application');
 
         return (new HoursExport($branches, $users, $hours, $weeks))->download($name.'.xlsx');
     }
@@ -127,8 +123,8 @@ class ExportsController extends Controller
             array_push($duration, $scheduledTime->diffInMinutes($actualTime));
         }
 
-        $name = 'Late report of '.$request->month.' '.$request->year;
+        $name = 'Late report of '.$this->months[$request->month].' '.$request->year;
 
-        return (new HoursExport($branches, $lates, $duration))->download($name.'.xlsx');
+        return (new LatesExport($branches, $lates, $duration))->download($name.'.xlsx');
     }
 }
