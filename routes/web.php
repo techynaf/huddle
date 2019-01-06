@@ -97,3 +97,9 @@ Route::get('/pins', 'AdminController@pins')->middleware('auth');
 //Excel Export Routes
 Route::post('/export/hour', 'ExportsController@hourExport')->middleware('auth');
 Route::post('/export/late', 'ExportsController@lateExport')->middleware('auth');
+
+// Route::get('/test', function () {
+//     // dd(exec('pwd'));
+//     dd(exec('cd .. && ./composer-cmd.sh'));
+//     // dd(exec('pwd'));
+// });

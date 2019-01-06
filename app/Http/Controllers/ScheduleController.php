@@ -44,7 +44,7 @@ class ScheduleController extends Controller
             $start = Carbon::parse($request->date);
             $start = $this->findSun($start);
         }
-
+        
         $dates = $this->findWeeks();
 
         $d = $start;
@@ -87,8 +87,6 @@ class ScheduleController extends Controller
         }
 
         $path = $request->path();
-        $now = new Carbon;
-        $today = $now->copy()->format('Y-m-d');
         
         if ($b != null) {
             $branches = Branch::where('id', '!=', $b->id)->get();
@@ -101,8 +99,8 @@ class ScheduleController extends Controller
         }
 
         return view('schedule/scheduler')->with('users', $users)->with('schedules', $schedules)->with('days', $days)->
-        with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('today', $today)->
-        with('notification', $notification)->with('b', $b)->with('leaveDate', $leaveDate);
+        with('branches', $branches)->with('dates', $dates)->with('path', $path)->with('notification', $notification)->
+        with('b', $b)->with('leaveDate', $leaveDate);
     }
 
     public function dayOffChecker ($user, $date)
@@ -135,14 +133,7 @@ class ScheduleController extends Controller
             $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
             
             if ($schedule == null) {
-                $date = Carbon::parse($date)->addDays(-7)->format('Y-m-d');
-                $schedule = Schedule::where('user_id', $user->id)->where('date', $date)->first();
-
-                if ($schedule == null) {
-                    return 'false';
-                } else {
-                    return $schedule;
-                }
+                return false;
             } else {
                 return $schedule;
             }
@@ -184,10 +175,34 @@ class ScheduleController extends Controller
                 $schedule->date = $dates[$i];
                 $schedule->timestamps = false;
                 $schedule->save();
+
+                $nextWeek = Carbon::parse($schedule->date)->addDays(7)->format('Y-m-d');
+
+                $s = Schedule::where('user_id', $schedule->user_id)->where('date', $nextWeek)->first();
+
+                if ($s == null) {
+                    $schedule = new Schedule;
+                } else {
+                    $schedule = $s;
+                }
+
+                $schedule->user_id = $user->id;
+                $schedule->branch_id = $user->branch_id;
+                $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
+                $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
+                $schedule->start_branch = $s_branches[$i];
+                $schedule->end_branch = $e_branches[$i];
+                $schedule->date = $nextWeek;
+                $schedule->timestamps = false;
+                $schedule->save();
             }
 
             if ($starts[$i] == null && $starts[$i] == null && $schedule_ids[$i] != '0') {
                 $schedule = Schedule::where('id', $schedule_ids[$i])->first();
+                $schedule->delete();
+
+                $nextWeek = Carbon::parse($schedule->date)->addDays(7)->format('Y-m-d');
+                $schedule = Schedule::where('user_id', $schedule->user_id)->where('date', $nextWeek)->first();
                 $schedule->delete();
             }
         }
