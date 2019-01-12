@@ -197,13 +197,17 @@ class ScheduleController extends Controller
                 $schedule->save();
             }
 
-            if ($starts[$i] == null && $starts[$i] == null && $schedule_ids[$i] != '0') {
+            if ($starts[$i] == null && $schedule_ids[$i] != '0') {
                 $schedule = Schedule::where('id', $schedule_ids[$i])->first();
                 $schedule->delete();
 
                 $nextWeek = Carbon::parse($schedule->date)->addDays(7)->format('Y-m-d');
                 $schedule = Schedule::where('user_id', $schedule->user_id)->where('date', $nextWeek)->first();
-                $schedule->delete();
+                
+                if ($schedule != null) {
+                    $schedule->delete();
+                }
+
             }
         }
 
