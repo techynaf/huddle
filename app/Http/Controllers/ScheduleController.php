@@ -157,7 +157,7 @@ class ScheduleController extends Controller
         // dd($request);
 
         for ($i = 0; $i < 7; $i++) {
-            if (!($starts[$i] == null || $starts[$i] == null)) {
+            if (!($starts[$i] == null || $ends[$i] == null)) {
                 $schedule = null;
 
                 if ($schedule_ids[$i] == '0') {
@@ -182,32 +182,21 @@ class ScheduleController extends Controller
 
                 if ($s == null) {
                     $schedule = new Schedule;
-                } else {
-                    $schedule = $s;
+                    $schedule->user_id = $user->id;
+                    $schedule->branch_id = $user->branch_id;
+                    $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
+                    $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
+                    $schedule->start_branch = $s_branches[$i];
+                    $schedule->end_branch = $e_branches[$i];
+                    $schedule->date = $nextWeek;
+                    $schedule->timestamps = false;
+                    $schedule->save();
                 }
-
-                $schedule->user_id = $user->id;
-                $schedule->branch_id = $user->branch_id;
-                $schedule->start = Carbon::parse($starts[$i])->format('H:i:s');
-                $schedule->end = Carbon::parse($ends[$i])->format('H:i:s');
-                $schedule->start_branch = $s_branches[$i];
-                $schedule->end_branch = $e_branches[$i];
-                $schedule->date = $nextWeek;
-                $schedule->timestamps = false;
-                $schedule->save();
             }
 
             if ($starts[$i] == null && $schedule_ids[$i] != '0') {
                 $schedule = Schedule::where('id', $schedule_ids[$i])->first();
                 $schedule->delete();
-
-                $nextWeek = Carbon::parse($schedule->date)->addDays(7)->format('Y-m-d');
-                $schedule = Schedule::where('user_id', $schedule->user_id)->where('date', $nextWeek)->first();
-                
-                if ($schedule != null) {
-                    $schedule->delete();
-                }
-
             }
         }
 
