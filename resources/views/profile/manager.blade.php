@@ -96,7 +96,7 @@
                                 <label for="pin" class="col-sm-4 col-form-label text-md-right">Manager Pin</label>
     
                                 <div class="col-md-6">
-                                    <input id="pin" type="number" class="form-control" name="pin" value="{{ old('pin') }}" required autofocus>
+                                    <input id="pin" type="password" class="form-control" name="pin" value="{{ old('pin') }}" required autofocus>
                                 </div>
                             </div>
     
