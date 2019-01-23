@@ -58,10 +58,16 @@
         </div>
     </div>
 
+    
     @if ($flow)
+        <div class="row">
+            <div class="col-md-12 text-right pr-5">
+                <a href="/export/leave?from={{ request()->from }}&to={{ request()->to }}&branch={{ request()->branch }}&approved={{ request()->approved }}&requested={{ request()->requested }}&pending={{ request()->pending }}&declined={{ request()->declined }}" class="btn btn-primary">Export Report</a>
+            </div>
+        </div>
         <section>
             <div class="container-fluid">
-                <h4 class="page-title mt-5">Please use Crtl + P to download</h4>
+                <h4 class="page-title mt-5">Leave Report</h4>
                 <div class="row">
                     <div class="col-12 table-responsive text-center">
                         <table class="table table-striped table-bordered bg-white">

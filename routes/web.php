@@ -97,6 +97,7 @@ Route::get('/pins', 'AdminController@pins')->middleware('auth');
 //Excel Export Routes
 Route::post('/export/hour', 'ExportsController@hourExport')->middleware('auth');
 Route::post('/export/late', 'ExportsController@lateExport')->middleware('auth');
+Route::get('/export/leave', 'ExportsController@leaveExport')->middleware('auth');
 
 // Route::get('/test', function () {
 //     // dd(exec('pwd'));

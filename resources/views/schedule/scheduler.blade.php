@@ -13,15 +13,19 @@
                             <div class="col-6">
                                 <h5>Select date range</h5>
                             </div>
-                            <div class="col-6">
-                                <select name="date" class="form-control">
-                                    <option value="{{date("d M", strtotime($days[0][1]))}}">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
-                                    @foreach($dates as $date)
-                                        @if($days[0][1] != date("Y-m-d", strtotime($date[0])))
-                                            <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                            <div class="col-6 my-auto">
+                                @if (auth()->user()->roles->first()->name == 'hr' || auth()->user()->roles->first()->name == 'super-admin')
+                                    <input type="date" name="date" class="form-control  input-sm">
+                                @else
+                                    <select name="date" class="form-control">
+                                        <option value="{{date("d M", strtotime($days[0][1]))}}">{{date("d M", strtotime($days[0][1])).' to '.date("d M", strtotime($days[6][1]))}}</option>
+                                        @foreach($dates as $date)
+                                            @if($days[0][1] != date("Y-m-d", strtotime($date[0])))
+                                                <option value="{{$date[0]}}">{{date("d M", strtotime($date[0])).' to '.date("d M", strtotime($date[1]))}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                @endif
                             </div>
                         </div>
                     </div>

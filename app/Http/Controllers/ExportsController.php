@@ -13,6 +13,7 @@ use App\Branch;
 use Excel;
 use App\Exports\HoursExport;
 use App\Exports\LatesExport;
+use App\Exports\LeaveExport;
 
 class ExportsController extends Controller
 {
@@ -126,5 +127,57 @@ class ExportsController extends Controller
         $name = 'Late report of '.$this->months[$request->month].' '.$request->year;
 
         return (new LatesExport($branches, $lates, $duration))->download($name.'.xlsx');
+    }
+
+    public function leaveExport (Request $request)
+    {
+        if ($this->barista()) {
+            return redirect('/')->with('error', 'You are not authorized to access this page');
+        }
+
+        $leaves = Leave::where('is_approved', -1)->get();
+        $la = Leave::where('start', '>=',$request->from)->where('start', '<=', $request->to)->get();
+        $ld = Leave::where('start', '>=',$request->from)->where('start', '<=', $request->to)->get();
+        $lp = Leave::where('start', '>=',$request->from)->where('start', '<=', $request->to)->get();
+
+        if ($request->branch != 'all') {
+            $la = $la->where('branch_id', $request->branch);
+            $ld = $ld->where('branch_id', $request->branch);
+            $ld = $lp->where('branch_id', $request->branch);
+        }
+
+        if ($request->requested == null) {
+            if ($request->approved == 1) {
+                $la = $la->where('is_approved', 1);
+            } else {
+                $la = null;
+            }
+
+            if ($request->declined == 1) {
+                $ld = $ld->where('is_approved', 2);
+            } else {
+                $ld = null;
+            }
+
+            if ($request->pending == 1) {
+                $lp = $lp->where('is_approved', 0);
+            } else {
+                $lp = null;
+            }
+        }
+
+        if ($la != null) {
+            $leaves = $leaves->merge($la);
+        }
+
+        if ($ld != null) {
+            $leaves = $leaves->merge($ld);
+        }
+        
+        if ($lp != null) {
+            $leaves = $leaves->merge($lp);
+        }
+
+        return (new LeaveExport($leaves))->download('Leave Report.xlsx');
     }
 }
