@@ -151,6 +151,12 @@ class ProfileController extends Controller
             }
         }
 
+        if (User::where('employee_id', $request->employee_id)->first() != null) {
+            $this->validate($request, [
+                'valid_employee_id' => 'required'
+            ]);
+        }
+
         $user = new User;
         $user->name = $request->name;
         $user->status = $request->status;

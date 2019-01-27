@@ -14,7 +14,7 @@
                                 <h5>Select date range</h5>
                             </div>
                             <div class="col-6 my-auto">
-                                @if (auth()->user()->roles->first()->name == 'hr' || auth()->user()->roles->first()->name == 'super-admin')
+                                @if (auth()->user()->roles->first()->name == 'HR' || auth()->user()->roles->first()->name == 'super-admin')
                                     <input type="date" name="date" class="form-control  input-sm">
                                 @else
                                     <select name="date" class="form-control">
@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin')
+                    @if (auth()->user()->roles->first()->name == 'district-manager' || auth()->user()->roles->first()->name == 'super-admin' || auth()->user()->roles->first()->name == 'HR')
                         <br>
                         <div class="col-3 mt-4 mb-0">
                             <div class="row">
