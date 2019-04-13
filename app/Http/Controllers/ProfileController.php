@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRole;
 use App\Managers;
-use QRCode;
+use QrCode;
 
 class ProfileController extends Controller
 {
@@ -95,7 +95,7 @@ class ProfileController extends Controller
             array_push($logs, $l);
         }
 
-        $path = 'qrcodes/'.$user->pin.'.png';
+        $path = 'qrcodes/'.$user->pin.'.svg';
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
         with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->
@@ -169,8 +169,9 @@ class ProfileController extends Controller
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
-        $qr = QRCode::text($pin);
-        $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
+        $qr = \QrCode::size(99999)
+              ->format('svg')
+              ->generate($pin, public_path('qrcodes/'.$pin.'.svg'));
 
         if ($role->name == 'manager' || $role->name == 'assistant-manager') {
             while (true) {
@@ -197,8 +198,9 @@ class ProfileController extends Controller
         $users = User::all();
 
         foreach ($users as $user) {
-            $qr = QRCode::text($user->pin);
-            $qr->setOutFile('qrcodes/'.$user->pin.'.png')->png();
+            $qr = \QrCode::size(99999)
+              ->format('svg')
+              ->generate($user->pin, public_path('qrcodes/'.$user->pin.'.svg'));
         }
 
         return redirect('/')->with('success', 'QR Codes successfully generated');
@@ -303,8 +305,9 @@ class ProfileController extends Controller
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile updated! The pin and password for the profile is '.$pin.'.';
-        $qr = QRCode::text($pin);
-        $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
+        $qr = \QrCode::size(99999)
+              ->format('svg')
+              ->generate($pin, public_path('qrcodes/'.$pin.'.svg'));
 
         $user->roles()->detach($user->roles->first()->id);
         $user->roles()->attach($request->role);
@@ -374,8 +377,9 @@ class ProfileController extends Controller
             $manager->save();
         }
 
-        $qr = QRCode::text($user->pin);
-        $qr->setOutFile('qrcodes/'.$user->pin.'.png')->png();
+        $qr = \QrCode::size(99999)
+              ->format('svg')
+              ->generate($user->pin, public_path('qrcodes/'.$user->pin.'.svg'));
 
         $url = '/view/employee/'.$id;
 

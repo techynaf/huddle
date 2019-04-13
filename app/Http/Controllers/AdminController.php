@@ -93,7 +93,7 @@ class AdminController extends Controller
             array_push($logs, $l);
         }
 
-        $path = '/'.'qrcodes/'.$user->pin.'.png';
+        $path = '/'.'qrcodes/'.$user->pin.'.svg';
 
         return view('dashboard')->with('user', $user)->with('requests', $requests)->with('schedules', $schedules)->
         with('days', $days)->with('logs', $logs)->with('hours', $hours)->with('minutes', $minutes)->

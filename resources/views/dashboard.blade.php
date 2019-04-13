@@ -67,7 +67,7 @@
                                     @if(auth()->user()->roles->first()->name == 'HR' || auth()->user()->roles->first()->name == 'super-admin')
                                         <tr>
                                             <td>QR Code</td>
-                                            <td><a href="{{ asset('qrcodes/'.$user->pin.'.png') }}" target="_blank">Download</a></td>
+                                            <td><a href="{{ asset('qrcodes/'.$user->pin.'.svg') }}" target="_blank">Download</a></td>
                                         </tr>
                                     @endif
                                 </tbody>
@@ -77,7 +77,7 @@
                             <div class="row text-center">
                                 <div class="col-3"></div>
                                 <div class="col-6 border-right border-left">
-                                    <img src="{{'/qrcodes/'.$user->pin.'.png'}}" width="150" height="150" alt="{{'QR code of'.$user->name}}">
+                                    <img src="{{'/qrcodes/'.$user->pin.'.svg'}}" width="150" height="150" alt="{{'QR code of'.$user->name}}">
                                 </div>
                                 <div class="col-3"></div>
                             </div>
