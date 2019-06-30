@@ -17,10 +17,10 @@ class CreateLogUpdatesTable extends Migration
             $table->increments('id');
             $table->integer('log_id');
             $table->integer('user_id');
-            $table->time('initial_start');
-            $table->time('initial_end')->nullable();
-            $table->time('final_start');
-            $table->time('final_end');
+            $table->datetime('initial_start');
+            $table->datetime('initial_end')->nullable();
+            $table->datetime('final_start');
+            $table->datetime('final_end');
             $table->timestamps();
         });
     }

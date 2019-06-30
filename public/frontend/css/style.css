@@ -2324,6 +2324,23 @@ pre {
   border: 1px solid #40180b !important;
 }
 
+.huddle-brown-btn {
+  background-color: #40180b !important;
+  color: white;
+  font-size: 14px;
+  padding: 1vh 3vh;
+  border-radius: 10px;
+  border: 1px solid #40180b !important;
+}
+
+.huddle-success-btn {
+  background-color: #37ac5b !important;
+  color: white;
+  font-size: 14px;
+  padding: 1vh 3vh;
+  border-radius: 10px;
+}
+
 .huddle-red-btn {
   background-color: red !important;
   color: white;
@@ -2336,8 +2353,17 @@ pre {
 .huddle-brown-btn:hover {
   background-color: transparent !important;
   color: #40180b !important;
-  font-size: 20px;
-  padding: 5px 40px;
+  /* font-size: 20px;
+  padding: 5px 40px; */
+  border-radius: 10px;
+  border: 1px solid #40180b !important;
+}
+
+.huddle-success-btn:hover {
+  background-color: transparent !important;
+  color: #40180b !important;
+  /* font-size: 20px;
+  padding: 5px 40px; */
   border-radius: 10px;
   border: 1px solid #40180b !important;
 }
@@ -7234,9 +7260,21 @@ a.no-style:visited {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .leave-type {
   font-size: 1.5em;
+}
+
+.shift-super {
+  background: #00aff0;
+}
+
+.approved {
+  background: #10c469;
+}
+
+.declined {
+  background: #dd4b39;
 }

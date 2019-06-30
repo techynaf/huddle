@@ -54,7 +54,7 @@
                                                         <option value="Islam">Islam</option>
                                                         <option value="Hinduism">Hinduism</option>
                                                         <option value="Buddhism">Buddhism</option>
-                                                        <option value="Christianity">Christianity</option>
+                                                        <option value="Christianityity">Christianityity</option>
                                                         <option value="Other">Other</option>
                                                     </select>
                                                 </div>

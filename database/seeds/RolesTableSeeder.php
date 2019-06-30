@@ -12,12 +12,28 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = array('super-admin', 'HR', 'district-manager', 'manager', 'assistant-manager', 'shift-supervisor', 'barista', 'employee');
+        DB::table('roles')->insert([
+            'name' => 'Chairman',
+        ]);
 
-        foreach ($roles as $role) {
-            DB::table('roles')->insert([
-                'name' => $role,
-            ]);
-        }
+        DB::table('roles')->insert([
+            'name' => 'MD',
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'COO',
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'HOD/Area Manager',
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'Manager/Assistant Manager',
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'Entry Level Employee',
+        ]);
     }
 }

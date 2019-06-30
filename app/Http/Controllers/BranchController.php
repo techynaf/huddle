@@ -36,17 +36,17 @@ class BranchController extends Controller
             $s = 0;
 
             foreach ($branch->users as $user) {
-                if ($user->roles->first()->name == 'manager') {
+                if ($user->designation->name == 'Manager') {
                     array_push($man, $user);
                     $m++;
                 }
 
-                if ($user->roles->first()->name == 'assistant-manager') {
+                if ($user->designation->name == 'Assistant Manager') {
                     array_push($as, $user);
                     $a++;
                 }
 
-                if ($user->roles->first()->name == 'shift-supervisor') {
+                if ($user->designation->name == 'Shift Supervisor') {
                     array_push($sup, $user);
                     $s++;
                 }

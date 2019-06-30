@@ -22,7 +22,7 @@
                     <a href="/dashboard" class="text-white btn btn-primary huddle-name-btn">
                         @if (auth()->user() != null)
                             <div class="name">{{auth()->user()->name}}</div>
-                            <div class="role">{{ucfirst(auth()->user()->roles->first()->name)}}</div>
+                            <div class="role">{{ucfirst(auth()->user()->designation->name)}}</div>
                         @endif
                     </a>
                 </div>
@@ -59,15 +59,15 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
-                    @if(auth()->user()->roles->first()->name == 'barista' || auth()->user()->roles->first()->name == 'employee')
+                    @if (auth()->user()->designation->name == 'Shift Supervisor')
+                        @include('layouts.shift-super-nav')
+                    @elseif(auth()->user()->roles->first()->name == 'Entry Level Employee')
                         @include('layouts.barista-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'manager' || auth()->user()->roles->first()->name == 'assistant-manager')
+                    @elseif(auth()->user()->roles->first()->name == 'Manager/Assistant Manager')
                         @include('layouts.manager-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'district-manager')
+                    @elseif(auth()->user()->roles->first()->name == 'HOD/Area Manager')
                         @include('layouts.dm-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'HR')
-                        @include('layouts.hr-nav')
-                    @elseif(auth()->user()->roles->first()->name == 'super-admin')
+                    @else
                         @include('layouts.super-nav')
                     @endif
                         </ul>

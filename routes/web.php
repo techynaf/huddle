@@ -29,7 +29,7 @@ Auth::routes();
 Route::get('/qr', 'ProfileController@createQR')->middleware('auth');
 Route::get('/create/employee', 'ProfileController@create')->middleware('auth');
 Route::post('/store/profile', 'ProfileController@store')->middleware('auth');
-Route::get('/dashboard', 'ProfileController@index')->middleware('auth');
+Route::get('/dashboard', 'ProfileController@index')->middleware('auth')->name('dashboard');
 Route::get('/logger', 'ProfileController@logger')->middleware('auth');
 Route::get('/edit/profile/{id}', 'ProfileController@edit')->middleware('auth');
 Route::post('/edit/profile/{id}', 'ProfileController@update')->middleware('auth');
@@ -58,6 +58,29 @@ Route::get('/view/requests', 'LeavesController@show')->middleware('auth');
 Route::get('/leave/type', 'LeavesController@type')->middleware('auth');
 Route::get('/leave/type/{type}', 'LeavesController@range')->middleware('auth');
 Route::get('/delete/request/{id}', 'LeavesController@delete')->middleware('auth');
+
+// V2.5 Leave Routes
+Route::get('/leaves/create', 'LeavesController@create')->name('leaves.create');
+Route::post('/leaves/create', 'LeavesController@store')->name('leaves.create');
+Route::get('/leaves/types', 'LeavesController@types')->name('leaves.types');
+Route::get('/leaves/types/{name}', 'LeavesController@showType')->name('leaves.type');
+Route::post('/leaves/types/{name}', 'LeavesController@updateType')->name('leaves.type');
+Route::get('/leaves/types/{type}/policies', 'LeavesController@showPolicies')->name('leaves.policies');
+Route::post('/leaves/types/{type}/policies', 'LeavesController@updatePolicies')->name('leaves.policies');
+Route::get('/leaves/types/{policy}/policies/delete', 'LeavesController@deletePolicies')->name('leaves.policies.delete');
+
+// V2.5 Holiday Routes
+Route::get('/holidays', 'HolidaysController@index')->name('holidays.index');
+Route::get('/holidays/create', 'HolidaysController@create')->name('holidays.create');
+Route::post('/holidays/create', 'HolidaysController@store')->name('holidays.create');
+Route::get('/holidays/{holiday}/edit', 'HolidaysController@edit')->name('holidays.edit');
+Route::post('/holidays/{holiday}/edit', 'HolidaysController@update')->name('holidays.edit');
+Route::get('/holidays/{holiday}/delete', 'HolidaysController@delete')->name('holidays.delete');
+
+// V2.5 Overtimes Routes
+Route::get('/overtimes', 'OvertimeController@index')->name('overtimes.index');
+Route::post('/overtimes', 'OvertimeController@action')->name('overtimes.action');
+Route::get('/overtimes/weekly', 'OvertimeController@weekly')->name('overtimes.weekly.report');
 
 //Weekly Leave Routes
 Route::get('/create/weekly', 'WeeklyLeavesController@create')->middleware('auth');
@@ -99,8 +122,6 @@ Route::post('/export/hour', 'ExportsController@hourExport')->middleware('auth');
 Route::post('/export/late', 'ExportsController@lateExport')->middleware('auth');
 Route::get('/export/leave', 'ExportsController@leaveExport')->middleware('auth');
 
-// Route::get('/test', function () {
-//     // dd(exec('pwd'));
-//     dd(exec('cd .. && ./composer-cmd.sh'));
-//     // dd(exec('pwd'));
-// });
+Route::get('/test', function () {
+    dd();
+});

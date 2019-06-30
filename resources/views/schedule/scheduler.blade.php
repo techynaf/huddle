@@ -1,7 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-            <form action="/scheduler" method="get">
+    <script>
+        let current = 0;
+
+        function showInfo(id) {
+            if (current != id) {
+                if (current !== 0) {
+                    document.getElementById('r-'+current).classList.add('hidden');
+                }
+
+                document.getElementById('r-'+id).classList.remove('hidden');
+            }
+
+            current = id;
+        }
+    </script>
+
+        <form action="/scheduler" method="get">
             <br><br>
             <div class="container-fluid">
                 <div class="row scheduler-header">
@@ -57,10 +73,11 @@
                         <button class="btn btn-primary huddle-brown-btn-schedule" type="submit">Submit</button>
                     </div>
                 </div>
-                </div>    
-            </form>
+            </div>    
+        </form>
 
-            <div class="row">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="bg-white scheduler">
                     <div class="header page-title-schedule text-uppercase">
                         <div class="row pt-3">
@@ -76,58 +93,83 @@
                         <hr>
                     </div>
                     
-                     <div class="table">
-                         @foreach($users as $user)
+                    <div class="table">
+                        @foreach($users as $user)
                             <form action="/scheduler/{{$user->id}}" method="POST">
                                 @csrf
-                                <div class="row">
+                                <div class="row mb-1" id="row-{{ $loop->iteration }}" onclick="showInfo({{ $loop->iteration }})">
                                     <div class="col-md-1 text-center" id="{{$user->id}}">{{$user->name}}
                                         <button type="submit" class="btn btn-success btn-rounded my-0 py-0">Save</button>
                                     </div>
                                     <div class="col-md-11">
                                         <div class="row">
                                             @foreach($schedules[$loop->index] as $schedule)
-                                            <input type="hidden" name="date[]" value="{{$days[$loop->index][1]}}">
-                                                <div class="col-md mx-0 pl-1 pr-3">
-                                                    @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
-                                                        <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                            <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
-                                                            <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
-                                                            <input type="hidden" value="" name="end[]">
-                                                            <input type="hidden" value="" name="start[]">
+                                                <input type="hidden" name="date[]" value="{{ $days[$loop->index][1] }}">
+                                                    <div class="col-md mx-0 pl-1 pr-3">
+                                                        @if (App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first() != null)
+                                                            <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                                <input type="hidden" value="{{ $user->branch->id }}" name="entry_b[]">
+                                                                <input type="hidden" value="{{ $user->branch->id }}" name="exit_b[]">
+                                                                <input type="hidden" value="" name="end[]">
+                                                                <input type="hidden" value="" name="start[]">
+                                                                <input type="hidden" name="s_id[]" value="0">
+                                                                <h6>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</h6>
+                                                            </div>
+                                                        @elseif ($schedule == 'false' || $schedule == null)
                                                             <input type="hidden" name="s_id[]" value="0">
-                                                            <h6>{{App\Leave::where('user_id', $user->id)->where('start', '<=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('end', '>=', $leaveDate->copy()->addDays($loop->index)->format('Y-m-d'))->where('is_approved', 1)->first()->leavetype->name}}</h6>
-                                                        </div>
-                                                    @elseif ($schedule == 'false' || $schedule == null)
-                                                        <input type="hidden" name="s_id[]" value="0">
-                                                        @include('templates.schedule-default-form')
-                                                    @elseif (is_string($schedule))
-                                                        <div class="text-center btn btn-outline-danger h-100 w-100">
-                                                            <input type="hidden" value="{{$user->branch->id}}" name="entry_b[]">
-                                                            <input type="hidden" value="{{$user->branch->id}}" name="exit_b[]">
-                                                            <input type="hidden" value="" name="end[]">
-                                                            <input type="hidden" value="" name="start[]">
-                                                            <input type="hidden" name="s_id[]" value="0">
-                                                            <h6>{{ucfirst($schedule)}}</h6>
-                                                        </div>
-                                                    @else
-                                                        @if ($schedule->date != $days[$loop->index][1])
-                                                            <input type="hidden" name="s_id[]" value="0">
-                                                            @include('templates.schedule-form')
+                                                            @include('templates.schedule-default-form')
+                                                        @elseif (is_string($schedule))
+                                                            <div class="text-center btn btn-outline-danger h-100 w-100">
+                                                                <input type="hidden" value="{{ $user->branch->id }}" name="entry_b[]">
+                                                                <input type="hidden" value="{{ $user->branch->id }}" name="exit_b[]">
+                                                                <input type="hidden" value="" name="end[]">
+                                                                <input type="hidden" value="" name="start[]">
+                                                                <input type="hidden" name="s_id[]" value="0">
+                                                                <h6>{{ucfirst($schedule)}}</h6>
+                                                            </div>
                                                         @else
-                                                            <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
-                                                            @include('templates.schedule-form')
+                                                            @if ($schedule->date != $days[$loop->index][1])
+                                                                <input type="hidden" name="s_id[]" value="0">
+                                                                @include('templates.schedule-form')
+                                                            @else
+                                                                <input type="hidden" name="s_id[]" value="{{$schedule->id}}">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @include('templates.schedule-form')
+                                                                    </div>
+                                                                </div>
+                                                            @endif
                                                         @endif
-                                                    @endif
-                                                </div>
-                                            @endforeach
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="row hidden" id="r-{{ $loop->iteration }}">
+                                                @foreach ($days as $day)
+                                                    <div class="col-md mx-0 text-center">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <input type="checkbox" name="shift_super[{{ $loop->index }}]" value="{{ $day[1] }}"
+                                                                {{ App\Schedule::where('date', $day[1])->where('user_id', $user->id)->first() != null ? (App\Schedule::where('date', $day[1])->where('user_id', $user->id)->first()->shift_super ? 'checked': '') : '' }}> Shift Supervisor
+                                                            </div>
+                                                        </div>
+                                                        @foreach ((new App\Helper\ScheduleHelper)->infoFinder($day[1], $user->id) as $message)
+                                                            @if ($message != null)
+                                                                <div class="row border-top">
+                                                                    <div class="col-md-12">{{ $message }}</div>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                    
+                                </form>
                             <hr>
-                         @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>
+        </div>
 @endsection

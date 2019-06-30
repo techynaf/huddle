@@ -3,15 +3,132 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helper\LeavesHelper;
+use App\LeaveBalance;
 use DB;
 use App\User;
 use App\Leave;
+use App\LeaveState;
 use App\LeaveTypes;
 use App\WeeklyLeave;
+use App\LeavePolicy;
+use App\Schedule;
 use Carbon\Carbon;
 
 class LeavesController extends Controller
 {
+    public function create()
+    {
+        $leaves = LeaveTypes::where('role_id', auth()->user()->roles->first()->id)->get();
+
+        return view('leave.index', compact('leaves'));
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, LeavesHelper::validationArray($request));
+        $helper = new LeavesHelper;
+        $leave = LeaveTypes::find($request->type);
+        $balance = LeaveBalance::where('user_id', auth()->user()->id)->where('type', $leave->name)->first();
+        
+        if ($balance == null) {
+            $helper->createBalance(auth()->user());
+            $balance = LeaveBalance::where('user_id', auth()->user()->id)->where('type', $leave->name)->first();
+        }
+        
+        $policyCheckMessage = $helper->policyCheck($request);
+
+        if (!$helper->validateData($request)) {
+            $message = 'Your form failed to fulfill leave '.($helper->validateMinNotification($request->start, $leave) ? '' : 'minimum-notification-requirement').($helper->validateBalance($balance, $request) ? '' : ' minimum-balance-requirement').($helper->validateExpiration($leave, $request) ? '' : ' validity-period-requirement').'.';
+
+            return back()->with('error', $message);
+        }
+
+        if (!$policyCheckMessage[0]) {
+            return back()->with('error', $policyCheckMessage);
+        }
+
+        $messages = $helper->createStates($request);
+
+        return redirect(route('dashboard', compact('messages')))->with('success', 'Your leave has been created');
+    }
+
+    public function types()
+    {
+        $types = LeaveTypes::groupBy('name')->get();
+        
+        return view('leave.policy.index', compact('types'));
+    }
+
+    public function showType(Request $request, $name)
+    {
+        $type = LeaveTypes::where('name', $name)->get();
+
+        return view('leave.policy.show', compact('type'));
+    }
+
+    public function updateType(Request $request, $name)
+    {
+        $types = LeaveTypes::where('name', $name)->get();
+
+        foreach ($types as $type) {
+            $type->min_notification = $request->min_notification;
+            $type->expiration = $request->exp_val.' '.$request->exp_range;
+            $type->ceil = $request->ceil;
+            $type->base = $request->base;
+            $type->hours = $request->hours;
+            $type->starting = $request->starting;
+            $type->is_calendar_day = $request->is_calendar_day;
+            $type->save();
+        }
+
+        return redirect(route('leaves.type', ['name' => $name]));
+    }
+
+    public function showPolicies(Request $request, LeaveTypes $type)
+    {
+        $policies = $type->policies;
+
+        return view('leave.policy.policy-page', compact('type', 'policies'));
+    }
+
+    public function updatePolicies(Request $request, LeaveTypes $type)
+    {
+        foreach ($request->id as $key => $id) {
+            if ($id != 'none') {
+                if ($id != null) {
+                    $policy = LeavePolicy::find($id);
+                    $policy->max = $request->max[$key];
+                    $policy->allow_overflow = $request->allow_overflow[$key];
+                    $policy->allow_block = $request->allow_block[$key];
+                    $policy->message = $request->message[$key];
+                    $policy->role_id = $request->role_id[$key];
+                    $policy->save();
+                } else {
+                    $policy = LeavePolicy::create([
+                        'leave_type_id' => $type->id,
+                        'role_id' => $request->role_id[$key],
+                        'serial' => count($type->policies) + 1,
+                        'allow_overflow' => $request->allow_overflow[$key],
+                        'allow_block' => $request->allow_block[$key],
+                        'message' => $request->message[$key],
+                    ]);
+                }
+            }
+        }
+
+        return redirect(route('leaves.policies', ['type' => $type->id]));
+    }
+
+    public function deletePolicies(Request $request, LeavePolicy $policy)
+    {
+        $type = $policy->leaveType;
+        $policy->delete();
+        (new LeavesHelper)->reserializePolicy($type->id);
+
+        return redirect(route('leaves.policies', ['type' => $type->id]));
+    }
+
     public function requestLeave (Request $request)
     {
         if ($this->superAdmin() || $this->hr()) {
@@ -102,26 +219,14 @@ class LeavesController extends Controller
 
     public function show ()
     {
-        if ($this->barista() || $this->hr()) {
-            return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
-        }
-
         $notification = $this->checkNotifications();
 
         if (!is_array($notification)) {
             return view('profile/manager');
         }
 
-        $leaves = array();
-
-        if ($this->manager()) {
-            $leaves = Leave::where('branch_id', auth()->user()->branch_id)->orderBy('created_at', 'desc')->
-            where('is_removed', false)->get();
-        } else {
-            $leaves = Leave::orderBy('created_at', 'desc')->where('is_removed', false)->get();
-        }
-
-        $leaves = $this->check($leaves);
+        $ids = LeaveState::whereNull('action')->whereIn('branch_id', auth()->user()->branch->descendent)->where('role_id', auth()->user()->roles->first()->id)->get()->pluck('leave_id')->toArray();
+        $leaves = Leave::whereIn('id', $ids)->where('user_id', '!=', auth()->user()->id)->get();
 
         return view('requests/show-leave')->with('leaves', $leaves)->with('notification', $notification);
     }
@@ -157,10 +262,38 @@ class LeavesController extends Controller
         if ($this->barista() || $this->hr()) {
             return redirect('/dashboard')->with('error', 'You are not authorized to access this view');
         }
+        if (auth()->user()->isShiftSuper) {
+            if (!auth()->user()->isAssignedShiftSuper) {
+                return back()->with('error', 'You are not the assigned shift supervisor');
+            }
+        }
         
         $leave = Leave::where('id', $id)->first();
-        $leave->is_approved = $request->status;
-        $leave->save();
+        $states = $leave->statuses->where('role_id', '>=',auth()->user()->roles->first()->id);
+
+        foreach ($states as $status) {
+            if (is_null($status->user_id)) {
+                $status->user_id = auth()->user()->id;
+                $status->action = $request->status;
+                $status->action_at = Carbon::now()->toDateTimeString();
+                $status->save();
+            }
+        }
+
+        if ($leave->statuses->sortByDesc('serial')->first()->action == 1) {
+            $leave->is_approved = 1;
+            $leave->save();
+
+            $balance = $leave->user->leaveBalance->where('type', $leave->leaveType->name)->first();
+            $balance->balance = $balance->balance - $leave->leaveCount;
+            $balance->save();
+        }
+
+        if (count($leave->statuses->where('action', 2)) > 0) {
+            $leave->is_approved = 2;
+            $leave->save();
+        }
+
         $message = 'Leave has been ';
 
         if ($request->status == 1) {
@@ -209,8 +342,8 @@ class LeavesController extends Controller
             return view('profile/manager');
         }
 
-        $types = LeaveTypes::where('id', '!=', 1)->get();
-        $users = User::where('branch_id', '>=', 1)->get();
+        $types = LeaveTypes::groupBy('name')->get();
+        $users = User::all();
 
         if ($this->manager()) {
             $users = DB::table("users")->whereIn('id', function ($query) {
@@ -235,12 +368,12 @@ class LeavesController extends Controller
             'day_2' => 'nullable',
         ]);
 
-        if ($request->type == 6) {
-            $this->validate($request, [
-                'day_1' => 'required',
-                'day_2' => 'required',
-            ]);
-        }
+        // if ($request->type == 6) {
+        //     $this->validate($request, [
+        //         'day_1' => 'required',
+        //         'day_2' => 'required',
+        //     ]);
+        // }
 
         $l = Leave::where('user_id', $request->id)->where('start', '<=', Carbon::parse($request->start)->format('Y-m-d'))->
         where('end', '>=', Carbon::parse($request->end)->format('Y-m-d'))->where('is_approved', 1)->get();
@@ -250,30 +383,22 @@ class LeavesController extends Controller
         }
 
         $user = User::find($request->id);
-        
-        if ($request->type != 6) {
-            $leave = new Leave;
-            $leave->user_id = $user->id;
-            $leave->branch_id = $user->branch_id;
-            $leave->is_approved = 1;
-            $leave->start = Carbon::parse($request->start)->format('Y-m-d');
-            $leave->end = Carbon::parse($request->end)->format('Y-m-d');
-            $leave->type = $request->type;
-            $leave->comment = $request->comment;
-            $leave->is_removed = false;
-        } else {
-            $leave = new WeeklyLeave;
-            $leave->user_id = $user->id;
-            $leave->branch_id = $user->branch_id;
-            $leave->approved = 1;
-            $leave->start = Carbon::parse($request->start)->format('Y-m-d');
-            $leave->end = Carbon::parse($request->end)->format('Y-m-d');
-            $leave->day_1 = $request->day_1;
-            $leave->day_2 = $request->day_2;
-            $leave->comment = $request->comment;
-        }
-
+        $leave = new Leave;
+        $leave->user_id = $user->id;
+        $leave->branch_id = $user->branch_id;
+        $leave->is_approved = 1;
+        $leave->start = Carbon::parse($request->start)->format('Y-m-d');
+        $leave->end = Carbon::parse($request->end)->format('Y-m-d');
+        $leave->type = LeaveTypes::where('name', $request->type)->where('role_id', $user->roles->first()->id)->first()->id;
+        $leave->start_is_half = $request->start_is_half;
+        $leave->end_is_half = $request->end_is_half;
+        $leave->comment = $request->comment;
+        $leave->is_removed = false;
+        $balance = $user->leaveBalance->where('type', LeaveTypes::where('name', $request->type)->where('role_id', $user->roles->first()->id)->first()->name)->first();
         $leave->save();
+
+        $balance->balance = $balance->balance - (new LeavesHelper)->leaveCount($request);
+        $balance->save();
 
         return redirect('/create/leave')->with('success', 'Leave successfully created');
     }

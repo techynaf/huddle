@@ -11,7 +11,6 @@
 @endif
 
 @if(session('success'))
-<br>
     <div class="row text-center alert alert-success m-t--40">
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -21,8 +20,19 @@
     </div>
 @endif
 
+@if(isset($messages))
+    @foreach($messages as $message)
+        <div class="row text-center alert alert-danger mt-5 mb-0">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                {{ $message }}
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    @endforeach
+@endif
+
 @if(session('error'))
-<br>
     <div class="row text-center alert alert-danger m-t--40">
         <div class="col-md-4"></div>
         <div class="col-md-4">

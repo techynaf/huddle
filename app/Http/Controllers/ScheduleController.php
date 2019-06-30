@@ -27,6 +27,12 @@ class ScheduleController extends Controller
         if (!is_array($notification)) {
             return view('profile/manager');
         }
+        
+        if (auth()->user()->isShiftSuper) {
+            if (!auth()->user()->isAssignedShiftSuper) {
+                return view('schedule.view');
+            }
+        }
 
         $intervals = array(':00', ':15', ':30', ':45');
         $times = array();
@@ -61,17 +67,23 @@ class ScheduleController extends Controller
         }
 
         $users = null;
-        $branches = Branch::all();
+        $branches = Branch::whereIn('id', auth()->user()->branch->descendent)->get();
 
-        if ($this->manager()) {
+        if (auth()->user()->hasUnitAccess) {
             $users = User::where('branch_id', auth()->user()->branch->id)->get();
-        } else {
+        } elseif (auth()->user()->hasGroupAccess) {
             if ($request->branch == null) {
-                $users = User::where('branch_id', '!=', 0)->get();
+                $users = $users = auth()->user()->branch->employees;
             } else {
-                $users = User::where('branch_id', $request->branch)->get();
-                $b = Branch::where('id', $request->branch)->first();
+                if (in_array($request->branch, auth()->user()->branch->descendent)) {
+                    $users = User::where('branch_id', $request->branch)->get();
+                    $b = Branch::where('id', $request->branch)->first();
+                } else {
+                    return back()->with('error', 'You do not have access to this branch');   
+                }
             }
+        } else {
+            return back()->with('error', 'You do not have access to this feature');
         }
 
         $schedules = array();
@@ -143,7 +155,6 @@ class ScheduleController extends Controller
     public function schedule (Request $request, $id)
     {
         $user = User::where('id', $id)->first();
-
         $dates = $request->date;
         $schedule_ids = $request->s_id;
         $starts = $request->start;
@@ -151,10 +162,7 @@ class ScheduleController extends Controller
         $s_branches = $request->entry_b;
         $e_branches = $request->exit_b;
         $counter = 0;
-
-        //dd(Carbon::parse($starts[0]), $ends, $schedule_ids);
-
-        // dd($request);
+        $shift_super = $request->shift_super;
 
         for ($i = 0; $i < 7; $i++) {
             if (!($starts[$i] == null || $ends[$i] == null)) {
@@ -174,6 +182,7 @@ class ScheduleController extends Controller
                 $schedule->end_branch = $e_branches[$i];
                 $schedule->date = $dates[$i];
                 $schedule->timestamps = false;
+                $schedule->shift_super = in_array($dates[$i], $shift_super);
                 $schedule->save();
 
                 $nextWeek = Carbon::parse($schedule->date)->addDays(7)->format('Y-m-d');
@@ -190,6 +199,7 @@ class ScheduleController extends Controller
                     $schedule->end_branch = $e_branches[$i];
                     $schedule->date = $nextWeek;
                     $schedule->timestamps = false;
+                    $schedule->shift_super = in_array($dates[$i], $shift_super);
                     $schedule->save();
                 }
             }

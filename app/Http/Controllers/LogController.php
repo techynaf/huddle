@@ -7,6 +7,7 @@ use App\User;
 use App\Log;
 use App\LogUpdate;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class LogController extends Controller
 {
@@ -22,55 +23,26 @@ class LogController extends Controller
             return view('profile/manager');
         }
 
-        $logs = array();
-        $today = new Carbon;
-        $last = null;
+        $now = Carbon::now();
+        $logs_dates = Log::whereIn('branch_id', auth()->user()->branch->descendent)
+            ->where('date', '>=', $now->copy()->addWeeks(-4)->toDateString())->orderBy('date', 'DESC')->get()->groupBy('date');
+        // dd($logs_dates);
 
-        if ($today->copy()->format('l') == 'Sunday') {
-            $last = $today->copy()->addWeeks(-1)->format('Y-m-d');
-        } else {
-            $last = $this->findSun(null)->format('Y-m-d');
-        }
-
-        $start = $today->copy()->format('Y-m-d');
-        $dates = array();
-        $ls = null;
-        
-        for (; $today->copy()->format('Y-m-d') >= $last; $today = $today->addDays(-1)) {
-            array_push($dates, $today->copy()->format('Y-m-d'));
-        }
-
-        if ($this->manager()) {
-            $ls = Log::where('branch_id', auth()->user()->branch_id)->where('date', '>=', $last)->
-            where('date', '<=', $start)->whereNull('end')->get();
-        } elseif ($this->superAdmin() || $this->dm() || $this->hr()) {
-            $ls = Log::whereNull('end')->orderBy('date')->get();
-        }
-
-        if ($this->manager()) {
-            foreach ($ls as $l) {
-                if ($l->user->roles->first()->name != 'manager' || $l->user->roles->first()->name != 'assistant-manager') {
-                    array_push($logs, $l);
-                }
-            }
-        } else {
-            return view('logs/show')->with('notification', $notification)->with('logs', $ls)->with('dates', $dates);
-        }
-
-        return view('logs/show')->with('notification', $notification)->with('logs', $logs)->with('dates', $dates);
+        return view('logs/show')->with('notification', $notification)->with('logs_dates', $logs_dates);
     }
 
     public function store (Request $request, $id)
     {
         $log = Log::where('id', $id)->first();
-        $start = Carbon::parse($request->start)->format('H:i:s');
-        $end = Carbon::parse($request->end)->format('H:i:s');
+        $start = Carbon::parse(implode(' ', explode('T', $request->start)))->toDateTimeString();
+        $end = Carbon::parse(implode(' ', explode('T', $request->end)))->toDateTimeString();
         $update = new LogUpdate;
         $update->log_id = $id;
         $update->user_id = auth()->user()->id;
         $update->initial_start = $log->start;
         $update->initial_end = $log->end;
         $log->end = $end;
+        $log->date = Carbon::parse(implode(' ', explode('T', $request->start)))->toDateString();
 
         if ($request->start != null) {
             $log->start = $start;
@@ -79,6 +51,7 @@ class LogController extends Controller
 
         $log->timestamps = false;
         $log->save();
+        $log->createOvertime();
         $update->final_end = $end;
         $update->save();
 

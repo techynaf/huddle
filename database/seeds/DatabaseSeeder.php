@@ -15,8 +15,12 @@ class DatabaseSeeder extends Seeder
             BranchesTableSeeder::class,
             UserTableSeeder::class,
             LeaveTypesTableSeeder::class,
+            LogsTableSeeder::class,
             RolesTableSeeder::class,
             RoleUserTableSeeder::class,
+            DesignationTableSeeder::class,
+            LeavePolicyTableSeeder::class,
+            HolidaysTableSeeder::class,
         ]);
     }
 }

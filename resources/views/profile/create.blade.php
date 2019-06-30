@@ -26,10 +26,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-1 text-right col-form-label" for="role">Job Title</label>
+                                            <label class="col-1 text-right col-form-label" for="role">Access Level</label>
                                             <div class="col-4">
                                                 <select name="role" class="form-control" required>
-                                                    <option value="">Select a Designation</option>
+                                                    <option value="">Select an Access Level</option>
                                                     @foreach($roles as $role)
                                                         <option value="{{$role[0]}}">{{$role[1]}}</option>
                                                     @endforeach
@@ -54,7 +54,7 @@
                                                     <option value="Islam">Islam</option>
                                                     <option value="Hinduism">Hinduism</option>
                                                     <option value="Buddhism">Buddhism</option>
-                                                    <option value="Christianity">Christianity</option>
+                                                    <option value="Christianityity">Christianity</option>
                                                     <option value="Other">Other</option>
                                                 </select>
                                             </div>
@@ -69,6 +69,37 @@
                                                     <option value="Contratual">Contratual</option>
                                                 </select>
                                             </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-1 text-right col-form-label" for="religion">Designation</label>
+                                            <div class="col-4">
+                                                <select name="designation" class="form-control" required>
+                                                    <option value="">Select a Designation</option>
+                                                    @foreach (App\Designation::all() as $designation)
+                                                        <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-1"></div>
+                                            <label class="col-1 text-right col-form-label" for="status">Gender</label>
+                                            <div class="col-4">
+                                                <select name="gender" class="form-control" required>
+                                                    <option value="">Select a Gender</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-1 text-right col-form-label" for="religion">Joining Date</label>
+                                            <div class="col-4">
+                                                <input type="date" name="joining_date" class="form-control" required>
+                                            </div>
+                                            <div class="col-1"></div>
+                                            <div class="col-4"></div>
                                         </div>
                                         
                                         <div class="row">

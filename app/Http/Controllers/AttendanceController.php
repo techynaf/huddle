@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helper\LeavesHelper as LH;
 use Carbon\Carbon;
 use App\User;
 use App\Log;
@@ -58,19 +59,24 @@ class AttendanceController extends Controller
 
         //finding the schedule where the date is the today's date and the user id is of the pin's user
         $schedule = Schedule::where('date', $date)->where('user_id', $user->id)->first();
-        $log = Log::whereNull('end')->where('user_id', $user->id)->where('date', $date)->first();
+        $log = Log::whereNull('end')->where('user_id', $user->id)->first();
 
         if ($log == null) {
             return $this->createLog($user, $schedule, $now);
         } else {
+            $helper = new LH;
+            $helper->govHolidayChecker($user);
+            $helper->annualBalanceChecker($user);
+            $helper->sickIncrementer($user);
+            $log->createOvertime();
+
             return $this->punchOut($user, $log, $schedule, $now);
         }
     }
 
     public function createLog ($user, $schedule, $now) {
         $log = new Log;
-        $startTime = $now->copy()->format('H:i:s');
-        $log->start = $startTime;
+        $log->start = $now->copy()->toDateTimeString();
 
         //need to get branch id from device_id
         $log->branch_id = $user->branch->id;
@@ -107,7 +113,7 @@ class AttendanceController extends Controller
 
     public function punchOut ($user, $log, $schedule, $now)
     {
-        $log->end = $now->copy()->format('H:i:s');;
+        $log->end = $now->copy()->toDateTimeString();
         $log->timestamps = false;
         $log->save();
 

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRole;
 use App\Managers;
 use QRCode;
+use App\Helper\LeavesHelper as LH;
 
 class ProfileController extends Controller
 {
@@ -137,6 +138,9 @@ class ProfileController extends Controller
             'employee_id' => 'required',
             'religion' => 'required',
             'status' => 'required',
+            'joining_date' => 'required',
+            'designation' => 'required',
+            'gender' => 'required',
         ]);
 
         $pin = 0;
@@ -149,6 +153,12 @@ class ProfileController extends Controller
             if (count($check) == 0) {
                 break;
             }
+        }
+
+        if (count($role->designations->where('id', $request->designation)) == 0) {
+            $this->validate($request, [
+                'valid_designation' => 'required'
+            ]);
         }
 
         if (User::where('employee_id', $request->employee_id)->first() != null) {
@@ -166,13 +176,16 @@ class ProfileController extends Controller
         $user->logged_in = false;
         $user->employee_id = $request->employee_id;
         $user->religion = $request->religion;
+        $user->gender = $request->gender;
+        $user->designation_id = $request->designation;
+        $user->joining_date = $request->joining_date;
         $user->save();
         $user->roles()->attach($role);
         $message = 'Profile created! The pin and password for the profile is '.$pin.'.';
         $qr = QRCode::text($pin);
         $qr->setOutFile('qrcodes/'.$pin.'.png')->png();
 
-        if ($role->name == 'manager' || $role->name == 'assistant-manager') {
+        if ($role->id == 5) {
             while (true) {
                 $pin = rand(1000, 9999);
                 $check = Managers::where('pin', $pin)->get();
@@ -189,6 +202,8 @@ class ProfileController extends Controller
         }
 
         $url = '/view/employee/'.$user->id;
+        $helper = new LH;
+        $helper->createBalance($user);
 
         return redirect($url);
     }

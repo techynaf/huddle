@@ -19,8 +19,8 @@
                                         <td>{{$user->name}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Role</td>
-                                        <td>{{$user->roles->first()->name}}</td>
+                                        <td>Designation</td>
+                                        <td>{{$user->designation->name}}</td>
                                     </tr>
                                     <tr>
                                         <td>PIN</td>
@@ -88,6 +88,17 @@
                                     <div class="col-md-6"><a href="/delete/profile/{{$user->id}}" class="text-danger">Delete Profile</a></div>
                                 </div>
                             @endif
+
+                            <div class="row mt-3">
+                                <div class="col-md-12 text-center"><h3>Leave Balances</h3></div>
+                            </div>
+
+                            @foreach (auth()->user()->leaveBalance as $balance)
+                                <div class="row mb-3 pb-3">
+                                    <div class="col-md-6 border-bottom">{{ $balance->type }}</div>
+                                    <div class="col-md-6 border-bottom">{{ $balance->balance }}</div>
+                                </div>
+                            @endforeach
 
                         </div>
                     </div>
@@ -272,14 +283,14 @@
                                                     <br>
                                                     <div class="row">
                                                 @endif
-                                                <div class="col-md-6 {{$loop->index % 2 == 0 ? 'br' : ''}}">
+                                                <div class="col-md-6 {{$loop->index % 2 == 0 ? 'br' : ''}} {{ $request->is_approved == 1 ? 'approved' : ($request->is_approved == 2 ? 'declined' : '') }}">
                                                     <div class="row">
-                                                        <div class="leave-type col-md-8">{{$request->leavetype->name}}</div>
-                                                        <div class="col-2 text-right">
+                                                        <div class="leave-type col-md-10">{{$request->leavetype->name}}</div>
+                                                        {{-- <div class="col-2 text-right">
                                                             @if($request->is_approved == 0)
                                                                 <a href="/request/edit/{{$request->id}}" class="btn">Edit</a>
                                                             @endif
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="col-2 text-right">
                                                             @if (App\Http\Controllers\Controller::admin() || auth()->user()->id == $user->id)
                                                                 <a href="/delete/request/{{$request->id}}" class="btn">Delete</a>

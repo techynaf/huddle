@@ -11,4 +11,24 @@ class Role extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public function leaveTypes()
+    {
+        return $this->hasMany('App\LeaveTypes');
+    }
+
+    public function leaveStatuses()
+    {
+        return $this->hasMany('App\LeaveStatus');
+    }
+
+    public function leavePolicies()
+    {
+        return $this->hasMany('App\LeavePolicy');
+    }
+
+    public function designations()
+    {
+        return $this->hasMany('App\Designation');
+    }
 }

@@ -17,8 +17,8 @@ class CreateLogsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->date('date');
-            $table->time('start');
-            $table->time('end')->nullable();
+            $table->datetime('start');
+            $table->datetime('end')->nullable();
             $table->integer('branch_id');
             $table->integer('schedule_id')->nullable();
         });
