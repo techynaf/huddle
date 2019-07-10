@@ -211,7 +211,7 @@ class LeavesHelper
                 $balance = LeaveBalance::create([
                     'user_id' => $user->id,
                     'type' => $type->name,
-                    'balance' => is_null($type->base) ? 0 : ($type->name == 'Sick' && Carbon::parse($user->joining_date)->diffInYears(Carbon::now()) < 1 ? 0 : $type->base),
+                    'balance' => is_null($type->base) ? 0 : ($type->name == 'Sick' && Carbon::parse($user->joining_date)->diffInYears(Carbon::now()) < 1 ? ($type->base / Carbon::parse($user->joining_date)->diffInMonths(Carbon::now())) : $type->base),
                     'locked' => false,
                 ]);
             }
