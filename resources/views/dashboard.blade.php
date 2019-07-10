@@ -93,7 +93,7 @@
                                 <div class="col-md-12 text-center"><h3>Leave Balances</h3></div>
                             </div>
 
-                            @foreach (auth()->user()->leaveBalance as $balance)
+                            @foreach ($user->leaveBalance as $balance)
                                 <div class="row mb-3 pb-3">
                                     <div class="col-md-6 border-bottom">{{ $balance->type }}</div>
                                     <div class="col-md-6 border-bottom">{{ $balance->balance }}</div>
