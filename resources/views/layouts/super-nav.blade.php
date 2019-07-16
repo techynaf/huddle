@@ -17,7 +17,7 @@
         @else
             <li><a href="/show/weekly">Day-off Requests</a></li>
         @endif
-        <li><a href="/create/leave">Create Leave</a></li>
+        <li><a href="/leaves/create">Create Leave</a></li>
         <li><a href="{{ route('holidays.index') }}">Holidays</a></li>
         <li><a href="{{ route('leaves.types') }}">Leave Types</a></li>
     </ul>

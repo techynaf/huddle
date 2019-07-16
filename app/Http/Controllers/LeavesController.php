@@ -395,6 +395,7 @@ class LeavesController extends Controller
         $leave->comment = $request->comment;
         $leave->is_removed = false;
         $balance = $user->leaveBalance->where('type', LeaveTypes::where('name', $request->type)->where('role_id', $user->roles->first()->id)->first()->name)->first();
+
         $leave->save();
 
         $balance->balance = $balance->balance - (new LeavesHelper)->leaveCount($request);

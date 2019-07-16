@@ -65,7 +65,11 @@ class Log extends Model
 
     public function getOnGovHolidayAttribute()
     {
-        return (GovHoliday::where('starting', '<=', $this->schedule->date)->where('ending', '>=', $this->schedule->date)->whereIn('religion', ['all', lcfirst($this->user->religion)])->first() != null);
+        if ( $this->schedule == null){
+            return null;
+        }else {
+            return (GovHoliday::where('starting', '<=', $this->schedule->date)->where('ending', '>=', $this->schedule->date)->whereIn('religion', ['all', lcfirst($this->user->religion)])->first() != null);
+        }
     }
 
     public function getWorkedOvertimeAttribute()
