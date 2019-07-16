@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form action="{{ route('leaves.types', ['name' => $type[0]->name]) }}" method="POST">
+    <form action="{{ route('leaves.type', ['name' => $type[0]->name]) }}" method="POST">
         @csrf
         <div class="row mb-3">
             <div class="col-md-3">
