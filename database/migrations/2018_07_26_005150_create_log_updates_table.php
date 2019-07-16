@@ -32,6 +32,6 @@ class CreateLogUpdatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs_update');
+        Schema::dropIfExists('log_updates');
     }
 }
